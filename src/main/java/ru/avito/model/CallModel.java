@@ -24,65 +24,57 @@ import static ru.avito.jooqdbmodel.Tables.USERS;
 public class CallModel{
 
     private final static Logger LOG = LogManager.getLogger();
-    private final static Marker SQL_QUERY_CALLS = MarkerManager.getMarker("SQL_QUERY_CALLS");
-
+    private final static Marker CALLS_PUT_SQL = MarkerManager.getMarker("CALLS_PUT_SQL");
+    private final static Marker CALLS_GET_SQL = MarkerManager.getMarker("CALLS_GET_SQL");
+    private final static Marker CALLS_UPDATE_SQL = MarkerManager.getMarker("CALLS_UPDATE_SQL");
     private static final int MAX_CALLS_PER_REQUEST = 20;
-    private static final String HOST ="http:192.168.10.132:8080/callrecords/";
-    private static final String USER_PASSWORD = "web_api:s7cgr3Ev";
-
     /*
     * Сохраняем ссылку на звонок
      */
-    public static void saveCallLink(
-            String oktell_login, String chain_id, String com_id,
-            Long timeStart, Long timeEnd, String call_link)
-            throws SQLException {
+    public static void saveCalLink(CallRecord record) throws SQLException { // Ни где не юзается, если все ок можно выпилить.
 
         try (Connection conn = DBConnection.getDataSource().getConnection()) {
 
+            debugLog(CALLS_PUT_SQL, String.format("Saving data... Hashcode #%s,\r\n data: %s", record.hashCode(), record));
+
             Integer user_id = DSL.using(conn).select(USERS.ID)
                     .from(USERS)
-                    .where(USERS.OKTELL_LOGIN.equal(oktell_login)).fetchOne().value1();
-
+                    .where(USERS.OKTELL_LOGIN.equal(record.getOktellLogin())).fetchOne().value1();
             DSL.using(conn)
                     .insertInto(CALLS)
                     .columns(CALLS.USER_ID, CALLS.CHAIN_ID, CALLS.COM_ID,
                             CALLS.CALL_LINK, CALLS.TIME_BEGIN, CALLS.TIME_END)
                     .values(
-                            user_id, chain_id, com_id,
-                            call_link, (timeStart - 10800) * 1000, (timeEnd - 10800) * 1000)
+                            user_id, record.getChainId(), record.getComId(),
+                            record.getCallLink(), (record.getTimeStart() - 10800) * 1000, (record.getTimeEnd() - 10800) * 1000)
                     .execute();
 
-            debugLog(SQL_QUERY_CALLS, String.format(
-                    "Data put successfuly by Agent ID %s, params {\r\n Oktell_login: %s\r\n, chain_id: %s\r\n, com_id: %s\r\n, timeStart: %s\r\n, timeEnd: %s\r\n, call_link: %s \r\n  }",
-                    user_id, oktell_login, chain_id, com_id, timeStart, timeEnd, call_link));
+            debugLog(CALLS_PUT_SQL, String.format(
+                    "Data call was saved successfully!!! Hashcode: #%s \r\n Data: %s",record.hashCode(), record));
         }
     }
 
-    public static void saveCallLink(
-            String oktell_login, String chain_id, String com_id,
-            Long timeStart, Long timeEnd, String call_link, Boolean isOut)
+    public static void saveCallLink(CallRecord record, Boolean isOut)
             throws SQLException {
 
         try(Connection conn = DBConnection.getDataSource().getConnection()) {
 
+            debugLog(CALLS_PUT_SQL, String.format("Saving data... Hashcode #%s,\r\n data: %s", record.hashCode(), record));
+
             Integer user_id = DSL.using(conn).select(USERS.ID)
                     .from(USERS)
-                    .where(USERS.OKTELL_LOGIN.equal(oktell_login)).fetchOne().value1();
-
+                    .where(USERS.OKTELL_LOGIN.equal(record.getOktellLogin())).fetchOne().value1();
             DSL.using(conn)
                     .insertInto(CALLS)
                     .columns(CALLS.USER_ID, CALLS.CHAIN_ID, CALLS.COM_ID,
                             CALLS.CALL_LINK, CALLS.TIME_BEGIN, CALLS.TIME_END,
                             CALLS.IS_OUT)
-                    .values(user_id, chain_id, com_id,
-                            call_link, (timeStart - 10800) * 1000, (timeEnd - 10800) * 1000,
+                    .values(user_id, record.getChainId(), record.getComId(),
+                            record.getCallLink(), (record.getTimeStart() - 10800) * 1000, (record.getTimeEnd() - 10800) * 1000,
                             isOut)
                     .execute();
 
-            debugLog(SQL_QUERY_CALLS, String.format(
-                    "Data put successfuly by Agent ID %s, params {\r\n Oktell_login: %s\r\n, chain_id: %s\r\n, com_id: %s\r\n, timeStart: %s\r\n, timeEnd: %s\r\n, call_link: %s\r\n, isOut: %s\r\n  }",
-                    user_id, oktell_login, chain_id, com_id, timeStart, timeEnd, call_link, isOut));
+            debugLog(CALLS_PUT_SQL, String.format("Data call was saved successfully!!! Hashcode: #%s\r\n Data: %s",record.hashCode(), record));
         }
     }
 
@@ -104,7 +96,7 @@ public class CallModel{
                     .limit(MAX_CALLS_PER_REQUEST).fetch()
                     .formatJSON();
 
-                debugLog(SQL_QUERY_CALLS, String.format(
+                debugLog(CALLS_GET_SQL, String.format(
                         "Get calls for user: %s by time: %s, \r\n results: %s",
                         link, time, resultAsLSON));
 
@@ -115,7 +107,6 @@ public class CallModel{
     /*
     * Получаем записи звонков агента с незаполненными полями
      */
-
     public static String getCallRecordsWithEmptyFields(int userId)
             throws SQLException {
 
@@ -129,7 +120,7 @@ public class CallModel{
                     ).fetch().formatJSON();
 
 
-            debugLog(SQL_QUERY_CALLS, String.format(
+            debugLog(CALLS_GET_SQL, String.format(
                     "Get empty calls for agent: %s, \r\n results: %s",
                     userId, resultAsJSON));
 
@@ -137,32 +128,27 @@ public class CallModel{
         }
     }
 
-    public static void updateCallRecord(long avitoUserId, String uChainId,
-                                        int question_id, int shop_category_id,
-                                        boolean isManager)
+    public static void updateCallRecord(UpdatedCallRecord updRecord)
             throws SQLException {
 
         try (Connection conn = DBConnection.getDataSource().getConnection()) {
-
+            debugLog(CALLS_UPDATE_SQL, String.format("Updating data: %s", updRecord));
             DSLContext create = DSL.using(conn, SQLDialect.MYSQL);
 
             create.update(CALLS)
-                    .set(CALLS.AVITO_LINK, avitoUserId)
-                    .set(CALLS.QUESTION_ID, question_id)
-                    .set(CALLS.SHOP_CATEGORY_ID, shop_category_id)
-                    .set(CALLS.IS_MANAGER, isManager)
-                    .where(CALLS.CHAIN_ID.eq(uChainId))
+                    .set(CALLS.AVITO_LINK, updRecord.getAvitoUserId())
+                    .set(CALLS.QUESTION_ID,updRecord.getQuestId())
+                    .set(CALLS.SHOP_CATEGORY_ID, updRecord.getShopCategoryId())
+                    .set(CALLS.IS_MANAGER, updRecord.isManager())
+                    .where(CALLS.CHAIN_ID.eq(updRecord.getChainId()))
                     .execute();
+            debugLog(CALLS_UPDATE_SQL, String.format("Update call was successfully!!! Data: %s", updRecord));
 
-            debugLog(SQL_QUERY_CALLS, String.format(
-                    "Update call by chain_id: %s for user ID: %s, \r\n params{ quest_id: %s, ShopCat_id: %s, isManager: %s",
-                    uChainId, avitoUserId, question_id, shop_category_id, isManager));
-
-            selectToUpdateCallRecord(uChainId);
+        //    selectToUpdateCallRecord(updRecord); я ваще хз зачем это написал. Получается я повторяю одно и тоже действие.
         }
     }
 
-    public static void selectToUpdateCallRecord(String chain_id)
+    public static void selectToUpdateCallRecord(UpdatedCallRecord updRecord)
             throws SQLException {
 
         try (Connection conn = DBConnection.getDataSource().getConnection()) {
@@ -173,23 +159,21 @@ public class CallModel{
                     .select(CALLS.AVITO_LINK, CALLS.QUESTION_ID,
                             CALLS.SHOP_CATEGORY_ID, CALLS.IS_MANAGER)
                     .from(CALLS)
-                    .where(CALLS.CHAIN_ID.eq(chain_id)).fetchOne();
+                    .where(CALLS.CHAIN_ID.eq(updRecord.getChainId())).fetchOne();
 
             create.update(CALLS)
                     .set(CALLS.AVITO_LINK, results.value1())
                     .set(CALLS.QUESTION_ID, results.value2())
                     .set(CALLS.SHOP_CATEGORY_ID, results.value3())
                     .set(CALLS.IS_MANAGER, results.value4())
-                    .where(CALLS.CHAIN_ID.eq(chain_id))
+                    .where(CALLS.CHAIN_ID.eq(updRecord.getChainId()))
                     .execute();
 
-            debugLog(SQL_QUERY_CALLS, String.format(
-                    "Update call for user ID %s, by chain_id: %s, \r\n params{ quest_id: %s, ShopCat_id: %s, isManager: %s",
-                    results.value1(), chain_id, results.value2(), results.value3(), results.value4()));
+            debugLog(CALLS_UPDATE_SQL, String.format("Update call was successfully!!! Data: %s", updRecord));
         }
     }
 
-    public static String getOktellLogin(String chain_id)
+    public static String getOktellLogin(String chain_id) // Этот метод ни где не юзается. Если все будет работать можно выпилить.
             throws SQLException, NullPointerException {
 
         try (Connection conn = DBConnection.getDataSource().getConnection()) {
@@ -204,7 +188,7 @@ public class CallModel{
                     .from(USERS)
                     .where(USERS.ID.eq(result.value1())).fetchOne();
 
-            debugLog(SQL_QUERY_CALLS, String.format(
+            debugLog(CALLS_GET_SQL, String.format(
                     "Get Oktell Login by chain id: %s, results: %s",
                     chain_id, oktell_login.value1()));
 

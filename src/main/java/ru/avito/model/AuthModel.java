@@ -71,7 +71,7 @@ public class AuthModel {
 
     public static int getUserIdByOktellLogin(String oktellLogin)
             throws SQLException {
-
+            debugLog(SQL_QUERY_AUTH,String.format("Getting agent ID by Oktell login: %s", oktellLogin));
         try (Connection conn = DBConnection.getDataSource().getConnection()) {
 
             Record1<Integer> result = DSL.using(conn)
@@ -80,7 +80,7 @@ public class AuthModel {
                     .where(USERS.OKTELL_LOGIN.eq(oktellLogin))
                     .fetchOne();
 
-            debugLog(SQL_QUERY_AUTH,String.format("Is user exist with Oktell login: %s. Results(id) %s", oktellLogin, result));
+            debugLog(SQL_QUERY_AUTH,String.format("Is user exist with Oktell login: %s. Results(id) %s", oktellLogin, result.value1()));
 
             return result == null ? -1 : result.value1();
         }

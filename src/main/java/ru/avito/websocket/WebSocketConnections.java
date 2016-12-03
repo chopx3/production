@@ -101,20 +101,20 @@ public class WebSocketConnections implements WebSocketInfoLogger{
     public void sendMessageToUser(int userId, String msg, String oktell_login) {
         try {
             if (sessions.containsKey(userId)) {
-            Session session = sessions.get(userId);
+                Session session = sessions.get(userId);
                 ServerResponse response = new ServerResponse();
                 response.setStatus(Response.MSG.toString());
                 response.setResult(msg);
                 session.getBasicRemote().sendText(response.toJson());
-            }
-            else
+
+            } else
                 LOG.warn(SESSION_POOL_UNLOGIN, String.format("AGENT %S (id: %s) IS NOT LOGGED EXTENSION!!!",
                         oktell_login, userId));
         }
         catch (IOException e) {
             LOG.error(IO_EXCEPTION, String.format("Message: %s, Description: %s", e.getMessage(), e.toString()));
         }
-        }
+    }
 
     @Override
     public void infoLog(Marker marker, String message) {
