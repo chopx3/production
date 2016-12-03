@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="utf-8" ?>
+    <Configuration monitorInterval ="60">
+    <Properties>
+        <Property name="log-path">logs/helper</Property>
+        <Property name="archives">${log-path}/archives</Property>
+        <Property name="date">${date:dd-MM-yyyy}</Property>
+        <Property name ="pattern">[%-5level %d{HH:mm:ss}] %c{3} [%t, line: %L] %n       %msg%n%n</Property>
+        <Property name ="markerPattern">[%-5level %d{HH:mm:ss}] #%marker %c{3} [%t, line: %L] %n       %msg%n%n</Property>
+        <Property name ="logLevel">debug</Property>
+        <Property name ="consoleLogLevel">debug</Property>
+        <Property name ="intervalLogSec">7200</Property>
+    </Properties>
+    <Appenders>
+        <Console name="console" target="SYSTEM_OUT">
+            <PatternLayout>
+                <pattern>
+                    [%-5level] %d{yyyy:MM:dd HH:mm:ss.SSS} [%t] %c{1} - %msg%n
+                </pattern>
+            </PatternLayout>
+        </Console>
+        <RollingFile name="calls"
+                     fileName="${log-path}/calls.log"
+                     filePattern="${archives}/${date}/calls.log.%d{HH-mm-ss}.gz">
+            <PatternLayout pattern="${markerPattern}"/>
+            <Policies>
+                <TimeBasedTriggeringPolicy interval="${intervalLogSec}" modulate="true"/>
+            </Policies>
+        </RollingFile>
+
+        <RollingFile name="comments"
+                     fileName="${log-path}/comments.log"
+                     filePattern="${archives}/${date}/comments.log.%d{HH-mm-ss}.gz">
+            <PatternLayout pattern="${markerPattern}"/>
+            <Policies>
+                <TimeBasedTriggeringPolicy interval="${intervalLogSec}" modulate="true"/>
+            </Policies>
+        </RollingFile>
+
+        <RollingFile name="questCat"
+                     fileName="${log-path}/questCat.log"
+                     filePattern="${archives}/${date}/questCat.log.%d{HH-mm-ss}.gz">
+            <PatternLayout pattern="${markerPattern}"/>
+
+            <Policies>
+                <TimeBasedTriggeringPolicy interval ="${intervalLogSec}" modulate="true"/>
+            </Policies>
+            <DefaultRolloverStrategy max="30"/>
+        </RollingFile>
+
+        <RollingFile name="sessionPool"
+                     fileName="${log-path}/sessionPool.log"
+                     filePattern="${archives}/${date}/sessionPool.log.%d{HH-mm-ss}.gz">
+            <PatternLayout pattern="${markerPattern}"/>
+            <Policies>
+                <TimeBasedTriggeringPolicy interval ="${intervalLogSec}" modulate="true"/>
+            </Policies>
+            <DefaultRolloverStrategy max="30"/>
+        </RollingFile>
+
+        <RollingFile name="stat"
+                     fileName="${log-path}/stat.log"
+                     filePattern="${archives}/${date}/stat.log.%d{HH-mm-ss}.gz">
+            <PatternLayout pattern="${markerPattern}"/>
+            <Policies>
+                <TimeBasedTriggeringPolicy interval ="${intervalLogSec}" modulate="true"/>
+            </Policies>
+            <DefaultRolloverStrategy max="30"/>
+        </RollingFile>
+    </Appenders>
+
+    <Loggers>
+        <Logger name="ru.avito.web.Auth" level="${logLevel}" additivity="false">
+            <AppenderRef ref="console" level ="${consoleLogLevel}"/>
+            <AppenderRef ref="calls"/>
+        </Logger>
+
+        <Logger name="ru.avito.web.Call" level="${logLevel}" additivity="false">
+            <AppenderRef ref="console" level ="${consoleLogLevel}"/>
+            <AppenderRef ref="calls"/>
+        </Logger>
+
+        <Logger name="ru.avito.web.Comment" level="${logLevel}" additivity="false">
+            <AppenderRef ref="console" level ="${consoleLogLevel}"/>
+            <AppenderRef ref="comments"/>
+        </Logger>
+
+        <Logger name="ru.avito.web.OktellListener" level="${logLevel}" additivity="false">
+            <AppenderRef ref="console" level ="${consoleLogLevel}"/>
+            <AppenderRef ref="calls"/>
+        </Logger>
+
+        <Logger name="ru.avito.web.QuestionCategory" level="${logLevel}" additivity="false">
+            <AppenderRef ref="console" level ="${consoleLogLevel}"/>
+            <AppenderRef ref="questCat"/>
+        </Logger>
+
+        <Logger name="ru.avito.web.Stat" level="${logLevel}" additivity="false">
+            <AppenderRef ref="console" level ="${consoleLogLevel}"/>
+            <AppenderRef ref="stat"/>
+        </Logger>
+
+        <Logger name="ru.avito.websocket.WebSocketConnections" level="${logLevel}" additivity="false">
+            <AppenderRef ref="console" level ="${consoleLogLevel}"/>
+            <AppenderRef ref="sessionPool"/>
+        </Logger>
+
+        <Logger name="ru.avito.model.AuthModel" level="${logLevel}" additivity="false">
+            <AppenderRef ref="console" level ="${consoleLogLevel}"/>
+            <AppenderRef ref="calls"/>
+        </Logger>
+
+        <Logger name="ru.avito.model.CallModel" level="${logLevel}" additivity="false">
+            <AppenderRef ref="console" level ="${consoleLogLevel}"/>
+            <AppenderRef ref="calls"/>
+        </Logger>
+
+        <Logger name="ru.avito.model.CategoryModel" level="${logLevel}" additivity="false">
+            <AppenderRef ref="console" level ="${consoleLogLevel}"/>
+            <AppenderRef ref="questCat"/>
+        </Logger>
+
+        <Logger name="ru.avito.model.CommentsModel" level="${logLevel}" additivity="false">
+            <AppenderRef ref="console" level ="${consoleLogLevel}"/>
+            <AppenderRef ref="comments"/>
+        </Logger>
+
+        <Logger name="ru.avito.model.StatModel" level="${logLevel}" additivity="false">
+            <AppenderRef ref="console" level ="${consoleLogLevel}"/>
+            <AppenderRef ref="stat"/>
+        </Logger>
+
+        <Root level="debug">
+            <AppenderRef ref="console"/>
+        </Root>
+    </Loggers>
+</Configuration>

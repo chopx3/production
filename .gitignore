@@ -1,0 +1,10 @@
+*.class
+~*
+/target/*
+
+.git
+.idea
+*.iml
+*.out
+*.sql
+/logs
