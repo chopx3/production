@@ -1,5 +1,6 @@
 package ru.avito.model;
 
+import com.google.gson.Gson;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.apache.logging.log4j.Marker;
@@ -12,6 +13,12 @@ import ru.avito.datasource.DBConnection;
 import java.io.IOException;
 import java.sql.Connection;
 import java.sql.SQLException;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
 
 import static ru.avito.jooqdbmodel.Tables.CALLS;
 import static ru.avito.jooqdbmodel.Tables.USERS;
@@ -31,11 +38,13 @@ public class CallModel{
     /*
     * Сохраняем ссылку на звонок
      */
-    public static void saveCalLink(CallRecord record) throws SQLException { // Ни где не юзается, если все ок можно выпилить.
+    @Deprecated
+    public static void saveCalLink(CallRecord record) throws SQLException { //TODO Ни где не юзается, если все ок можно выпилить.
 
         try (Connection conn = DBConnection.getDataSource().getConnection()) {
 
-            debugLog(CALLS_PUT_SQL, String.format("Saving data... Hashcode #%s,\r\n data: %s", record.hashCode(), record));
+            debugLog(CALLS_PUT_SQL,
+                    String.format("Saving data... Hashcode #%s,\r\n data: %s", record.hashCode(), record));
 
             Integer user_id = DSL.using(conn).select(USERS.ID)
                     .from(USERS)
@@ -63,7 +72,12 @@ public class CallModel{
 
             Integer user_id = DSL.using(conn).select(USERS.ID)
                     .from(USERS)
-                    .where(USERS.OKTELL_LOGIN.equal(record.getOktellLogin())).fetchOne().value1();
+                    .where(USERS.OKTELL_LOGIN.equal(!isOut ? record.getOktellLogin() : record.getaStr()))
+                    .fetchOne()
+                    .value1();
+
+            System.out.println(user_id);
+
             DSL.using(conn)
                     .insertInto(CALLS)
                     .columns(CALLS.USER_ID, CALLS.CHAIN_ID, CALLS.COM_ID,
@@ -110,21 +124,40 @@ public class CallModel{
     public static String getCallRecordsWithEmptyFields(int userId)
             throws SQLException {
 
+        LocalDate now = LocalDate.now();
+        ZoneId  zoneId = ZoneId.systemDefault();
+        long startDay = now.atStartOfDay(zoneId).toEpochSecond()*1000;
+        long endDay = startDay+86400000;
+
+        System.out.println("st: "+startDay);
+
+        System.out.println("en: "+endDay);
+
         try (Connection conn = DBConnection.getDataSource().getConnection()) {
 
-            String resultAsJSON = DSL.using(conn)
-                    .select(CALLS.ID, CALLS.FILE_NAME, CALLS.TIME_BEGIN)
-                    .from(CALLS)
-                    .where(CALLS.USER_ID.equal(userId)
-                            .and(CALLS.QUESTION_ID.isNull())
-                    ).fetch().formatJSON();
-
+            Result<Record4<String, String, String, Long>> emptyCalls = DSL.using(conn)
+                    .select(USERS.USER_NAME, CALLS.CHAIN_ID, CALLS.COM_ID, CALLS.TIME_BEGIN)
+                    .from((TableLike<?>)CALLS.join(USERS))
+                    .where(USERS.ID.equal(CALLS.USER_ID))
+                    .and(CALLS.TIME_BEGIN.between(startDay, endDay))
+                    .and(CALLS.USER_ID.equal(userId))
+                    .and(CALLS.QUESTION_ID.isNull()
+                           .or(CALLS.AVITO_LINK.isNull()))
+                    .limit(5)
+                    .fetch();
 
             debugLog(CALLS_GET_SQL, String.format(
                     "Get empty calls for agent: %s, \r\n results: %s",
-                    userId, resultAsJSON));
+                    userId, emptyCalls));
 
-            return resultAsJSON;
+            List<EmptyCall> list = new ArrayList<>();
+            emptyCalls.forEach(rc -> list.add(new EmptyCall(rc.value2(),rc.value3(),rc.value4())));
+
+            return   emptyCalls.size() > 0 ?
+                    new EmptyCallAsJson(emptyCalls.get(0).value1(), userId)
+                            .buildEmptyCallList(list)
+                            .toJson() :
+                    new EmptyCallAsJson(null, userId).toJson();
         }
     }
 
@@ -144,10 +177,11 @@ public class CallModel{
                     .execute();
             debugLog(CALLS_UPDATE_SQL, String.format("Update call was successfully!!! Data: %s", updRecord));
 
-        //    selectToUpdateCallRecord(updRecord); я ваще хз зачем это написал. Получается я повторяю одно и тоже действие.
+        //    selectToUpdateCallRecord(updRecord); TODO я хз зачем это написал. Получается я повторяю одно и тоже действие. если все работает. Выкинуть.
+
         }
     }
-
+    @Deprecated
     public static void selectToUpdateCallRecord(UpdatedCallRecord updRecord)
             throws SQLException {
 
@@ -173,7 +207,8 @@ public class CallModel{
         }
     }
 
-    public static String getOktellLogin(String chain_id) // Этот метод ни где не юзается. Если все будет работать можно выпилить.
+    @Deprecated
+    public static String getOktellLogin(String chain_id) // TODO Этот метод ни где не юзается. Если все будет работать можно выпилить.
             throws SQLException, NullPointerException {
 
         try (Connection conn = DBConnection.getDataSource().getConnection()) {

@@ -14,7 +14,7 @@ import java.sql.SQLException;
  */
 public class DBConnection {
     private static final DBConnection instance = new DBConnection();
-
+ //TODO запилить логгер
     private DataSource source;
 
     private DBConnection() {

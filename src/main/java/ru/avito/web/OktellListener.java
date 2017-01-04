@@ -36,7 +36,7 @@ public class OktellListener  implements WebDebugLogger{
     @Produces(MediaType.TEXT_PLAIN)
 
     public String saveCallRecord(
-            @QueryParam("Bstr") String oktell_login
+              @QueryParam("Bstr") String oktell_login
             , @QueryParam("IDChain") String chain_id
             , @QueryParam("IDConn") String com_id
             , @QueryParam("TimeStart") Long timeStart
@@ -45,7 +45,7 @@ public class OktellListener  implements WebDebugLogger{
             , @QueryParam("ReasonStart") Integer reasonStart
     ) {
 
-        CallRecord record = new CallRecord(oktell_login, chain_id, com_id, astr,timeStart, timeStop, reasonStart);
+        CallRecord record = new CallRecord(oktell_login, chain_id, com_id, astr, timeStart, timeStop, reasonStart);
         ServerResponse response = new ServerResponse();
 
         this.debugLog(CALLS_PUT, String.format("Incoming data call.\r\n Params: %s", record));
@@ -107,7 +107,8 @@ public class OktellListener  implements WebDebugLogger{
 
 
     private String logMessage(int caseId, CallRecord record){
-        return String.format("Data HashCode: #%s,\r\n CASE %s:, try to save data call %s:\r\n", record.hashCode(), caseId, record);
+        return String.format("Data HashCode: #%s,\r\n CASE %s:, try to save data call %s:\r\n",
+                                record.hashCode(), caseId, record);
     }
 
     private void sendMessageToUser(int userId, int caseId, String oktellLogin, String chainId){

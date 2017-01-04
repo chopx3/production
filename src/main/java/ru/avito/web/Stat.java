@@ -24,6 +24,10 @@ import java.util.Date;
 @Path("stat")
 public class Stat {
 
+    /*
+        TODO Тут шляпа, надо убрать повторную логику.
+     */
+
     private final static Logger LOG = LogManager.getLogger();
     private final static Marker SQL_EXCEPTION = MarkerManager.getMarker("SQL_EXCEPTION");
     private final static Marker STAT = MarkerManager.getMarker("STAT");
@@ -116,7 +120,7 @@ public class Stat {
     {
         return executeQueryByName("emptycalls", from, to);
     }
-
+            //TODO все что выше можно удалить. Перед этим отредактить ссылки запроса на фронте
     @GET
     @Path("byname")
     @Produces (MediaType.TEXT_HTML)
@@ -167,7 +171,7 @@ public class Stat {
         return result;
     }
 
-    private Long[] getPeriod(String from, String to){
+    private Long[] getPeriod(String from, String to){ //TODO подумать че сделать с этим...
 
         Long[] period = new Long[2];
 

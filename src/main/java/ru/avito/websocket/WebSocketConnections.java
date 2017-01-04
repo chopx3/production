@@ -25,15 +25,15 @@ import java.util.concurrent.ConcurrentMap;
 @ServerEndpoint(value = "/websocket/connect")
 public class WebSocketConnections implements WebSocketInfoLogger{
 
-    private static Logger LOG = LogManager.getLogger();
-    private static final WebSocketConnections instance = new WebSocketConnections();
+    private static       Logger LOG                     = LogManager.getLogger();
+    private final static  WebSocketConnections instance = new WebSocketConnections();
 
-    private final static Marker SESSION_POOL = MarkerManager.getMarker("SESSION_POOL");
-    private final static Marker SESSION_POOL_LOGIN = MarkerManager.getMarker("SESSION_POOL_LOGIN").addParents(SESSION_POOL);
-    private final static Marker SESSION_POOL_LOGOUT = MarkerManager.getMarker("SESSION_POOL_LOGOUT").addParents(SESSION_POOL);
+    private final static Marker SESSION_POOL         = MarkerManager.getMarker("SESSION_POOL");
+    private final static Marker SESSION_POOL_LOGIN   = MarkerManager.getMarker("SESSION_POOL_LOGIN").addParents(SESSION_POOL);
+    private final static Marker SESSION_POOL_LOGOUT  = MarkerManager.getMarker("SESSION_POOL_LOGOUT").addParents(SESSION_POOL);
     private final static Marker SESSION_POOL_UNLOGIN = MarkerManager.getMarker("SESSION_POOL_UNLOGIN").addParents(SESSION_POOL);
-    private final static Marker IO_EXCEPTION = MarkerManager.getMarker("IO_EXCEPTION");
-    private final static Marker SQL_EXCEPTION = MarkerManager.getMarker("SQL_EXCEPTION");
+    private final static Marker IO_EXCEPTION         = MarkerManager.getMarker("IO_EXCEPTION");
+    private final static Marker SQL_EXCEPTION        = MarkerManager.getMarker("SQL_EXCEPTION");
 
 
     private static ConcurrentMap<Integer, Session> sessions = new ConcurrentHashMap<Integer, Session>();

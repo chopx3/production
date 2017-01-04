@@ -14,6 +14,9 @@ import javax.ws.rs.core.MediaType;
 import java.io.*;
 import java.net.URI;
 import java.sql.SQLException;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
 
 import static jdk.nashorn.internal.runtime.regexp.joni.Config.log;
 
@@ -31,8 +34,14 @@ public class Call implements WebDebugLogger{
     private final static Marker IO_EXCEPTION = MarkerManager.getMarker("IO_EXCEPTION");
 
 
-    public String getEmptyCallsByUserId(int userId) {
-        return null;
+    @GET
+    @Path("getemptycalls")
+    @Produces(MediaType.APPLICATION_JSON)
+    public String getEmptyCallsByUserId(
+            @QueryParam("userid") int userId)
+            throws SQLException {
+
+       return CallModel.getCallRecordsWithEmptyFields(userId);
     }
 
     @GET
@@ -76,12 +85,11 @@ public class Call implements WebDebugLogger{
             , @QueryParam(value = "shop_category") int shop_category_id
             , @QueryParam(value = "isManager") boolean isManager)
          {
-
+             ServerResponse     response = new ServerResponse();
              UpdatedCallRecord updRecord = new UpdatedCallRecord(uChainId, question_id, shop_category_id, avitoUserId, isManager);
 
              this.debugLog(CALLS_UPDATE,String.format("Try to update calls. Data calls: %s", updRecord));
 
-             ServerResponse response = new ServerResponse();
             try {
                 CallModel.updateCallRecord(updRecord);
 
