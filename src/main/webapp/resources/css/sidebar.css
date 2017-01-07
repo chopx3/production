@@ -1,0 +1,139 @@
+/* */
+#sidebar-wrapper
+{
+	z-index: 1;
+	position: fixed;
+	width: 0;
+	height: 100%;
+	overflow-y: hidden;
+	background: #2c3e50;
+	opacity: 0.9;
+}
+#CallForm
+{
+	display:table;
+}
+#IDforInfo, #IDSubmit
+{
+	display:table-cell;
+	
+}
+#submit
+{
+	float:right;
+}
+#SubForm
+{
+	z-index: 1;
+	position: fixed;
+	overflow-y: hidden;
+	right:1%;
+	top:12%;
+	visibility: hidden;
+	max-width:33%;
+}
+.history, #divAddButton {
+    margin: 10px 20px;
+	padding:8px;
+	background-color:lightblue;
+    border-radius: 5px;
+    font-family: 'Segoe UI', Tahoma, sans-serif;
+    font-size: 14px;
+	display:table;
+	
+}
+
+[type='checkbox'] {
+display: none; 
+}
+
+.history-info {
+    font-size: 14px;
+}
+
+
+
+#page-content-wrapper
+{
+	width: 100%;
+	position: absolute;
+	padding: 15px;
+}
+
+#wrapper.menuDisplayed #page-content-wrapper
+{
+	padding-left:17%;
+}
+
+#page-content-wrapper #CallForm
+{
+	visibility:hidden;
+}
+
+#page-content-wrapper #CallForm.inactive
+{
+	visibility:visible;
+}
+
+#menu-toggle
+{	
+	width:150px;
+	text-align: center;
+}
+
+div.woop
+{
+	color:blue;
+	font-weight: bold;
+}
+
+#SubForm.Add
+{
+	visibility: visible;
+}
+
+#wrapper.menuDisplayed #menu-toggle
+{
+	margin-left:0px;
+}
+
+#wrapper.menuDisplayed #sidebar-wrapper
+{
+	width:17%;
+	min-width: 200px;
+}
+
+.sidebar-nav
+{
+	padding: 0;
+	list-style: none;
+}
+
+.sidebar-nav li
+{
+	text-indent: 30px;
+	line-height: 50px;
+}
+
+.sidebar-nav li a
+{
+	display: block;
+	text-decoration: none;
+	color: #ddd;
+}
+
+.sidebar-nav li a:hover
+{
+background: #161616;
+}
+
+.highlight, .highlight_stay{
+    background: #262626;
+}
+audio
+{
+	text-align: left;
+	margin: 10px auto 0 auto;
+	width: 100%;
+	min-width:300px;
+}

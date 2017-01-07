@@ -14,7 +14,7 @@ public class EmptyCallAsJson {
 
     private String agentName;
     private int agentId;
-    private List<EmptyCall> emptyCallsList = new ArrayList<>();
+    private List<EmptyCall> emptyCallList = new ArrayList<>();
     private long lastUpdateTimeMs;
 
     public EmptyCallAsJson(String agentName, int agentId) {
@@ -36,7 +36,7 @@ public class EmptyCallAsJson {
     }
 
     public List<EmptyCall> getEmptyCallList() {
-        return emptyCallsList;
+        return emptyCallList;
     }
 
     public long getLastUpdateTimeMs() {
@@ -44,7 +44,7 @@ public class EmptyCallAsJson {
     }
 
     public EmptyCallAsJson buildEmptyCallList(List<EmptyCall> emptyCallList) {
-        this.emptyCallsList = emptyCallList;
+        this.emptyCallList = emptyCallList;
         return this;
     }
 

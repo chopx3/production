@@ -41,7 +41,7 @@ public class Call implements WebDebugLogger{
             @QueryParam("userid") int userId)
             throws SQLException {
 
-       return CallModel.getCallRecordsWithEmptyFields(userId);
+       return CallModel.getCallRecordsWithEmptyFields(userId,null);
     }
 
     @GET
@@ -74,7 +74,7 @@ public class Call implements WebDebugLogger{
         response.setResult(result);
         return response.toJson();
     }
-
+//http://localhost:8085/rest/call/update
     @GET
     @Path("update")
     @Produces(MediaType.APPLICATION_JSON)

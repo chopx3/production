@@ -121,17 +121,13 @@ public class CallModel{
     /*
     * Получаем записи звонков агента с незаполненными полями
      */
-    public static String getCallRecordsWithEmptyFields(int userId)
+    public static String getCallRecordsWithEmptyFields(int userId, String agentName)
             throws SQLException {
 
         LocalDate now = LocalDate.now();
         ZoneId  zoneId = ZoneId.systemDefault();
         long startDay = now.atStartOfDay(zoneId).toEpochSecond()*1000;
         long endDay = startDay+86400000;
-
-        System.out.println("st: "+startDay);
-
-        System.out.println("en: "+endDay);
 
         try (Connection conn = DBConnection.getDataSource().getConnection()) {
 
@@ -142,7 +138,8 @@ public class CallModel{
                     .and(CALLS.TIME_BEGIN.between(startDay, endDay))
                     .and(CALLS.USER_ID.equal(userId))
                     .and(CALLS.QUESTION_ID.isNull()
-                           .or(CALLS.AVITO_LINK.isNull()))
+                            .or(CALLS.AVITO_LINK.isNull())
+                            .or(CALLS.SHOP_CATEGORY_ID.isNull()))
                     .limit(5)
                     .fetch();
 
@@ -157,7 +154,7 @@ public class CallModel{
                     new EmptyCallAsJson(emptyCalls.get(0).value1(), userId)
                             .buildEmptyCallList(list)
                             .toJson() :
-                    new EmptyCallAsJson(null, userId).toJson();
+                    new EmptyCallAsJson(agentName, userId).toJson();
         }
     }
 

@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+        <beans
+               xmlns:context="http://www.springframework.org/schema/context"
+               xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+               xmlns:tx="http://www.springframework.org/schema/tx"
+               xmlns="http://www.springframework.org/schema/beans"
+               xsi:schemaLocation="http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans-4.0.xsd
+        http://www.springframework.org/schema/tx
+        http://www.springframework.org/schema/tx/spring-tx.xsd
+        http://www.springframework.org/schema/context
+        http://www.springframework.org/schema/context/spring-context-4.0.xsd">
+
+    <context:component-scan base-package="ru.avito"/>
+    <bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource" destroy-method="close">
+        <property name="username" value="root"/>
+        <property name="password" value="root"/>
+        <property name="url" value="jdbc:mysql://localhost:3030/avito"/>
+        <property name="driverClassName" value="com.mysql.jdbc.Driver"/>
+        <property name="initialSize" value="5"/>
+    </bean>
+
+    <bean id="hibernate4AnnotatedSessionFactory"
+          class="org.springframework.orm.hibernate4.LocalSessionFactoryBean">
+        <property name="dataSource" ref="dataSource"/>
+        <property name="annotatedClasses">
+            <list>
+                <value>ru.avito.model.Agent</value>
+                <value>ru.avito.model.Role</value>
+            </list>
+        </property>
+        <property name="hibernateProperties">
+            <props>
+                <prop key="hibernate.dialect">org.hibernate.dialect.MySQLDialect</prop>
+                <prop key="hibernate.show_sql">true</prop>
+            </props>
+        </property>
+    </bean>
+
+    <tx:annotation-driven transaction-manager="transactionManager"/>
+    <bean id="transactionManager" class="org.springframework.orm.hibernate4.HibernateTransactionManager">
+        <property name="sessionFactory" ref="hibernate4AnnotatedSessionFactory"/>
+    </bean>
+
+    <bean id="agentDao" class="ru.avito.dao.AgentDaoImpl">
+        <property name="sessionFactory" ref="hibernate4AnnotatedSessionFactory"/>
+    </bean>
+
+    <bean id="agentService" class="ru.avito.services.AgentServiceImpl">
+        <property name="agentDao" ref="agentDao"/>
+    </bean>
+</beans>
