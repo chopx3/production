@@ -23,5 +23,5 @@
               username="root"
               password="root"
               driverClassName="com.mysql.jdbc.Driver"
-              url="jdbc:mysql://localhost:3030/avito?characterEncoding=utf8"/>
+              url="jdbc:mysql://localhost:3306/avito?characterEncoding=utf8"/>
 </Context>

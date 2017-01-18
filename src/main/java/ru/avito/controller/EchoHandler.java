@@ -30,7 +30,6 @@ public class EchoHandler extends TextWebSocketHandler{
     @Override
     protected void handleTextMessage(WebSocketSession session, TextMessage message) throws Exception {
 
-        System.out.println(message);
         switch (message.getPayload()){
             case "getMyEmptyCalls" :
                 String agentUsername = session.getPrincipal().getName();
@@ -38,9 +37,7 @@ public class EchoHandler extends TextWebSocketHandler{
 
                 String callRecordsWithEmptyFields =
                         getCallRecordsWithEmptyFields(authorizedUsers.get(agentUsername).getId(), agentUsername);
-                System.out.println(callRecordsWithEmptyFields);
                 session.sendMessage(new TextMessage(callRecordsWithEmptyFields));
-                System.out.println("message send");
 
         }
 

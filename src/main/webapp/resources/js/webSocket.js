@@ -1,7 +1,7 @@
 
 'use strict';
 
-var webSocketHost = "192.168.11.134:8085";
+var webSocketHost = "192.168.10.132:8080";
 var websocket;
 var websocketUrl = "ws://"+webSocketHost+"/shoptracker/websocket/start";
 
@@ -38,20 +38,3 @@ function setWebSocketStatus(status) {
     document.getElementById("websocketStatus").innerHTML = status;
     document.getElementById("websocketStatus").style.color = "red";
 }
-
-
-    // websocket.onerror = function (err) {
-    //     alert("websocket error");
-    //     console.log(err);
-    // };
-
-
-// setInterval(function () {
-//
-//         websocket.send("getMyEmptyCalls");
-//         websocket.onmessage = function (message) {
-//             console.log(message.data);
-//         }
-//
-//
-// }, 10000);
