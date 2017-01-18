@@ -6,7 +6,6 @@
     <script src="${pageContext.request.contextPath}/resources/js/webSocket.js"></script>
 
     <script>
-
     </script>
 
 </head>

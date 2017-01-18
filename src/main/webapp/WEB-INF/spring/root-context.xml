@@ -18,7 +18,7 @@
         <property name="password" value="root"/>
         <property name="url" value="jdbc:mysql://localhost:3030/avito"/>
         <property name="driverClassName" value="com.mysql.jdbc.Driver"/>
-        <property name="initialSize" value="5"/>
+        <property name="initialSize" value="3"/>
     </bean>
 
     <bean id="hibernate4AnnotatedSessionFactory"

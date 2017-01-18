@@ -1,13 +1,38 @@
 /* */
+#wrapper{
+   min-width:950px; 
+}
+#HeaderText
+{
+	font-size: 34px;
+}
 #sidebar-wrapper
 {
 	z-index: 1;
 	position: fixed;
-	width: 0;
+	min-width: 200px;
 	height: 100%;
 	overflow-y: hidden;
 	background: #2c3e50;
 	opacity: 0.9;
+}
+#sidebar-wrapper
+{
+	background: #2c3e50;
+}
+#Hello h1
+{
+	margin:20;
+	font-family: 'Segoe UI', Tahoma, sans-serif;
+    font-size: 48px;
+}
+
+#websocketStatus
+{
+	color:green;
+	position: fixed; 
+	bottom: 0px;
+	margin:auto;
 }
 #CallForm
 {
@@ -18,7 +43,11 @@
 	display:table-cell;
 	
 }
-#submit
+#JsonText
+{
+	display:none;
+}
+#submit, #CloseSubForm
 {
 	float:right;
 }
@@ -33,8 +62,8 @@
 	max-width:33%;
 }
 .history, #divAddButton {
-    margin: 10px 20px;
-	padding:8px;
+    margin: 8px 12px;
+	padding:6px;
 	background-color:lightblue;
     border-radius: 5px;
     font-family: 'Segoe UI', Tahoma, sans-serif;
@@ -58,11 +87,7 @@ display: none;
 	width: 100%;
 	position: absolute;
 	padding: 15px;
-}
-
-#wrapper.menuDisplayed #page-content-wrapper
-{
-	padding-left:17%;
+	padding-left:200px;
 }
 
 #page-content-wrapper #CallForm
@@ -83,24 +108,19 @@ display: none;
 
 div.woop
 {
-	color:blue;
-	font-weight: bold;
+	width:520px;
+	background-color:lightblue;
+	text-align: center;
+	border:1px solid blue;
+	font-weight:bold;
 }
-
+#sendDataButtonDiv
+{
+margin:0px 10px;
+}
 #SubForm.Add
 {
 	visibility: visible;
-}
-
-#wrapper.menuDisplayed #menu-toggle
-{
-	margin-left:0px;
-}
-
-#wrapper.menuDisplayed #sidebar-wrapper
-{
-	width:17%;
-	min-width: 200px;
 }
 
 .sidebar-nav
@@ -135,5 +155,5 @@ audio
 	text-align: left;
 	margin: 10px auto 0 auto;
 	width: 100%;
-	min-width:300px;
+	min-width:500px;
 }

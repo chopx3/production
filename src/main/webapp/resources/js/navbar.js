@@ -1,25 +1,56 @@
- var chainId;
+﻿ var chainId="";
  var commentOrCallHandler;
  var idSaver;
  var dataArray;
+ var sentCall=false;
+ var httpHost = "192.168.11.134:8085";
 
 
-
- var websocket;
- var websocketUrl = "ws://localhost:8085/websocket/start";
-
- //192.168.10.132:8080/avito вставить вместо localhost:8085 для продакшн
+ //http://192.168.10.132:8080/shoptracker
  //update url calls http://192.168.10.132:8080/avito/rest/call/update
 
-
- var getCommentsURL = 'http://localhost:8085/rest/comment/get?userid=';
- var getCallsURL = 'http://localhost:8085/rest/call/getcallsforaccount?userid=';
- var updateEmptyCalls = "http://localhost:8085/rest/call/update";
-
+ var getCommentsURL = "http://"+httpHost+'/shoptracker/rest/comment/get?userid=';
+ var getCallsURL = "http://"+httpHost+"/shoptracker/rest/call/getcallsforaccount?userid=";
+ var updateEmptyCalls = "http://"+httpHost +"/shoptracker/rest/call/update";
 
 
 
- function startConnection() {
+//  function oktellAuth(){
+// $.ajax({
+//       //url: 'http://web_api:s7cgr3Ev@192.168.3.10:4055/download/',
+// 	  url: 'http://192.168.3.10:4055/download/byscript?name=Avito_get_file_by_id_conn&startparam1=CC9D3D6E-2399-415E-BBA6-D26BAD5C5B75',
+//       type: "GET",
+//       async: true,
+//       username: "web_api",
+//       password: "s7cgr3Ev",
+// 		//headers: {'Authorization':'Basic d2ViX2FwaTpzN2NncjNFdg=='},
+//
+//
+// 		beforeSend: function (xhr) {
+// 					xhr.setRequestHeader('Authorization', makeBaseAuth("web_api", "s7cgr3Ev"));
+// 		},
+//
+//       success: function (response, status) {
+//          // success code here
+//       },
+//       failure: function (response, status) {
+//          // failure code here
+//       },
+//       complete: function (xhr, status) {
+//          // on complete code here
+//       }
+//    });
+//  }
+//
+//  function makeBaseAuth(user, pswd){
+//       var token = user + ':' + pswd;
+//       var hash = "";
+//       if (btoa) {
+//          hash = btoa(token);
+// 		}
+//       return "Basic " + hash;
+// 		}
+ /*function startConnection() {
 	 websocket = new WebSocket(websocketUrl);
 	 websocket.onopen=function () {
 		 // document.getElementById("websocketStatus").innerHTML = "Online";
@@ -27,19 +58,28 @@
 	 };
  }
 
+ 
+
+
+    $.get(
+                    'http://web_api:s7cgr3Ev@192.168.3.10:4055/download/'
+                ).done(
+
+                ).fail(
+                    function () {
+
+                            }
+
+                );
+}
 
 
 
-
+*/
 
  $(document).ready(function() {
-	 startConnection();
-	 $("#menu-toggle").click( function (){
-		$("#wrapper").toggleClass("menuDisplayed");
-		$(this).text(function(i, text){
-          return text === "Скрыть меню" ? "Раскрыть меню" : "Скрыть меню";
-      })		
-	});
+	 //startConnection();
+	 //oktellAuth();
 	 var commentsInfo = null;
 	 var callsInfo = null;
 	 var emptyCallsInfo = null;
@@ -48,36 +88,97 @@
 	 var questNum="1";
 	 var catNum="1";
 	 var isManager=false;
-
+//Вопрос
 $('input[name="question"]').change(function(e){
     questNum = e.target.id.substr(6,1);
 });
+//Категория
 $('input[name="category"]').change(function(e){
     catNum = e.target.id.substr(4,1);
 });
+//Кнопка "Частник"
 $("#2299").click(function()
 {
+	if (chainId=="")
+		{
+			$('#serviceMessage').text("Выберите звонок");
+		}
+	else
+	{
 	dataArray = [chainId, -1, 9, 6, false];
 	fillData(dataArray);
+	sentCall = true;
+	clearData();
+	//$('#my_calls').click();
+	 setTimeout(function() {
+		 showMyEmptyCalls()
+	 		}, 800);
+	}
 });
-$('#sendDataButton').click(function()
-{	
-	$("#JsonText").val("");
-	$('#IDNum').css({ "border": ''});	
-	if ($('#IDNum').val()!="" && $('#IDNum').val()!="Введите ID")
-	{
-	dataArray = [chainId, $('#IDNum').val(), questNum, catNum, $("#IsManager").prop("checked")];
-	fillData(dataArray);
+//Кнопка "Отправить"
 
+	 $('#sendDataButton').click(function()
+{
+	var catVal, IDVal, questVal;
+	$("#JsonText").val("");
+	$('#IDNum').css({ "border": ''});
+	$('#questButtonGroup').css({"border":""});
+	$('#catButtonGroup').css({"border":""});
+	//Выделение красным неправильно введенных данных 
+	if (chainId=="")
+		{
+			$('#serviceMessage').text("Выберите звонок");
+		}
+	else
+	{
+	if ($('[name="category"]').is(':checked'))
+	{	
+		catVal = true;
 	}
 	else
 	{
-	$('#IDNum').css({ "border": '#FF0000 1px solid'});	
-	$('#IDNum').attr('placeholder','Введите ID');
-	}
-	
-});
+		catVal = false;
+		$('#catButtonGroup').css({"border":"1px solid red"});
+	}	
+	if($('[name="question"]').is(':checked'))
+		{
+			questVal = true;
+		}
+		else
+		{
+			questVal = false;
+			$('#questButtonGroup').css({"border":"1px solid red"});
+		}
+	if ($('#IDNum').val()!="" && $('#IDNum').val()!="Введите ID")
+		{
+			IDVal=true;
+		}
+		else
+			{
+			IDVal=false;
+			$('#IDNum').css({ "border": '#FF0000 1px solid'});	
+			$('#IDNum').attr('placeholder','Введите ID');
+			}
+		if(questVal&&IDVal&&catVal)	
+		{
+				$('#serviceMessage').text("");
+				dataArray = [chainId, $('#IDNum').val(), questNum, catNum, $("#IsManager").prop("checked")];
+				fillData(dataArray);
+				clearData();
+				sentCall=true;
+				setTimeout(function(){
+					showMyEmptyCalls()
+				}, 800);
+				//$('#my_calls').click();
+		}
+		else
+		{
+			$('#serviceMessage').text("Введите корректные данные");
+		}
+	}	
 
+});
+//Подсветка бокового меню
 $('li').click(function(){
       		$('li').removeClass('highlight');
            	$(this).toggleClass('highlight');
@@ -88,60 +189,83 @@ $("#Adder").click(function()
 				$("#SubForm").toggleClass("Add");			
 			}
 			);
-$('#my_calls').click(function()
-				{
-				document.getElementById("CallForm").innerHTML = '';
-				fillInfo("remove","Мои звонки");
 
-						websocket.send("getMyEmptyCalls");
-						websocket.onmessage = function (message) {
+	 $('#my_calls').click(function() {
+		 showMyEmptyCalls();
+	 });
+//Кнопка "Мои звонки"
+	 function showMyEmptyCalls() {
 
-							var emptyCallsInfo = JSON.parse(message.data);
+		 websocket.send("getMyEmptyCalls");
+		//oktellAuth();
+		 if(sentCall)
+		 {
+			 $('#serviceMessage').text("Звонок отправлен");
+			 sentCall = false;
+		 }
+		 else
+		 {
+			 $('#serviceMessage').text("");
 
-							console.log(emptyCallsInfo);
-							console.log(emptyCallsInfo.agentName);
-							draw(emptyCallsInfo);
+		 }
+		 chainId = "";
+		 document.getElementById("CallForm").innerHTML = '';
+		 fillInfo("remove","Мои звонки", "");
 
-						};
-						websocket.onclose = function () {
-							document.getElementById("websocketStatus").innerHTML = "Offline";
-						};
 
-						websocket.onerror = function (err) {
-							document.getElementById("websocketStatus").innerHTML = "Error. "+err;
-						};
+		 websocket.onmessage = function (webSocketMessage) {
 
-			}
-					);
-					
+			 var emptyCallsInfo = JSON.parse(webSocketMessage.data);
+			 draw(emptyCallsInfo);
+
+		 };
+		 websocket.onclose = function () {
+			 document.getElementById("websocketStatus").innerHTML = "Offline";
+		 };
+
+		 websocket.onerror = function (err) {
+			 document.getElementById("websocketStatus").innerHTML = "Error. "+err;
+		 };
+		 $("#SubForm").addClass("Add");
+	 }
+
+
+//Кнопка "Звонки пользователя"
 $('#user_calls').click(function()
  {
-	fillInfo("add","Звонки пользователя");
-	
+	fillInfo("add","Звонки пользователя", "");	
 	commentOrCallHandler = "call";
-	addButton();
-	
+	addButton();	
  });				
+ //Кнопка "Комментарии"
 $('#comments').click(function()
 {
-	fillInfo("add","Комментарии");
+	fillInfo("add","Комментарии", "");
 	commentOrCallHandler = "comment";
 	addButton();
 });
+// Кнопка "Закрыть" внизу бокового меню
 $('#CloseSubForm').click(function()
 {
 	$("#SubForm").removeClass("Add");
 	$("#divAddButton0").removeClass('woop').siblings().removeClass('woop');	
 });			
+//Кнопка "Заметки"
 $('#notes').click(function()
 {
-	fillInfo("remove","Заметки");
+	fillInfo("remove","Заметки", "В разразботке");
 });			
+//Кнопка "Фидбек"
 $('#feedback').click(function()
 {
-	fillInfo("remove","Feedback");			
+	fillInfo("remove","Feedback", "В разразботке");			
 });
-function fillInfo(callForm, headerText)
+// --- Завершение блока документ.реди
+
+// --- Функции
+
+//Стандартная отрисовка после нажатия на кнопку бокового меню, для удобства читабельности. Форма звонка(вкл\выкл), текст заголовка страницы, текст основного меню
+function fillInfo(callForm, headerText, MainForm)
 {	
 	$("#SubForm").removeClass("Add");
 		if(callForm=="add")
@@ -153,48 +277,50 @@ function fillInfo(callForm, headerText)
 		$("#CallForm").removeClass("inactive");
 		}
 	$("#HeaderText").text(headerText);
-	document.getElementById("MainForm").innerHTML = '';
+	document.getElementById("MainForm").innerHTML = MainForm;
+	document.getElementById("Hello").innerHTML = '';
 }
 });
+
+// Функция для вывода информации по ID, звонки или комментарии.
 function getInfo(){
 	idNumber = $('#IDforInfo').val();
 	idSaver = $('#IDforInfo').val();
 	if (commentOrCallHandler == "call")
 	{
     $.get(
-				getCallsURL + idNumber + '&time=1483813017000'
+				getCallsURL + idNumber + '&time=14838130170000'
                 ).done(
-				 function (data) 
+				 function (data)
 		{
 
 	    	outputCalls ='';
-      		var callsInfo = data;
-			console.log(data);			
+      		var callsInfo = data;		
       		document.getElementById("MainForm").innerHTML = '';
       		var callsAsJSON = JSON.stringify(callsInfo.result);
 			var parsedCalls = JSON.parse(JSON.parse(callsAsJSON));
 			if (parsedCalls.records.length != 0&&idNumber!='')
-			{			
-			for (var i = 0; i < parsedCalls.records.length; i++) 
+			{
+			for (var i = 0; i < parsedCalls.records.length; i++)
 			{
 			var audiotag = parsedCalls.records[i][0];
 			var nametag = parsedCalls.records[i][1];
 			var timetag = $.format.date(new Date().setTime(parsedCalls.records[i][2]), 'dd/MM/yyyy@HH:mm:ss');
-			
+
 			var audioURL = '<audio src="' + audiotag + '" controls></audio><a href="'+ audiotag +'" target="_blank">' + '<\/a>';
-			outputCalls += '<div class="history" data-time="'+timetag+'" data-sign="'+nametag+'"><span class="history-info">'+ timetag +' '+nametag + '</span><br>' + audioURL + '</div>';	
+			outputCalls += '<div class="history" data-time="'+timetag+'" data-sign="'+nametag+'"><span class="history-info">'+ timetag +' '+nametag + '</span><br>' + audioURL + '</div>';
 			}
 			}
-			else 
+			else
 			{
 			outputCalls ='На данной учетной записи еще не было звонков';	
 			}
-			
+
 			document.getElementById("MainForm").innerHTML = outputCalls;
-			
-			
-		}	
-				 
+
+
+		}
+
                 ).fail(
                     function () {
 						console.log("---");
@@ -205,7 +331,7 @@ function getInfo(){
 	if(commentOrCallHandler == "comment")
 	{
 		$.get(getCommentsURL+idNumber+'&time=1483457133166')
-		.done(function (data) 
+		.done(function (data)
 		{
 			document.getElementById("MainForm").innerHTML = '';
 			var commentsInfo = data;
@@ -213,8 +339,8 @@ function getInfo(){
 			var parsedComments = JSON.parse(JSON.parse(commentsAsJSON));
 			var outputComments = '';
 			if (parsedComments.records.length != 0)
-			{			
-			for (var i = 0; i < parsedComments.records.length; i++) 
+			{
+			for (var i = 0; i < parsedComments.records.length; i++)
 				{
 					var message = parsedComments.records[i][0];
 					var nametag = parsedComments.records[i][1];
@@ -227,8 +353,8 @@ function getInfo(){
 				outputComments='На данной учетной записи еще не оставляли комментариев';
 			}
 			document.getElementById("MainForm").innerHTML = outputComments;
-			
-		}					 
+
+		}
              )
 				.fail(
                     function () {
@@ -238,6 +364,8 @@ function getInfo(){
                 );
 	}
 }
+
+// Отрисовка кнопки для вывода комментариев\звонков
 function addButton()
 {
 	document.getElementById("CallForm").innerHTML =	'<div class="row">'
@@ -253,6 +381,29 @@ function addButton()
 								+ '</div>'
 							+ '</div>';
 }
+
+// Очистка данных в боковой форме
+function clearData()
+{
+	$('#IDNum').css({ "border": ''});
+	$('#questButtonGroup').css({"border":""});
+	$('#catButtonGroup').css({"border":""});
+	$('#serviceMessage').text("");
+	$('#label-cat-1').removeClass('active').siblings().removeClass('active');
+	$('input:radio[name=category]').each(function () { $(this).prop('checked', false); });
+	$('#label-quest-1').removeClass('active').siblings().removeClass('active');
+	$('input:radio[name=question]').each(function () { $(this).prop('checked', false); });
+	$('#IDNum').val("");
+	
+	if ($("#IsManager").prop("checked"))
+	{
+		$("#IsManager").click();
+		$("#IsManager").prop("checked", false);
+		$("#IsManager").click();
+	}
+}
+
+//Отправка данных из боковой формы на сервер
 function fillData(dataArray)
 {
 	$("#JsonText").val("uChainId:"+dataArray[0]+",\n"+
@@ -274,7 +425,7 @@ function fillData(dataArray)
 				if (response.status != 'ok') {
 					errorHandler(response.description);
 				}
-				callback(response);
+				console.log(response);
 			}
 		).fail(
 			function () {
@@ -283,19 +434,23 @@ function fillData(dataArray)
 		);
 
 }
- function reply_click(id,i)
-{
+
+// Добавление стиля выбранного звонка
+function change_call(chain, i)
+{	
 	var idd = '#divAddButton'+i;
-	console.log(id);
-    $("#SubForm").addClass("Add");
-    $(idd).addClass('woop').siblings().removeClass('woop');
-	chainId = id;
+	$("#SubForm").addClass("Add");
+	$(idd).addClass('woop').siblings().removeClass('woop');
+	chainId = chain;
+	clearData();
 }
+
+// Отрисовка пустых звонков
 function  draw(emptyCallsInfo) {
-	alert(emptyCallsInfo.agentName);
+
+
 	var nametag = emptyCallsInfo.agentName;
 	var oktell = "http://web_api:s7cgr3Ev@192.168.3.10:4055/download/byscript?name=Avito_get_file_by_id_conn&startparam1=";
-
 	var outputEmptyCalls = '';
 
 	for (var i = 0; i < emptyCallsInfo.emptyCallList.length; i++)
@@ -303,12 +458,40 @@ function  draw(emptyCallsInfo) {
 		var chain = emptyCallsInfo.emptyCallList[i].chainId;
 		var audiosrc = emptyCallsInfo.emptyCallList[i].comId;
 		var timetag = $.format.date(new Date().setTime(emptyCallsInfo.emptyCallList[i].startTime), 'dd/MM/yyyy@HH:mm:ss');
-		var addButton = '<a href="#"  class="btn btn-success" id="' + chain + '" onclick=reply_click(this.id,'+i+')> Добавить </a>';
-		var audioURL = '<audio src="' + oktell + audiosrc + '" controls></audio><a href="'+ oktell + audiosrc +'" target="_blank">' + '<\/a>';
-		outputEmptyCalls += '<div id="divAddButton' +i+'" class="history" data-time="'+timetag+'" data-sign="'+nametag+'"><span class="history-info">'+ timetag +' '+nametag +'\t\t' + addButton + '</span><br>' + audioURL + '</div>';
+		var addButton = '<a href="#"  class="btn btn-success" id="' + chain + '" onclick=change_call(this.id,'+i+') style="float:right;"> Выбрать </a>';
+		var audioURL = '<audio id="audio'+i+'" onplay=change_call("'+chain+'",'+i+') src="' + oktell + audiosrc + '" controls></audio><a href="'+ oktell + audiosrc +'" target="_blank">' + '<\/a>';
+		outputEmptyCalls += '<div id="divAddButton' +i+'" onclick=change_call("'+chain+'",'+i+') class="history" data-time="'+timetag+'" data-sign="'+nametag+'"><span class="history-info">'+ timetag +' '+nametag +'\t\t' + addButton + '</span><br>' + audioURL + '</div>';
 	}
-
 	document.getElementById("MainForm").innerHTML = outputEmptyCalls;
-
-
 }
+
+
+/*
+ function reply_click(id,i)
+{
+	var idd = '#divAddButton'+i;
+	if (i<0)
+	{
+		idd='#'+id;
+	}
+    $("#SubForm").addClass("Add");
+    $(idd).addClass('woop').siblings().removeClass('woop');
+	chainId = id;
+	clearData();
+}
+function audio_click(id, chain,i)
+{	
+	var idd = '#divAddButton'+i;
+	$("#SubForm").addClass("Add");
+    $(idd).addClass('woop').siblings().removeClass('woop');
+	chainId = chain;
+	clearData();
+}
+ function div_click(id, chain)
+{			
+    $("#SubForm").addClass("Add");
+    $('#'+id).addClass('woop').siblings().removeClass('woop');
+	chainId = chain;
+	clearData();
+}
+*/
