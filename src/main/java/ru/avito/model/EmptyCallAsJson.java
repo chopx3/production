@@ -11,6 +11,7 @@ import java.util.List;
  * Класс описывает ответ сервера в JSON формате
  */
 public class EmptyCallAsJson {
+//TODO Это класс JSON-ответа с пустыми звонками для конкретного агента. Глядя на код не понятно о чем идет речь.
 
     private String agentName;
     private int agentId;
@@ -20,7 +21,7 @@ public class EmptyCallAsJson {
     public EmptyCallAsJson(String agentName, int agentId) {
         this.agentName = agentName;
         this.agentId = agentId;
-        this.lastUpdateTimeMs = LocalDateTime
+        this.lastUpdateTimeMs = LocalDateTime //TODO копипаста
                 .now()
                 .atZone(ZoneId.systemDefault())
                 .toInstant()
@@ -42,6 +43,8 @@ public class EmptyCallAsJson {
     public long getLastUpdateTimeMs() {
         return lastUpdateTimeMs;
     }
+
+
 
     public EmptyCallAsJson buildEmptyCallList(List<EmptyCall> emptyCallList) {
         this.emptyCallList = emptyCallList;

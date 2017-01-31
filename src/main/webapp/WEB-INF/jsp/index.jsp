@@ -3,17 +3,17 @@
 <html>
 <head>
     <title>BulkaPro</title>
-    <link rel="icon" href="${pageContext.request.contextPath}/resources/img/favicon-32x32.png">
+    <link rel="icon" href="/shoptracker/resources/img/favicon-32x32.png">
     <meta http-equiv="content-type" content="text/html; charset=cp1251">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 
-    <script src="${pageContext.request.contextPath}/resources/js/jquery-dateFormat.min.js"></script>
-    <script src="${pageContext.request.contextPath}/resources/js/navbar.js" charset="utf-8"></script>
-    <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/resources/css/sidebar.css">
-    <script src="${pageContext.request.contextPath}/resources/js/webSocket.js"></script>
+    <script src="/shoptracker/resources/js/jquery-dateFormat.min.js"></script>
+    <script src="/shoptracker/resources/js/navbar.js" charset="utf-8"></script>
+    <link rel="stylesheet" type="text/css" href="/shoptracker/resources/css/sidebar.css">
+    <script src="/shoptracker/resources/js/webSocket.js"></script>
     <link href="https://gitcdn.github.io/bootstrap-toggle/2.2.2/css/bootstrap-toggle.min.css" rel="stylesheet">
     <script src="https://gitcdn.github.io/bootstrap-toggle/2.2.2/js/bootstrap-toggle.min.js"></script>
 
@@ -30,8 +30,8 @@
             <li><a href="#" id="comments"> Комментарии </a></li>
             <li><a href="#" id="notes"> Заметки </a></li>
             <li><a href="#" id="feedback"> Feedback </a></li>
-            <li><a href="/shoptracker/j_spring_security_logout" id="logout"> Выйти </a></li>
             <li><a href="#" id="oktell"> Oktell </a></li>
+            <li><a href="/shoptracker/j_spring_security_logout" id="logout"> Выйти </a></li>
             <label id="websocketStatus"> Статус </label>
         </ul>
     </div>
@@ -43,7 +43,7 @@
             <div class="form-group col-lg-6 text-center">
                 <input type="number" class="form-control" id="IDNum" placeholder="ID учетной записи">
             </div>
-            <div id="CloseSubForm" class="btn-group col-lg-6" data-toggle="buttons">
+            <div id="CloseSubForm" class="btn-group" data-toggle="buttons">
                 <button type="button" id="CloseSubForm" class="btn btn-success">Закрыть</button>
             </div>
         </div>
@@ -100,31 +100,49 @@
 
             </div>
         </div>
-
         <div>
             <span><br/></span>
         </div>
-        <div class="btn-group" data-toggle="buttons">
-            <input type="checkbox" data-toggle="toggle" id="IsManager" data-on="Менеджер" data-off="Клиент" data-offstyle="info" data-onstyle="danger">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="btn-group" data-toggle="buttons">
+                    <input type="checkbox" data-toggle="toggle" id="IsManager" data-on="Менеджер" data-off="Клиент" data-offstyle="info" data-onstyle="danger">
 
+                </div>
+                <div class="btn-group" data-toggle="buttons" id="sendDataButtonDiv">
+                    <button type="button" id="sendDataButton" class="btn btn-success">Отправить</button>
+                </div>
+                <div id="2299CSS" class="btn-group pull-right" data-toggle="buttons">
+                    <button type="button" id="2299" class="btn btn-danger">Частник</button>
+                </div>
+            </div>
         </div>
-        <div class="btn-group" data-toggle="buttons" id="sendDataButtonDiv">
-            <button type="button" id="sendDataButton" class="btn btn-success">Отправить</button>
-        </div>
-        <div id="2299CSS" class="btn-group pull-right" data-toggle="buttons">
-            <button type="button" id="2299" class="btn btn-danger">Частник</button>
+
+        <div class="row">
+            <div class="col-lg-12">
+                <label>Дополнительные тэги</label>
+                <div class="btn-group btn-group-justified" data-toggle="buttons">
+                    <label class="btn btn-warning-2" id="label-tag-1">
+                        <input type="checkbox" id="tag-1" name="addTags" autocomplete="off" value="lf"> Listing Fees
+                    </label>
+                    <label class="btn btn-warning-2" id="label-tag-2">
+                        <input type="checkbox" id="tag-2" name="addTags" autocomplete="off" value="vas"> Vas
+                    </label>
+                    <label class="btn btn-warning-2" id="label-tag-3">
+                        <input type="checkbox" id="tag-3" name="addTags" autocomplete="off" value="subs"> Subscription
+                    </label>
+                    <label class="btn btn-warning-2" id="label-tag-4">
+                        <input type="checkbox" id="tag-4" name="addTags" autocomplete="off" value="feedback"> Feedback
+                    </label>
+                </div>
+            </div>
         </div>
 
         <div class="form-group">
             <label for="comment" id="serviceMessage"></label>
             <textarea class="form-control" rows="6" id="JsonText"></textarea>
         </div>
-
     </div>
-
-
-
-
     <div id="page-content-wrapper">
         <div class="container-fluid">
             <div class="col-lg-12">
@@ -147,7 +165,7 @@
                     </div>
                 </div>
                 <div class="row" >
-                    <p id="MainForm" class="col-lg-6">
+                    <p id="MainForm" class="col-lg-10">
                     <div id="Hello">
                         <h1>Здравствуй, ${username}</h1>
                     </div>
@@ -171,14 +189,16 @@
             setTimeout(function() {
                 wnd.close();
             }, 1500);
-
-            $('#my_calls').click();
             return false;
         };
     })();
 </script>
+<script>
+    setTimeout(jQuery(function(){
+        jQuery('#my_calls').click();
+    }, 2500));
 
+</script>
 </body>
 
 </html>
-

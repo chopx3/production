@@ -23,7 +23,7 @@ import java.util.concurrent.ConcurrentMap;
  */
 
 @ServerEndpoint(value = "/websocket/connect")
-public class WebSocketConnections implements WebSocketInfoLogger{
+public class WebSocketConnections implements WebSocketInfoLogger{ //TODO WTF i wrote?
 
     private static       Logger LOG                     = LogManager.getLogger();
     private final static  WebSocketConnections instance = new WebSocketConnections();

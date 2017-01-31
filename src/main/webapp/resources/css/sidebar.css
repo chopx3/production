@@ -4,8 +4,57 @@
 }
 #HeaderText
 {
-	font-size: 34px;
+	font-size: 25px;
 }
+input[type=number]::-webkit-inner-spin-button, 
+input[type=number]::-webkit-outer-spin-button { 
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    margin: 0; 
+}
+.breakable
+{
+    word-break: break-all;
+    word-wrap: break-word;
+}
+.cell
+{
+	padding-left:12px;
+}
+#addCommentBlock
+{
+	overflow: auto;
+	resize:none;
+}
+#MainForm
+{
+	padding : none !important;
+}
+.table-scroll
+{
+    max-height: 360px;
+    overflow: auto;
+    margin: 0 0 20px;
+	max-width: 750px;
+}
+
+.btn-warning-2 {
+    color: #333;
+    background-color: #ddd;
+	border:#333 solid 1px;
+}
+.btn-warning-2:active, .btn-warning-2.active {
+    background: #999;
+    box-shadow: none;
+	border:#333 solid 1px;
+}
+.btn-warning-2:hover, .btn-warning-2:focus, .btn-warning-2:active:focus, .btn-warning-2:focus:hover .btn-warning-2:active, .btn-warning-2:active:hover, .btn-warning-2.active:hover, .open > .dropdown-toggle.btn-warning-2 {
+    background: #aaa;
+	border:#333 solid 1px;
+	color: #ffffff !important;
+}
+
 #sidebar-wrapper
 {
 	z-index: 1;
@@ -22,7 +71,7 @@
 }
 #Hello h1
 {
-	margin:20;
+	margin:15;
 	font-family: 'Segoe UI', Tahoma, sans-serif;
     font-size: 48px;
 }
@@ -50,6 +99,10 @@
 #submit, #CloseSubForm
 {
 	float:right;
+}
+#CloseSubForm
+{
+	padding-right:18px;
 }
 #SubForm
 {
@@ -86,7 +139,7 @@ display: none;
 {
 	width: 100%;
 	position: absolute;
-	padding: 15px;
+	padding: 5px;
 	padding-left:200px;
 }
 
@@ -108,11 +161,10 @@ display: none;
 
 div.woop
 {
-	width:520px;
-	background-color:lightblue;
-	text-align: center;
+	background-color:#CDD8F6;
+	/*text-align: center;
+	font-weight:bold;*/
 	border:1px solid blue;
-	font-weight:bold;
 }
 #sendDataButtonDiv
 {

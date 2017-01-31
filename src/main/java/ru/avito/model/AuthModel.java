@@ -26,10 +26,7 @@ public class AuthModel {
     /*
     *Обращаемся к базе и проверяем есть ли пользователь с заданным логином и паролем
      */
-    public static int login(
-            String username,
-            String password
-    )
+    public static int login(String username)
             throws SQLException {
 
         try (Connection conn = DBConnection.getDataSource().getConnection()) {
@@ -37,7 +34,7 @@ public class AuthModel {
             Record1<Integer> result = DSL.using(conn)
                     .select(USERS.ID)
                     .from(USERS)
-                    .where(USERS.USER_NAME.eq(username).and(USERS.PASS.eq(password)))
+                    .where(USERS.USER_NAME.eq(username))
                     .fetchOne();
 
             debugLog(SQL_QUERY_AUTH,String.format("Is user exist: %s. Results %s", username, result));

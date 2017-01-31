@@ -1,5 +1,7 @@
 package ru.avito.model;
 
+import org.springframework.web.socket.WebSocketSession;
+
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
@@ -9,5 +11,7 @@ import java.util.concurrent.ConcurrentHashMap;
 public abstract class AuthorizedUsers {
 
     public static Map<String, Agent> authorizedUsers = new ConcurrentHashMap<>();
+
+    public static Map<Integer, WebSocketSession> webSocketSessions = new ConcurrentHashMap<Integer, WebSocketSession>();
 
 }

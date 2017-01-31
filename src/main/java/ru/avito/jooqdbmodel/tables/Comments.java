@@ -66,7 +66,7 @@ public class Comments extends TableImpl<CommentsRecord> {
     /**
      * The column <code>avito.comments.message</code>.
      */
-    public final TableField<CommentsRecord, String> MESSAGE = createField("message", org.jooq.impl.SQLDataType.VARCHAR.length(2000), this, "");
+    public final TableField<CommentsRecord, String> MESSAGE = createField("message", org.jooq.impl.SQLDataType.VARCHAR.length(20000), this, "");
 
     /**
      * Create a <code>avito.comments</code> table reference

@@ -4,7 +4,6 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.apache.logging.log4j.Marker;
 import org.apache.logging.log4j.MarkerManager;
-import org.apache.logging.log4j.message.Message;
 import ru.avito.model.CallModel;
 import ru.avito.model.UpdatedCallRecord;
 
@@ -12,13 +11,11 @@ import ru.avito.model.UpdatedCallRecord;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import java.io.*;
-import java.net.URI;
 import java.sql.SQLException;
-import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.time.ZoneId;
 
-import static jdk.nashorn.internal.runtime.regexp.joni.Config.log;
+import static ru.avito.model.CallModel.*;
+import static ru.avito.model.JsonFactory.*;
+
 
 /**
  * Created by vananos.
@@ -41,7 +38,7 @@ public class Call implements WebDebugLogger{
             @QueryParam("userid") int userId)
             throws SQLException {
 
-       return CallModel.getCallRecordsWithEmptyFields(userId,null);
+       return getCallRecordsWithEmptyFields(userId,null);
     }
 
     @GET
@@ -57,7 +54,7 @@ public class Call implements WebDebugLogger{
         String result="";
         ServerResponse response = new ServerResponse();
         try {
-            result = CallModel.getCallRecordsAsJson(avitoLink, time);
+            result = getCallRecordsAsJson(avitoLink, time);
 
         } catch (SQLException e) {
             LOG.error(SQL_EXCEPTION, String.format("Message: %s, Description: %s",e.getMessage(), e.toString()));
@@ -76,38 +73,63 @@ public class Call implements WebDebugLogger{
     }
 //http://localhost:8085/rest/call/update
     @GET
-    @Path("update")
+    @Path("update") //TODO Spring MVC JSON-post method
     @Produces(MediaType.APPLICATION_JSON)
     public String setCallInfo(
-              @QueryParam(value = "uChainId") String uChainId
+              @QueryParam(value = "uAgentId") int agentId
+            , @QueryParam(value = "uChainId") String uChainId
             , @QueryParam(value = "uAvitoUserId") long avitoUserId
             , @QueryParam(value = "question") int question_id
             , @QueryParam(value = "shop_category") int shop_category_id
-            , @QueryParam(value = "isManager") boolean isManager)
+            , @QueryParam(value = "isManager") boolean isManager
+            , @QueryParam(value = "tags") String tags)
          {
-             ServerResponse     response = new ServerResponse();
-             UpdatedCallRecord updRecord = new UpdatedCallRecord(uChainId, question_id, shop_category_id, avitoUserId, isManager);
+             ServerResponse response = new ServerResponse();
 
+             UpdatedCallRecord updRecord = new UpdatedCallRecord(agentId, uChainId, question_id, shop_category_id,
+                                                                    avitoUserId, isManager, tags);
              this.debugLog(CALLS_UPDATE,String.format("Try to update calls. Data calls: %s", updRecord));
 
             try {
-                CallModel.updateCallRecord(updRecord);
+                updateCallRecord(updRecord);
 
-               this.debugLog(CALLS_UPDATE, String.format("Data HashCode #%s.\r\n Params: %s \r\n Update for call was successfully!!!",
-                       uChainId.hashCode(), updRecord));
+               this.debugLog(CALLS_UPDATE,
+                       String.format("Data HashCode #%s.\r\n Params: %s \r\n Update for call was successfully!!!",
+                                        uChainId.hashCode(), updRecord));
+                response.setStatus(ServerResponse.STATUS_OK);
+                return response.toJson();
 
             } catch (SQLException e) {
                 LOG.error(SQL_EXCEPTION, String.format("Message: %s, Description: %s", e.getMessage(), e.toString()));
-
                 response.setStatus(ServerResponse.STATUS_ERROR);
                 response.setDescription(e.getMessage());
-
                 return response.toJson();
             }
-            response.setStatus(ServerResponse.STATUS_OK);
-
-            return response.toJson();
         }
+
+    @GET
+    @Path("feedback/put") //TODO Spring MVC JSON-post method
+    @Produces(MediaType.APPLICATION_JSON)
+    public String putFeedback(
+            @QueryParam(value = "tags") String tags
+           ,@QueryParam(value = "comment") String comment
+           ,@QueryParam(value = "userId") int userId
+           ,@QueryParam(value = "chainId") String chainId) {
+
+        try {
+            return CallModel.putFeedback(tags, comment, chainId, userId);
+        } catch (SQLException e) {
+            return e.toString();
+        }
+    }
+
+    @GET
+    @Path("feedback/get") //TODO Spring MVC JSON-post method
+    @Produces(MediaType.APPLICATION_JSON)
+    public String getFeedback(@QueryParam(value = "tags")String tags) {
+
+        return getFeedBackByTags(tags);
+    }
 
     @Override
     public void debugLog(Marker marker, String message) {

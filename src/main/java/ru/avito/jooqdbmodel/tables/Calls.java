@@ -57,7 +57,7 @@ public class Calls extends TableImpl<CallsRecord> {
     /**
      * The column <code>avito.calls.call_link</code>.
      */
-    public final TableField<CallsRecord, String> CALL_LINK = createField("call_link", org.jooq.impl.SQLDataType.VARCHAR.length(1024), this, "");
+    public final TableField<CallsRecord, String> COMMENTS = createField("comments", org.jooq.impl.SQLDataType.VARCHAR.length(2048), this, "");
 
     /**
      * The column <code>avito.calls.time_begin</code>.
@@ -100,7 +100,7 @@ public class Calls extends TableImpl<CallsRecord> {
     /**
      * The column <code>avito.calls.shop_category_id</code>.
      */
-    public final TableField<CallsRecord, String> FILE_NAME = createField("file_name", SQLDataType.VARCHAR.length(100), this, "");
+    public final TableField<CallsRecord, String> TAGS = createField("tags", SQLDataType.VARCHAR.length(1024), this, "");
 
     /**
      * The column <code>avito.calls.shop_category_id</code>.

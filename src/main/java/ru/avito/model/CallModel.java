@@ -28,67 +28,49 @@ import static ru.avito.jooqdbmodel.Tables.USERS;
  * Created by vananos.
  */
 
-public class CallModel{
+public class CallModel {
 
     private final static Logger LOG = LogManager.getLogger();
     private final static Marker CALLS_PUT_SQL = MarkerManager.getMarker("CALLS_PUT_SQL");
     private final static Marker CALLS_GET_SQL = MarkerManager.getMarker("CALLS_GET_SQL");
     private final static Marker CALLS_UPDATE_SQL = MarkerManager.getMarker("CALLS_UPDATE_SQL");
-    private static final int MAX_CALLS_PER_REQUEST = 20;
+    private static final int MAX_CALLS_PER_REQUEST = 20; //TODO ай
+
+    private static String selectComIdByTags = "SELECT\n" +
+            "  calls.com_id, calls.avito_link, calls.time_begin, calls.tags, calls.comments,\n" +
+            "  users.user_name,\n" +
+            "  shop_category.description,\n" +
+            "  question.description\n" +
+            "FROM calls\n" +
+            "  INNER JOIN users ON users.id = calls.user_id\n" +
+            "  INNER JOIN shop_category ON shop_category.id = calls.shop_category_id\n" +
+            "  INNER JOIN question ON question.id = calls.question_id\n" +
+            "WHERE tags REGEXP(\'%s\')";
+
     /*
     * Сохраняем ссылку на звонок
      */
-    @Deprecated
-    public static void saveCalLink(CallRecord record) throws SQLException { //TODO Ни где не юзается, если все ок можно выпилить.
-
-        try (Connection conn = DBConnection.getDataSource().getConnection()) {
-
-            debugLog(CALLS_PUT_SQL,
-                    String.format("Saving data... Hashcode #%s,\r\n data: %s", record.hashCode(), record));
-
-            Integer user_id = DSL.using(conn).select(USERS.ID)
-                    .from(USERS)
-                    .where(USERS.OKTELL_LOGIN.equal(record.getOktellLogin())).fetchOne().value1();
-            DSL.using(conn)
-                    .insertInto(CALLS)
-                    .columns(CALLS.USER_ID, CALLS.CHAIN_ID, CALLS.COM_ID,
-                            CALLS.CALL_LINK, CALLS.TIME_BEGIN, CALLS.TIME_END)
-                    .values(
-                            user_id, record.getChainId(), record.getComId(),
-                            record.getCallLink(), (record.getTimeStart() - 10800) * 1000, (record.getTimeEnd() - 10800) * 1000)
-                    .execute();
-
-            debugLog(CALLS_PUT_SQL, String.format(
-                    "Data call was saved successfully!!! Hashcode: #%s \r\n Data: %s",record.hashCode(), record));
-        }
-    }
 
     public static void saveCallLink(CallRecord record, Boolean isOut)
-            throws SQLException {
-
-        try(Connection conn = DBConnection.getDataSource().getConnection()) {
-
+            throws SQLException { //TODO должен возвращаться ID созданной записи в БД. по ней обновлять инфу
+        try (Connection conn = DBConnection.getDataSource().getConnection()) {
             debugLog(CALLS_PUT_SQL, String.format("Saving data... Hashcode #%s,\r\n data: %s", record.hashCode(), record));
-
             Integer user_id = DSL.using(conn).select(USERS.ID)
                     .from(USERS)
                     .where(USERS.OKTELL_LOGIN.equal(!isOut ? record.getOktellLogin() : record.getaStr()))
                     .fetchOne()
                     .value1();
-
-            System.out.println(user_id);
-
             DSL.using(conn)
                     .insertInto(CALLS)
                     .columns(CALLS.USER_ID, CALLS.CHAIN_ID, CALLS.COM_ID,
-                            CALLS.CALL_LINK, CALLS.TIME_BEGIN, CALLS.TIME_END,
+                            CALLS.TIME_BEGIN, CALLS.TIME_END,
                             CALLS.IS_OUT)
                     .values(user_id, record.getChainId(), record.getComId(),
-                            record.getCallLink(), (record.getTimeStart() - 10800) * 1000, (record.getTimeEnd() - 10800) * 1000,
+                            (record.getTimeStart() - 10800) * 1000, (record.getTimeEnd() - 10800) * 1000,
                             isOut)
                     .execute();
 
-            debugLog(CALLS_PUT_SQL, String.format("Data call was saved successfully!!! Hashcode: #%s\r\n Data: %s",record.hashCode(), record));
+            debugLog(CALLS_PUT_SQL, String.format("Data call was saved successfully!!! Hashcode: #%s\r\n Data: %s", record.hashCode(), record));
         }
     }
 
@@ -97,11 +79,9 @@ public class CallModel{
      */
     public static String getCallRecordsAsJson(long link, long time)
             throws SQLException, IOException {
-
         try (Connection conn = DBConnection.getDataSource().getConnection()) {
-
             String resultAsLSON = DSL.using(conn)
-                    .select(CALLS.CALL_LINK, USERS.USER_NAME, CALLS.TIME_BEGIN)
+                    .select(CALLS.COM_ID, USERS.USER_NAME, CALLS.TIME_BEGIN)
                     .from(CALLS, USERS)
                     .where(CALLS.AVITO_LINK.equal(link)
                             .and(CALLS.TIME_BEGIN.lessOrEqual(time)))
@@ -110,10 +90,9 @@ public class CallModel{
                     .limit(MAX_CALLS_PER_REQUEST).fetch()
                     .formatJSON();
 
-                debugLog(CALLS_GET_SQL, String.format(
-                        "Get calls for user: %s by time: %s, \r\n results: %s",
-                        link, time, resultAsLSON));
-
+            debugLog(CALLS_GET_SQL, String.format(
+                    "Get calls for user: %s by time: %s, \r\n results: %s",
+                    link, time, resultAsLSON));
             return resultAsLSON;
         }
     }
@@ -121,19 +100,19 @@ public class CallModel{
     /*
     * Получаем записи звонков агента с незаполненными полями
      */
-    public static String getCallRecordsWithEmptyFields(int userId, String agentName)
-            throws SQLException {
+    public static String getCallRecordsWithEmptyFields(int userId, String agentName) // TODO agentName можно получить по userId или по передаваемому объекту.
+            throws SQLException {                           //TODO вообще тут бы передавать объект как параметр, а не переменные
 
         LocalDate now = LocalDate.now();
-        ZoneId  zoneId = ZoneId.systemDefault();
-        long startDay = now.atStartOfDay(zoneId).toEpochSecond()*1000;
-        long endDay = startDay+86400000;
+        ZoneId zoneId = ZoneId.systemDefault();
+        long startDay = now.atStartOfDay(zoneId).toEpochSecond() * 1000;
+        long endDay = startDay + 86400000;
 
         try (Connection conn = DBConnection.getDataSource().getConnection()) {
 
             Result<Record4<String, String, String, Long>> emptyCalls = DSL.using(conn)
                     .select(USERS.USER_NAME, CALLS.CHAIN_ID, CALLS.COM_ID, CALLS.TIME_BEGIN)
-                    .from((TableLike<?>)CALLS.join(USERS))
+                    .from((TableLike<?>) CALLS.join(USERS))
                     .where(USERS.ID.equal(CALLS.USER_ID))
                     .and(CALLS.TIME_BEGIN.between(startDay, endDay))
                     .and(CALLS.USER_ID.equal(userId))
@@ -148,9 +127,9 @@ public class CallModel{
                     userId, emptyCalls));
 
             List<EmptyCall> list = new ArrayList<>();
-            emptyCalls.forEach(rc -> list.add(new EmptyCall(rc.value2(),rc.value3(),rc.value4())));
+            emptyCalls.forEach(rc -> list.add(new EmptyCall(rc.value2(), rc.value3(), rc.value4())));
 
-            return   emptyCalls.size() > 0 ?
+            return emptyCalls.size() > 0 ? //TODO обернуть в метод и заюзать JsonFactory+ и лямбду, что выше, забрать
                     new EmptyCallAsJson(emptyCalls.get(0).value1(), userId)
                             .buildEmptyCallList(list)
                             .toJson() :
@@ -159,25 +138,70 @@ public class CallModel{
     }
 
     public static void updateCallRecord(UpdatedCallRecord updRecord)
-            throws SQLException {
-
+            throws SQLException {  //TODO обновлять по ID
         try (Connection conn = DBConnection.getDataSource().getConnection()) {
             debugLog(CALLS_UPDATE_SQL, String.format("Updating data: %s", updRecord));
             DSLContext create = DSL.using(conn, SQLDialect.MYSQL);
 
             create.update(CALLS)
                     .set(CALLS.AVITO_LINK, updRecord.getAvitoUserId())
-                    .set(CALLS.QUESTION_ID,updRecord.getQuestId())
+                    .set(CALLS.QUESTION_ID, updRecord.getQuestId())
                     .set(CALLS.SHOP_CATEGORY_ID, updRecord.getShopCategoryId())
                     .set(CALLS.IS_MANAGER, updRecord.isManager())
-                    .where(CALLS.CHAIN_ID.eq(updRecord.getChainId()))
+                    .set(CALLS.TAGS, updRecord.getTags())
+                    .where(CALLS.CHAIN_ID.eq(updRecord.getChainId()).and(CALLS.USER_ID.eq(updRecord.getAgentId())))
                     .execute();
             debugLog(CALLS_UPDATE_SQL, String.format("Update call was successfully!!! Data: %s", updRecord));
 
-        //    selectToUpdateCallRecord(updRecord); TODO я хз зачем это написал. Получается я повторяю одно и тоже действие. если все работает. Выкинуть.
-
+            //    selectToUpdateCallRecord(updRecord); TODO я хз зачем это написал. Получается я повторяю одно и тоже действие. если все работает. Выкинуть.
         }
     }
+
+    /*
+    *
+    * добавление тегов и комментариев по звонку
+    */
+    public static String putFeedback(String tags, String comment, String chainId, int userId)
+            throws SQLException {
+        try (Connection conn = DBConnection.getDataSource().getConnection()) {
+            DSLContext create = DSL.using(conn, SQLDialect.MYSQL);
+            create.update(CALLS)
+                    .set(CALLS.TAGS, tags)
+                    .set(CALLS.COMMENTS, comment)
+                    .where(CALLS.CHAIN_ID.eq(chainId).and(CALLS.USER_ID.eq(userId)))
+                    .execute();
+
+            return "feedback putted";
+        }
+    }
+
+
+    /*
+    *
+    * выбираем звонки из БД по указанным тегам. Работает.
+    */
+
+    public static String getFeedBackByTags(String tags){
+        try (Connection conn = DBConnection.getDataSource().getConnection()) {
+
+            DSLContext create = DSL.using(conn, SQLDialect.MYSQL);
+            LOG.debug(String.format(selectComIdByTags, tags));
+            Result<Record> fetch = create.fetch(String.format(selectComIdByTags, tags));
+            return fetch.formatJSON();
+
+        } catch (SQLException e) {
+            return e.toString();
+        }
+    }
+
+    private static void debugLog(Marker marker, String message) { //TODO  Поправить этот копипаст, он есть в нескольких классах.
+        if (LOG.isDebugEnabled()) {
+            LOG.debug(marker, message);
+        }
+    }
+
+// осторожно. Ниже шлак
+
     @Deprecated
     public static void selectToUpdateCallRecord(UpdatedCallRecord updRecord)
             throws SQLException {
@@ -228,9 +252,32 @@ public class CallModel{
         }
     }
 
-    private static void debugLog(Marker marker, String message) {
+    @Deprecated
+    public static void saveCalLink(CallRecord record) throws SQLException { //TODO Ни где не юзается, если все ок можно выпилить.
 
-        if(LOG.isDebugEnabled())
-            LOG.debug(marker, message);
+        try (Connection conn = DBConnection.getDataSource().getConnection()) {
+
+            debugLog(CALLS_PUT_SQL,
+                    String.format("Saving data... Hashcode #%s,\r\n data: %s", record.hashCode(), record));
+
+            Integer user_id = DSL.using(conn).select(USERS.ID)
+                    .from(USERS)
+                    .where(USERS.OKTELL_LOGIN.equal(record.getOktellLogin())).fetchOne().value1();
+            DSL.using(conn)
+                    .insertInto(CALLS)
+                    .columns(
+                            CALLS.USER_ID, CALLS.CHAIN_ID, CALLS.COM_ID,
+                            CALLS.TIME_BEGIN, CALLS.TIME_END)
+                    .values(
+                            user_id, record.getChainId(), record.getComId(),
+                            (record.getTimeStart() - 10800) * 1000, (record.getTimeEnd() - 10800) * 1000)
+                    .execute();
+
+            debugLog(CALLS_PUT_SQL, String.format(
+                    "Data call was saved successfully!!! Hashcode: #%s \r\n Data: %s", record.hashCode(), record));
+        }
     }
+
+
+
 }

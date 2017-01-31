@@ -261,7 +261,7 @@ public class CallsRecord extends UpdatableRecordImpl<CallsRecord> implements Rec
      */
     @Override
     public Field<String> field3() {
-        return Calls.CALLS.CALL_LINK;
+        return Calls.CALLS.COMMENTS;
     }
 
     /**
@@ -333,7 +333,7 @@ public class CallsRecord extends UpdatableRecordImpl<CallsRecord> implements Rec
      */
     @Override
     public Field<String> field12() {
-        return Calls.CALLS.FILE_NAME;
+        return Calls.CALLS.TAGS;
     }
 
     /**
@@ -598,12 +598,12 @@ public class CallsRecord extends UpdatableRecordImpl<CallsRecord> implements Rec
     /**
      * Create a detached, initialised CallsRecord
      */
-    public CallsRecord(Integer id, Integer userId, String callLink, Long timeBegin, Long timeEnd, Long avitoLink, Integer questionId, Integer shopCategoryId, Boolean isManager, String chain_id, String com_id, String file_name, Boolean isOut) {
+    public CallsRecord(Integer id, Integer userId, String comments, Long timeBegin, Long timeEnd, Long avitoLink, Integer questionId, Integer shopCategoryId, Boolean isManager, String chain_id, String com_id, String tags, Boolean isOut) {
         super(Calls.CALLS);
 
         set(0, id);
         set(1, userId);
-        set(2, callLink);
+        set(2, comments);
         set(3, timeBegin);
         set(4, timeEnd);
         set(5, avitoLink);
@@ -612,7 +612,7 @@ public class CallsRecord extends UpdatableRecordImpl<CallsRecord> implements Rec
         set(8, isManager);
         set(9, chain_id);
         set(10, com_id);
-        set(11, file_name);
+        set(11, tags);
         set(12, isOut);
     }
 }

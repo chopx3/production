@@ -6,7 +6,9 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.apache.logging.log4j.Marker;
 import org.apache.logging.log4j.MarkerManager;
+import org.springframework.web.socket.TextMessage;
 import ru.avito.model.AuthModel;
+import ru.avito.model.AuthorizedUsers;
 import ru.avito.model.CallModel;
 import ru.avito.model.CallRecord;
 import ru.avito.websocket.WebSocketConnections;
@@ -15,9 +17,12 @@ import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
+import java.io.IOException;
 import java.sql.SQLException;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+
+import static ru.avito.model.AuthorizedUsers.webSocketSessions;
 
 /**
  * Created by vananos.
@@ -112,9 +117,18 @@ public class OktellListener  implements WebDebugLogger{
     }
 
     private void sendMessageToUser(int userId, int caseId, String oktellLogin, String chainId){
+
             this.debugLog(CALLS_PUT, String.format("CASE %s: Sending message to agent %s...", caseId, oktellLogin));
-            WebSocketConnections.getInstance().sendMessageToUser(userId, chainId, oktellLogin);
+            //WebSocketConnections.getInstance().sendMessageToUser(userId, chainId, oktellLogin);
+        try {
+            LOG.debug(webSocketSessions);
+            LOG.debug(webSocketSessions.get(userId).isOpen());
+            webSocketSessions.get(userId).sendMessage(new TextMessage("Exist empty calls"));
+        } catch (Exception e) {
+            LOG.debug(e.getMessage());
+            LOG.debug(e.getCause());
         }
+    }
 
     @Override
     public void debugLog(Marker marker, String message) {

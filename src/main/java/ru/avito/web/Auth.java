@@ -36,7 +36,7 @@ public class Auth implements WebDebugLogger {
         int result;
         try {
             this.debugLog(AUTH, String.format("Get id for login %s", username));
-            result = AuthModel.login(username, password);
+            result = AuthModel.login(username);
         } catch (SQLException e) {
 
             LOG.error(SQL_EXCEPTION, String.format("Message: %s, Description: %s",e.getMessage(), e.toString()));

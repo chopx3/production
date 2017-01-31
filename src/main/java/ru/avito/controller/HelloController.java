@@ -46,6 +46,16 @@ public class HelloController{
         return "testpage";
     }
 
+    @RequestMapping(value = "/api", method = RequestMethod.GET)
+    public String getApiPage(ModelMap model) {
+        return "api";
+    }
+
+    @RequestMapping(value = "/downloader", method = RequestMethod.GET)
+    public String getDownloadPage(ModelMap model) {
+        return "downloader";
+    }
+
     @RequestMapping(value = "/login", method = RequestMethod.GET)
     public ModelAndView getLoginPage(@RequestParam(value = "error", required = false) String error) {
 

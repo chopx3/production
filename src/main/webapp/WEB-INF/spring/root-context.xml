@@ -16,9 +16,9 @@
     <bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource" destroy-method="close">
         <property name="username" value="root"/>
         <property name="password" value="root"/>
-        <property name="url" value="jdbc:mysql://localhost:3306/avito"/>
+        <property name="url" value="jdbc:mysql://localhost:3030/avito"/>
         <property name="driverClassName" value="com.mysql.jdbc.Driver"/>
-        <property name="initialSize" value="3"/>
+        <property name="initialSize" value="10"/>
     </bean>
 
     <bean id="hibernate4AnnotatedSessionFactory"
@@ -50,4 +50,9 @@
     <bean id="agentService" class="ru.avito.services.AgentServiceImpl">
         <property name="agentDao" ref="agentDao"/>
     </bean>
+
+    <bean class="org.springframework.web.socket.server.standard.ServletServerContainerFactoryBean">
+        <property name="maxSessionIdleTimeout" value="-1"/>
+    </bean>
+
 </beans>

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8" ?>
     <Configuration monitorInterval ="60">
     <Properties>
-        <Property name="log-path">logs/helper</Property>
+        <Property name="log-path">logs/shoptracker</Property>
         <Property name="archives">${log-path}/archives</Property>
         <Property name="date">${date:dd-MM-yyyy}</Property>
         <Property name ="pattern">[%-5level %d{HH:mm:ss}] %c{3} [%t, line: %L] %n       %msg%n%n</Property>
