@@ -11,7 +11,7 @@
 <div class="container">
     <div class="row">
         <div class="col-sm-6 col-md-4 col-md-offset-4">
-            <form class="form-signin" name="form_login" action="/shoptracker/j_spring_security_check" method="post">
+            <form class="form-signin" name="form_login" action="/avito/j_spring_security_check" method="post">
                 <h2 class="form-signin-heading">Авторизация</h2>
                 <c:if test ="${not empty error}">
                     ${error}

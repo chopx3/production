@@ -18,7 +18,15 @@
         <property name="password" value="root"/>
         <property name="url" value="jdbc:mysql://localhost:3030/avito"/>
         <property name="driverClassName" value="com.mysql.jdbc.Driver"/>
-        <property name="initialSize" value="10"/>
+        <property name="initialSize" value="50"/>
+        <property name="maxActive" value="100"/>
+        <property name="maxIdle" value="50"/>
+        <property name="maxWait" value="10000"/>
+        <property name="validationQuery" value="SELECT 1"/>
+        <property name="validationQueryTimeout" value="30000"/>
+        <property name="removeAbandoned" value="true"/>
+        <property name="removeAbandonedTimeout" value="500"/>
+
     </bean>
 
     <bean id="hibernate4AnnotatedSessionFactory"

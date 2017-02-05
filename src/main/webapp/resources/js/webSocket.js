@@ -1,8 +1,8 @@
 'use strict';
-// var webSocketHost = "192.168.10.132:8080";
-var webSocketHost = "192.168.11.87:8085";
+// var webSocketHost = "192.168.10.132:8080/avito";
+var webSocketHost = "192.168.9.91:8080/avito";
 var websocket;
-var websocketUrl = "ws://"+webSocketHost+"/shoptracker/websocket/start";
+var websocketUrl = "ws://"+webSocketHost+"/websocket/start";
 
 
 startConnection();
@@ -15,6 +15,7 @@ function startConnection() {
         websocket.onmessage =function (webSocketMessage) {
             console.log(webSocketMessage.data)
         }
+        websocket.send("ping");
     };
 }
 
@@ -38,7 +39,7 @@ function getWebsocketMessage(callback){
 
             case "Ok": console.log(webSocketMessage.data);
                 break;
-            case "Exist empty calls": showMyEmptyCalls();
+            case "Exist empty calls": console.log("empty calls"); showMyEmptyCalls();
                 break;
             case "pong":
                 setTimeout(
@@ -47,7 +48,7 @@ function getWebsocketMessage(callback){
                     }, 1000);
                 console.log("pong");
                 break;
-            default: callback(JSON.parse(webSocketMessage.data));
+            default: console.log("before draw"); callback(JSON.parse(webSocketMessage.data));
                 break;
         }
     }

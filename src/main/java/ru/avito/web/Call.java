@@ -104,31 +104,44 @@ public class Call implements WebDebugLogger{
                 response.setStatus(ServerResponse.STATUS_ERROR);
                 response.setDescription(e.getMessage());
                 return response.toJson();
+            } catch (NullPointerException e){
+                LOG.error(SQL_EXCEPTION, String.format("Message: %s, Data: %s, ",e.getMessage(), updRecord ));
+                response.setStatus(ServerResponse.STATUS_ERROR);
+                response.setDescription(e.getMessage());
+                return response.toJson();
             }
         }
 
     @GET
-    @Path("feedback/put") //TODO Spring MVC JSON-post method
+    @Path("feedback/put") //TODO Spring MVC JSON-post
     @Produces(MediaType.APPLICATION_JSON)
     public String putFeedback(
             @QueryParam(value = "tags") String tags
            ,@QueryParam(value = "comment") String comment
-           ,@QueryParam(value = "userId") int userId
+           ,@QueryParam(value = "agentId") int agentId
            ,@QueryParam(value = "chainId") String chainId) {
 
         try {
-            return CallModel.putFeedback(tags, comment, chainId, userId);
+            return CallModel.putFeedback(tags, comment, chainId, agentId);
         } catch (SQLException e) {
             return e.toString();
         }
     }
 
     @GET
-    @Path("feedback/get") //TODO Spring MVC JSON-post method
+    @Path("feedback/all/get") //TODO Spring MVC JSON-post method
     @Produces(MediaType.APPLICATION_JSON)
     public String getFeedback(@QueryParam(value = "tags")String tags) {
 
         return getFeedBackByTags(tags);
+    }
+
+    @GET
+    @Path("feedback/agent/get") //TODO Spring MVC JSON-post method
+    @Produces(MediaType.APPLICATION_JSON)
+    public String getFeedbackTaggedByAgentId(@QueryParam(value = "id")Integer agentId) {
+
+        return getCallFeedbackTaged(agentId);
     }
 
     @Override

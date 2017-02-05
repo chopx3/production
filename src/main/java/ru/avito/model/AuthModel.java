@@ -37,7 +37,7 @@ public class AuthModel {
                     .where(USERS.USER_NAME.eq(username))
                     .fetchOne();
 
-            debugLog(SQL_QUERY_AUTH,String.format("Is user exist: %s. Results %s", username, result));
+            //debugLog(SQL_QUERY_AUTH,String.format("Is user exist: %s. Results %s", username, result));
 
             return result == null ? -1 : result.value1();
         }

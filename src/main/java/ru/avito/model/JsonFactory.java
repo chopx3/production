@@ -11,7 +11,7 @@ public class JsonFactory {
         return new Gson().toJson(obj);
     }
 
-    public static Object jsonToSQL(Object obj){
+    public static Object jsonToSQL(Object obj){ // TODO WTF???
         return new Gson().toJson(new Gson().toJson(obj));
     }
 }

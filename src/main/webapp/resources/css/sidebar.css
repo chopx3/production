@@ -1,22 +1,22 @@
 /* */
 #wrapper{
-   min-width:950px; 
+	min-width:950px;
 }
 #HeaderText
 {
 	font-size: 25px;
 }
-input[type=number]::-webkit-inner-spin-button, 
-input[type=number]::-webkit-outer-spin-button { 
-    -webkit-appearance: none;
-    -moz-appearance: none;
-    appearance: none;
-    margin: 0; 
+input[type=number]::-webkit-inner-spin-button,
+input[type=number]::-webkit-outer-spin-button {
+	-webkit-appearance: none;
+	-moz-appearance: none;
+	appearance: none;
+	margin: 0;
 }
 .breakable
 {
-    word-break: break-all;
-    word-wrap: break-word;
+	word-break: break-all;
+	word-wrap: break-word;
 }
 .cell
 {
@@ -33,24 +33,24 @@ input[type=number]::-webkit-outer-spin-button {
 }
 .table-scroll
 {
-    max-height: 360px;
-    overflow: auto;
-    margin: 0 0 20px;
+	max-height: 360px;
+	overflow: auto;
+	margin: 0 0 20px;
 	max-width: 750px;
 }
 
 .btn-warning-2 {
-    color: #333;
-    background-color: #ddd;
+	color: #333;
+	background-color: #ddd;
 	border:#333 solid 1px;
 }
 .btn-warning-2:active, .btn-warning-2.active {
-    background: #999;
-    box-shadow: none;
+	background: #999;
+	box-shadow: none;
 	border:#333 solid 1px;
 }
 .btn-warning-2:hover, .btn-warning-2:focus, .btn-warning-2:active:focus, .btn-warning-2:focus:hover .btn-warning-2:active, .btn-warning-2:active:hover, .btn-warning-2.active:hover, .open > .dropdown-toggle.btn-warning-2 {
-    background: #aaa;
+	background: #aaa;
 	border:#333 solid 1px;
 	color: #ffffff !important;
 }
@@ -73,13 +73,13 @@ input[type=number]::-webkit-outer-spin-button {
 {
 	margin:15;
 	font-family: 'Segoe UI', Tahoma, sans-serif;
-    font-size: 48px;
+	font-size: 48px;
 }
 
 #websocketStatus
 {
 	color:green;
-	position: fixed; 
+	position: fixed;
 	bottom: 0px;
 	margin:auto;
 }
@@ -90,13 +90,13 @@ input[type=number]::-webkit-outer-spin-button {
 #IDforInfo, #IDSubmit
 {
 	display:table-cell;
-	
+
 }
 #JsonText
 {
 	display:none;
 }
-#submit, #CloseSubForm
+#submit, #CloseSubForm, #sendFeedback
 {
 	float:right;
 }
@@ -111,26 +111,29 @@ input[type=number]::-webkit-outer-spin-button {
 	overflow-y: hidden;
 	right:1%;
 	top:12%;
-	visibility: hidden;
+	display:none;
 	max-width:33%;
 }
 .history, #divAddButton {
-    margin: 8px 12px;
+	margin: 8px 12px;
 	padding:6px;
 	background-color:lightblue;
-    border-radius: 5px;
-    font-family: 'Segoe UI', Tahoma, sans-serif;
-    font-size: 14px;
+	border-radius: 5px;
+	font-family: 'Segoe UI', Tahoma, sans-serif;
+	font-size: 14px;
 	display:table;
-	
+
 }
 
 [type='checkbox'] {
-display: none; 
+	display: none;
+}
+[type='radio'] {
+	display: none;
 }
 
 .history-info {
-    font-size: 14px;
+	font-size: 14px;
 }
 
 
@@ -145,16 +148,16 @@ display: none;
 
 #page-content-wrapper #CallForm
 {
-	visibility:hidden;
+	display: none;
 }
 
 #page-content-wrapper #CallForm.inactive
 {
-	visibility:visible;
+	display: inline;
 }
 
 #menu-toggle
-{	
+{
 	width:150px;
 	text-align: center;
 }
@@ -168,11 +171,11 @@ div.woop
 }
 #sendDataButtonDiv
 {
-margin:0px 10px;
+	margin:0px 10px;
 }
 #SubForm.Add
 {
-	visibility: visible;
+	display: inline-block;
 }
 
 .sidebar-nav
@@ -180,7 +183,25 @@ margin:0px 10px;
 	padding: 0;
 	list-style: none;
 }
-
+#feedbackComment
+{
+	resize: none;
+	overflow: auto;
+}
+#FeedbackForm
+{
+	z-index: 1;
+	position: fixed;
+	overflow-y: hidden;
+	right:1%;
+	top:1%;
+	display:none;
+	max-width:33%;
+}
+#FeedbackForm.Add
+{
+	display: inline-block;
+}
 .sidebar-nav li
 {
 	text-indent: 30px;
@@ -196,11 +217,11 @@ margin:0px 10px;
 
 .sidebar-nav li a:hover
 {
-background: #161616;
+	background: #161616;
 }
 
 .highlight, .highlight_stay{
-    background: #262626;
+	background: #262626;
 }
 audio
 {

@@ -1,33 +1,38 @@
 package ru.avito.controller;
 
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.socket.TextMessage;
 import org.springframework.web.socket.WebSocketSession;
 import org.springframework.web.socket.handler.TextWebSocketHandler;
+import ru.avito.model.Agent;
 import ru.avito.model.AuthModel;
-import ru.avito.model.AuthorizedUsers;
+import ru.avito.services.AgentService;
 
+import javax.xml.bind.SchemaOutputResolver;
 import java.io.IOException;
 import java.sql.SQLException;
 
-import static ru.avito.model.AuthorizedUsers.authorizedUsers;
+import static ru.avito.model.AuthorizedUsers.*;
 import static ru.avito.model.CallModel.getCallRecordsWithEmptyFields;
 
 /**
  * Created by Dmitriy on 24.12.2016.
  */
-public class EchoHandler extends TextWebSocketHandler{
+public class EchoHandler extends TextWebSocketHandler{ //TODO это просто контроллер, бизнес-логику убрать
+
+    private final static Logger LOG = LogManager.getLogger();
 
     @Override
-    public void afterConnectionEstablished(WebSocketSession session) throws SQLException {
-        int userId = AuthModel.login(session.getPrincipal().getName());
-        AuthorizedUsers.webSocketSessions.putIfAbsent(userId, session);
-       // sendPong(session);
-        //баг
-        //1. запустили приложение 2. залогинились 3. убедились, что авторефреш работает 4. очистили кэш в бразуере
-        //5. авторефреш сломался.
-        //вернуть пинг-понг и проверить все ли ок
-
+    public void afterConnectionEstablished(WebSocketSession session) throws SQLException, IOException {
+        int agentId = getAgentIdFromDb(session.getPrincipal().getName());
+        if(webSocketSessions.get(agentId) != null) {
+            webSocketSessions.get(agentId).close();
+        }
+        webSocketSessions.put(agentId, session);
+        getWebSocketSession(agentId).sendMessage(new TextMessage("ok"));
     }
 
     @Override
@@ -35,8 +40,7 @@ public class EchoHandler extends TextWebSocketHandler{
 
         switch (message.getPayload()){
             case "getMyEmptyCalls":
-                String agentUsername = session.getPrincipal().getName();
-                System.out.println(agentUsername);
+                String agentUsername = getAgentName(session);
                 String callRecordsWithEmptyFields =
                         getCallRecordsWithEmptyFields(authorizedUsers.get(agentUsername).getId(), agentUsername);
                 session.sendMessage(new TextMessage(callRecordsWithEmptyFields));
@@ -48,12 +52,19 @@ public class EchoHandler extends TextWebSocketHandler{
         }
     }
 
-    private static void sendPong(WebSocketSession session) {
-        try {
-            session.sendMessage(new TextMessage("pong"));
-            System.out.println("pong");
-        } catch (IOException e) {
-            System.out.println(e.getCause());
+    private void sendPong(WebSocketSession session) throws IOException, SQLException {
+        session.sendMessage(new TextMessage("pong"));
         }
+
+    private WebSocketSession getWebSocketSession(int agentId){ //TODO этот метод точно должен быть не тут
+        return webSocketSessions.get(agentId);
+    }
+
+    private String getAgentName(WebSocketSession session) {
+        return session.getPrincipal().getName();
+    }
+
+    private int getAgentIdFromDb(String username) throws SQLException {
+        return AuthModel.login(username);
     }
 }

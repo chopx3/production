@@ -38,7 +38,7 @@ public class HelloController{
         return "hello";
     }
 
-    @RequestMapping(value = "/test", method = RequestMethod.GET)
+    @RequestMapping(value = "admin/test", method = RequestMethod.GET)
     public String getTestPage(ModelMap model) {
 
         model.addAttribute("hello", "Hi user");
@@ -46,12 +46,12 @@ public class HelloController{
         return "testpage";
     }
 
-    @RequestMapping(value = "/api", method = RequestMethod.GET)
+    @RequestMapping(value = "admin/api", method = RequestMethod.GET)
     public String getApiPage(ModelMap model) {
         return "api";
     }
 
-    @RequestMapping(value = "/downloader", method = RequestMethod.GET)
+    @RequestMapping(value = "admin/downloader", method = RequestMethod.GET)
     public String getDownloadPage(ModelMap model) {
         return "downloader";
     }

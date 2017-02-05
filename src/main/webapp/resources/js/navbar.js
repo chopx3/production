@@ -1,21 +1,25 @@
-﻿
-var chainId="";
+﻿var chainId="";
 var commentOrCallHandler;
 var idSaver;
 var dataArray;
-var tagsArray = [];
+var feedbackArray = [];
 var commentArray = [];
 var sentCall=false;
-// var httpHost = "192.168.10.132:8080";
-var httpHost = "192.168.11.87:8085";
+var httpHost = "192.168.9.91:8080/avito";
+// var httpHost = "192.168.10.132:8080/avito";
 var questNum="1";
 var catNum="1";
+var catTagNum="1";
+var feedbackStr = "";
 var agentId='';
-var tagsString;
-var getCommentsURL = "http://"+httpHost+'/shoptracker/rest/comment/get?userid=';
-var getCallsURL = "http://"+httpHost+"/shoptracker/rest/call/getcallsforaccount?userid=";
-var updateEmptyCalls = "http://"+httpHost +"/shoptracker/rest/call/update";
-var postCommentUrl = "http://"+httpHost+'/shoptracker/rest/comment/put';
+var tagsString ="";
+var getCommentsURL = "http://"+httpHost+'/rest/comment/get?userid=';
+var getCallsURL = "http://"+httpHost+"/rest/call/getcallsforaccount?userid=";
+var updateEmptyCalls = "http://"+httpHost +"/rest/call/update";
+var postCommentUrl = "http://"+httpHost+'/rest/comment/put';
+var oktell = "http://web_api:s7cgr3Ev@192.168.3.10:4055/download/byscript?name=Avito_get_file_by_id_conn&startparam1=";
+var feedbackUrl = "http://"+httpHost+"/avito/rest/call/feedback/put"
+
 
 $(document).ready(function() {
 	var commentsInfo = null;
@@ -25,24 +29,28 @@ $(document).ready(function() {
 
 	var isManager=false;
 
-	//Вопрос
+//Вопрос
 	$('input[name="question"]').change(function(e){
-		questNum = e.target.id.substr(6,1);
+		questNum = $(this).attr("value");
 	});
 
-	//Категория
+//Категория
 	$('input[name="category"]').change(function(e){
-		catNum = e.target.id.substr(4,1);
+		catNum = $(this).attr("value");
+	});
+//
+	$('input[name="feed-cat"]').change(function(e){
+		catTagNum = $(this).attr("value");
 	});
 
-	//Кнопка "Частник"
+//Кнопка "Частник"
 	$("#2299").click(function() {
 		if (chainId=="") {
 			$('#serviceMessage').text("Выберите звонок");
 		} else {
-			// callTags();
-			dataArray = [chainId, -1, 9, 6, false];
-			//dataArray = [chainId, -1, 9, 6, false, tagsString];
+			collectTags($(this).attr("value"));
+			//dataArray = [chainId, -1, 9, 6, false];
+			dataArray = [chainId, -1, 9, 6, false, tagsString];
 			fillData(dataArray);
 			sentCall = true;
 			clearData();
@@ -51,14 +59,13 @@ $(document).ready(function() {
 			}, 800);
 		}
 	});
-	//Кнопка "Отправить"
+//Кнопка "Отправить"
 	$('#sendDataButton').click(function() {
 		var catVal, IDVal, questVal;
 		$("#JsonText").val("");
 		$('#IDNum').css({ "border": ''});
 		$('#questButtonGroup').css({"border":""});
 		$('#catButtonGroup').css({"border":""});
-		//callTags(tagsArray, 4);
 		//Выделение красным неправильно введенных данных
 		if (chainId=="") {
 			$('#serviceMessage').text("Выберите звонок");
@@ -84,8 +91,8 @@ $(document).ready(function() {
 			}
 			if(questVal&&IDVal&&catVal) {
 				$('#serviceMessage').text("");
-				callTags();
-				// dataArray = [chainId, $('#IDNum').val(), questNum, catNum, $("#IsManager").prop("checked")];
+				collectTags($(this).attr("value"));
+				//dataArray = [chainId, $('#IDNum').val(), questNum, catNum, $("#IsManager").prop("checked")];
 				dataArray = [chainId, $('#IDNum').val(), questNum, catNum, $("#IsManager").prop("checked"), tagsString];
 				fillData(dataArray);
 				clearData();
@@ -98,28 +105,23 @@ $(document).ready(function() {
 			}
 		}
 	});
-
-	tagsArray.join(",")
-	//Подсветка бокового меню
+//Подсветка бокового меню
 	$('li').click(function(){
 		$('li').removeClass('highlight');
 		$(this).toggleClass('highlight');
 	});
 
-	//Переключение класса "Добавить звонок"
+//Переключение класса "Добавить звонок"
 	$("#Adder").click(function() {
 		$("#SubForm").toggleClass("Add");
 	});
-	//Кнопка "Мои звонки"
+//Кнопка "Мои звонки"
 	$('#my_calls').click(function() {
 		showMyEmptyCalls();
 
 	});
 
-
-
-
-	//Кнопка "Звонки пользователя"
+//Кнопка "Звонки пользователя"
 	$('#user_calls').click(function() {
 		fillInfo("add","Звонки пользователя", "");
 		commentOrCallHandler = "call";
@@ -131,28 +133,33 @@ $(document).ready(function() {
 		commentOrCallHandler = "comment";
 		addButton();
 	});
-	// Кнопка "Закрыть" внизу бокового меню
+// Кнопка "Закрыть" для формы заполнения звонка
 	$('#CloseSubForm').click(function() {
 		$("#SubForm").removeClass("Add");
 		$("#divAddButton0").removeClass('woop').siblings().removeClass('woop');
 	});
-	//Кнопка "Заметки"
+//Кнопка "Заметки"
 	$('#notes').click(function(){
 		fillInfo("remove","Заметки", "В разразботке");
 	});
-	//Кнопка "Фидбек"
+//Кнопка "Фидбек"
 	$('#feedback').click(function() {
 		fillInfo("remove","Feedback", "В разразботке");
+		$("#FeedbackForm").addClass("Add");
+		drawFeedback();
 	});
-
-//Стандартная отрисовка после нажатия на кнопку бокового меню, для удобства читабельности. Форма звонка(вкл\выкл), текст заголовка страницы, текст основного меню
+//Кнопка Сохранить на блоке Feedback
+	$('#sendFeedbackButton').click(function() {
+		collectTags($(this).attr("value"));
+	});
 
 });
 
-
 // --- Завершение блока документ.реди
+
 // --- Функции
 
+//Функция, отправляющая запрос по ws, получает данные JSON и отдает их на отрисовку draw()
 function showMyEmptyCalls() {
 
 	sendWebSocketMessage("getMyEmptyCalls");
@@ -168,15 +175,18 @@ function showMyEmptyCalls() {
 	fillInfo("remove","Мои звонки", "");
 
 	getWebsocketMessage(function(emptyCallsInfo){
+		console.log("before draw")
 		draw(emptyCallsInfo);
 	});
 
 	$("#SubForm").addClass("Add");
 }
 
+//Стандартная отрисовка после нажатия на кнопку бокового меню, для удобства читабельности. Форма звонка(вкл\выкл), текст заголовка страницы, текст основного меню
 function fillInfo(callForm, headerText, MainForm) {
 	$("#SubForm").removeClass("Add");
-	if(callForm=="add") {
+	$("#FeedbackForm").removeClass("Add");
+	if(callForm==="add") {
 		$("#CallForm").addClass("inactive");
 	} else {
 		$("#CallForm").removeClass("inactive");
@@ -187,10 +197,8 @@ function fillInfo(callForm, headerText, MainForm) {
 	document.getElementById("Hello").innerHTML = '';
 }
 
-
 // Функция для вывода информации по ID, звонки или комментарии.
 function getInfo(){
-	var oktell = "http://web_api:s7cgr3Ev@192.168.3.10:4055/download/byscript?name=Avito_get_file_by_id_conn&startparam1=";
 	idNumber = $('#IDforInfo').val();
 	idSaver = $('#IDforInfo').val();
 	if (commentOrCallHandler == "call") {
@@ -204,10 +212,10 @@ function getInfo(){
 					var parsedCalls = JSON.parse(JSON.parse(callsAsJSON));
 					if (parsedCalls.records.length != 0&&idNumber!='') {
 						for (var i = 0; i < parsedCalls.records.length; i++) {
-							var audiotag = oktell+parsedCalls.records[i][0];
+							var audiotag = parsedCalls.records[i][0];
 							var nametag = parsedCalls.records[i][1];
 							var timetag = $.format.date(new Date().setTime(parsedCalls.records[i][2]), 'dd/MM/yyyy@HH:mm:ss');
-							var audioURL = '<audio src="' + audiotag + '" controls></audio><a href="'+ audiotag +'" ta1rget="_blank">' + '<\/a>';
+							var audioURL = '<audio src="'+oktell + audiotag + '" controls></audio><a href="'+oktell+ audiotag +'" ta1rget="_blank">' + '<\/a>';
 							outputCalls += '<div class="history" data-time="'+timetag+'" data-sign="'+nametag+'"><span class="history-info">'+ timetag +' '+nametag + '</span><br>' + audioURL + '</div>';
 						}
 					} else {
@@ -295,8 +303,6 @@ function clearData() {
 
 //Отправка данных из боковой формы на сервер
 function fillData(dataArray) {
-
-	console.log(dataArray[5]);
 	$("#JsonText").val("uChainId:"+dataArray[0]+",\n"+
 		"uAvitoUserId:"+dataArray[1]+",\n"+
 		"question:"+dataArray[2]+",\n"+
@@ -310,8 +316,8 @@ function fillData(dataArray) {
 			uAvitoUserId: dataArray[1],
 			question : dataArray[2],
 			shop_category : dataArray[3],
-			isManager : dataArray[4],
-			tags : dataArray[5].join(",")
+			isManager : dataArray[4]//,
+			//tags : dataArray[5]
 		}
 	).done(
 		function (response) {
@@ -333,32 +339,36 @@ function fortesting()
 // Добавление стиля выбранного звонка
 function change_call(chain, i) {
 	var idd = '#divAddButton'+i;
-	$("#SubForm").addClass("Add");
+	var feedId = '#feedbackCall'+i;
+	console.log(chain);
+	//$("#SubForm").addClass("Add");
 	/*
 	 callTags();
 	 console.log(tagsString);
 	 */
 	$(idd).addClass('woop').siblings().removeClass('woop');
+	$(feedId).addClass('woop').siblings().removeClass('woop'); // ИСПРАВИТЬ
 	if ((chain!=chainId)&&(chainId!=""))
 	{
 		clearData();
 	}
 	chainId = chain;
 	//fortesting();
-
 }
 //Проверка тегов
-function callTags ()
+function collectTags (feedOrCall)
 {
-	tagsString=[];
-	$('input:checkbox[name=addTags]').each(function ()
+	console.log(feedOrCall);
+	var choice = feedOrCall;
+	tagsString = "";
+	$('input:checkbox[name='+choice+']').each(function ()
 	{
 		if ($(this).prop("checked"))
 		{
-			tagsString.push(this.value);
+			tagsString +=$(this).attr("value") + " ";
 		}
 	});
-	console.log()
+	console.log(tagsString);
 }
 //Comments
 function postComment () {
@@ -392,15 +402,15 @@ function  draw(emptyCallsInfo) {
 	agentId = emptyCallsInfo.agentId;
 	console.log(agentId);
 	var nametag = emptyCallsInfo.agentName;
-	var oktell = "http://web_api:s7cgr3Ev@192.168.3.10:4055/download/byscript?name=Avito_get_file_by_id_conn&startparam1=";
 	var outputEmptyCalls = '';
 	if(emptyCallsInfo.emptyCallList.length!=0)
 	{
+		var audioURL,addButton,audiosrc,chain;
 		for (var i = 0; i < emptyCallsInfo.emptyCallList.length; i++) {
-			var chain = emptyCallsInfo.emptyCallList[i].chainId;
-			var audiosrc = emptyCallsInfo.emptyCallList[i].comId;
-			var timetag = $.format.date(new Date().setTime(emptyCallsInfo.emptyCallList[i].startTime), 'dd/MM/yyyy@HH:mm:ss');
-			var addButton = '<a href="#"  class="btn btn-success" id="' + chain + '" onclick=change_call(this.id,'+i+') style="float:right;"> Выбрать </a>';
+			chain = emptyCallsInfo.emptyCallList[i].chainId;
+			audiosrc = emptyCallsInfo.emptyCallList[i].comId;
+			timetag = $.format.date(new Date().setTime(emptyCallsInfo.emptyCallList[i].startTime), 'dd/MM/yyyy@HH:mm:ss');
+			addButton = '<a href="#"  class="btn btn-success" id="' + chain + '" onclick=change_call(this.id,'+i+') style="float:right;"> Выбрать </a>';
 			var audioURL = '<audio id="audio'+i+'" onplay=change_call("'+chain+'",'+i+') src="' + oktell + audiosrc + '" controls></audio><a href="'+ oktell + audiosrc +'" target="_blank">' + '<\/a>';
 			outputEmptyCalls += '<div id="divAddButton' +i+'" onclick=change_call("'+chain+'",'+i+') class="history" data-time="'+timetag+'" data-sign="'+nametag+'"><span class="history-info">'+ timetag +' '+nametag +'\t\t' + addButton + '</span><br>' + audioURL + '</div>';
 		}
@@ -415,15 +425,81 @@ function  draw(emptyCallsInfo) {
 	$("audio").each(function(){
 		$(this).bind("play",stopAll);
 	});
+}
+function stopAll(e){
+	var currentElementId=$(e.currentTarget).attr("id");
+	$("audio").each(function(){
+		var $this=$(this);
+		var elementId=$this.attr("id");
+		if(elementId!=currentElementId){
+			$this[0].pause();
+		}
+	});
+}
+function drawFeedback() {
+	/*$.get("http://192.168.11.87:8080/shoptracker/rest/call/feedback/get?tags=feedback")
+	 .done(
+	 function (data) {
 
-	function stopAll(e){
-		var currentElementId=$(e.currentTarget).attr("id");
-		$("audio").each(function(){
-			var $this=$(this);
-			var elementId=$this.attr("id");
-			if(elementId!=currentElementId){
-				$this[0].pause();
+	 var feedbackInfo = data;*/
+	var outputEmptyCalls = "";
+	var feedbackInfo = {"fields":[{"table":"calls","name":"com_id","type":"VARCHAR"},{"table":"calls","name":"avito_link","type":"BIGINT"},{"table":"calls","name":"time_begin","type":"BIGINT"},{"table":"calls","name":"tags","type":"VARCHAR"},{"table":"calls","name":"comments","type":"VARCHAR"},{"table":"users","name":"user_name","type":"VARCHAR"},{"table":"shop_category","name":"description","type":"VARCHAR"},{"table":"question","name":"description","type":"VARCHAR"}],"records":[["ABCD-ABCD-1fdszz",1939992,1485246354000,"vas ",null,"dokunev","Недвижимость","Блокировка (отклонение) объявления"],["ABCD-ABCD-1fdszs",1939992,1485421663000,"vas ",null,"dokunev","Недвижимость","Блокировка (отклонение) объявления"],["223AE161-C5B9-4221-9775-338241DDB7C3",1939992,1485425051000,"lf,vas","","dokunev","General","Платные услуги и Кошелек Avito"],["383977A6-E35C-4D6A-87A6-9997BDCEECAC",1939992,1485425051000,"lf,vas","","dokunev","General","Платные услуги и Кошелек Avito"]]};
+	console.log(feedbackInfo);
+	/*var feedbackInfoAsJSON = JSON.stringify(feedbackInfo);
+	 console.log(feedbackInfoAsJSON);
+	 var parsedFeedbackInfo = JSON.parse(JSON.parse(feedbackInfoAsJSON));
+	 console.log(parsedFeedbackInfo);
+	 */
+	if(feedbackInfo.records.length!=0)
+	{
+		//var com_id, user_id, timestamp, tags, comment, agent;
+		var callInfo = [];
+		var timetag,audioURL;
+		for (var i = 0; i < feedbackInfo.records.length; i++) {
+			for (var j = 0; j< 6;j++) {
+				callInfo[j] = feedbackInfo.records[i][j];
 			}
-		});
+			timetag = $.format.date(new Date().setTime(callInfo[2]), 'dd/MM/yyyy@HH:mm:ss');
+			audioURL = '<audio id="audio'+i+'" src="' + oktell + callInfo[0] + '" onplay=change_call("'+callInfo[0]+'",'+i+') controls></audio><a href="'+ oktell + callInfo[0] +'" target="_blank">' + '</a>';
+			outputEmptyCalls += '<div id="feedbackCall' +i+'" onclick=change_call("'+callInfo[0]+'",'+i+') class="history" data-time="'+timetag+'" data-sign="'+callInfo[5]+'"><span class="history-info">'+ timetag +' '+ callInfo[5] + '</span><br>' + audioURL + '</div>';
+		}
+		document.getElementById("MainForm").innerHTML = outputEmptyCalls;
 	}
+	else
+	{
+		document.getElementById("MainForm").innerHTML = "Все звонки заполнены, молодец";
+	}
+	$("audio").each(function(){
+		$(this).bind("play",stopAll);
+	});
+	$("#feedbackCall0").bind("click",stopAll).siblings().bind("click",stopAll);
+}
+//)}
+function postFeedback () {
+	feedbackArray =[idSaver,new Date().getTime(),$('#addCommentBlock').val(), agentId];
+	console.log(feedbackArray);
+	/*
+
+	 $.get(
+	 feedbackUrl, {
+	 comment: feedbackArray[0],
+	 tags: feedbackArray[1],
+	 userId: feedbackArray[2],
+	 chainId: feedbackArray[3]
+	 }
+	 ).done(
+	 function (response) {
+	 if (response.status != 'ok') {
+	 errorHandler(response.description);
+	 }
+	 console.log(response);
+	 }
+	 ).fail(
+	 function () {
+	 errorHandler('Ошибка соединения с сервером.');
+	 }
+	 );
+	 */setTimeout(function() {
+		drawFeedback();
+	}, 800);
 }

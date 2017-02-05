@@ -37,7 +37,7 @@ public class CallModel {
     private static final int MAX_CALLS_PER_REQUEST = 20; //TODO ай
 
     private static String selectComIdByTags = "SELECT\n" +
-            "  calls.com_id, calls.avito_link, calls.time_begin, calls.tags, calls.comments,\n" +
+            "  calls.com_id, calls.chain_id, calls.avito_link, calls.time_begin, calls.tags, calls.comments,\n" +
             "  users.user_name,\n" +
             "  shop_category.description,\n" +
             "  question.description\n" +
@@ -161,20 +161,19 @@ public class CallModel {
     *
     * добавление тегов и комментариев по звонку
     */
-    public static String putFeedback(String tags, String comment, String chainId, int userId)
+    public static String putFeedback(String tags, String comment, String chainId, int agentId)
             throws SQLException {
         try (Connection conn = DBConnection.getDataSource().getConnection()) {
             DSLContext create = DSL.using(conn, SQLDialect.MYSQL);
             create.update(CALLS)
                     .set(CALLS.TAGS, tags)
                     .set(CALLS.COMMENTS, comment)
-                    .where(CALLS.CHAIN_ID.eq(chainId).and(CALLS.USER_ID.eq(userId)))
+                    .where(CALLS.CHAIN_ID.eq(chainId).and(CALLS.USER_ID.eq(agentId)))
                     .execute();
 
             return "feedback putted";
         }
     }
-
 
     /*
     *
@@ -193,6 +192,21 @@ public class CallModel {
             return e.toString();
         }
     }
+
+    public static String getCallFeedbackTaged(Integer agentId) {
+        try (Connection conn = DBConnection.getDataSource().getConnection()) {
+
+            DSLContext create = DSL.using(conn, SQLDialect.MYSQL);
+            LOG.debug(String.format(selectComIdByTags, "feedback"));
+            Result<Record> fetch = create.fetch(String.format(selectComIdByTags, "feedback")+
+                    String.format(" and user_id=%s and comments is null",agentId));
+            return fetch.formatJSON();
+
+        } catch (SQLException e) {
+            return e.toString();
+        }
+    }
+
 
     private static void debugLog(Marker marker, String message) { //TODO  Поправить этот копипаст, он есть в нескольких классах.
         if (LOG.isDebugEnabled()) {

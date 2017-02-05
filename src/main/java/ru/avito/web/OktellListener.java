@@ -7,6 +7,7 @@ import org.apache.logging.log4j.Logger;
 import org.apache.logging.log4j.Marker;
 import org.apache.logging.log4j.MarkerManager;
 import org.springframework.web.socket.TextMessage;
+import org.springframework.web.socket.WebSocketSession;
 import ru.avito.model.AuthModel;
 import ru.avito.model.AuthorizedUsers;
 import ru.avito.model.CallModel;
@@ -40,7 +41,7 @@ public class OktellListener  implements WebDebugLogger{
     @Path("savecallrecord")
     @Produces(MediaType.TEXT_PLAIN)
 
-    public String saveCallRecord(
+    public String saveCallRecord( // TODO не надо так...
               @QueryParam("Bstr") String oktell_login
             , @QueryParam("IDChain") String chain_id
             , @QueryParam("IDConn") String com_id
@@ -53,10 +54,10 @@ public class OktellListener  implements WebDebugLogger{
         CallRecord record = new CallRecord(oktell_login, chain_id, com_id, astr, timeStart, timeStop, reasonStart);
         ServerResponse response = new ServerResponse();
 
-        this.debugLog(CALLS_PUT, String.format("Incoming data call.\r\n Params: %s", record));
+        LOG.info(CALLS_PUT, String.format("Incoming data call.\r\n Params: %s", record));
 
         try {
-            switch (reasonStart){
+            switch (reasonStart){ //TODO тут тоже бы что-то сделать...
 
                 case 1:
                     this.debugLog(CALLS_PUT, this.logMessage(1, record));
@@ -111,7 +112,7 @@ public class OktellListener  implements WebDebugLogger{
     }
 
 
-    private String logMessage(int caseId, CallRecord record){
+    private String logMessage(int caseId, CallRecord record){ // TODO используется в кейсах. Может можно сделать лучше?
         return String.format("Data HashCode: #%s,\r\n CASE %s:, try to save data call %s:\r\n",
                                 record.hashCode(), caseId, record);
     }
@@ -119,11 +120,12 @@ public class OktellListener  implements WebDebugLogger{
     private void sendMessageToUser(int userId, int caseId, String oktellLogin, String chainId){
 
             this.debugLog(CALLS_PUT, String.format("CASE %s: Sending message to agent %s...", caseId, oktellLogin));
-            //WebSocketConnections.getInstance().sendMessageToUser(userId, chainId, oktellLogin);
+            WebSocketConnections.getInstance().sendMessageToUser(userId, chainId, oktellLogin);
         try {
             LOG.debug(webSocketSessions);
-            LOG.debug(webSocketSessions.get(userId).isOpen());
+            LOG.debug(webSocketSessions.get(userId));
             webSocketSessions.get(userId).sendMessage(new TextMessage("Exist empty calls"));
+
         } catch (Exception e) {
             LOG.debug(e.getMessage());
             LOG.debug(e.getCause());
@@ -131,7 +133,7 @@ public class OktellListener  implements WebDebugLogger{
     }
 
     @Override
-    public void debugLog(Marker marker, String message) {
+    public void debugLog(Marker marker, String message) { //TODO копипаста во всех DAO-классах где есть статик методы
         if(LOG.isDebugEnabled())
             LOG.debug(marker, message);
     }
