@@ -5,8 +5,7 @@
     <title>Авторизация</title>
     <link href="${pageContext.request.contextPath}/resources/css/bootstrap.min.css" rel="stylesheet">
     <link href="${pageContext.request.contextPath}/resources/css/signin.css" rel="stylesheet">
-    <link rel="icon" href="${pageContext.request.contextPath}/resources/favicon-32x32.png">
-    <%--<%response.sendRedirect("http://www.mydomain.com/somethingelse/index.jsp");%>--%>
+    <link rel="icon" href="${pageContext.request.contextPath}/resources/img/favicon.ico">
 </head>
 
 
@@ -14,7 +13,7 @@
 <div class="container">
     <div class="row">
         <div class="col-sm-6 col-md-4 col-md-offset-4">
-            <form class="form-signin" name="form_login" action="/avito/j_spring_security_check" method="post">
+            <form class="form-signin" name="form_login" action="${pageContext.request.contextPath}/j_spring_security_check" method="post">
                 <h2 class="form-signin-heading">Авторизация</h2>
                 <c:if test ="${not empty error}">
                     ${error}

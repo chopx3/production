@@ -1,22 +1,19 @@
 <%@ page language="java" contentType="text/html; charset=Cp1251" pageEncoding="Cp1251"%>
-<%@ page import="java.io.*,java.util.*" %>
-<% String DirPath = "/avito"; %> 
-<% String DirPath2 = "${pageContext.request.contextPath}"; %> 
 <!DOCTYPE html>
 <html>
 <head>
     <title>fireCatcher</title>
-    <link rel="icon" href="/avito/resources/img/favicon-32.png">
+    <link rel="icon" href="${pageContext.request.contextPath}/resources/img/favicon.ico">
     <meta http-equiv="content-type" content="text/html; charset=cp1251">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 
-    <script src="<%=DirPath%>/resources/js/jquery-dateFormat.min.js"></script>
-    <script src="<%=DirPath%>/resources/js/navbar.js" charset="utf-8"></script>
+    <script src="${pageContext.request.contextPath}/resources/js/jquery-dateFormat.min.js"></script>
+    <script src="${pageContext.request.contextPath}/resources/js/navbar.js" charset="utf-8"></script>
     <link rel="stylesheet" type="text/css" href="/avito/resources/css/sidebar.css">
-    <script src="<%=DirPath%>/resources/js/webSocket.js"></script>
+    <script src="${pageContext.request.contextPath}/resources/js/webSocket.js"></script>
     <link href="https://gitcdn.github.io/bootstrap-toggle/2.2.2/css/bootstrap-toggle.min.css" rel="stylesheet">
     <script src="https://gitcdn.github.io/bootstrap-toggle/2.2.2/js/bootstrap-toggle.min.js"></script>
 
@@ -34,7 +31,7 @@
             <li><a href="#" id="notes">Заметки<span class="glyphicon glyphicon-triangle-right glyph pull-right" aria-hidden="true" id="glyphNote"></span> </a></li>
             <li><a href="#" id="feedback">Feedback</a></li>
             <li><a href="#" id="oktell">Oktell</a></li>
-            <li><a href="/avito/j_spring_security_logout" id="logout">Выйти</a></li>
+            <li><a href="${pageContext.request.contextPath}/j_spring_security_logout" id="logout">Выйти</a></li>
             <label id="websocketStatus">Статус </label>
         </ul>
     </div>
@@ -190,10 +187,10 @@
                         <input type="checkbox" name="feedTags" id="item_add" autocomplete="off" value="item_add"> Подача и редактирование
                     </label>
                     <label class="btn btn-warning-2 col-lg-2" id="feed-tag-8">
-                        <input type="checkbox" name="feedTags" id="item_feedback" autocomplete="off" value="item_feedback"> Отзывы
+                        <input type="checkbox" name="feedTags" id="item_review" autocomplete="off" value="item_review"> Отзывы
                     </label>
                     <label class="btn btn-warning-2 col-lg-2" id="feed-tag-9">
-                        <input type="checkbox" name="feedTags" id="item_lf" autocomplete="off" value="item_lf"> LF VAS
+                        <input type="checkbox" name="feedTags" id="item_lf" autocomplete="off" value="item_lf_vas"> LF VAS
                     </label>
                 </div>
             </div>

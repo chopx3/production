@@ -3,16 +3,28 @@
 var webSocketHost = "192.168.9.207:8080/avito";
 var websocket;
 var websocketUrl = "ws://"+webSocketHost+"/websocket/start";
+var wsCount = 0;
 
 
 startConnection();
 
 function startConnection() {
     websocket = new WebSocket(websocketUrl);
+        websocket.onopen = function () {
+            online();
+        }
 }
 
 function sendWebSocketMessage(message){
-    websocket.send(message)
+    if(websocket.readyState === 1){
+    websocket.send(message);
+        wsCount=0
+    } else {
+        console.log("connect to websocket...")
+        setTimeout(function () {
+                sendWebSocketMessage(message)
+        }, 1000);
+    }
 }
 
 websocket.onerror = function (err) {
@@ -26,25 +38,22 @@ websocket.onclose = function () {
 
 function getWebsocketMessage(callback){
     websocket.onmessage = function (webSocketMessage) {
-
         switch (webSocketMessage.data){
-
             case "ok":
+                online();
                 websocket.send("ping");
                 break;
             case "Exist empty calls": showMyEmptyCalls();
                 break;
             case "pong":
                 online();
+                console.log("pong");
                 break;
             default: callback(JSON.parse(webSocketMessage.data));
                 break;
         }
     }
 }
-
-
-
 function online() {
 		$("#websocketStatus").text("Online");
             console.log("ok")

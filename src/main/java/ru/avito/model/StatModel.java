@@ -1,5 +1,6 @@
 package ru.avito.model;
 
+import com.google.gson.Gson;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.apache.logging.log4j.Marker;
@@ -10,6 +11,7 @@ import ru.avito.datasource.DBConnection;
 
 import java.sql.Connection;
 import java.sql.SQLException;
+import java.util.ArrayList;
 
 import static ru.avito.jooqdbmodel.Tables.*;
 
@@ -31,7 +33,7 @@ public class StatModel {
 
         try (Connection conn = DBConnection.getDataSource().getConnection()) {
 
-            String callsByCategoryAsHTML = DSL.using(conn, SQLDialect.MYSQL)
+            String callsByCategoryAsJSON = DSL.using(conn, SQLDialect.MYSQL)
                     .select(SHOP_CATEGORY.DESCRIPTION.as("Shop_Category"),
                             CALLS.CHAIN_ID.countDistinct().as("Calls"))
                     .from((TableLike<?>) CALLS.join(SHOP_CATEGORY))
@@ -41,13 +43,13 @@ public class StatModel {
                     .groupBy(CALLS.SHOP_CATEGORY_ID)
                     .orderBy(CALLS.CHAIN_ID.countDistinct().desc())
                     .fetch()
-                    .formatHTML();
+                    .formatJSON();
 
             debugLog(SQL_QUERY_STAT,String.format(
                     "get stat by period from %s to %s for categories, \r\n results: %s",
-                    from,to,callsByCategoryAsHTML));
+                    from,to,callsByCategoryAsJSON));
 
-            return callsByCategoryAsHTML;
+            return callsByCategoryAsJSON;
         }
     }
 
@@ -58,7 +60,7 @@ public class StatModel {
 
             DSLContext create = DSL.using(conn, SQLDialect.MYSQL);
 
-            String callsByUserAsHTML = create
+            String callsByUserAsJSON = create
                     .select(SHOP_CATEGORY.DESCRIPTION.as("Shop_Category"),
                             CALLS.AVITO_LINK.as("User ID"),
                             CALLS.CHAIN_ID.countDistinct().as("Calls"))
@@ -72,9 +74,9 @@ public class StatModel {
 
             debugLog(SQL_QUERY_STAT,String.format(
                     "get stat by period from %s to %s for users, \r\n results: %s",
-                    from,to,callsByUserAsHTML));
+                    from,to,callsByUserAsJSON));
 
-            return callsByUserAsHTML;
+            return callsByUserAsJSON;
         }
     }
 
@@ -83,7 +85,7 @@ public class StatModel {
 
         try (Connection conn = DBConnection.getDataSource().getConnection()) {
 
-            String callsByManagerAsHTML = DSL.using(conn, SQLDialect.MYSQL)
+            String callsByManagerAsJSON = DSL.using(conn, SQLDialect.MYSQL)
                     .select(SHOP_CATEGORY.DESCRIPTION.as("Shop_category"),
                             CALLS.CHAIN_ID.countDistinct().as("Manager_calls"))
                     .from((TableLike<?>) CALLS.join(SHOP_CATEGORY))
@@ -93,13 +95,13 @@ public class StatModel {
                     .groupBy(SHOP_CATEGORY.DESCRIPTION)
                     .orderBy(CALLS.CHAIN_ID.countDistinct().desc())
                     .fetch()
-                    .formatHTML();
+                    .formatJSON();
 
             debugLog(SQL_QUERY_STAT,String.format(
                     "get stat by period from %s to %s for managers, \r\n results: %s",
-                    from,to,callsByManagerAsHTML));
+                    from,to,callsByManagerAsJSON));
 
-            return callsByManagerAsHTML;
+            return callsByManagerAsJSON;
         }
     }
 
@@ -109,7 +111,7 @@ public class StatModel {
         try (Connection conn = DBConnection.getDataSource().getConnection()) {
 
 
-            String callsByQuestAsHTML = DSL.using(conn, SQLDialect.MYSQL)
+            String callsByQuestAsJSON = DSL.using(conn, SQLDialect.MYSQL)
                     .select(QUESTION.DESCRIPTION.as("Question"),
                             CALLS.CHAIN_ID.countDistinct().as("Calls"))
                     .from((TableLike<?>) CALLS.join(QUESTION))
@@ -118,13 +120,13 @@ public class StatModel {
                     .groupBy(CALLS.QUESTION_ID)
                     .orderBy(CALLS.CHAIN_ID.countDistinct().desc())
                     .fetch()
-                    .formatHTML();
+                    .formatJSON();
 
             debugLog(SQL_QUERY_STAT,String.format(
                     "get stat by period from %s to %s for questions, \r\n results: %s",
-                    from,to,callsByQuestAsHTML));
+                    from,to,callsByQuestAsJSON));
 
-            return callsByQuestAsHTML;
+            return callsByQuestAsJSON;
         }
     }
 
@@ -134,7 +136,7 @@ public class StatModel {
         try (Connection conn = DBConnection.getDataSource().getConnection()) {
 
 
-           String callsByOutcomingAsHTML = DSL.using(conn, SQLDialect.MYSQL)
+           String callsByOutcomingAsJSON = DSL.using(conn, SQLDialect.MYSQL)
                     .select(SHOP_CATEGORY.DESCRIPTION.as("Shop category"),
                             CALLS.IS_OUT.count().as("Outcoming calls"))
                     .from((TableLike<?>) CALLS.join(SHOP_CATEGORY))
@@ -144,21 +146,23 @@ public class StatModel {
                     .groupBy(CALLS.SHOP_CATEGORY_ID)
                     .orderBy(CALLS.IS_OUT.count().desc())
                     .fetch()
-                    .formatHTML();
+                    .formatJSON();
 
             debugLog(SQL_QUERY_STAT,String.format(
                     "get stat by period from %s to %s for outcoming, \r\n results: %s",
-                    from,to,callsByOutcomingAsHTML));
+                    from,to,callsByOutcomingAsJSON));
 
-            return callsByOutcomingAsHTML;
+            return callsByOutcomingAsJSON;
         }
     }
 
     public static String getEmptyCallsByAgent(Long from, Long to) throws SQLException {
 
+        ArrayList<String> response = new ArrayList<>();
+
         try(Connection conn = DBConnection.getDataSource().getConnection()) {
 
-            String emptyCallsAsHTML = DSL.using(conn, SQLDialect.MYSQL)
+            String emptyCallsAsJSON = DSL.using(conn, SQLDialect.MYSQL)
                     .select(USERS.OKTELL_LOGIN.as("Agent name"),
                             CALLS.CHAIN_ID.countDistinct().as("Empty calls"))
                     .from((TableLike<?>) CALLS.join(USERS))
@@ -168,9 +172,9 @@ public class StatModel {
                     .groupBy(CALLS.USER_ID)
                     .orderBy(CALLS.CHAIN_ID.countDistinct().desc())
                     .fetch()
-                    .formatHTML();
+                    .formatJSON();
 
-            String totalCallsAsHTML = DSL.using(conn, SQLDialect.MYSQL)
+            String totalCallsAsJSON = DSL.using(conn, SQLDialect.MYSQL)
                     .select(USERS.OKTELL_LOGIN.as("Agent name"),
                             CALLS.CHAIN_ID.countDistinct().as("Total calls"))
                     .from((TableLike<?>) CALLS.join(USERS))
@@ -179,15 +183,16 @@ public class StatModel {
                     .groupBy(CALLS.USER_ID)
                     .orderBy(CALLS.CHAIN_ID.countDistinct().desc())
                     .fetch()
-                    .formatHTML();
+                    .formatJSON();
 
-            String result = emptyCallsAsHTML+totalCallsAsHTML;
+                 response.add(emptyCallsAsJSON);
+                 response.add(totalCallsAsJSON);
 
             debugLog(SQL_QUERY_STAT,String.format(
                     "get stat by period from %s to %s for emptycalls, \r\n results: %s",
-                    from,to, result));
+                    from,to, response));
 
-            return result;
+            return new Gson().toJson(response);
         }
     }
 
