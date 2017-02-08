@@ -1,6 +1,6 @@
 /* */
 #wrapper{
-	min-width:950px;
+	opacity: 1;
 }
 #HeaderText
 {
@@ -12,6 +12,14 @@ input[type=number]::-webkit-outer-spin-button {
 	-moz-appearance: none;
 	appearance: none;
 	margin: 0;
+}
+.glyph
+{
+	margin-top:17px;
+}
+#MainForm
+{
+	top:1vh;
 }
 .breakable
 {
@@ -27,13 +35,10 @@ input[type=number]::-webkit-outer-spin-button {
 	overflow: auto;
 	resize:none;
 }
-#MainForm
-{
-	padding : none !important;
-}
+
 .table-scroll
 {
-	max-height: 360px;
+	max-height: 57vh;
 	overflow: auto;
 	margin: 0 0 20px;
 	max-width: 750px;
@@ -54,20 +59,65 @@ input[type=number]::-webkit-outer-spin-button {
 	border:#333 solid 1px;
 	color: #ffffff !important;
 }
-
+#noteForm
+{
+	z-index: 1;
+	position: fixed;
+	overflow-y: hidden;
+	top:1vh;	
+	width: 0vw;
+	display:none;
+	left: 170px;
+}
+#noteForm.Add
+{
+	display: block;
+	width: 30vw;
+	background : white;
+	height: 99vh;
+	border: 1px dashed lightblue;
+	border-radius : 10px;
+	z-index : 1;
+}
+#commentForm
+{
+	z-index: 1;
+	position: fixed;
+	overflow-y: hidden;
+	top:1vh;	
+	width: 0vw;
+	display:none;
+	left: 170px;
+}
+#commentForm.Add
+{
+	display: block;
+	width: 30vw;
+	overflow-y: hidden; 
+	overflow-x: hidden; 
+	background : white;
+	height: 99vh;
+	border: 1px dashed lightblue;
+	border-radius : 10px;
+	z-index : 1;
+}
+#noteArea
+{
+	resize:none;
+	overflow:auto;
+	height: 89vh;
+	opacity:1 !important; 
+}
 #sidebar-wrapper
 {
 	z-index: 1;
 	position: fixed;
-	min-width: 200px;
+	width: 165px;
 	height: 100%;
 	overflow-y: hidden;
 	background: #2c3e50;
 	opacity: 0.9;
-}
-#sidebar-wrapper
-{
-	background: #2c3e50;
+	display: inline-block;
 }
 #Hello h1
 {
@@ -75,7 +125,10 @@ input[type=number]::-webkit-outer-spin-button {
 	font-family: 'Segoe UI', Tahoma, sans-serif;
 	font-size: 48px;
 }
-
+h1
+{
+	font-size:25px;
+}
 #websocketStatus
 {
 	color:green;
@@ -87,10 +140,9 @@ input[type=number]::-webkit-outer-spin-button {
 {
 	display:table;
 }
-#IDforInfo, #IDSubmit
+#IDforInfo
 {
-	display:table-cell;
-
+	z-index : 0;
 }
 #JsonText
 {
@@ -110,12 +162,12 @@ input[type=number]::-webkit-outer-spin-button {
 	position: fixed;
 	overflow-y: hidden;
 	right:1%;
-	top:12%;
+	top:12vh;
 	display:none;
 	max-width:33%;
 }
 .history, #divAddButton {
-	margin: 8px 12px;
+	margin: 8px 0px;
 	padding:6px;
 	background-color:lightblue;
 	border-radius: 5px;
@@ -135,22 +187,21 @@ input[type=number]::-webkit-outer-spin-button {
 .history-info {
 	font-size: 14px;
 }
-
-
-
 #page-content-wrapper
 {
 	width: 100%;
 	position: absolute;
 	padding: 5px;
-	padding-left:200px;
+	padding-left:165px;
 }
-
+#page-content-wrapper.Add
+{
+	padding-left: calc(150px + 23vw);
+}
 #page-content-wrapper #CallForm
 {
 	display: none;
 }
-
 #page-content-wrapper #CallForm.inactive
 {
 	display: inline;
@@ -193,8 +244,8 @@ div.woop
 	z-index: 1;
 	position: fixed;
 	overflow-y: hidden;
-	right:1%;
-	top:1%;
+	right:2%;
+	top:12vh;
 	display:none;
 	max-width:33%;
 }
@@ -228,5 +279,7 @@ audio
 	text-align: left;
 	margin: 10px auto 0 auto;
 	width: 100%;
-	min-width:500px;
+	width:40vw;
+	max-width: 550px;
+	min-width:320px;
 }

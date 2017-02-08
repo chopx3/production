@@ -6,7 +6,10 @@
     <link href="${pageContext.request.contextPath}/resources/css/bootstrap.min.css" rel="stylesheet">
     <link href="${pageContext.request.contextPath}/resources/css/signin.css" rel="stylesheet">
     <link rel="icon" href="${pageContext.request.contextPath}/resources/favicon-32x32.png">
+    <%--<%response.sendRedirect("http://www.mydomain.com/somethingelse/index.jsp");%>--%>
 </head>
+
+
 <body>
 <div class="container">
     <div class="row">

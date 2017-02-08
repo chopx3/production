@@ -64,6 +64,13 @@ public class Users extends TableImpl<UsersRecord> {
     public final TableField<UsersRecord, String> OKTELL_LOGIN = createField("oktell_login", org.jooq.impl.SQLDataType.VARCHAR.length(50), this, "");
 
     /**
+     * The column <code>avito.users.oktell_login</code>.
+     */
+    public final TableField<UsersRecord, String> NOTES = createField("notes", org.jooq.impl.SQLDataType.VARCHAR.length(10000), this, "");
+
+
+
+    /**
      * Create a <code>avito.users</code> table reference
      */
     public Users() {

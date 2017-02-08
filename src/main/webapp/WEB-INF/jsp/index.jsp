@@ -1,19 +1,22 @@
 <%@ page language="java" contentType="text/html; charset=Cp1251" pageEncoding="Cp1251"%>
+<%@ page import="java.io.*,java.util.*" %>
+<% String DirPath = "/avito"; %> 
+<% String DirPath2 = "${pageContext.request.contextPath}"; %> 
 <!DOCTYPE html>
 <html>
 <head>
-    <title>BulkaPro</title>
-    <link rel="icon" href="/avito/resources/img/favicon-32x32.png">
+    <title>fireCatcher</title>
+    <link rel="icon" href="/avito/resources/img/favicon-32.png">
     <meta http-equiv="content-type" content="text/html; charset=cp1251">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 
-    <script src="${pageContext.request.contextPath}/resources/js/jquery-dateFormat.min.js"></script>
-    <script src="${pageContext.request.contextPath}/resources/js/navbar.js" charset="utf-8"></script>
+    <script src="<%=DirPath%>/resources/js/jquery-dateFormat.min.js"></script>
+    <script src="<%=DirPath%>/resources/js/navbar.js" charset="utf-8"></script>
     <link rel="stylesheet" type="text/css" href="/avito/resources/css/sidebar.css">
-    <script src="${pageContext.request.contextPath}/resources/js/webSocket.js"></script>
+    <script src="<%=DirPath%>/resources/js/webSocket.js"></script>
     <link href="https://gitcdn.github.io/bootstrap-toggle/2.2.2/css/bootstrap-toggle.min.css" rel="stylesheet">
     <script src="https://gitcdn.github.io/bootstrap-toggle/2.2.2/js/bootstrap-toggle.min.js"></script>
 
@@ -25,17 +28,17 @@
 
     <div id="sidebar-wrapper">
         <ul class="sidebar-nav container-fluid">
-            <li><a href="#" id="my_calls"> Мои звонки </a></li>
-            <li><a href="#" id="user_calls"> Звонки пользователя </a></li>
-            <li><a href="#" id="comments"> Комментарии </a></li>
-            <li><a href="#" id="notes"> Заметки </a></li>
-            <li><a href="#" id="feedback"> Feedback </a></li>
-            <li><a href="#" id="oktell"> Oktell </a></li>
-            <li><a href="/avito/j_spring_security_logout" id="logout"> Выйти </a></li>
-            <label id="websocketStatus"> Статус </label>
+            <li><a href="#" id="my_calls">Мои звонки</a></li>
+            <li><a href="#" id="user_calls">Звонки клиента</a></li>
+            <li><a href="#" id="comments">Комментарии<span class="glyphicon glyphicon-triangle-right glyph pull-right" aria-hidden="true" id="glyphCom"></span></a></li>
+            <li><a href="#" id="notes">Заметки<span class="glyphicon glyphicon-triangle-right glyph pull-right" aria-hidden="true" id="glyphNote"></span> </a></li>
+            <li><a href="#" id="feedback">Feedback</a></li>
+            <li><a href="#" id="oktell">Oktell</a></li>
+            <li><a href="/avito/j_spring_security_logout" id="logout">Выйти</a></li>
+            <label id="websocketStatus">Статус </label>
         </ul>
     </div>
-
+	
     <div id="SubForm" class="form-group col-lg-4 container-fluid">
         <div class="row">
 
@@ -52,20 +55,20 @@
 
         <div class="row">
             <div class="btn-group col-lg-12" data-toggle="buttons" id="catButtonGroup">
-                <label class="btn btn-primary col-lg-4" id="label-cat-1">
-                    <input type="radio" name="category" id="cat-1" autocomplete="off"> Недвижимость
+                <label class="btn btn-primary col-lg-3" id="label-cat-1" >
+                    <input type="radio" name="category" id="cat-1" autocomplete="off" value="1">Недвиж-ть
                 </label>
-                <label class="btn btn-primary col-lg-2" id="label-cat-2">
-                    <input type="radio" name="category" id="cat-2" autocomplete="off"> Авто
+                <label class="btn btn-primary col-lg-3" id="label-cat-2">
+                    <input type="radio" name="category" id="cat-2" autocomplete="off" value="2"> Транспорт
                 </label>
                 <label class="btn btn-primary col-lg-2" id="label-cat-3">
-                    <input type="radio" name="category" id="cat-3" autocomplete="off"> Работа
+                    <input type="radio" name="category" id="cat-3" autocomplete="off" value="3"> Работа
                 </label>
                 <label class="btn btn-primary col-lg-2" id="label-cat-4">
-                    <input type="radio" name="category" id="cat-4" autocomplete="off"> Услуги
+                    <input type="radio" name="category" id="cat-4" autocomplete="off" value="4"> Услуги
                 </label>
                 <label class="btn btn-primary col-lg-2" id="label-cat-5">
-                    <input type="radio" name="category" id="cat-5" autocomplete="off"> Gen
+                    <input type="radio" name="category" id="cat-5" autocomplete="off" value="5"> Gen
                 </label>
             </div>
         </div>
@@ -75,28 +78,28 @@
         <div class="row">
             <div class="btn-group col-lg-12" data-toggle="buttons" id="questButtonGroup">
                 <label class="btn btn-primary col-lg-3" id="label-quest-1">
-                    <input type="radio" name="question" id="quest-1" autocomplete="off"> Блокировки
+                    <input type="radio" name="question" id="quest-1" autocomplete="off" value="1"> Блокировки
                 </label>
                 <label class="btn btn-primary col-lg-3" id="label-quest-2">
-                    <input type="radio" name="question" id="quest-2" autocomplete="off"> Платные
+                    <input type="radio" name="question" id="quest-2" autocomplete="off" value="2"> Платные
                 </label>
                 <label class="btn btn-primary col-lg-3" id="label-quest-3">
-                    <input type="radio" name="question" id="quest-3" autocomplete="off"> Автозагрузка
+                    <input type="radio" name="question" id="quest-3" autocomplete="off" value="3"> Автозагрузка
                 </label>
                 <label class="btn btn-primary col-lg-3" id="label-quest-4">
-                    <input type="radio" name="question" id="quest-4" autocomplete="off"> Технические
+                    <input type="radio" name="question" id="quest-4" autocomplete="off" value="4"> Технические
                 </label>
                 <label class="btn btn-primary col-lg-3" id="label-quest-5">
-                    <input type="radio" name="question" id="quest-5" autocomplete="off"> Другие
+                    <input type="radio" name="question" id="quest-5" autocomplete="off" value="5"> Другие
                 </label>
                 <label class="btn btn-primary col-lg-3" id="label-quest-6">
-                    <input type="radio" name="question" id="quest-6" autocomplete="off"> Жалобы
+                    <input type="radio" name="question" id="quest-6" autocomplete="off" value="6"> Жалобы
                 </label>
                 <label class="btn btn-primary col-lg-3" id="label-quest-7">
-                    <input type="radio" name="question" id="quest-7" autocomplete="off"> Рекламные
+                    <input type="radio" name="question" id="quest-7" autocomplete="off" value="7"> Рекламные
                 </label>
                 <label class="btn btn-primary col-lg-3" id="label-quest-8">
-                    <input type="radio" name="question" id="quest-8" autocomplete="off"> Несколько
+                    <input type="radio" name="question" id="quest-8" autocomplete="off" value="8"> Несколько
                 </label>
 
             </div>
@@ -111,7 +114,7 @@
 
                 </div>
                 <div class="btn-group" data-toggle="buttons" id="sendDataButtonDiv">
-                    <button type="button" id="sendDataButton" class="btn btn-success">Отправить</button>
+                    <button type="button" id="sendDataButton" class="btn btn-success" value="addTags">Отправить</button>
                 </div>
                 <div id="2299CSS" class="btn-group pull-right" data-toggle="buttons">
                     <button type="button" id="2299" class="btn btn-danger">Частник</button>
@@ -130,7 +133,7 @@
                         <input type="checkbox" id="tag-2" name="addTags" autocomplete="off" value="vas"> Vas
                     </label>
                     <label class="btn btn-warning-2" id="label-tag-3">
-                        <input type="checkbox" id="tag-3" name="addTags" autocomplete="off" value="subs"> Subscription
+                        <input type="checkbox" id="tag-3" name="addTags" autocomplete="off" value="subs"> Подписка
                     </label>
                     <label class="btn btn-warning-2" id="label-tag-4">
                         <input type="checkbox" id="tag-4" name="addTags" autocomplete="off" value="feedback"> Feedback
@@ -149,98 +152,70 @@
     <!-- Feedback -->
     <div id="FeedbackForm" class="form-group col-lg-5 container-fluid">
         <div class="row">
-            <label>Вертикаль вопроса</label>
-            <div class="btn-group col-lg-12" data-toggle="buttons" id="feedback-catButtonGroup">
-                <div class="row">
-                    <label class="btn btn-primary col-lg-4" id="feed-cat-1">
-                        <input type="radio" name="feed-cat" id="radio-feed-cat-1" autocomplete="off"> Все категории
-                    </label>
-                    <label class="btn btn-primary col-lg-4" id="feed-cat-2">
-                        <input type="radio" name="feed-cat" id="radio-feed-cat-2" autocomplete="off"> Недвижимость
-                    </label>
-                    <label class="btn btn-primary col-lg-4" id="feed-cat-3">
-                        <input type="radio" name="feed-cat" id="radio-feed-cat-3" autocomplete="off"> Авто
-                    </label>
-                </div>
-                <div class="row">
-
-                    <label class="btn btn-primary col-lg-4" id="feed-cat-3">
-                        <input type="radio" name="feed-cat" id="radio-feed-cat-4" autocomplete="off"> Работа
-                    </label>
-                    <label class="btn btn-primary col-lg-4" id="feed-cat-5">
-                        <input type="radio" name="feed-cat" id="radio-feed-cat-5" autocomplete="off"> Услуги
-                    </label>
-                    <label class="btn btn-primary col-lg-4" id="feed-cat-6">
-                        <input type="radio" name="feed-cat" id="radio-feed-cat-6" autocomplete="off"> Gen
-                    </label>
-                </div>
-            </div>
-        </div>
-        <div class="row">
-            <label>Тэги по категориям</label>
+            <label id="TagLabel">Тэги по категориям</label>
         </div>
         <div class="btn-group col-lg-12" name="feedback-tags" data-toggle="buttons" id="feedback-tagButtonGroup">
             <div class="row">
                 <label>Инфологическая модель</label>
                 <div class="row">
-                    <label class="btn btn-primary col-lg-6" id="feed-tag-1">
-                        <input type="checkbox" name="feed-tag" id="model_geo" autocomplete="off"> Добавить регион или город
+                    <label class="btn btn-warning-2 col-lg-6" id="feed-tag-1">
+                        <input type="checkbox" name="feedTags" id="model_geo" autocomplete="off" value="model_geo"> Добавить регион или город
                     </label>
-                    <label class="btn btn-primary col-lg-6" id="feed-tag-2">
-                        <input type="checkbox" name="feed-tag" id="model_cat" autocomplete="off"> Добавить категорию
+                    <label class="btn btn-warning-2 col-lg-6" id="feed-tag-2">
+                        <input type="checkbox" name="feedTags" id="model_cat" autocomplete="off" value="model_cat"> Добавить категорию
                     </label>
                 </div>
             </div>
             <div class="row">
                 <label>Поиск на сайте</label>
                 <div class="row">
-                    <label class="btn btn-primary col-lg-3" id="feed-tag-3">
-                        <input type="checkbox" name="feed-tag" id="search_filters" autocomplete="off"> Фильтры
+                    <label class="btn btn-warning-2 col-lg-3" id="feed-tag-3">
+                        <input type="checkbox" name="feedTags" id="search_filters" autocomplete="off" value="search_filters"> Фильтры
                     </label>
-                    <label class="btn btn-primary col-lg-3" id="feed-tag-4">
-                        <input type="checkbox" name="feed-tag" id="search_problems" autocomplete="off"> Проблемы
+                    <label class="btn btn-warning-2 col-lg-3" id="feed-tag-4">
+                        <input type="checkbox" name="feedTags" id="search_problems" autocomplete="off" value="search_problems"> Проблемы
                     </label>
-                    <label class="btn btn-primary col-lg-6" id="feed-tag-5">
-                        <input type="checkbox" name="feed-tag" id="search_favourite" autocomplete="off"> Избранное и сохраненные
+                    <label class="btn btn-warning-2 col-lg-6" id="feed-tag-5">
+                        <input type="checkbox" name="feedTags" id="search_favourite" autocomplete="off" value="search_favourite"> Избранное и сохраненные
                     </label>
                 </div>
             </div>
             <div class="row">
                 <label>Работа с объявлениями</label>
                 <div class="row">
-                    <label class="btn btn-primary col-lg-3" id="feed-tag-6">
-                        <input type="checkbox" name="feed-tag" id="item_inside" autocomplete="off"> Содержимое
+                    <label class="btn btn-warning-2 col-lg-3" id="feed-tag-6">
+                        <input type="checkbox" name="feedTags" id="item_inside" autocomplete="off" value="item_inside"> Содержимое
                     </label>
-                    <label class="btn btn-primary col-lg-5" id="feed-tag-7">
-                        <input type="checkbox" name="feed-tag" id="item_add" autocomplete="off"> Подача и редактирование
+                    <label class="btn btn-warning-2 col-lg-5" id="feed-tag-7">
+                        <input type="checkbox" name="feedTags" id="item_add" autocomplete="off" value="item_add"> Подача и редактирование
                     </label>
-                    <label class="btn btn-primary col-lg-2" id="feed-tag-8">
-                        <input type="checkbox" name="feed-tag" id="item_feedback" autocomplete="off"> Отзывы
+                    <label class="btn btn-warning-2 col-lg-2" id="feed-tag-8">
+                        <input type="checkbox" name="feedTags" id="item_feedback" autocomplete="off" value="item_feedback"> Отзывы
                     </label>
-                    <label class="btn btn-primary col-lg-2" id="feed-tag-9">
-                        <input type="checkbox" name="feed-tag" id="item_lf" autocomplete="off"> LF VAS
+                    <label class="btn btn-warning-2 col-lg-2" id="feed-tag-9">
+                        <input type="checkbox" name="feedTags" id="item_lf" autocomplete="off" value="item_lf"> LF VAS
                     </label>
                 </div>
             </div>
             <div class="row">
                 <label>Работа с сайтом</label>
                 <div class="row">
-                    <label class="btn btn-primary col-lg-5" id="feed-tag-10">
-                        <input type="checkbox" name="feed-tag" id="site_navigation" autocomplete="off"> Навигация и юзабилити
+                    <label class="btn btn-warning-2 col-lg-5" id="feed-tag-10">
+                        <input type="checkbox" name="feedTags" id="site_navigation" autocomplete="off" value="site_navigation"> Навигация и юзабилити
                     </label>
-                    <label class="btn btn-primary col-lg-3" id="feed-tag-11">
-                        <input type="checkbox" name="feed-tag" id="site_mobile" autocomplete="off"> Mobile
+                    <label class="btn btn-warning-2 col-lg-3" id="feed-tag-11">
+                        <input type="checkbox" name="feedTags" id="site_mobile" autocomplete="off" value="site_mobile"> Mobile
                     </label>
-                    <label class="btn btn-primary col-lg-4" id="feed-tag-12">
-                        <input type="checkbox" name="feed-tag" id="site_messenger" autocomplete="off"> Мессенджер
+                    <label class="btn btn-warning-2 col-lg-4" id="feed-tag-12">
+                        <input type="checkbox" name="feedTags" id="site_messenger" autocomplete="off" value="site_messenger"> Мессенджер
                     </label>
                 </div>
                 <div class="row">
-                    <label class="btn btn-primary col-lg-6" id="feed-tag-13">
-                        <input type="checkbox" name="feed-tag" id="site_safety" autocomplete="off"> Безопасность
+                    <label class="btn btn-warning-2 col-lg-6" id="feed-tag-13">
+                        <input type="checkbox" name="feedTags" id="site_safety" autocomplete="off" value="site_safety"> Безопасность
                     </label>
-                    <label class="btn btn-primary col-lg-6" id="feed-tag-14">
-                        <input type="checkbox" name="feed-tag" id="site_other" autocomplete="off"> Остальные
+                    <label class="btn btn-warning-2 col-lg-6" id="feed-tag-14">
+                        <input type="checkbox" name="feedTags" id="site_other" value="site_other" autocomplete="off"> Остальные
                     </label>
                 </div>
             </div>
@@ -248,8 +223,8 @@
             <div class="row">
                 <div class="form-group">
                     <div class="row">
-                        <label for="feedbackComment" id="serviceMessage">Поле для комментария</label>
-                        <textarea class="form-control" rows="5" id="feedbackComment"></textarea>
+                        <label for="feedbackComment" id="commentLabel">Поле для комментария</label>
+                        <textarea class="form-control" rows="5" id="feedbackComment" maxlength="2048"></textarea>
                     </div>
                 </div>
             </div>
@@ -257,45 +232,55 @@
         </div>
         <div class="btn-group" data-toggle="buttons" id="sendFeedback">
             <div class="row">
-                <button type="button" id="sendFeedbackButton" class="btn btn-success">Сохранить</button>
+				<label id="serviceFeedbackMessage"></label>
+                <button type="button" id="sendFeedbackButton" class="btn btn-success" value="feedTags">Сохранить</button>
             </div>
         </div>
     </div>
-
+	
     <div id="page-content-wrapper">
         <div class="container-fluid">
             <div class="col-lg-12">
+			
                 <h1 id="HeaderText"></h1>
                 <div class="row">
                     <div id="CallForm" class="form-group col-md-6">
-                        <div class="row">
-                            <div class="cell col-md-6" id="Cell">
-                                <div class="form-group">
-                                    <input type="number" class="form-control" id="IDforInfo" placeholder="ID учетной записи">
-                                </div>
-                            </div>
-                            <div class="cell col-md-2" id="Cell">
-                                <div id="submit" class="btn-group" data-toggle="buttons">
-                                    <button type="button" id="IDSubmit" class="btn btn-primary">GO</button>
-                                    <button type="button" id="IDSubmit" class="btn btn-primary">GO</button>
-                                </div>
-                            </div>
-                        </div>
                     </div>
                 </div>
-                <div class="row" >
+                <div class="row">
                     <p id="MainForm" class="col-lg-10">
                     <div id="Hello">
                         <h1>Здравствуй, ${username}</h1>
-                    </div>
+                    </div>				
                     </p>
                 </div>
-
             </div>
         </div>
     </div>
 </div>
-
+			<div id="noteForm" class="form-group col-lg-3">
+				<div class="row">
+					<h1>Заметки</h1>
+				</div>
+				<div class="row">
+					<textarea class="form-control" id="noteArea" maxlength="2048"></textarea>
+				</div>
+			</div>
+			<div id="commentForm" class="form-group col-lg-3">
+				<div class="row ">
+					<h1>Комментарии</h1>
+				</div>
+				<div class="row">
+					
+						<div class="input-group goButton">
+							<input type="number" class="form-control" id="IDforComments" placeholder="ID учетной записи" autofocus>
+							<span class="input-group-addon btn btn-success" id="IDSubmitComments" onclick=getComments()>GO</span>
+						</div>
+					
+				</div>
+				<div class="row" id="forComments">
+				</div>
+			</div>
 <script>
     (function() {
         document.getElementById("oktell").onclick = function() {

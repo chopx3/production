@@ -89,6 +89,37 @@ public class CommentsModel {
         }
     }
 
+    public static void putNotes(int agentId, String text)
+            throws SQLException {
+
+        try (Connection conn = DBConnection.getDataSource().getConnection()) {
+
+            DSL.using(conn)
+                    .update(USERS)
+                    .set(USERS.NOTES, text)
+                    .where(USERS.ID.eq(agentId))
+                    .execute();
+        }
+    }
+
+    public static String getNotes(int agentId)
+            throws SQLException {
+
+        try (Connection conn = DBConnection.getDataSource().getConnection()) {
+
+            String notesAsJSON = DSL.using(conn)
+                    .select(USERS.NOTES)
+                    .from(USERS)
+                    .where(USERS.ID.eq(agentId))
+                    .fetch()
+                    .formatJSON();
+            return notesAsJSON;
+        }
+    }
+
+
+
+
     private static void debugLog(Marker marker, String message) {
 
         if(LOG.isDebugEnabled())
