@@ -1,6 +1,5 @@
 package ru.avito.model;
 
-import com.google.gson.Gson;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.apache.logging.log4j.Marker;
@@ -9,16 +8,15 @@ import org.jooq.*;
 
 import org.jooq.impl.DSL;
 import ru.avito.datasource.DBConnection;
+import ru.avito.factory.EmptyCallAsJson;
 
 import java.io.IOException;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 import static ru.avito.jooqdbmodel.Tables.CALLS;
 import static ru.avito.jooqdbmodel.Tables.USERS;

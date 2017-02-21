@@ -1,6 +1,6 @@
 package ru.avito.model;
 
-import com.google.gson.Gson;
+import ru.avito.factory.JsonFactory;
 
 /**
  * Created by Dmitriy on 03.12.2016.

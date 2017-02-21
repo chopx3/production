@@ -14,7 +14,6 @@ import java.io.*;
 import java.sql.SQLException;
 
 import static ru.avito.model.CallModel.*;
-import static ru.avito.model.JsonFactory.*;
 
 
 /**

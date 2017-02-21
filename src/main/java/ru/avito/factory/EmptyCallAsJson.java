@@ -1,6 +1,7 @@
-package ru.avito.model;
+package ru.avito.factory;
 
 import com.google.gson.Gson;
+import ru.avito.model.EmptyCall;
 
 import java.time.LocalDateTime;
 import java.time.ZoneId;

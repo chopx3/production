@@ -55,9 +55,9 @@
 
                         <li>
                             <label>
-                                <input type="checkbox" data-url="http://web_api:s7cgr3Ev@192.168.3.10:4055/download/byscript?name=Avito_get_file_by_id_conn&startparam1=E72B90CD-7580-4126-8AB3-6B532B6E214E&attachment=1" />
+                                <input type="checkbox" data-url="E72B90CD-7580-4126-8AB3-6B532B6E214E.mp3" />
                                 record
-                                <audio src="http://web_api:s7cgr3Ev@192.168.3.10:4055/download/byscript?name=Avito_get_file_by_id_conn&startparam1=E72B90CD-7580-4126-8AB3-6B532B6E214E&attachment=1" controls/>
+                                <audio src="http://192.168.10.120/calls?name=Avito_get_file_by_id_conn&startparam1=E72B90CD-7580-4126-8AB3-6B532B6E214E&attachment=1" controls/>
                             </label>
                         </li>
 

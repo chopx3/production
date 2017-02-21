@@ -81,10 +81,10 @@
         function showFeedback(){
             var recordsByComId;
 //            var host = "http://192.168.11.87:8085/shoptracker";
-            var host = "http://192.168.10.132:8080/avito";
+            var host = "http://192.168.10.49/avito";
             document.getElementById("message").innerHTML = getPeriod() + ' (Feedback) ';
             var x = new XMLHttpRequest();
-            x.open("GET", host+"/rest/call/feedback/get?tags=feedback|vas​", true);
+            x.open("GET", host+"/rest/call/feedback/all/get?tags=feedback|vas​", true);
             x.onload = function() {
                 document.getElementById("message").innerHTML = getPeriod() + ' (Feedback) ';
                 document.getElementById("response").innerHTML = x.responseText;

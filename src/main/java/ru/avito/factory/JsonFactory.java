@@ -1,4 +1,4 @@
-package ru.avito.model;
+package ru.avito.factory;
 
 import com.google.gson.Gson;
 

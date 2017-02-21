@@ -1,4 +1,6 @@
-package ru.avito.model;
+package ru.avito.factory;
+
+import ru.avito.model.FeedbackCall;
 
 import java.time.LocalDateTime;
 import java.time.ZoneId;

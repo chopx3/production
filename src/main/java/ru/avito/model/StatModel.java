@@ -70,7 +70,7 @@ public class StatModel {
                     .groupBy(CALLS.AVITO_LINK)
                     .orderBy(CALLS.CHAIN_ID.countDistinct().desc())
                     .fetch()
-                    .formatHTML();
+                    .formatJSON();
 
             debugLog(SQL_QUERY_STAT,String.format(
                     "get stat by period from %s to %s for users, \r\n results: %s",

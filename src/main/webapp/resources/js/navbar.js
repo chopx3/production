@@ -6,7 +6,7 @@ var feedbackArray = [];
 var commentArray = [];
 var sentCall=false;
 var noteArray = [];
-var httpHost = "192.168.9.207:8080/avito";
+var httpHost = "192.168.10.49:8080/avito";
 // var httpHost = "192.168.10.132:8080/avito";
 var questNum="1";
 var catNum="1";
@@ -18,7 +18,7 @@ var getCommentsURL = "http://"+httpHost+'/rest/comment/get?userid=';
 var getCallsURL = "http://"+httpHost+"/rest/call/getcallsforaccount?userid=";
 var updateEmptyCalls = "http://"+httpHost +"/rest/call/update";
 var postCommentUrl = "http://"+httpHost+'/rest/comment/put';
-var oktell = "http://web_api:s7cgr3Ev@192.168.3.10:4055/download/byscript?name=Avito_get_file_by_id_conn&startparam1=";
+var oktell = "http://192.168.10.49/calls?attachment=1&name=Avito_get_file_by_id_conn&startparam1=";
 var feedbackUrl = "http://"+httpHost+"/rest/call/feedback/put"
 var getFeedbackForAgent = "http://"+httpHost+"/rest/call/feedback/agent/get?id=";
 var getNotesUrl = 'http://' + httpHost + '/rest/comment/notes/get?agentId=';

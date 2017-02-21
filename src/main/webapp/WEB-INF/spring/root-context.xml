@@ -16,7 +16,7 @@
     <bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource" destroy-method="close">
         <property name="username" value="root"/>
         <property name="password" value="root"/>
-        <property name="url" value="jdbc:mysql://localhost:3030/avito"/>
+        <property name="url" value="jdbc:mysql://localhost:3306/avito"/>
         <property name="driverClassName" value="com.mysql.jdbc.Driver"/>
         <property name="initialSize" value="50"/>
         <property name="maxActive" value="100"/>
