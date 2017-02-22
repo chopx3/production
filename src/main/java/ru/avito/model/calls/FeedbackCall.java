@@ -1,4 +1,4 @@
-package ru.avito.model;
+package ru.avito.model.calls;
 
 import java.util.ArrayList;
 

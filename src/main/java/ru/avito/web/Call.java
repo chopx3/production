@@ -5,7 +5,7 @@ import org.apache.logging.log4j.Logger;
 import org.apache.logging.log4j.Marker;
 import org.apache.logging.log4j.MarkerManager;
 import ru.avito.model.CallModel;
-import ru.avito.model.UpdatedCallRecord;
+import ru.avito.model.calls.UpdatedCallRecord;
 
 
 import javax.ws.rs.*;

@@ -30,6 +30,6 @@ http://www.springframework.org/schema/beans/spring-beans-4.0.xsd"
     <authentication-manager alias="authenticationManager">
        <authentication-provider user-service-ref="userDetailsServiceImpl"/>
     </authentication-manager>
-    <beans:bean id="userDetailsServiceImpl" class="ru.avito.services.UserDetailsServiceImpl"/>
+    <beans:bean id="userDetailsServiceImpl" class="ru.avito.services.impl.UserDetailsServiceImpl"/>
 
 </beans:beans>

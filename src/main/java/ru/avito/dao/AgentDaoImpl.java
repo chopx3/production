@@ -5,9 +5,8 @@ import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.stereotype.Repository;
-import ru.avito.model.Agent;
+import ru.avito.model.agent.Agent;
 
-import java.time.temporal.TemporalQuery;
 import java.util.List;
 
 /**

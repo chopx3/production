@@ -1,4 +1,4 @@
-package ru.avito.model;
+package ru.avito.model.calls;
 
 /**
  * Created by Dmitriy on 03.12.2016.

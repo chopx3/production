@@ -7,23 +7,20 @@ import org.apache.logging.log4j.Logger;
 import org.apache.logging.log4j.Marker;
 import org.apache.logging.log4j.MarkerManager;
 import org.springframework.web.socket.TextMessage;
-import org.springframework.web.socket.WebSocketSession;
 import ru.avito.model.AuthModel;
-import ru.avito.model.AuthorizedUsers;
 import ru.avito.model.CallModel;
-import ru.avito.model.CallRecord;
+import ru.avito.model.calls.CallRecord;
 import ru.avito.websocket.WebSocketConnections;
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
-import java.io.IOException;
 import java.sql.SQLException;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import static ru.avito.model.AuthorizedUsers.webSocketSessions;
+import static ru.avito.model.agent.AuthorizedUsers.webSocketSessions;
 
 /**
  * Created by vananos.

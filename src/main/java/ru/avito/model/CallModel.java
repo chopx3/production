@@ -9,6 +9,9 @@ import org.jooq.*;
 import org.jooq.impl.DSL;
 import ru.avito.datasource.DBConnection;
 import ru.avito.factory.EmptyCallAsJson;
+import ru.avito.model.calls.CallRecord;
+import ru.avito.model.calls.EmptyCall;
+import ru.avito.model.calls.UpdatedCallRecord;
 
 import java.io.IOException;
 import java.sql.Connection;

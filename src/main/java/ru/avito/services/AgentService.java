@@ -1,8 +1,6 @@
 package ru.avito.services;
 
-import org.springframework.stereotype.Service;
-import ru.avito.dao.AgentDao;
-import ru.avito.model.Agent;
+import ru.avito.model.agent.Agent;
 
 /**
  * Created by Dmitriy on 30.12.2016.

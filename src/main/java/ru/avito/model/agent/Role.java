@@ -1,4 +1,4 @@
-package ru.avito.model;
+package ru.avito.model.agent;
 
 import javax.persistence.*;
 import java.util.Set;

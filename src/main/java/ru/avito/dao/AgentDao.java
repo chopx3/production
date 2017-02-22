@@ -1,6 +1,6 @@
 package ru.avito.dao;
 
-import ru.avito.model.Agent;
+import ru.avito.model.agent.Agent;
 
 /**
  * Created by Dmitriy on 30.12.2016.

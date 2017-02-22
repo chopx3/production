@@ -1,8 +1,8 @@
-package ru.avito.model;
+package ru.avito.model.agent;
 
 import org.springframework.web.socket.WebSocketSession;
+import ru.avito.model.agent.Agent;
 
-import java.util.ArrayList;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 

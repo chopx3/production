@@ -10,13 +10,27 @@ import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 import ru.avito.dao.AgentDao;
+import ru.avito.model.tags.Tag;
+import ru.avito.model.tags.TagGroup;
 import ru.avito.services.AgentService;
+import ru.avito.services.TagGroupService;
+import ru.avito.services.TagService;
+
+import javax.ws.rs.QueryParam;
+import java.util.HashSet;
+import java.util.Set;
 
 @Controller
 public class HelloController{
 
     @Autowired
     AgentService agentService;
+
+    @Autowired
+    TagService tagService;
+
+    @Autowired
+    TagGroupService tagGroupService;
 
     @RequestMapping(value ={ "/", "/index"}, method = RequestMethod.GET)
     public String getMainPage(ModelMap model) {
@@ -66,5 +80,17 @@ public class HelloController{
             modelAndView.setViewName("login");
         return modelAndView;
     }
+
+    @RequestMapping(value = "tags/put", method = RequestMethod.GET)
+    public void putTag(@QueryParam("name") String name, @QueryParam("group") int group, ModelMap model) {
+        Tag tag = new Tag();
+        Set<TagGroup> groups = new HashSet<>();
+        groups.add(tagGroupService.findOne(1));
+        tag.setTagGroups(groups);
+        tag.setName(name);
+        tag.setDescription("custom tag in main group");
+        tagService.addTag(tag);
+    }
+
 
 }
