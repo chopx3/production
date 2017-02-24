@@ -26,11 +26,11 @@ public class HelloController{
     @Autowired
     AgentService agentService;
 
-    @Autowired
-    TagService tagService;
-
-    @Autowired
-    TagGroupService tagGroupService;
+//    @Autowired
+//    TagService tagService;
+//
+//    @Autowired
+//    TagGroupService tagGroupService;
 
     @RequestMapping(value ={ "/", "/index"}, method = RequestMethod.GET)
     public String getMainPage(ModelMap model) {
@@ -80,17 +80,14 @@ public class HelloController{
             modelAndView.setViewName("login");
         return modelAndView;
     }
-
-    @RequestMapping(value = "tags/put", method = RequestMethod.GET)
-    public void putTag(@QueryParam("name") String name, @QueryParam("group") int group, ModelMap model) {
-        Tag tag = new Tag();
-        Set<TagGroup> groups = new HashSet<>();
-        groups.add(tagGroupService.findOne(1));
-        tag.setTagGroups(groups);
-        tag.setName(name);
-        tag.setDescription("custom tag in main group");
-        tagService.addTag(tag);
+//
+//    @RequestMapping(value = "tags/put", method = RequestMethod.GET)
+//    public void putTag(@QueryParam("name") String name, @QueryParam("group") int group, ModelMap model) {
+//        Tag tag = new Tag();
+//        Set<TagGroup> groups = new HashSet<>();
+//        groups.add(tagGroupService.findOne(1));
+//        tag.setTagGroups(groups);
+//        tag.setName(name);
+//        tag.setDescription("custom tag in main group");
+//        tagService.save(tag);
     }
-
-
-}

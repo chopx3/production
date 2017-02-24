@@ -1,6 +1,8 @@
 package ru.avito.services;
 
+
 import ru.avito.model.tags.Tag;
+
 import java.util.List;
 
 /**
@@ -8,11 +10,11 @@ import java.util.List;
  */
 public interface TagService {
 
-    Tag addTag(Tag tag);
-    void deleteTag(int id);
-    Tag editTag(Tag tag);
+    Tag save(Tag tag);
+    void delete(int id);
+    Tag edit(Tag tag);
     Tag findOne(int id);
-    List<Tag> getAll();
+    List<Tag> findAll();
     Tag findByName(String name);
 
 

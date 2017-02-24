@@ -15,10 +15,10 @@ public class Agent {
     @Column(name = "id")
     private int id;
 
-    @Column(name = "user_name")
+    @Column(name = "username")
     private String username;
 
-    @Column(name="pass")
+    @Column(name= "password")
     private String pass;
 
     @Column(name = "oktell_login")

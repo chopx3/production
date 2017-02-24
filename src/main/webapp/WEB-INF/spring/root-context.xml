@@ -15,7 +15,7 @@
         http://www.springframework.org/schema/data/jpa
         http://www.springframework.org/schema/data/jpa/spring-jpa.xsd">
 
-    <!--<jpa:repositories base-package="ru.avito.repository"/>-->
+    <jpa:repositories base-package="ru.avito.repository"/>
     <context:component-scan base-package="ru.avito"/>
     <tx:annotation-driven transaction-manager="transactionManager"/>
     <!--<tx:annotation-driven transaction-manager="jpaTransactionManager"/>-->
@@ -35,24 +35,23 @@
         <property name="removeAbandonedTimeout" value="500"/>
     </bean>
 
-    <!--<bean id="entityManagerFactory" class ="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean">-->
-        <!--<property name="dataSource" ref ="dataSource"/>-->
-        <!--<property name="packagesToScan" value="ru.avito.model"/>-->
-        <!--<property name="jpaVendorAdapter">-->
-            <!--<bean class="org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter"/>-->
-        <!--</property>-->
-        <!--<property name="jpaProperties">-->
-            <!--<props>-->
-                <!--<prop key="hibernate.dialect">org.hibernate.dialect.MySQL5Dialect</prop>-->
-                <!--<prop key="hibernate.show_sql">true</prop>-->
-            <!--</props>-->
-        <!--</property>-->
-    <!--</bean>-->
+    <bean id="entityManagerFactory" class ="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean">
+        <property name="dataSource" ref ="dataSource"/>
+        <property name="packagesToScan" value="ru.avito.model"/>
+        <property name="jpaVendorAdapter">
+            <bean class="org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter"/>
+        </property>
+        <property name="jpaProperties">
+            <props>
+                <prop key="hibernate.dialect">org.hibernate.dialect.MySQL5Dialect</prop>
+                <prop key="hibernate.show_sql">true</prop>
+            </props>
+        </property>
+    </bean>
 
-    <!--<bean id ="transactionManager1" class="org.springframework.orm.jpa.JpaTransactionManager">-->
-        <!--<property name="entityManagerFactory" ref="entityManagerFactory"/>-->
-    <!--</bean>-->
-
+    <bean id ="transactionManager" class="org.springframework.orm.jpa.JpaTransactionManager">
+        <property name="entityManagerFactory" ref="entityManagerFactory"/>
+    </bean>
 
     <bean id="hibernate4AnnotatedSessionFactory"
           class="org.springframework.orm.hibernate4.LocalSessionFactoryBean">
@@ -72,15 +71,11 @@
     </bean>
 
 
-    <bean id="transactionManager" class="org.springframework.orm.hibernate4.HibernateTransactionManager">
-        <property name="sessionFactory" ref="hibernate4AnnotatedSessionFactory"/>
-    </bean>
-
     <bean id="agentDao" class="ru.avito.dao.AgentDaoImpl">
         <property name="sessionFactory" ref="hibernate4AnnotatedSessionFactory"/>
     </bean>
 
-    <bean id="agentService" class="ru.avito.services.AgentServiceImpl">
+    <bean id="agentService" class="ru.avito.services.impl.AgentServiceImpl">
         <property name="agentDao" ref="agentDao"/>
     </bean>
     <bean id="tagServise" class="ru.avito.services.impl.TagServiceImpl"/>

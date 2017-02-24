@@ -6,8 +6,8 @@ var feedbackArray = [];
 var commentArray = [];
 var sentCall=false;
 var noteArray = [];
-var httpHost = "192.168.10.49:8080/avito";
-// var httpHost = "192.168.10.132:8080/avito";
+// var httpHost = "192.168.10.49:8080/avito";
+var httpHost = "192.168.10.132:8080/avito";
 var questNum="1";
 var catNum="1";
 var catTagNum="1";
@@ -18,7 +18,7 @@ var getCommentsURL = "http://"+httpHost+'/rest/comment/get?userid=';
 var getCallsURL = "http://"+httpHost+"/rest/call/getcallsforaccount?userid=";
 var updateEmptyCalls = "http://"+httpHost +"/rest/call/update";
 var postCommentUrl = "http://"+httpHost+'/rest/comment/put';
-var oktell = "http://192.168.10.49/calls?attachment=1&name=Avito_get_file_by_id_conn&startparam1=";
+var oktell = "http://web_api:s7cgr3Ev@192.168.3.10:4055/download/byscript?name=Avito_get_file_by_id_conn&attachment=1&startparam1=";
 var feedbackUrl = "http://"+httpHost+"/rest/call/feedback/put"
 var getFeedbackForAgent = "http://"+httpHost+"/rest/call/feedback/agent/get?id=";
 var getNotesUrl = 'http://' + httpHost + '/rest/comment/notes/get?agentId=';
@@ -42,6 +42,18 @@ $('#IDforComments').keypress(function (e) {
   {
    getComments();
   }
+});
+$('#magic').click(function(){
+if ($('#colours').prop("disabled"))
+{
+	console.log(true);
+	$('#colours').prop("disabled", false);
+}
+else
+{
+	$('#colours').prop("disabled", true);
+	console.log(false);
+}
 });
 //Вопрос
 	$('input[name="question"]').change(function(e){
@@ -160,9 +172,9 @@ $('#IDforComments').keypress(function (e) {
 		*/
 		commentOrCallHandler = "comment";
 		addButton();
-		$("#commentForm").toggleClass("Add");
-		$('#glyphCom').toggleClass('glyphicon-triangle-right').toggleClass('glyphicon-triangle-left');
 		$("#noteForm").removeClass("Add");
+		$("#commentForm").toggleClass("Add");
+		$('#glyphCom').toggleClass('glyphicon-triangle-right').toggleClass('glyphicon-triangle-left');	
 		$('#glyphNote').addClass('glyphicon-triangle-right').removeClass('glyphicon-triangle-left');
 	});
 //Кнопка "Заметки"
@@ -172,7 +184,6 @@ $('#IDforComments').keypress(function (e) {
 		$("#noteForm").toggleClass("Add");
 		getNotes();
 		$("#commentForm").removeClass("Add");
-		
 		$('#glyphNote').toggleClass('glyphicon-triangle-right').toggleClass('glyphicon-triangle-left');
 		$('#glyphCom').addClass('glyphicon-triangle-right').removeClass('glyphicon-triangle-left');
 		/*
@@ -191,16 +202,18 @@ $('#IDforComments').keypress(function (e) {
 		*/		
 	});
 	//Кнопка "Закрыть" для формы заполнения звонка
-	$('#CloseSubForm').click(function() {
+	/*$('#CloseSubForm').click(function() {
 		$("#SubForm").removeClass("Add");
 		$("#divAddButton0").removeClass('woop').siblings().removeClass('woop');
-	});
+	});*/
 //Кнопка "Фидбек"
 	$('#feedback').click(function() {
 		fillInfo("remove","Feedback", "");
 		$("#FeedbackForm").addClass("Add");
+		//clearFeedback();???
 		chainId=="";
 		drawFeedback();
+		
 	});
 //
 
@@ -214,6 +227,8 @@ $('#sendFeedbackButton').click(function() {
 		//Выделение красным неправильно введенных данных
 		if (chainId=="") {
 			$('#serviceFeedbackMessage').text("Выберите звонок").css({"color":"red"});
+			tagVal = false;
+			commentVal=false;
 		} else  {
 			if($('[name="feedTags"]').is(':checked')) {
 				tagVal = true;
@@ -233,7 +248,8 @@ $('#sendFeedbackButton').click(function() {
 				collectTags($(this).attr("value"));
 				postFeedback();
 				setTimeout(function(){
-					drawFeedback()
+					clearFeedback();
+					drawFeedback();
 				}, 800);
 				console.log("--:");
 			} else {
@@ -339,7 +355,7 @@ function getCalls(){
 							var audiotag = parsedCalls.records[i][0];
 							var nametag = parsedCalls.records[i][1];
 							var timetag = $.format.date(new Date().setTime(parsedCalls.records[i][2]), 'dd/MM/yyyy@HH:mm:ss');
-							var audioURL = '<audio src="'+oktell + audiotag + '" controls></audio><a href="'+oktell+ audiotag +'" ta1rget="_blank">' + '<\/a>';
+							var audioURL = '<audio src="'+oktell + audiotag + '" controls></audio><a href="'+oktell+ audiotag +'" target="_blank">' + '<\/a>';
 							outputCalls += '<div class="history" data-time="'+timetag+'" data-sign="'+nametag+'"><span class="history-info">'+ timetag +' '+nametag + '</span><br>' + audioURL + '</div>';
 						}
 					} else {
@@ -392,7 +408,15 @@ function clearData() {
 		$("#IsManager").click();
 	}
 }
-
+function clearFeedback() {
+	for (i=1;i<=14;i++)
+	{
+		$('#feed-tag-'+i).removeClass('active');
+	}
+	$('input:checkbox[name=feedTags]').each(function () { $(this).prop('checked', false); });
+	$('#feedbackComment').val("");
+	$('#serviceFeedbackMessage').text("").css({"color":"black"});
+}
 //Отправка данных из боковой формы на сервер
 function fillData(dataArray) {
 	$("#JsonText").val("uChainId:"+dataArray[0]+",\n"+

@@ -1,5 +1,7 @@
 package ru.avito.model.tags;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 import javax.persistence.*;
 import java.util.Set;
 
@@ -9,11 +11,11 @@ import java.util.Set;
 
 @Entity
 @Table(name = "tags")
-public class Tag {
+public class Tag implements Comparable<Tag> {
 
     @Id
     @Column(name = "id")
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private int id;
 
     @Column(name = "name")
@@ -25,9 +27,11 @@ public class Tag {
     @Column(name = "description")
     private String description;
 
-    @OneToOne
-    @JoinTable(name = "taggroup_tags", joinColumns = @JoinColumn(name = "taggroup"),
-    inverseJoinColumns = @JoinColumn(name="tags"))
+    @ManyToMany
+    @OrderBy("id ASC")
+    @JoinTable(name ="taggroup_tags", joinColumns = @JoinColumn(name = "tag_id"),
+            inverseJoinColumns = @JoinColumn(name = "tagGroup_id"))
+    @JsonBackReference
     private Set<TagGroup> tagGroups;
 
     public Tag() {
@@ -74,12 +78,8 @@ public class Tag {
     }
 
     @Override
-    public String toString() {
-        return "Tag{" +
-                "id=" + id +
-                ", name='" + name + '\'' +
-                ", value='" + value + '\'' +
-                ", description='" + description + '\'' +
-                '}';
+    public int compareTo(Tag o) {
+        return this.id > o.getId() ? 1 : this.id < o.getId() ? -1 : 0;
     }
 }
+

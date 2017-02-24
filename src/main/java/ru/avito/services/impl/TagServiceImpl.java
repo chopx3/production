@@ -1,5 +1,7 @@
 package ru.avito.services.impl;
 
+
+import com.google.gson.Gson;
 import org.springframework.beans.factory.annotation.Autowired;
 import ru.avito.model.tags.Tag;
 import ru.avito.model.tags.TagGroup;
@@ -18,25 +20,34 @@ import java.util.Set;
 public class TagServiceImpl implements TagService {
 
 
-
+    @Autowired
     TagRepository tagRepository;
 
+    @Autowired
     TagGroupRepository tagGroupRepository;
 
     @Override
-    public Tag addTag(Tag tag) {
-
+    public Tag save(Tag tag) {
+        Set<TagGroup> tagGroups = new HashSet();
+        tagGroups.add(tagGroupRepository.findOne(1));
+        tag.setTagGroups(tagGroups);
         return tagRepository.saveAndFlush(tag);
     }
 
     @Override
-    public void deleteTag(int id) {
+    public void delete(int id) {
         tagRepository.delete(id);
     }
 
     @Override
-    public Tag editTag(Tag tag) {
-        return tagRepository.saveAndFlush(tag);
+    public Tag edit(Tag actualTag) {
+
+        Tag currentTag = tagRepository.findOne(actualTag.getId());
+        currentTag.setName(actualTag.getName());
+        currentTag.setDescription(actualTag.getDescription());
+        currentTag.setValue(actualTag.getValue());
+
+        return tagRepository.saveAndFlush(currentTag);
     }
 
     @Override
@@ -50,7 +61,8 @@ public class TagServiceImpl implements TagService {
     }
 
     @Override
-    public List<Tag> getAll() {
-        return tagRepository.findAll();
+    public List<Tag> findAll() {
+        List<Tag> tags=tagRepository.findAll();
+        return tags;
     }
 }

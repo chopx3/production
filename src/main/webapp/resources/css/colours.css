@@ -1,0 +1,92 @@
+/* Синий Авитовский цвет */
+.btn-avito-blue {
+	color: #fff;
+	background-color: #0af;
+	border : 1px solid #0af;
+}
+.btn-avito-blue:active, .btn-avito-blue.active, .btn-avito-blue:hover, .btn-avito-blue:focus, .btn-avito-blue:active:focus, .open > .dropdown-toggle.btn-avito-blue {
+	background: #0297e5;
+	box-shadow: none;
+	border : 1px solid #036fa8;
+
+}
+.btn-avito-blue:focus:hover .btn-avito-blue:active, .btn-avito-blue:active:hover, .btn-avito-blue.active:hover
+{
+	background: #0082c6;
+}
+/* Красный Авитовский цвет */
+.btn-avito-red {
+	color: #fff;
+	background-color: #ff6163;
+	border : 1px solid transparent;
+}
+.btn-avito-red:active, .btn-avito-red.active , .btn-avito-red:hover, .btn-avito-red:focus, .btn-avito-red:active:focus, .open > .dropdown-toggle.btn-avito-red {
+	background: #f23e41;
+	box-shadow: none;
+	border : 1px solid #d61518;
+}
+.btn-avito-red:focus:hover .btn-avito-red:active, .btn-avito-red:active:hover, .btn-avito-red.active:hover
+{
+	background: #d61518;
+}
+/* Зеленый Авитовский цвет */
+.btn-avito-green {
+	color: #fff;
+	background-color: #97cf26;
+	border : 1px solid #97cf26;
+}
+.btn-avito-green:active, .btn-avito-green.active, .btn-avito-green:hover, .btn-avito-green:focus, .btn-avito-green:active:focus, .open > .dropdown-toggle.btn-avito-green {
+	background: #3ca316;
+	box-shadow: none;
+	border : 1px solid #3ca316;
+}
+.btn-avito-green:focus:hover .btn-avito-green:active, .btn-avito-green:active:hover, .btn-avito-green.active:hover
+{
+	background: #008000;
+}
+/* Фиолетовый Авитовский цвет */
+.btn-avito-purple {
+	color: #fff;
+	background-color: #a169f7;
+	border : 1px solid #a169f7;
+}
+.btn-avito-purple:active, .btn-avito-purple.active, .btn-avito-purple:hover, .btn-avito-purple:focus, .btn-avito-purple:active:focus, .open > .dropdown-toggle.btn-avito-purple {
+	background: #6f2cd6;
+	box-shadow: none;
+	border : 1px solid #6f2cd6;
+}
+.btn-avito-purple:focus:hover .btn-avito-purple:active, .btn-avito-purple:active:hover, .btn-avito-purple.active:hover
+{
+	background: #9400D3;
+}
+/* Серый Авитовский цвет */
+.btn-avito-gray {
+	color: #fff;
+	background-color: #adadad;
+	border : 1px solid #adadad;
+}
+.btn-avito-gray:active, .btn-avito-gray.active, .btn-avito-gray:hover, .btn-avito-gray:focus, .btn-avito-gray:active:focus, .open > .dropdown-toggle.btn-avito-gray {
+	background: #6b6868;
+	box-shadow: none;
+	border : 1px solid #545151;
+}
+.btn-avito-gray:focus:hover .btn-avito-gray:active, .btn-avito-gray:active:hover, .btn-avito-gray.active:hover
+{
+	background: #444444;
+}
+/* Tags Colour */
+.btn-avito-tags {
+	color: #333;
+	background-color: #ddd;
+	border:#333 solid 1px;
+}
+.btn-avito-tags:active, .btn-avito-tags.active {
+	background: #999;
+	box-shadow: none;
+	border:#333 solid 1px;
+}
+.btn-avito-tags:hover, .btn-avito-tags:focus, .btn-avito-tags:active:focus, .btn-avito-tags:focus:hover .btn-avito-tags:active, .btn-avito-tags:active:hover, .btn-avito-tags.active:hover, .open > .dropdown-toggle.btn-avito-tags {
+	background: #aaa;
+	border:#333 solid 1px;
+	color: #ffffff !important;
+}

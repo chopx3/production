@@ -51,12 +51,12 @@ public class Users extends TableImpl<UsersRecord> {
     /**
      * The column <code>avito.users.user_name</code>.
      */
-    public final TableField<UsersRecord, String> USER_NAME = createField("user_name", org.jooq.impl.SQLDataType.VARCHAR.length(50).nullable(false), this, "");
+    public final TableField<UsersRecord, String> USER_NAME = createField("username", org.jooq.impl.SQLDataType.VARCHAR.length(50).nullable(false), this, "");
 
     /**
      * The column <code>avito.users.pass</code>.
      */
-    public final TableField<UsersRecord, String> PASS = createField("pass", org.jooq.impl.SQLDataType.VARCHAR.length(50), this, "");
+    public final TableField<UsersRecord, String> PASS = createField("password", org.jooq.impl.SQLDataType.VARCHAR.length(50), this, "");
 
     /**
      * The column <code>avito.users.oktell_login</code>.

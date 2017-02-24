@@ -1,5 +1,7 @@
 package ru.avito.model.tags;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 import javax.persistence.*;
 import java.util.Set;
 
@@ -9,19 +11,22 @@ import java.util.Set;
 
 @Entity
 @Table(name = "taggroup")
-public class TagGroup {
+public class TagGroup implements Comparable<TagGroup>{
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "id")
     private int id;
 
     @Column(name = "name")
     private String name;
 
-    @OneToMany
-    @JoinTable(name ="taggroup_tags", joinColumns = @JoinColumn(name = "taggroup"),
-    inverseJoinColumns = @JoinColumn(name = "tags"))
+    @Column(name="description")
+    private String description;
+
+    @OrderBy("id ASC")
+    @ManyToMany(mappedBy = "tagGroups")
+    @JsonManagedReference
     Set<Tag> tags;
 
     public TagGroup() {
@@ -43,12 +48,24 @@ public class TagGroup {
         this.name = name;
     }
 
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public Set<Tag> getTags() {
+        return tags;
+    }
+
+    public void setTags(Set<Tag> tags) {
+        this.tags = tags;
+    }
+
     @Override
-    public String toString() {
-        return "TagGroup{" +
-                "id=" + id +
-                ", name='" + name + '\'' +
-                ", tags=" + tags +
-                '}';
+    public int compareTo(TagGroup o) {
+        return this.id > o.getId() ? 1 : this.id < o.getId() ? -1 : 0;
     }
 }

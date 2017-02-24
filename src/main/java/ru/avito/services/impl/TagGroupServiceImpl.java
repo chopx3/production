@@ -1,30 +1,27 @@
 package ru.avito.services.impl;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import ru.avito.model.tags.Tag;
 import ru.avito.model.tags.TagGroup;
 import ru.avito.repository.TagGroupRepository;
-import ru.avito.repository.TagRepository;
 import ru.avito.services.TagGroupService;
-import ru.avito.services.TagService;
 
 import java.util.List;
 
 /**
  * Created by Dmitriy on 22.02.2017.
  */
-public class TagGroupServiceImpl implements TagGroupService{
+public class TagGroupServiceImpl implements TagGroupService {
 
-
+    @Autowired
     TagGroupRepository tagGroupRepository;
 
     @Override
-    public TagGroup addTagGroup(TagGroup aTagGroup) {
+    public TagGroup save(TagGroup aTagGroup) {
         return tagGroupRepository.saveAndFlush(aTagGroup);
     }
 
     @Override
-    public TagGroup editTagGroup(TagGroup aTagGroup) {
+    public TagGroup edit(TagGroup aTagGroup) {
         return tagGroupRepository.saveAndFlush(aTagGroup);
     }
 

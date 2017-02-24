@@ -1,5 +1,8 @@
 package ru.avito.services;
 
+
+
+
 import ru.avito.model.tags.TagGroup;
 
 import java.util.List;
@@ -9,8 +12,8 @@ import java.util.List;
  */
 public interface TagGroupService {
 
-    TagGroup addTagGroup(TagGroup tagGroup);
-    TagGroup editTagGroup(TagGroup tagGroup);
+    TagGroup save(TagGroup tagGroup);
+    TagGroup edit(TagGroup tagGroup);
     List<TagGroup> findAll();
     TagGroup findOne(int id);
     TagGroup getByName(String name);
