@@ -10,8 +10,8 @@ hi ${hello}
 
 <script>
     var request = new XMLHttpRequest();
-//    var host = "http://192.168.10.49:8080/avito";
-    var host = "http://192.168.10.132:8080/avito";
+    var host = "http://192.168.9.65:8080/avito";
+//    var host = "http://192.168.10.132:8080/avito";
 
 function getEmptyCallsByAgentId (agentId) {
     request.open("get",host+"/rest/call/getemptycalls?userid="+agentId, true);
