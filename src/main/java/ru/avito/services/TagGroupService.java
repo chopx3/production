@@ -1,10 +1,6 @@
 package ru.avito.services;
 
-
-
-
 import ru.avito.model.tags.TagGroup;
-
 import java.util.List;
 
 /**

@@ -1,9 +1,6 @@
 package ru.avito.model.agent;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
-
 import javax.persistence.*;
-import java.util.Set;
 
 /**
  * Created by Dmitriy on 30.12.2016.

@@ -1,7 +1,6 @@
 package ru.avito.factory;
 
 import ru.avito.model.calls.FeedbackCall;
-
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.util.ArrayList;

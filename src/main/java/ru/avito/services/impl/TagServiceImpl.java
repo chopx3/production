@@ -1,14 +1,11 @@
 package ru.avito.services.impl;
 
-
-import com.google.gson.Gson;
 import org.springframework.beans.factory.annotation.Autowired;
 import ru.avito.model.tags.Tag;
 import ru.avito.model.tags.TagGroup;
 import ru.avito.repository.TagGroupRepository;
 import ru.avito.repository.TagRepository;
 import ru.avito.services.TagService;
-
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;

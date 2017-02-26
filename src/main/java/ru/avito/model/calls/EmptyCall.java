@@ -1,11 +1,5 @@
 package ru.avito.model.calls;
 
-import com.google.gson.Gson;
-
-import java.time.LocalDateTime;
-import java.time.ZoneId;
-import java.util.List;
-import java.util.Map;
 
 /**
  *

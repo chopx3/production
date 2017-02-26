@@ -4,11 +4,8 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.apache.logging.log4j.Marker;
 import org.apache.logging.log4j.MarkerManager;
-import org.jooq.Record2;
-import org.jooq.Result;
 import org.jooq.impl.DSL;
 import ru.avito.datasource.DBConnection;
-
 import java.sql.Connection;
 import java.sql.SQLException;
 

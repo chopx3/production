@@ -1,6 +1,5 @@
 package ru.avito.model.calls;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 
 /**

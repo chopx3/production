@@ -1,7 +1,6 @@
 package ru.avito.services;
 
 import ru.avito.model.agent.Role;
-
 import java.util.List;
 
 /**

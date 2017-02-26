@@ -8,11 +8,9 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.transaction.annotation.Transactional;
-import ru.avito.dao.AgentDao;
 import ru.avito.model.agent.Agent;
 import ru.avito.model.agent.Role;
 import ru.avito.repository.AgentRepository;
-
 import java.util.HashSet;
 import java.util.Set;
 

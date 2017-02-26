@@ -7,10 +7,12 @@ public class ResponseMessage {
 
     private int code;
     private String status;
+    private String description;
 
-    public ResponseMessage(int i, String ok) {
-        code=i;
-        status = ok;
+    public ResponseMessage(int code, String status, String description) {
+        this.code=code;
+        this.status = status;
+        this.description = description;
     }
 
     public ResponseMessage() {

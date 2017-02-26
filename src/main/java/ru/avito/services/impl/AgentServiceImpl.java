@@ -3,12 +3,9 @@ package ru.avito.services.impl;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
-import ru.avito.dao.AgentDao;
 import ru.avito.model.agent.Agent;
 import ru.avito.repository.AgentRepository;
 import ru.avito.services.AgentService;
-
 import java.util.List;
 
 /**

@@ -8,7 +8,6 @@ import org.apache.logging.log4j.MarkerManager;
 import org.jooq.*;
 import org.jooq.impl.DSL;
 import ru.avito.datasource.DBConnection;
-
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.ArrayList;

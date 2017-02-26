@@ -3,7 +3,6 @@ package ru.avito.repository;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import ru.avito.model.agent.Role;
-
 import javax.ws.rs.QueryParam;
 
 /**

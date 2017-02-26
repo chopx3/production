@@ -1,13 +1,11 @@
 package ru.avito.controller;
 
-
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.web.socket.TextMessage;
 import org.springframework.web.socket.WebSocketSession;
 import org.springframework.web.socket.handler.TextWebSocketHandler;
 import ru.avito.model.AuthModel;
-
 import java.io.IOException;
 import java.sql.SQLException;
 

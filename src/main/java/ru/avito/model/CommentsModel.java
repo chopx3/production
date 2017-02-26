@@ -9,7 +9,6 @@ import org.jooq.Record3;
 import org.jooq.Result;
 import org.jooq.impl.DSL;
 import ru.avito.datasource.DBConnection;
-
 import java.sql.Connection;
 import java.sql.SQLException;
 
@@ -116,9 +115,6 @@ public class CommentsModel {
             return notesAsJSON;
         }
     }
-
-
-
 
     private static void debugLog(Marker marker, String message) {
 
