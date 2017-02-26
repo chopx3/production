@@ -53,31 +53,8 @@
         <property name="entityManagerFactory" ref="entityManagerFactory"/>
     </bean>
 
-    <bean id="hibernate4AnnotatedSessionFactory"
-          class="org.springframework.orm.hibernate4.LocalSessionFactoryBean">
-        <property name="dataSource" ref="dataSource"/>
-        <property name="annotatedClasses">
-            <list>
-                <value>ru.avito.model.agent.Agent</value>
-                <value>ru.avito.model.agent.Role</value>
-            </list>
-        </property>
-        <property name="hibernateProperties">
-            <props>
-                <prop key="hibernate.dialect">org.hibernate.dialect.MySQLDialect</prop>
-                <prop key="hibernate.show_sql">true</prop>
-            </props>
-        </property>
-    </bean>
-
-
-    <bean id="agentDao" class="ru.avito.dao.AgentDaoImpl">
-        <property name="sessionFactory" ref="hibernate4AnnotatedSessionFactory"/>
-    </bean>
-
-    <bean id="agentService" class="ru.avito.services.impl.AgentServiceImpl">
-        <property name="agentDao" ref="agentDao"/>
-    </bean>
+    <bean id="roleService" class="ru.avito.services.impl.RoleServiceImpl"/>
+    <bean id="agentService" class="ru.avito.services.impl.AgentServiceImpl"/>
     <bean id="tagServise" class="ru.avito.services.impl.TagServiceImpl"/>
     <bean id="tagGroupService" class="ru.avito.services.impl.TagGroupServiceImpl"/>
 

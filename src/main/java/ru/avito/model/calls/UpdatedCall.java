@@ -5,7 +5,7 @@ import ru.avito.factory.JsonFactory;
 /**
  * Created by Dmitriy on 03.12.2016.
  */
-public class UpdatedCallRecord {
+public class UpdatedCall {
 
     private String  chainId;
     private int     questId, shopCategoryId, agentId;
@@ -13,10 +13,10 @@ public class UpdatedCallRecord {
     private boolean isManager;
     private String tags;
 
-    public UpdatedCallRecord() {
+    public UpdatedCall() {
     }
 
-    public UpdatedCallRecord(int agentId, String chainId, int questId, int shopCategoryId, long avitoUserId, boolean isManager, String tags) {
+    public UpdatedCall(int agentId, String chainId, int questId, int shopCategoryId, long avitoUserId, boolean isManager, String tags) {
         this.chainId = chainId;
         this.questId = questId;
         this.shopCategoryId = shopCategoryId;
@@ -88,15 +88,15 @@ public class UpdatedCallRecord {
 
     @Override
     public String toString() {
-        final StringBuffer sb = new StringBuffer("UpdatedCallRecord{");
-        sb.append("chainId='").append(chainId).append('\'');
-        sb.append(", questId=").append(questId);
-        sb.append(", shopCategoryId=").append(shopCategoryId);
-        sb.append(", agentId=").append(agentId);
-        sb.append(", avitoUserId=").append(avitoUserId);
-        sb.append(", isManager=").append(isManager);
-        sb.append(", tags='").append(tags).append('\'');
-        sb.append('}');
-        return sb.toString();
+        return "UpdatedCall{" +
+                "chainId='" + chainId + '\'' +
+                ", questId=" + questId +
+                ", shopCategoryId=" + shopCategoryId +
+                ", agentId=" + agentId +
+                ", avitoUserId=" + avitoUserId +
+                ", isManager=" + isManager +
+                ", tags='" + tags + '\'' +
+                '}';
     }
 }
+

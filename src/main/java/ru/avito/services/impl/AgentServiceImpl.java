@@ -1,11 +1,15 @@
 package ru.avito.services.impl;
 
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ru.avito.dao.AgentDao;
 import ru.avito.model.agent.Agent;
+import ru.avito.repository.AgentRepository;
 import ru.avito.services.AgentService;
+
+import java.util.List;
 
 /**
  * Created by Dmitriy on 30.12.2016.
@@ -14,19 +18,44 @@ import ru.avito.services.AgentService;
 @Service
 public class AgentServiceImpl implements AgentService {
 
-    private AgentDao agentDao;
 
-    @Transactional
-    public Agent getAgentByUsername(String username) {
-        return this.agentDao.getAgentByUsername(username);
+    @Autowired
+    private AgentRepository agentRepository;
+
+    @Override
+    public Agent save(Agent agent) {
+        return agentRepository.saveAndFlush(agent);
     }
 
-    @Transactional
-    public Agent getAgentByUserId(int id) {
-        return this.agentDao.getAgentByUserId(id);
+    @Override
+    public Agent edit(Agent actualAgent) {
+        Agent currentAgent = agentRepository.findOne(actualAgent.getId());
+        currentAgent.setOktellLogin(actualAgent.getOktellLogin());
+        currentAgent.setPassword(actualAgent.getPassword());
+        currentAgent.setRoles(actualAgent.getRoles());
+        currentAgent.setUsername(actualAgent.getUsername());
+        return agentRepository.saveAndFlush(currentAgent);
     }
 
-    public void setAgentDao(AgentDao agentDao) {
-        this.agentDao = agentDao;
+    @Override
+    public void delete(Agent agent) {
+
+        agentRepository.delete(agent);
+
+    }
+
+    @Override
+    public Agent findOne(int id) {
+        return agentRepository.findOne(id);
+    }
+
+    @Override
+    public Agent findByUsername(String username) {
+        return agentRepository.findByUsername(username);
+    }
+
+    @Override
+    public List<Agent> findAll() {
+        return agentRepository.findAll();
     }
 }

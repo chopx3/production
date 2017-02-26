@@ -6,8 +6,8 @@
         <Property name="date">${date:dd-MM-yyyy}</Property>
         <Property name ="pattern">[%-5level %d{HH:mm:ss}] %c{3} [%t, line: %L] %n       %msg%n%n</Property>
         <Property name ="markerPattern">[%-5level %d{HH:mm:ss}] #%marker %c{3} [%t, line: %L] %n       %msg%n%n</Property>
-        <Property name ="logLevel">info</Property>
-        <Property name ="consoleLogLevel">info</Property>
+        <Property name ="logLevel">debug</Property>
+        <Property name ="consoleLogLevel">debug</Property>
         <Property name ="intervalLogSec">7200</Property>
     </Properties>
     <Appenders>
@@ -143,6 +143,10 @@
         <Logger name="ru.avito.model.StatModel" level="${logLevel}" additivity="false">
             <AppenderRef ref="console" level ="${consoleLogLevel}"/>
             <AppenderRef ref="stat"/>
+        </Logger>
+
+        <Logger name="ru.avito.controller" level="${logLevel}" additivity="false">
+            <AppenderRef ref="console" level ="${consoleLogLevel}"/>
         </Logger>
 
         <Root level="debug">

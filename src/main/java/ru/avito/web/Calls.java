@@ -5,7 +5,7 @@ import org.apache.logging.log4j.Logger;
 import org.apache.logging.log4j.Marker;
 import org.apache.logging.log4j.MarkerManager;
 import ru.avito.model.CallModel;
-import ru.avito.model.calls.UpdatedCallRecord;
+import ru.avito.model.calls.UpdatedCall;
 
 
 import javax.ws.rs.*;
@@ -21,7 +21,7 @@ import static ru.avito.model.CallModel.*;
  */
 
 @Path("call")
-public class Call implements WebDebugLogger{
+public class Calls implements WebDebugLogger{
 
     private final static Logger LOG = LogManager.getLogger();
     private final static Marker CALLS_UPDATE = MarkerManager.getMarker("CALLS_UPDATE");
@@ -85,7 +85,7 @@ public class Call implements WebDebugLogger{
          {
              ServerResponse response = new ServerResponse();
 
-             UpdatedCallRecord updRecord = new UpdatedCallRecord(agentId, uChainId, question_id, shop_category_id,
+             UpdatedCall updRecord = new UpdatedCall(agentId, uChainId, question_id, shop_category_id,
                                                                     avitoUserId, isManager, tags);
              this.debugLog(CALLS_UPDATE,String.format("Try to update calls. Data calls: %s", updRecord));
 

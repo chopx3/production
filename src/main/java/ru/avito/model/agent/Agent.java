@@ -1,5 +1,7 @@
 package ru.avito.model.agent;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 import javax.persistence.*;
 import java.util.Set;
 
@@ -19,7 +21,7 @@ public class Agent {
     private String username;
 
     @Column(name= "password")
-    private String pass;
+    private String password;
 
     @Column(name = "oktell_login")
     private String oktellLogin;
@@ -48,12 +50,12 @@ public class Agent {
         this.username = username;
     }
 
-    public String getPass() {
-        return pass;
+    public String getPassword() {
+        return password;
     }
 
-    public void setPass(String pass) {
-        this.pass = pass;
+    public void setPassword(String password) {
+        this.password = password;
     }
 
     public String getOktellLogin() {
@@ -77,7 +79,7 @@ public class Agent {
         return "Agent{" +
                 "id=" + id +
                 ", username='" + username + '\'' +
-                ", pass='" + pass + '\'' +
+                ", password='" + password + '\'' +
                 ", oktellLogin='" + oktellLogin + '\'' +
                 ", roles=" + roles +
                 '}';

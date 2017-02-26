@@ -11,6 +11,7 @@ import org.springframework.transaction.annotation.Transactional;
 import ru.avito.dao.AgentDao;
 import ru.avito.model.agent.Agent;
 import ru.avito.model.agent.Role;
+import ru.avito.repository.AgentRepository;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -23,22 +24,21 @@ import static ru.avito.model.agent.AuthorizedUsers.authorizedUsers;
 public class UserDetailsServiceImpl implements UserDetailsService{
 
     @Autowired
-    AgentDao agentDao;
+    AgentRepository agentRepository;
 
     @Transactional(readOnly = true)
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 
-        Agent agent = agentDao.getAgentByUsername(username);
+        System.out.println("NAME!!!!!!!!!!!!!!!!!!!!"+username);
 
+        Agent agent = agentRepository.findByUsername(username);
         Set<GrantedAuthority> grantedAuthorities = new HashSet();
-
         for (Role role : agent.getRoles()) {
             grantedAuthorities.add(new SimpleGrantedAuthority(role.getName()));
         }
-
         authorizedUsers.put(agent.getUsername(), agent);
 
-        return new User(agent.getUsername(), agent.getPass(), grantedAuthorities);
+        return new User(agent.getUsername(), agent.getPassword(), grantedAuthorities);
 
     }
 }

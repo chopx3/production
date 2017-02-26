@@ -8,7 +8,7 @@
     </appender>
 
     <logger name="org.springframework">
-        <level value="error"/>
+        <level value="debug"/>
     </logger>
 
     <logger name="org.hibernate">

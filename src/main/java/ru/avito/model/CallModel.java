@@ -9,9 +9,9 @@ import org.jooq.*;
 import org.jooq.impl.DSL;
 import ru.avito.datasource.DBConnection;
 import ru.avito.factory.EmptyCallAsJson;
-import ru.avito.model.calls.CallRecord;
+import ru.avito.model.calls.IncomingCall;
 import ru.avito.model.calls.EmptyCall;
-import ru.avito.model.calls.UpdatedCallRecord;
+import ru.avito.model.calls.UpdatedCall;
 
 import java.io.IOException;
 import java.sql.Connection;
@@ -52,7 +52,7 @@ public class CallModel {
     * Сохраняем ссылку на звонок
      */
 
-    public static void saveCallLink(CallRecord record, Boolean isOut)
+    public static void saveCallLink(IncomingCall record, Boolean isOut)
             throws SQLException { //TODO должен возвращаться ID созданной записи в БД. по ней обновлять инфу
         try (Connection conn = DBConnection.getDataSource().getConnection()) {
             debugLog(CALLS_PUT_SQL, String.format("Saving data... Hashcode #%s,\r\n data: %s", record.hashCode(), record));
@@ -138,7 +138,7 @@ public class CallModel {
         }
     }
 
-    public static void updateCallRecord(UpdatedCallRecord updRecord)
+    public static void updateCallRecord(UpdatedCall updRecord)
             throws SQLException {  //TODO обновлять по ID
         try (Connection conn = DBConnection.getDataSource().getConnection()) {
             debugLog(CALLS_UPDATE_SQL, String.format("Updating data: %s", updRecord));
@@ -172,7 +172,7 @@ public class CallModel {
                     .where(CALLS.CHAIN_ID.eq(chainId).and(CALLS.USER_ID.eq(agentId)))
                     .execute();
 
-            return "feedback putted";
+            return "feedback put";
         }
     }
 
@@ -218,7 +218,7 @@ public class CallModel {
 // осторожно. Ниже шлак
 
     @Deprecated
-    public static void selectToUpdateCallRecord(UpdatedCallRecord updRecord)
+    public static void selectToUpdateCallRecord(UpdatedCall updRecord)
             throws SQLException {
 
         try (Connection conn = DBConnection.getDataSource().getConnection()) {
@@ -268,7 +268,7 @@ public class CallModel {
     }
 
     @Deprecated
-    public static void saveCalLink(CallRecord record) throws SQLException { //TODO Ни где не юзается, если все ок можно выпилить.
+    public static void saveCalLink(IncomingCall record) throws SQLException { //TODO Ни где не юзается, если все ок можно выпилить.
 
         try (Connection conn = DBConnection.getDataSource().getConnection()) {
 
