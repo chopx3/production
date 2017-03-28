@@ -84,7 +84,6 @@ public class AuthModel {
     }
 
         private static void debugLog(Marker marker, String message) {
-
         if(LOG.isDebugEnabled())
             LOG.debug(marker, message);
     }

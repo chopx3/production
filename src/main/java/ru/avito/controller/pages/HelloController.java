@@ -18,7 +18,7 @@ public class HelloController{
     @Autowired
     AgentService agentService;
 
-    @RequestMapping(value ={ "/", "/index"}, method = RequestMethod.GET)
+    @RequestMapping(value ={ "/", "/index"}, method = RequestMethod.GET) //TODO возникает рекурсия, когда Nginx редиректит на /. Пофиксить
     public String getMainPage(ModelMap model) {
         Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         String name="";

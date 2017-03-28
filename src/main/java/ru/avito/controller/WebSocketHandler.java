@@ -15,6 +15,8 @@ import static ru.avito.model.CallModel.getCallRecordsWithEmptyFields;
 /**
  * Created by Dmitriy on 24.12.2016.
  */
+
+//TODO рефактроинг класса
 public class WebSocketHandler extends TextWebSocketHandler{ //TODO это просто контроллер, бизнес-логику убрать
 
     private final static Logger LOG = LogManager.getLogger();

@@ -31,7 +31,6 @@ public class OktellController {
     @RequestMapping(value = "call/save", method = RequestMethod.POST)
     public ResponseMessage saveCallRecord(@RequestBody Call call){
         LOG.debug(call);
-        callService.save(call);
         return new ResponseMessage(201,"ok");
     }
 

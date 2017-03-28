@@ -1,5 +1,5 @@
 'use strict';
-var webSocketHost = "10.10.38.8:8080/avito";
+var webSocketHost = "10.10.37.132:8080/avito";
 // var webSocketHost = "192.168.10.132:8080/avito";
 var websocket;
 var websocketUrl = "ws://"+webSocketHost+"/websocket/start";

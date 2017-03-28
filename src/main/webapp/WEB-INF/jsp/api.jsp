@@ -81,7 +81,7 @@
         function showFeedback(){
             var recordsByComId;
 //            var host = "http://192.168.11.87:8085/shoptracker";
-            var host = "http://192.168.10.49/avito";
+            var host = "http://10.10.37.132/avito";
             document.getElementById("message").innerHTML = getPeriod() + ' (Feedback) ';
             var x = new XMLHttpRequest();
             x.open("GET", host+"/rest/call/feedback/all/get?tags=feedback|vas​", true);
