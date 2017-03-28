@@ -9,7 +9,7 @@ import java.util.List;
 public interface TagGroupService {
 
     TagGroup save(TagGroup tagGroup);
-    TagGroup edit(TagGroup tagGroup);
+    TagGroup update(TagGroup tagGroup);
     List<TagGroup> findAll();
     TagGroup findOne(int id);
     TagGroup getByName(String name);

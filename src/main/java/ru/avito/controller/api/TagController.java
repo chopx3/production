@@ -1,8 +1,9 @@
-package ru.avito.controller;
+package ru.avito.controller.api;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
+import ru.avito.controller.Path;
 import ru.avito.model.ResponseMessage;
 import ru.avito.model.tags.Tag;
 import ru.avito.model.tags.TagGroup;
@@ -16,48 +17,35 @@ import java.util.List;
  */
 
 @RestController
+@RequestMapping(value = Path.API+"tag")
 public class TagController {
 
     @Autowired
     TagService tagService;
 
-    @Autowired
-    TagGroupService tagGroupService;
-
-    @RequestMapping(value ="tag/{id}")
-    public Tag findTagByName(@PathVariable("id") int id){
-        return tagService.findOne(id);
-    }
-
-    @RequestMapping(value ="tag")
+    @RequestMapping(value ="")
     public List <Tag> findAllTags(){
         return tagService.findAll();
     }
 
-    @ResponseBody
+    @RequestMapping(value ="/{id}")
+    public Tag findTagByName(@PathVariable("id") int id){
+        return tagService.findOne(id);
+    }
+
     @ResponseStatus(HttpStatus.CREATED)
-    @RequestMapping(value ="tag/save", method = RequestMethod.POST)
+    @RequestMapping(value ="/save", method = RequestMethod.POST)
     public ResponseMessage saveTag(@RequestBody Tag tag){
         tagService.save(tag);
         return new ResponseMessage(201,"ok");
     }
 
-    @ResponseBody
     @ResponseStatus(HttpStatus.CREATED)
-    @RequestMapping(value ="tag/update", method = RequestMethod.POST)
-    public ResponseMessage updateTag(@RequestBody Tag tag){
+    @RequestMapping(value ="/edit", method = RequestMethod.POST)
+    public ResponseMessage editTag(@RequestBody Tag tag){
         tagService.edit(tag);
         return new ResponseMessage(201,"ok");
     }
 
 
-    @RequestMapping(value ="group/{id}")
-    public TagGroup findTagGroupByName(@PathVariable("id") int id){
-        return tagGroupService.findOne(id);
-    }
-
-    @RequestMapping(value ="group")
-    public List<TagGroup> findAllTagGroup(){
-        return tagGroupService.findAll();
-    }
 }

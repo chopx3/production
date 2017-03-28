@@ -10,7 +10,7 @@ hi ${hello}
 
 <script>
     var request = new XMLHttpRequest();
-    var host = "http://192.168.9.65:8080/avito";
+    var host = "http://10.10.38.8:8080/avito";
 //    var host = "http://192.168.10.132:8080/avito";
 
 function getEmptyCallsByAgentId (agentId) {
@@ -27,22 +27,23 @@ function getcallsBytags (tags) { // принимает теги как regexp (t
         console.log(request.responseText);
     }
 }
-    var saveURL ="http://192.168.9.65:8080/avito/oktell/call/save";
-    var updateURL ="http://192.168.9.65:8080/avito/rest/call/update";
+    var saveURL =host+"/oktell/call/save";
+    var updateURL =host+"/rest/call/update";
+    var saveChainURL =host+"/oktell/chain/save";
+    var saveChainsURL =host+"/oktell/chains/save";
 
-    function getNewCall(){ var newCall = {
-        "Bstr": "30",
-        "IDChain": "ABCD-ABCD-3",
-        "IDConn": "ABCD-ABCD-3-"+String(Math.round(new Date().getTime() / 1000.0)),
-        "starttime": String(Math.round(new Date().getTime() / 1000.0)),
-        "stoptime": String(Math.round(new Date().getTime() / 1000.0)),
-        "Astr": "2035",
-        "ReasonStart": "1"
-    }
-     return newCall;
+   var newCall = {
+        "bStr": "Okunev Dmitry",
+        "chainId": "ABCD-ABCD-3",
+        "comId": "ABCD-ABCD-3-"+Math.round(new Date().getTime() / 1000.0),
+        "timeStart": Math.round(new Date().getTime() / 1000.0),
+        "timeEnd": Math.round(new Date().getTime() / 1000.0),
+        "aStr": "2035",
+        "reasonStart": 1
+
     }
 
-    function getUpdateCall(){ var updateCall = {
+    var updateCall = {
         "uAgentId": "30",
         "uChainId": "ABCD-ABCD-3",
         "uAvitoUserId": 1939992,
@@ -51,31 +52,45 @@ function getcallsBytags (tags) { // принимает теги как regexp (t
         "tags": "feedback",
         "isManager": "0"
     }
-        return updateCall;
+    var jsonPostOktell =  {
+        "chainId": "123",
+        "commutations": [
+            {
+                "comId": "dsda",
+                "timeStart": 123123,
+                "timeEnd": 123321,
+                "aStr": "vasya",
+                "bStr": "petya",
+                "reasonStart": 1
+            },
+            {
+                "comId": "dsdx",
+                "timeStart": 123521,
+                "timeEnd": 123921,
+                "aStr": "vasya",
+                "bStr": "petya",
+                "reasonStart": 5
+            }
+        ]
+    }
+
+    var jsonTest =  {
+        "chainId": "123"
     }
 
 
-    var RestPost = function(senddata) {
 
-        var aData;
-        var aUrl
-        for (var n =0; n < 3; n++){
 
-            if (senddata == 'save'){
-                aData = getNewCall();
-                aUrl = saveURL;
-            }
-            else {
-                aData = getUpdateCall();
-                aUrl = updateURL;
-            }
+    var RestPost = function(sendData, url) {
 
-        setTimeout( function () {
+        console.log(url)
+        console.log(sendData)
+
             $.ajax({
-                url: aUrl,
-                type: "GET",
+                url: url,
+                type: "post",
                 contentType: "application/json; charset=utf-8",
-                data: aData, //Stringified Json Object
+                data: JSON.stringify(sendData), //Stringified Json Object
                 async: false,    //Cross-domain requests and dataType: "jsonp" requests do not support synchronous operation
                 cache: false,    //This will force requested pages not to be cached by the browser
                 processData: false, //To avoid making query String instead of JSON
@@ -86,14 +101,12 @@ function getcallsBytags (tags) { // принимает теги как regexp (t
                     alert(message)
                 }
             });
-        }, 500+n);
-        }
     }
 
 </script>
 
 <%--<form action="http://192.168.10.132:8080/avito/rest/oktell/savecallrecord" method="get">--%>
-    <form action="http://192.168.9.65:8080/avito/rest/oktell/savecallrecord" method="get">
+    <form action="http://10.10.38.8:8080/avito/rest/oktell/savecallrecord" method="get">
     <input type="text" name="Bstr" value="Okunev Dmitry">Bstr<br>
     <input type="text" name="IDChain" value="ABCD-ABCD-3">IDChain<br>
     <input type="text" name="IDConn">IDConn<br>
@@ -108,7 +121,7 @@ function getcallsBytags (tags) { // принимает теги как regexp (t
 Update call form
 
 <%--<form action="http://192.168.10.132:8080/avito/rest/call/update" method="get">--%>
-    <form action="http://192.168.9.65:8080/avito/rest/call/update" method="get">
+    <form action="http://10.10.38.8:8080/avito/rest/call/update" method="get">
     <input type="text" name="uAgentId" value="30">uAgentId<br>
     <input type="text" name="uChainId" value="ABCD-ABCD-3">uChainId<br>
     <input type="text" name="uAvitoUserId" value="1939992">uAvitoUserId<br>
@@ -124,7 +137,7 @@ Feedback form
 <br>
 Put feedback
 <%--<form action="http://192.168.10.132:8080/avito/rest/call/feedback/put" method="get">--%>
-    <form action="http://192.168.9.65:8080/avito/rest/call/feedback/put" method="get">
+    <form action="http://10.10.38.8:8080/avito/rest/call/feedback/put" method="get">
     <input type="text" name="comment">comment<br>
     <input type="text" name="tags">tags<br>
     <input type="text" name="agentId" value="30">agentId<br>
@@ -133,7 +146,7 @@ Put feedback
 </form>
     Get feedback
 <%--<form action="http://192.168.10.132:8080/avito/rest/call/feedback/all/get" method="get">--%>
-    <form action="http://192.168.9.65:8080/avito/rest/call/feedback/get" method="get">
+    <form action="http://10.10.38.8:8080/avito/rest/call/feedback/get" method="get">
         <input type="text" name="tags">tags<br>
         <button type="submit" value="submit">get feedback</button>
     </form>
@@ -144,6 +157,10 @@ Put feedback
     document.getElementById("starttime").value=stopTime-300;
 </script>
 
+
+<button onclick="RestPost(newCall,saveURL)">save call</button>
+<button onclick="RestPost(jsonPostOktell, saveChainURL)">save chain</button>
+<button onclick="RestPost(jsonPostOktell, saveChainsURL)">save chains</button>
 
 </body>
 </html>

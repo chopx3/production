@@ -20,8 +20,13 @@ public class TagGroupServiceImpl implements TagGroupService {
     }
 
     @Override
-    public TagGroup edit(TagGroup aTagGroup) {
-        return tagGroupRepository.saveAndFlush(aTagGroup);
+    public TagGroup update(TagGroup aTagGroup) {
+        TagGroup currentTagGroup = tagGroupRepository.findOne(aTagGroup.getId());
+        currentTagGroup.setName(aTagGroup.getName());
+        currentTagGroup.setDescription(aTagGroup.getDescription());
+        currentTagGroup.setTags(aTagGroup.getTags());
+
+        return tagGroupRepository.saveAndFlush(currentTagGroup);
     }
 
     @Override

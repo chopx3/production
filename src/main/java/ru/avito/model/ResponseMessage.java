@@ -9,13 +9,17 @@ public class ResponseMessage {
     private String status;
     private String description;
 
-    public ResponseMessage(int code, String status, String description) {
-        this.code=code;
-        this.status = status;
-        this.description = description;
+    public ResponseMessage() {
     }
 
-    public ResponseMessage() {
+    public ResponseMessage(int code, String status) {
+        this.code=code;
+        this.status = status;
+    }
+
+    public ResponseMessage(int code, String status, String description) {
+        this(code, status);
+        this.description = description;
     }
 
     public int getCode() {

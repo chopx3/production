@@ -11,7 +11,7 @@ http://www.springframework.org/schema/beans/spring-beans-4.0.xsd"
     <http use-expressions="true">
         <intercept-url pattern="/index" access="isAuthenticated()"/>
         <intercept-url pattern="/hello" access="isAuthenticated()"/>
-        <intercept-url pattern="/" access="isAuthenticated()"/>
+        <!--<intercept-url pattern="/" access="isAuthenticated()"/>-->
         <intercept-url pattern="/admin/**" access="hasRole('ROLE_ADMIN')"/>
         <intercept-url pattern="/roles/**" access="hasRole('ROLE_ADMIN')"/>
         <intercept-url pattern="/agent/**" access="hasRole('ROLE_ADMIN')"/>

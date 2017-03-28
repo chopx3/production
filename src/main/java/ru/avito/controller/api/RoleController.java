@@ -1,8 +1,9 @@
-package ru.avito.controller;
+package ru.avito.controller.api;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import ru.avito.controller.Path;
 import ru.avito.model.agent.Role;
 import ru.avito.services.RoleService;
 
@@ -13,7 +14,7 @@ import java.util.List;
  */
 
 @RestController
-@RequestMapping(value = "roles")
+@RequestMapping(value = Path.API+"roles")
 public class RoleController {
 
     @Autowired
@@ -23,7 +24,5 @@ public class RoleController {
     public List<Role> findAllRoles(){
         return roleService.findAll();
     }
-
-
 
 }

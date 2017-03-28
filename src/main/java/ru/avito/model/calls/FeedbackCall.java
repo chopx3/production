@@ -51,7 +51,7 @@ public class FeedbackCall {
         this.avitoUserId = avitoUserId;
     }
 
-    public long getTimeStart() {
+    public Long getTimeStart() {
         return timeStart;
     }
 

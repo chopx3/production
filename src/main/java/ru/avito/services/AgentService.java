@@ -1,7 +1,7 @@
 package ru.avito.services;
 
-import ru.avito.model.agent.Agent;
-import java.util.List;
+        import ru.avito.model.agent.Agent;
+        import java.util.List;
 
 /**
  * Created by Dmitriy on 30.12.2016.
@@ -9,9 +9,10 @@ import java.util.List;
 
 public interface AgentService {
     Agent save(Agent agent);
-    Agent edit(Agent agent);
+    Agent update(Agent agent);
     void delete(Agent agent);
     Agent findOne(int id);
     Agent findByUsername(String username);
     List<Agent> findAll();
+    Agent hidePassword(Agent agent);
 }

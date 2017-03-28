@@ -1,4 +1,4 @@
-package ru.avito.controller;
+package ru.avito.controller.pages;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -40,10 +40,10 @@ public class HelloController{
     public ModelAndView getLoginPage(@RequestParam(value = "error", required = false) String error) {
 
         ModelAndView modelAndView = new ModelAndView();
-
         if(error != null)
             modelAndView.addObject("error", "Username or password incorrect.");
             modelAndView.setViewName("login");
+
         return modelAndView;
     }
     }

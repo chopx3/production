@@ -25,7 +25,7 @@ public class AgentServiceImpl implements AgentService {
     }
 
     @Override
-    public Agent edit(Agent actualAgent) {
+    public Agent update(Agent actualAgent) {
         Agent currentAgent = agentRepository.findOne(actualAgent.getId());
         currentAgent.setOktellLogin(actualAgent.getOktellLogin());
         currentAgent.setPassword(actualAgent.getPassword());
@@ -36,9 +36,7 @@ public class AgentServiceImpl implements AgentService {
 
     @Override
     public void delete(Agent agent) {
-
         agentRepository.delete(agent);
-
     }
 
     @Override
@@ -54,5 +52,10 @@ public class AgentServiceImpl implements AgentService {
     @Override
     public List<Agent> findAll() {
         return agentRepository.findAll();
+    }
+
+    @Override
+    public Agent hidePassword(Agent agent) {
+        return null;//TODO как нибудь защитить пароль при отправке на фронт или в логи.
     }
 }

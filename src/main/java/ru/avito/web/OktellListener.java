@@ -9,7 +9,6 @@ import ru.avito.factory.CallFactory;
 import ru.avito.model.AuthModel;
 import ru.avito.model.CallModel;
 import ru.avito.model.calls.Call;
-import ru.avito.model.calls.IncomingCall;
 import ru.avito.websocket.WebSocketConnections;
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
@@ -49,45 +48,45 @@ public class OktellListener  implements WebDebugLogger{
             , @QueryParam("ReasonStart") Integer reasonStart
     ) {
 
-        IncomingCall record = new IncomingCall(oktell_login, chain_id, com_id, astr, timeStart, timeStop, reasonStart);
+        Call call = new Call(oktell_login, chain_id, com_id, astr, timeStart, timeStop, reasonStart);
 
         //Call call = callFactory.getInstance(record); //TODO сюда приходит звонок
 
         ServerResponse response = new ServerResponse();
 
-        LOG.info(CALLS_PUT, String.format("Incoming data call.\r\n Params: %s", record));
+        LOG.info(CALLS_PUT, String.format("Incoming data call.\r\n Params: %s", call));
 
         try {
             switch (reasonStart){ //TODO тут тоже бы что-то сделать...
 
                 case 1:
-                    this.debugLog(CALLS_PUT, this.logMessage(1, record));
-                    CallModel.saveCallLink(record, false);
-                    int id = AuthModel.getUserIdByOktellLogin(record.getOktellLogin());
+                    this.debugLog(CALLS_PUT, this.logMessage(1, call));
+                    CallModel.saveCallLink(call, false);
+                    int id = AuthModel.getUserIdByOktellLogin(call.getOktellLogin());
                     if (id != -1) {
-                        this.sendMessageToUser(id, 1, record.getOktellLogin(), record.getChainId());
+                        this.sendMessageToUser(id, 1, call.getOktellLogin(), call.getChainId());
                     }
                     break;
 
                 case 2:
-                    this.debugLog(CALLS_PUT, this.logMessage(2, record));
+                    this.debugLog(CALLS_PUT, this.logMessage(2, call));
                     Pattern p = Pattern.compile("^(4|5)\\d{3,3}$");
                     Matcher m = p.matcher(oktell_login);
                     if (m.matches()) {
-                        this.debugLog(CALLS_PUT, String.format("I don't want to save this datacall:\r\n %s", record));
+                        this.debugLog(CALLS_PUT, String.format("I don't want to save this datacall:\r\n %s", call));
                         break;
                     }   else {
-                        this.debugLog(CALLS_PUT, this.logMessage(2, record));
-                        CallModel.saveCallLink(record, false);
+                        this.debugLog(CALLS_PUT, this.logMessage(2, call));
+                        CallModel.saveCallLink(call, false);
                     }
                     break;
 
                 case 3:
-                    this.debugLog(CALLS_PUT, this.logMessage(3, record));
-                    CallModel.saveCallLink(record, true);
+                    this.debugLog(CALLS_PUT, this.logMessage(3, call));
+                    CallModel.saveCallLink(call, true);
                     int ids = AuthModel.getUserIdByOktellLogin(astr);
                     if (ids != -1) {
-                        this.sendMessageToUser(ids, 3, record.getaStr(), record.getChainId());
+                        this.sendMessageToUser(ids, 3, call.getaStr(), call.getChainId());
                     }
                     break;
 
@@ -95,8 +94,8 @@ public class OktellListener  implements WebDebugLogger{
                     Pattern pp = Pattern.compile("^(2|4|5)\\d{3,3}$");
                     Matcher mm = pp.matcher(oktell_login);
                     if (mm.matches()) break;
-                    this.debugLog(CALLS_PUT, this.logMessage(5, record));
-                    CallModel.saveCallLink(record, false);
+                    this.debugLog(CALLS_PUT, this.logMessage(5, call));
+                    CallModel.saveCallLink(call, false);
                     break;
 
                 default:
@@ -113,9 +112,9 @@ public class OktellListener  implements WebDebugLogger{
     }
 
 
-    private String logMessage(int caseId, IncomingCall record){ // TODO используется в кейсах. Может можно сделать лучше?
+    private String logMessage(int caseId, Call call){ // TODO используется в кейсах. Может можно сделать лучше?
         return String.format("Data HashCode: #%s,\r\n CASE %s:, try to save data call %s:\r\n",
-                                record.hashCode(), caseId, record);
+                                call.hashCode(), caseId, call);
     }
 
     private void sendMessageToUser(int userId, int caseId, String oktellLogin, String chainId){

@@ -8,7 +8,7 @@ import org.jooq.*;
 import org.jooq.impl.DSL;
 import ru.avito.datasource.DBConnection;
 import ru.avito.factory.EmptyCallAsJson;
-import ru.avito.model.calls.IncomingCall;
+import ru.avito.model.calls.Call;
 import ru.avito.model.calls.EmptyCall;
 import ru.avito.model.calls.UpdatedCall;
 import java.io.IOException;
@@ -35,7 +35,7 @@ public class CallModel {
     private final static Marker CALLS_UPDATE_SQL = MarkerManager.getMarker("CALLS_UPDATE_SQL");
     private static final int MAX_CALLS_PER_REQUEST = 20; //TODO ай
 
-    private static String selectComIdByTags = "SELECT\n" +
+    private static String selectComIdByTags = "SELECT\n" + //TODO заюзать паттерн Стратегия
             "  calls.com_id, calls.chain_id, calls.avito_link, calls.time_begin, calls.tags, calls.comments,\n" +
             "  users.user_name,\n" +
             "  shop_category.description,\n" +
@@ -50,13 +50,13 @@ public class CallModel {
     * Сохраняем ссылку на звонок
      */
 
-    public static void saveCallLink(IncomingCall record, Boolean isOut)
+    public static void saveCallLink(Call call, Boolean isOut)
             throws SQLException { //TODO должен возвращаться ID созданной записи в БД. по ней обновлять инфу
         try (Connection conn = DBConnection.getDataSource().getConnection()) {
-            debugLog(CALLS_PUT_SQL, String.format("Saving data... Hashcode #%s,\r\n data: %s", record.hashCode(), record));
+            debugLog(CALLS_PUT_SQL, String.format("Saving data... Hashcode #%s,\r\n data: %s", call.hashCode(), call));
             Integer user_id = DSL.using(conn).select(USERS.ID)
                     .from(USERS)
-                    .where(USERS.OKTELL_LOGIN.equal(!isOut ? record.getOktellLogin() : record.getaStr()))
+                    .where(USERS.OKTELL_LOGIN.equal(!isOut ? call.getOktellLogin() : call.getaStr()))
                     .fetchOne()
                     .value1();
             DSL.using(conn)
@@ -64,12 +64,12 @@ public class CallModel {
                     .columns(CALLS.USER_ID, CALLS.CHAIN_ID, CALLS.COM_ID,
                             CALLS.TIME_BEGIN, CALLS.TIME_END,
                             CALLS.IS_OUT)
-                    .values(user_id, record.getChainId(), record.getComId(),
-                            (record.getTimeStart() - 10800) * 1000, (record.getTimeEnd() - 10800) * 1000,
+                    .values(user_id, call.getChainId(), call.getComId(),
+                            (call.getTimeStart() - 10800) * 1000, (call.getTimeEnd() - 10800) * 1000,
                             isOut)
                     .execute();
 
-            debugLog(CALLS_PUT_SQL, String.format("Data call was saved successfully!!! Hashcode: #%s\r\n Data: %s", record.hashCode(), record));
+            debugLog(CALLS_PUT_SQL, String.format("Data call was saved successfully!!! Hashcode: #%s\r\n Data: %s", call.hashCode(), call));
         }
     }
 
