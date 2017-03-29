@@ -58,6 +58,7 @@
     <bean id="tagServise" class="ru.avito.services.impl.TagServiceImpl"/>
     <bean id="tagGroupService" class="ru.avito.services.impl.TagGroupServiceImpl"/>
     <bean id ="callService" class="ru.avito.services.impl.CallServiceImpl"/>
+    <bean id="callFactory" class="ru.avito.factory.CallFactory"/>
 
     <bean class="org.springframework.web.socket.server.standard.ServletServerContainerFactoryBean">
         <property name="maxSessionIdleTimeout" value="-1"/>

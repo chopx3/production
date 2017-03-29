@@ -149,6 +149,10 @@
             <AppenderRef ref="console" level ="${consoleLogLevel}"/>
         </Logger>
 
+        <Logger name="ru.avito.service" level="${logLevel}" additivity="false">
+            <AppenderRef ref="console" level ="${consoleLogLevel}"/>
+        </Logger>
+
         <Root level="debug">
             <AppenderRef ref="console"/>
         </Root>

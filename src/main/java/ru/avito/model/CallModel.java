@@ -30,7 +30,6 @@ import static ru.avito.jooqdbmodel.Tables.USERS;
 public class CallModel {
 
     private final static Logger LOG = LogManager.getLogger();
-    private final static Marker CALLS_PUT_SQL = MarkerManager.getMarker("CALLS_PUT_SQL");
     private final static Marker CALLS_GET_SQL = MarkerManager.getMarker("CALLS_GET_SQL");
     private final static Marker CALLS_UPDATE_SQL = MarkerManager.getMarker("CALLS_UPDATE_SQL");
     private static final int MAX_CALLS_PER_REQUEST = 20; //TODO ай
@@ -49,29 +48,6 @@ public class CallModel {
     /*
     * Сохраняем ссылку на звонок
      */
-
-    public static void saveCallLink(Call call, Boolean isOut)
-            throws SQLException { //TODO должен возвращаться ID созданной записи в БД. по ней обновлять инфу
-        try (Connection conn = DBConnection.getDataSource().getConnection()) {
-            debugLog(CALLS_PUT_SQL, String.format("Saving data... Hashcode #%s,\r\n data: %s", call.hashCode(), call));
-            Integer user_id = DSL.using(conn).select(USERS.ID)
-                    .from(USERS)
-                    .where(USERS.OKTELL_LOGIN.equal(!isOut ? call.getOktellLogin() : call.getaStr()))
-                    .fetchOne()
-                    .value1();
-            DSL.using(conn)
-                    .insertInto(CALLS)
-                    .columns(CALLS.USER_ID, CALLS.CHAIN_ID, CALLS.COM_ID,
-                            CALLS.TIME_BEGIN, CALLS.TIME_END,
-                            CALLS.IS_OUT)
-                    .values(user_id, call.getChainId(), call.getComId(),
-                            (call.getTimeStart() - 10800) * 1000, (call.getTimeEnd() - 10800) * 1000,
-                            isOut)
-                    .execute();
-
-            debugLog(CALLS_PUT_SQL, String.format("Data call was saved successfully!!! Hashcode: #%s\r\n Data: %s", call.hashCode(), call));
-        }
-    }
 
     /*
     * Получаем записи звонков для данного пользователя
@@ -197,7 +173,7 @@ public class CallModel {
             DSLContext create = DSL.using(conn, SQLDialect.MYSQL);
             LOG.debug(String.format(selectComIdByTags, "feedback"));
             Result<Record> fetch = create.fetch(String.format(selectComIdByTags, "feedback")+
-                    String.format(" and user_id=%s and comments is null",agentId));
+                    String.format(" and user_id=%s and comments is null", agentId));
             return fetch.formatJSON();
 
         } catch (SQLException e) {

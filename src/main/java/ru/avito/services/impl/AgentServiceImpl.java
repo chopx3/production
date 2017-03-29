@@ -58,4 +58,9 @@ public class AgentServiceImpl implements AgentService {
     public Agent hidePassword(Agent agent) {
         return null;//TODO как нибудь защитить пароль при отправке на фронт или в логи.
     }
+
+    @Override
+    public Agent findByOktellLogin(String oktellLogin) {
+            return agentRepository.findByOktellLogin(oktellLogin);
+    }
 }

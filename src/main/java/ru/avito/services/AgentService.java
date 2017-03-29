@@ -15,4 +15,6 @@ public interface AgentService {
     Agent findByUsername(String username);
     List<Agent> findAll();
     Agent hidePassword(Agent agent);
+
+    Agent findByOktellLogin(String oktellLogin);
 }

@@ -13,4 +13,8 @@ public interface AgentRepository extends JpaRepository<Agent, Integer> {
 
     @Query(name = "select a from Agent a where a.username = :username")
     Agent findByUsername(@QueryParam("username") String username);
+
+    @Query(name = "select a from Agent a where a.oktell_login = :oktellLogin")
+    Agent findByOktellLogin(@QueryParam("oktellLogin") String oktellLogin);
+
 }

@@ -18,6 +18,14 @@ public class Chain {
         this.commutations = commutations;
     }
 
+    public String getChainId() {
+        return chainId;
+    }
+
+    public List<Commutation> getCommutations() {
+        return commutations;
+    }
+
     @Override
     public String toString() {
         return "Chain{" +

@@ -8,7 +8,7 @@ import javax.persistence.*;
 
 @Entity
 @Table(name ="calls")
-public class Call {  //TODO надо подумать над иерархией сущностей звонков. Сделать UnUpdatable аннотацию.
+public class Call {
 
     @Id
     @Column(name = "id", updatable = false)
@@ -33,23 +33,16 @@ public class Call {  //TODO надо подумать над иерархией 
     @Column(name ="isManager")
     private boolean isManager;
 
-    private transient String aStr;
-    private transient String bStr;
-    private transient Integer reasonStart;
-
     public Call() {
     }
 
-    public Call(String bStr, String chainId, String comId, String aStr, Long timeStart, Long timeEnd, Integer reasonStart) {
-        this.bStr = bStr;
+    public Call(int userId, String chainId, String comId, Long timeStart, Long timeEnd) {
         this.chainId = chainId;
         this.comId = comId;
-        this.aStr = aStr;
         this.timeStart = timeStart;
         this.timeEnd = timeEnd;
-        this.reasonStart = reasonStart;
         this.isManager = false;
-        this.userId = 30; //TODO убрать хардкод
+        this.userId = userId;
 
     }
 
@@ -59,14 +52,6 @@ public class Call {  //TODO надо подумать над иерархией 
 
     public void setId(int id) {
         this.id = id;
-    }
-
-    public String getOktellLogin() {
-        return bStr;
-    }
-
-    public void setOktellLogin(String oktellLogin) {
-        this.bStr = oktellLogin;
     }
 
     public String getChainId() {
@@ -85,14 +70,6 @@ public class Call {  //TODO надо подумать над иерархией 
         this.comId = comId;
     }
 
-    public String getaStr() {
-        return aStr;
-    }
-
-    public void setaStr(String aStr) {
-        this.aStr = aStr;
-    }
-
     public Long getTimeStart() {
         return timeStart;
     }
@@ -107,14 +84,6 @@ public class Call {  //TODO надо подумать над иерархией 
 
     public void setTimeEnd(Long timeEnd) {
         this.timeEnd = timeEnd;
-    }
-
-    public Integer getReasonStart() {
-        return reasonStart;
-    }
-
-    public void setReasonStart(Integer reasonStart) {
-        this.reasonStart = reasonStart;
     }
 
     public void setManager(boolean manager) {
@@ -143,9 +112,6 @@ public class Call {  //TODO надо подумать над иерархией 
                 ", chainId='" + chainId + '\'' +
                 ", comId='" + comId + '\'' +
                 ", isManager=" + isManager +
-                ", aStr='" + aStr + '\'' +
-                ", oktellLogin='" + bStr + '\'' +
-                ", reasonStart=" + reasonStart +
                 '}';
     }
 }

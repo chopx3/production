@@ -1,16 +1,59 @@
 package ru.avito.factory;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
+import ru.avito.model.agent.Agent;
 import ru.avito.model.calls.Call;
+import ru.avito.model.calls.oktell.Chain;
+import ru.avito.model.calls.oktell.Commutation;
+import ru.avito.services.AgentService;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by Dmitriy on 26.02.2017.
  */
-public class CallFactory<T extends Call> {
 
-    private T t;
+@Component
+public class CallFactory {
 
-        public T getInstance(T call){
-            t = call;
-            return t;
-        }
+    private final static Logger LOG = LogManager.getLogger();
+
+    @Autowired
+    AgentService agentService;
+
+    public List<Call> getInstance(Chain chain){
+        Call call;
+        List<Call> calls = new ArrayList<>();
+
+            for(Commutation comm : chain.getCommutations()){
+                if (comm.getReasonStart() == 3){
+                    comm.setbStr(comm.getaStr());
+                }
+
+                try{
+                    Agent agent = agentService.findByOktellLogin(comm.getbStr());
+                    call = new Call(
+                            agent.getId(),
+                            chain.getChainId(), comm.getComId(), //TODO зарефакторить в конструктор
+                            createPeriod(comm.getTimeStart()),
+                            createPeriod(comm.getTimeEnd())
+                    );
+
+                    calls.add(call);
+                }catch (Exception e){
+                    LOG.error(e);
+                }
+            }
+            LOG.debug(calls);
+            return calls;
+    }
+
+
+    private long createPeriod(long period){
+        return (period - 10800) * 1000;
+    }
 }

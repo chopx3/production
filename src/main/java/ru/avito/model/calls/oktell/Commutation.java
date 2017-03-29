@@ -36,6 +36,31 @@ public class Commutation {
         this.reasonStart = reasonStart;
     }
 
+
+    public String getComId() {
+        return comId;
+    }
+
+    public long getTimeStart() {
+        return timeStart;
+    }
+
+    public long getTimeEnd() {
+        return timeEnd;
+    }
+
+    public String getaStr() {
+        return aStr;
+    }
+
+    public String getbStr() {
+        return bStr;
+    }
+
+    public int getReasonStart() {
+        return reasonStart;
+    }
+
     @Override
     public String toString() {
         return "Commutation{" +

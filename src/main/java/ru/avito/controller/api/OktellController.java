@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import ru.avito.controller.Path;
+import ru.avito.factory.CallFactory;
 import ru.avito.model.ResponseMessage;
 import ru.avito.model.calls.Call;
 import ru.avito.model.calls.oktell.Chain;
@@ -24,17 +25,11 @@ public class OktellController {
     @Autowired
     CallService callService;
 
+    @Autowired
+    CallFactory callFactory;
+
     private final static Logger LOG = LogManager.getLogger();
 
-    @ResponseBody
-    @ResponseStatus(HttpStatus.CREATED) //TODO не нужен этот метод
-    @RequestMapping(value = "call/save", method = RequestMethod.POST)
-    public ResponseMessage saveCallRecord(@RequestBody Call call){
-        LOG.debug(call);
-        return new ResponseMessage(201,"ok");
-    }
-
-    @ResponseBody
     @ResponseStatus(HttpStatus.OK)
     @RequestMapping(value = "load", method = RequestMethod.GET)
     public ResponseMessage saveCallRecord(){
@@ -45,6 +40,7 @@ public class OktellController {
     @ResponseStatus(HttpStatus.CREATED)
     @RequestMapping(value = "chain/save", method = RequestMethod.POST)
     public void saveChain(@RequestBody Chain chain){
-        LOG.debug(chain);
+        LOG.info(String.format("New chain: %s", chain));
+        callService.save(callFactory.getInstance(chain));
     }
 }
