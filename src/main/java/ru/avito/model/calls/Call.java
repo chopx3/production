@@ -1,5 +1,9 @@
 package ru.avito.model.calls;
 
+import com.google.gson.Gson;
+import org.hibernate.annotations.Formula;
+import ru.avito.model.agent.Agent;
+
 import javax.persistence.*;
 
 /**
@@ -13,16 +17,28 @@ public class Call {
     @Id
     @Column(name = "id", updatable = false)
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private int id;
+    private Integer id;
 
     @Column(name ="user_id", updatable = false)
-    private int userId;
+    private Integer agentId;
+
+    @Column (name = "comments")
+    private String comments;
 
     @Column(name ="time_begin", updatable = false)
     private Long timeStart;
 
     @Column(name = "time_end", updatable = false)
     private Long timeEnd;
+
+    @Column(name = "avito_link")
+    private Long avitoUserId;
+
+    @Column(name = "question_id")
+    private Integer questionId;
+
+    @Column(name = "shop_category_id")
+    private Integer shopCategoryId;
 
     @Column(name = "chain_id", updatable = false)
     private String chainId;
@@ -31,43 +47,40 @@ public class Call {
     private String comId;
 
     @Column(name ="isManager")
-    private boolean isManager;
+    private Boolean isManager;
+
+    @Column(name = "tags")
+    private String tags;
+
+    @Column(name ="isOut")
+    private Boolean isOut;
 
     public Call() {
     }
 
-    public Call(int userId, String chainId, String comId, Long timeStart, Long timeEnd) {
-        this.chainId = chainId;
-        this.comId = comId;
-        this.timeStart = timeStart;
-        this.timeEnd = timeEnd;
-        this.isManager = false;
-        this.userId = userId;
+    public Integer getId() {
 
-    }
-
-    public int getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 
-    public String getChainId() {
-        return chainId;
+    public Integer getAgentId() {
+        return agentId;
     }
 
-    public void setChainId(String chainId) {
-        this.chainId = chainId;
+    public void setAgentId(Integer agentId) {
+        this.agentId = agentId;
     }
 
-    public String getComId() {
-        return comId;
+    public String getComments() {
+        return comments;
     }
 
-    public void setComId(String comId) {
-        this.comId = comId;
+    public void setComments(String comments) {
+        this.comments = comments;
     }
 
     public Long getTimeStart() {
@@ -86,32 +99,84 @@ public class Call {
         this.timeEnd = timeEnd;
     }
 
-    public void setManager(boolean manager) {
-        isManager = manager;
+    public Long getAvitoUserId() {
+        return avitoUserId;
     }
 
-    public boolean isManager() {
+    public void setAvitoUserId(Long avitoUserId) {
+        this.avitoUserId = avitoUserId;
+    }
+
+    public Integer getQuestionId() {
+        return questionId;
+    }
+
+    public void setQuestionId(Integer questionId) {
+        this.questionId = questionId;
+    }
+
+    public Integer getShopCategoryId() {
+        return shopCategoryId;
+    }
+
+    public void setShopCategoryId(Integer shopCategoryId) {
+        this.shopCategoryId = shopCategoryId;
+    }
+
+    public String getChainId() {
+        return chainId;
+    }
+
+    public void setChainId(String chainId) {
+        this.chainId = chainId;
+    }
+
+    public String getComId() {
+        return comId;
+    }
+
+    public void setComId(String comId) {
+        this.comId = comId;
+    }
+
+    public Boolean getManager() {
         return isManager;
     }
 
-    public int getUserId() {
-        return userId;
+    public void setManager(Boolean manager) {
+        isManager = manager;
     }
 
-    public void setUserId(int userId) {
-        this.userId = userId;
+    public String getTags() {
+        return tags;
     }
+
+    public void setTags(String tags) {
+        this.tags = tags;
+    }
+
+    public Boolean getOut() {
+        return isOut;
+    }
+
+    public void setOut(Boolean out) {
+        isOut = out;
+    }
+
+    public Call(Integer agentId, String chainId, String comId, Long timeStart, Long timeEnd, Boolean isOut) {
+
+        this.agentId = agentId;
+        this.timeStart = timeStart;
+        this.timeEnd = timeEnd;
+        this.chainId = chainId;
+        this.comId = comId;
+        this.isOut = isOut;
+        this.isManager = false;
+    }
+
 
     @Override
     public String toString() {
-        return "Call{" +
-                "id=" + id +
-                ", userId=" + userId +
-                ", timeStart=" + timeStart +
-                ", timeEnd=" + timeEnd +
-                ", chainId='" + chainId + '\'' +
-                ", comId='" + comId + '\'' +
-                ", isManager=" + isManager +
-                '}';
+        return new Gson().toJson(this);
     }
 }

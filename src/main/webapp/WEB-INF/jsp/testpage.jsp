@@ -10,7 +10,7 @@ hi ${hello}
 
 <script>
     var request = new XMLHttpRequest();
-    var host = "http://10.10.37.132:8080/avito";
+    var host = location.protocol + '//' + location.host;
 //    var host = "http://192.168.10.132:8080/avito";
 
 function getEmptyCallsByAgentId (agentId) {
@@ -27,20 +27,23 @@ function getcallsBytags (tags) { // принимает теги как regexp (t
         console.log(request.responseText);
     }
 }
-    var saveURL =host+"/oktell/call/save";
-    var updateURL =host+"/rest/call/update";
-    var saveChainURL =host+"/api/oktell/chain/save";
+    var saveURL =host+"/avito/oktell/call/save";
+    var oldUpdateURL =host+"/avito/api/call/oldsave";
+    var updateURL =host+"/avito/api/call/save";
+    var saveChainURL =host+"/avito/api/oktell/chain/save";
 
 
     var updateCall = {
-        "uAgentId": "30",
-        "uChainId": "ABCD-ABCD-3",
-        "uAvitoUserId": 1939992,
-        "question": 2,
-        "shop_category": 1,
+        "agentId": "32",
+        "chainId": "CC7A96B1-9DF1-41BE-ACF5-9203CFE0B6B8",
+        "avitoUserId": 1939992,
+        "questId": 2,
+        "shopCategoryId": 1,
         "tags": "feedback",
-        "isManager": "0"
+        "isManager": false
     }
+
+
     var fakeCall =  {
         "chainId": "48258FE5-1646-4F10-BC9A-4CEBE64C548B",
         "commutations": [
@@ -72,8 +75,8 @@ function getcallsBytags (tags) { // принимает теги как regexp (t
         "commutations": [
             {
                 "comId": "82A6C584-A63D-409B-9D10-E6F15E61EB56",
-                "timeStart": 1490710437,
-                "timeEnd": 1490710643,
+                "timeStart": 1490954126,
+                "timeEnd": 1490954186,
                 "aStr": "5356, CallCenter",
                 "bStr": "Avtomonova Alena",
                 "reasonStart": 1
@@ -374,7 +377,8 @@ Put feedback
     document.getElementById("starttime").value=stopTime-300;
 </script>
 
-
+<button onclick="RestPost(updateCall, updateURL)">Update call</button>
+<button onclick="RestPost(updateCall, oldUpdateURL)">oldUpdate call</button>
 <button onclick="RestPost(fakeCall, saveChainURL)">fake call</button>
 <button onclick="RestPost(fakeAgent, saveChainURL)">fake agent</button>
 <button onclick="RestPost(newCall, saveChainURL)">new call</button>

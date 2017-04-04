@@ -1,4 +1,4 @@
-package ru.avito.model.calls.oktell;
+package ru.avito.model.oktell;
 
 /**
  * Created by Dmitriy on 09.03.2017.

@@ -7,10 +7,10 @@ import org.apache.logging.log4j.MarkerManager;
 import org.jooq.*;
 import org.jooq.impl.DSL;
 import ru.avito.datasource.DBConnection;
-import ru.avito.factory.EmptyCallAsJson;
-import ru.avito.model.calls.Call;
+import ru.avito.response.EmptyCallAsJson;
 import ru.avito.model.calls.EmptyCall;
 import ru.avito.model.calls.UpdatedCall;
+
 import java.io.IOException;
 import java.sql.Connection;
 import java.sql.SQLException;
@@ -80,8 +80,8 @@ public class CallModel {
 
         LocalDate now = LocalDate.now();
         ZoneId zoneId = ZoneId.systemDefault();
-        long startDay = now.atStartOfDay(zoneId).toEpochSecond() * 1000;
-        long endDay = startDay + 86400000;
+        long startDay = now.atStartOfDay(zoneId).toEpochSecond();
+        long endDay = startDay + 86400;
 
         try (Connection conn = DBConnection.getDataSource().getConnection()) {
 
@@ -102,31 +102,36 @@ public class CallModel {
                     userId, emptyCalls));
 
             List<EmptyCall> list = new ArrayList<>();
-            emptyCalls.forEach(rc -> list.add(new EmptyCall(rc.value2(), rc.value3(), rc.value4())));
+            emptyCalls.forEach(rc -> list.add(new EmptyCall(userId, rc.value2(), rc.value3(), rc.value4())));
 
-            return emptyCalls.size() > 0 ? //TODO обернуть в метод и заюзать JsonFactory+ и лямбду, что выше, забрать
-                    new EmptyCallAsJson(emptyCalls.get(0).value1(), userId)
-                            .buildEmptyCallList(list)
-                            .toJson() :
-                    new EmptyCallAsJson(agentName, userId).toJson();
+            return createEmptyCalls(emptyCalls, userId, agentName, list);
         }
+    }
+
+    private static String createEmptyCalls(Result<Record4<String, String, String, Long>> emptyCalls, int userId, String agentName, List list) {
+
+        return emptyCalls.size() > 0 ? //TODO обернуть в метод и заюзать JsonFactory+ и лямбду, что выше, забрать
+                new EmptyCallAsJson(emptyCalls.get(0).value1(), userId)
+                        .buildEmptyCallList(list)
+                        .toJson() :
+                new EmptyCallAsJson(agentName, userId).toJson();
     }
 
     public static void updateCallRecord(UpdatedCall updRecord)
             throws SQLException {  //TODO обновлять по ID
         try (Connection conn = DBConnection.getDataSource().getConnection()) {
-            debugLog(CALLS_UPDATE_SQL, String.format("Updating data: %s", updRecord));
+//            debugLog(CALLS_UPDATE_SQL, String.format("Updating data: %s", updRecord));
             DSLContext create = DSL.using(conn, SQLDialect.MYSQL);
 
             create.update(CALLS)
                     .set(CALLS.AVITO_LINK, updRecord.getAvitoUserId())
                     .set(CALLS.QUESTION_ID, updRecord.getQuestId())
                     .set(CALLS.SHOP_CATEGORY_ID, updRecord.getShopCategoryId())
-                    .set(CALLS.IS_MANAGER, updRecord.isManager())
+                    .set(CALLS.IS_MANAGER, updRecord.getIsManager())
                     .set(CALLS.TAGS, updRecord.getTags())
                     .where(CALLS.CHAIN_ID.eq(updRecord.getChainId()).and(CALLS.USER_ID.eq(updRecord.getAgentId())))
                     .execute();
-            debugLog(CALLS_UPDATE_SQL, String.format("Update call was successfully!!! Data: %s", updRecord));
+//            debugLog(CALLS_UPDATE_SQL, String.format("Update call was successfully!!! Data: %s", updRecord));
 
             //    selectToUpdateCallRecord(updRecord); TODO я хз зачем это написал. Получается я повторяю одно и тоже действие. если все работает. Выкинуть.
         }

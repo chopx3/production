@@ -1,6 +1,5 @@
 'use strict';
-var webSocketHost = "10.10.37.132:8080/avito";
-// var webSocketHost = "192.168.10.132:8080/avito";
+var webSocketHost = location.host+'/firecatcher';
 var websocket;
 var websocketUrl = "ws://"+webSocketHost+"/websocket/start";
 var wsCount = 0;

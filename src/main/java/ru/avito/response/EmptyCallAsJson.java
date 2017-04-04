@@ -1,6 +1,7 @@
-package ru.avito.factory;
+package ru.avito.response;
 
 import com.google.gson.Gson;
+import ru.avito.model.calls.Call;
 import ru.avito.model.calls.EmptyCall;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
@@ -14,18 +15,24 @@ public class EmptyCallAsJson {
 //TODO Это класс JSON-ответа с пустыми звонками для конкретного агента. Глядя на код не понятно о чем идет речь.
 
     private String agentName;
-    private int agentId;
-    private List<EmptyCall> emptyCallList = new ArrayList<>();
-    private long lastUpdateTimeMs;
+    private Integer agentId;
+    private List<EmptyCall> emptyCallList;
+    private Long lastUpdateTimeMs;
 
     public EmptyCallAsJson(String agentName, int agentId) {
         this.agentName = agentName;
         this.agentId = agentId;
+        this.emptyCallList = new ArrayList();
         this.lastUpdateTimeMs = LocalDateTime //TODO копипаста
                 .now()
                 .atZone(ZoneId.systemDefault())
                 .toInstant()
                 .toEpochMilli();
+    }
+
+    public EmptyCallAsJson(Integer agentId, String agentName, List<EmptyCall> emptyCallList) {
+        this(agentName, agentId);
+        this.setEmptyCallList(emptyCallList);
     }
 
     public String getAgentName() {
@@ -44,7 +51,9 @@ public class EmptyCallAsJson {
         return lastUpdateTimeMs;
     }
 
-
+    public void setEmptyCallList(List<EmptyCall> emptyCallList) {
+        this.emptyCallList = emptyCallList;
+    }
 
     public EmptyCallAsJson buildEmptyCallList(List<EmptyCall> emptyCallList) {
         this.emptyCallList = emptyCallList;

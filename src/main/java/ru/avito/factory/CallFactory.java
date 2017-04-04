@@ -6,8 +6,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import ru.avito.model.agent.Agent;
 import ru.avito.model.calls.Call;
-import ru.avito.model.calls.oktell.Chain;
-import ru.avito.model.calls.oktell.Commutation;
+import ru.avito.model.oktell.Chain;
+import ru.avito.model.oktell.Commutation;
 import ru.avito.services.AgentService;
 
 import java.util.ArrayList;
@@ -33,16 +33,14 @@ public class CallFactory {
                 if (comm.getReasonStart() == 3){
                     comm.setbStr(comm.getaStr());
                 }
-
                 try{
                     Agent agent = agentService.findByOktellLogin(comm.getbStr());
                     call = new Call(
                             agent.getId(),
-                            chain.getChainId(), comm.getComId(), //TODO зарефакторить в конструктор
+                            chain.getChainId(), comm.getComId(),
                             createPeriod(comm.getTimeStart()),
-                            createPeriod(comm.getTimeEnd())
-                    );
-
+                            createPeriod(comm.getTimeEnd()),
+                            comm.getReasonStart() == 3);
                     calls.add(call);
                 }catch (Exception e){
                     LOG.error(e);
@@ -54,6 +52,6 @@ public class CallFactory {
 
 
     private long createPeriod(long period){
-        return (period - 10800) * 1000;
+        return period - 10800;
     }
 }

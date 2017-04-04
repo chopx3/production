@@ -1,4 +1,4 @@
-package ru.avito.factory;
+package ru.avito.response;
 
 import ru.avito.model.calls.FeedbackCall;
 import java.time.LocalDateTime;

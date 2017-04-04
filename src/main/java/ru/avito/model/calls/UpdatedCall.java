@@ -2,28 +2,53 @@ package ru.avito.model.calls;
 
 import ru.avito.factory.JsonFactory;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Table;
+
 /**
  * Created by Dmitriy on 03.12.2016.
  */
+
+@Entity
+@Table(name = "calls")
 public class UpdatedCall {
 
-    private String  chainId;
-    private int     questId, shopCategoryId, agentId;
-    private long    avitoUserId;
-    private boolean isManager;
+    @Id
+    @Column(name = "id", updatable = false)
+    private Integer id;
+
+    @Column(name = "chain_id", updatable = false)
+    private String chainId;
+
+    @Column(name = "question_id")
+    private Integer questId;
+
+    @Column(name = "shop_category_id")
+    private Integer shopCategoryId;
+
+    @Column(name = "user_id", updatable = false)
+    private Integer agentId;
+
+    @Column(name = "avito_link")
+    private Long avitoUserId;
+
+    @Column(name = "isManager")
+    private Boolean isManager;
+
+    @Column(name = "tags")
     private String tags;
 
     public UpdatedCall() {
     }
 
-    public UpdatedCall(int agentId, String chainId, int questId, int shopCategoryId, long avitoUserId, boolean isManager, String tags) {
-        this.chainId = chainId;
-        this.questId = questId;
-        this.shopCategoryId = shopCategoryId;
-        this.avitoUserId = avitoUserId;
-        this.isManager = isManager;
-        this.agentId = agentId;
-        this.tags = tags;
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
     }
 
     public String getChainId() {
@@ -34,44 +59,44 @@ public class UpdatedCall {
         this.chainId = chainId;
     }
 
-    public int getQuestId() {
+    public Integer getQuestId() {
         return questId;
     }
 
-    public void setQuestId(int questId) {
+    public void setQuestId(Integer questId) {
         this.questId = questId;
     }
 
-    public int getShopCategoryId() {
+    public Integer getShopCategoryId() {
         return shopCategoryId;
     }
 
-    public void setShopCategoryId(int shopCategoryId) {
+    public void setShopCategoryId(Integer shopCategoryId) {
         this.shopCategoryId = shopCategoryId;
     }
 
-    public long getAvitoUserId() {
-        return avitoUserId;
-    }
-
-    public void setAvitoUserId(long avitoUserId) {
-        this.avitoUserId = avitoUserId;
-    }
-
-    public boolean isManager() {
-        return isManager;
-    }
-
-    public void setManager(boolean manager) {
-        isManager = manager;
-    }
-
-    public int getAgentId() {
+    public Integer getAgentId() {
         return agentId;
     }
 
-    public void setAgentId(int agentId) {
+    public void setAgentId(Integer agentId) {
         this.agentId = agentId;
+    }
+
+    public Long getAvitoUserId() {
+        return avitoUserId;
+    }
+
+    public void setAvitoUserId(Long avitoUserId) {
+        this.avitoUserId = avitoUserId;
+    }
+
+    public Boolean getIsManager() {
+        return isManager;
+    }
+
+    public void setIsManager(Boolean manager) {
+        isManager = manager;
     }
 
     public String getTags() {
@@ -82,14 +107,11 @@ public class UpdatedCall {
         this.tags = tags;
     }
 
-    public static String tagsAsJson(String tags){
-        return (String) JsonFactory.jsonToSQL(tags);
-    }
-
     @Override
     public String toString() {
         return "UpdatedCall{" +
-                "chainId='" + chainId + '\'' +
+                "id=" + id +
+                ", chainId='" + chainId + '\'' +
                 ", questId=" + questId +
                 ", shopCategoryId=" + shopCategoryId +
                 ", agentId=" + agentId +

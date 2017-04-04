@@ -23,18 +23,18 @@
             <version>4.12</version>
         </dependency>
 
-        <dependency>
-            <groupId>org.glassfish.jersey.containers</groupId>
-            <!-- if your container implements Servlet API older than 3.0, use "jersey-container-servlet-core"  -->
-            <artifactId>jersey-container-servlet</artifactId>
-            <version>2.22.2</version>
-        </dependency>
-        <!-- Required only when you are using JAX-RS Client -->
-        <dependency>
-            <groupId>org.glassfish.jersey.core</groupId>
-            <artifactId>jersey-client</artifactId>
-            <version>2.22.2</version>
-        </dependency>
+        <!--<dependency>-->
+            <!--<groupId>org.glassfish.jersey.containers</groupId>-->
+            <!--&lt;!&ndash; if your container implements Servlet API older than 3.0, use "jersey-container-servlet-core"  &ndash;&gt;-->
+            <!--<artifactId>jersey-container-servlet</artifactId>-->
+            <!--<version>2.22.2</version>-->
+        <!--</dependency>-->
+        <!--&lt;!&ndash; Required only when you are using JAX-RS Client &ndash;&gt;-->
+        <!--<dependency>-->
+            <!--<groupId>org.glassfish.jersey.core</groupId>-->
+            <!--<artifactId>jersey-client</artifactId>-->
+            <!--<version>2.22.2</version>-->
+        <!--</dependency>-->
         <dependency>
             <groupId>org.jooq</groupId>
             <artifactId>jooq</artifactId>
@@ -235,7 +235,7 @@
 
     </dependencies>
     <build>
-        <finalName>avito</finalName>
+        <finalName>firecatcher</finalName>
         <plugins>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
@@ -254,7 +254,7 @@
                     <url>http://127.0.0.1:8080/manager/text</url>
                     <server>tomcat</server>
                     <update>true</update>
-                    <path>/avito</path>
+                    <path>/firecatcher</path>
                 </configuration>
             </plugin>
         </plugins>

@@ -83,8 +83,8 @@ public class Calls implements WebDebugLogger{
          {
              ServerResponse response = new ServerResponse();
 
-             UpdatedCall updRecord = new UpdatedCall(agentId, uChainId, question_id, shop_category_id,
-                                                                    avitoUserId, isManager, tags);
+             UpdatedCall updRecord = new UpdatedCall();
+//             agentId, uChainId, question_id, shop_category_id, avitoUserId, isManager, tags);
              this.debugLog(CALLS_UPDATE,String.format("Try to update calls. Data calls: %s", updRecord));
 
             try {

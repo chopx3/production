@@ -4,10 +4,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import ru.avito.controller.Path;
-import ru.avito.model.ResponseMessage;
+import ru.avito.response.ResponseMessage;
 import ru.avito.model.tags.Tag;
-import ru.avito.model.tags.TagGroup;
-import ru.avito.services.TagGroupService;
 import ru.avito.services.TagService;
 
 import java.util.List;
@@ -23,7 +21,7 @@ public class TagController {
     @Autowired
     TagService tagService;
 
-    @RequestMapping(value ="")
+    @RequestMapping(value ="/")
     public List <Tag> findAllTags(){
         return tagService.findAll();
     }

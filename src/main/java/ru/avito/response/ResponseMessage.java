@@ -1,4 +1,4 @@
-package ru.avito.model;
+package ru.avito.response;
 
 /**
  * Created by Dmitriy on 07.01.2017.

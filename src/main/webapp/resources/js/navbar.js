@@ -6,8 +6,7 @@ var feedbackArray = [];
 var commentArray = [];
 var sentCall=false;
 var noteArray = [];
-var httpHost = "10.10.37.132:8080/avito";
-// var httpHost = "192.168.10.132:8080/avito";
+var httpHost = location.host+'/firecatcher';
 var questNum="1";
 var catNum="1";
 var catTagNum="1";
@@ -279,6 +278,7 @@ function showMyEmptyCalls() {
 	fillInfo("remove","Мои звонки", "");
 
 	getWebsocketMessage(function(emptyCallsInfo){
+		console.log(emptyCallsInfo);
 		draw(emptyCallsInfo);
 	});
 	$("#SubForm").addClass("Add");

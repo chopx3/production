@@ -1,6 +1,5 @@
-package ru.avito.model.calls.oktell;
+package ru.avito.model.oktell;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**

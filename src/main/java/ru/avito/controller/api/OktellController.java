@@ -7,12 +7,9 @@ import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import ru.avito.controller.Path;
 import ru.avito.factory.CallFactory;
-import ru.avito.model.ResponseMessage;
-import ru.avito.model.calls.Call;
-import ru.avito.model.calls.oktell.Chain;
+import ru.avito.response.ResponseMessage;
+import ru.avito.model.oktell.Chain;
 import ru.avito.services.CallService;
-
-import java.util.List;
 
 /**
  * Created by Dmitriy on 26.02.2017.
@@ -36,11 +33,12 @@ public class OktellController {
         return new ResponseMessage(200 ,"ok");
     }
 
-    @ResponseBody
+
     @ResponseStatus(HttpStatus.CREATED)
     @RequestMapping(value = "chain/save", method = RequestMethod.POST)
-    public void saveChain(@RequestBody Chain chain){
+    public ResponseMessage saveChain(@RequestBody Chain chain){
         LOG.info(String.format("New chain: %s", chain));
         callService.save(callFactory.getInstance(chain));
+        return new ResponseMessage(201, "Chain saved.");
     }
 }

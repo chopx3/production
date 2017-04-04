@@ -19,7 +19,6 @@
 	<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/colours.css" type="text/css" id="colours" disabled=disabled/>
 
 </head>
-<body>
 
 <body>
 
