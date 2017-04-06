@@ -81,7 +81,7 @@ public class CallModel {
         LocalDate now = LocalDate.now();
         ZoneId zoneId = ZoneId.systemDefault();
         long startDay = now.atStartOfDay(zoneId).toEpochSecond();
-        long endDay = startDay + 86400;
+        long endDay = startDay + 86400000;
 
         try (Connection conn = DBConnection.getDataSource().getConnection()) {
 

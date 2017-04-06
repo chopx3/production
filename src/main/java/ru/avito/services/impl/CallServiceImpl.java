@@ -7,13 +7,11 @@ import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.socket.TextMessage;
+import ru.avito.model.agent.Agent;
 import ru.avito.model.agent.AuthorizedUsers;
-import ru.avito.model.calls.Call;
-import ru.avito.model.calls.EmptyCall;
-import ru.avito.model.calls.UpdatedCall;
+import ru.avito.model.calls.*;
 import ru.avito.repository.CallRepository;
 import ru.avito.response.EmptyCallAsJson;
-import ru.avito.response.ResponseMessage;
 import ru.avito.services.AgentService;
 import ru.avito.services.CallService;
 
@@ -24,7 +22,6 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.concurrent.ConcurrentHashMap;
-import java.util.stream.Collectors;
 
 /**
  * Created by Dmitriy on 26.02.2017.
@@ -44,32 +41,32 @@ public class CallServiceImpl implements CallService {
 
     @Transactional
     public List<Call> save(List<Call> calls) {
-        HashSet<Integer> agentsId = new HashSet<>();
+        HashSet<Agent> agentsId = new HashSet<>();
         for(Call call : calls){
             callRepository.save(call);
-            agentsId.add(call.getAgentId());
+            agentsId.add(call.getAgent());
         }
         LOG.debug(calls);
-        for(int id : agentsId){
+        for(Agent agent : agentsId){
             try {
                 List<EmptyCall>emptyCalls = new ArrayList<>();
                 List<Integer> ids = new ArrayList<>();
-                for(Call call : callRepository.findByAgentIdAndTimeStartBetween(id, startCurrentDay(), startCurrentDay() + 86400)){
+                for(Call call : callRepository.findByAgentIdAndTimeStartBetween(agent.getId(), startCurrentDay(), startCurrentDay() + 86400)){
                     ids.add(call.getId());
                     LOG.debug("create emptyCall by: " + call);
                     EmptyCall emptyCall = new EmptyCall(call);
                     LOG.debug("result: " + emptyCall);
                     emptyCalls.add(emptyCall);
                     LOG.debug(ids);
-                    commaSeparatedIdCallsByAgent.put(id, ids);
+                    commaSeparatedIdCallsByAgent.put(agent.getId(), ids);
                 }
-                String response = new EmptyCallAsJson(id, agentService.findOne(id).getUsername(), emptyCalls).toJson();
+                String response = new EmptyCallAsJson(agent.getId(), agentService.findOne(agent.getId()).getUsername(), emptyCalls).toJson();
                 LOG.debug(response);
-                AuthorizedUsers.webSocketSessions.get(id).sendMessage(new TextMessage(response));
+                AuthorizedUsers.webSocketSessions.get(agent.getId()).sendMessage(new TextMessage(response));
             } catch (IOException e) {
                 LOG.error(e);
             }catch (NullPointerException e ){
-                LOG.error(String.format("Agent %s is offline!!!", id));
+                LOG.error(String.format("Agent %s is offline!!!", agent.getUsername()));
             }catch(DataIntegrityViolationException e){
                 LOG.error("Duplicate com_id");
             }
@@ -91,10 +88,6 @@ public class CallServiceImpl implements CallService {
         return callRepository.findOne(id);
     }
 
-    @Override
-    public List<Call> findByAgentId(Integer agentId) {
-        return callRepository.findByAgentId(agentId);
-    }
 
     @Override
     public List<Call> findByAgentIdAndTimeStartBetween(Integer agentId, Long timeStart, Long timeEnd) {
@@ -102,9 +95,12 @@ public class CallServiceImpl implements CallService {
     }
 
     @Override
-    public List<Call> findByAgentIdAndTimeStartGreaterThan(Integer userId) {
-        return callRepository.findByAgentIdAndTimeStartGreaterThan(userId, startCurrentDay());
+    public List<Call> findByTimeStartGreaterThanAndAgentIdAndType(Integer id, Long startDay) {
+        List<Call> sss = callRepository.findByTimeStartGreaterThanAndAgentIdAndType(startCurrentDay() * 1000L, id, "EMPTY");
+        LOG.debug("134"+sss.get(0).getClass());
+        return sss;
     }
+
 
     /**
      * секунды
@@ -115,29 +111,5 @@ public class CallServiceImpl implements CallService {
         ZoneId zoneId = ZoneId.systemDefault();
         return now.atStartOfDay(zoneId).toEpochSecond();
     }
-
-
-//TODO удалить
-    @Override
-    public List<EmptyCall> findCallForPeriodByAgent(Integer agentId, Long startPeriod, Long endPeriod) {
-        LOG.debug(String.format("build empty call list for agent %s by period %s - %s", agentId, startPeriod, endPeriod));
-
-        List<EmptyCall> emptyCalls = new ArrayList<>();
-        try {
-            List<Call> calls = callRepository.findCallForPeriodByAgentId(agentId, startPeriod, endPeriod);
-            LOG.debug("list calls: "+ calls);
-
-            for( Call call : calls){
-                EmptyCall emptyCall = new EmptyCall(call);
-                emptyCalls.add(emptyCall);
-            }
-        } catch (Exception e){
-            LOG.error(e);
-        }
-        LOG.debug(emptyCalls);
-        return emptyCalls;
-    }
-
-
 
 }

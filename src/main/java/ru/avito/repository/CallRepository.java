@@ -16,18 +16,6 @@ import java.util.List;
  */
 public interface CallRepository extends JpaRepository<Call,Integer>{ //TODO реализовать репозиторий
 
-        @Query(name = "SELECT username, chain_id, com_id, time_begin " +
-                "FROM calls JOIN users ON calls.user_id = users.id " +
-                "WHERE user_id = :agentId " +
-                "AND time_begin BETWEEN :startDay AND :endDay " +
-                "AND (calls.question_id IS NULL " +
-                "     OR calls.shop_category_id IS NULL " +
-                "     OR calls.avito_link IS NULL) "+
-                "ORDER BY time_begin DESC")
-        List<Call> findCallForPeriodByAgentId(@Param("agentId") Integer agentId,
-                                                     @Param("startDay") Long startDay,
-                                                     @Param("endDay") Long endDay);
-
 
         @Query(name = "SELECT username, chain_id, com_id, time_begin " +
                 "FROM calls JOIN users ON calls.user_id = users.id " +
@@ -38,40 +26,21 @@ public interface CallRepository extends JpaRepository<Call,Integer>{ //TODO ре
                                         @Param("timeStart") Long timeStart,
                                         @Param("timeEnd") Long timeEnd);
 
-
-    @Modifying
-    @Query(name = "SELECT username, chain_id, com_id, time_begin " +
-            "FROM calls JOIN users ON calls.user_id = users.id " +
-            "WHERE user_id = :agentId " +
-            "AND (calls.question_id IS NULL " +
-            "     OR calls.shop_category_id IS NULL " +
-            "     OR calls.avito_link IS NULL) "+
-            "LIMIT 5 "+
-            "ORDER BY time_begin DESC")
-    List<Call> findByAgentId(@Param("agentId") Integer agentId);
-
-
     @Modifying
     @Query(value = "UPDATE Call c " +
             "SET c.avitoUserId = :avitoUserId, c.questionId = :questionId, c.shopCategoryId = :shopCategoryId, " +
             "c.isManager = :isManager, c.tags = :tags " +
             "WHERE c.id IN (:ids)")
-    Integer updateParamsForEmptyCall(@Param("avitoUserId") Long avitoUserId,
+    Integer updateParamsForEmptyCall(@Param("avitoUserId") Long avitoUserId,//TODO тегов нет
                                 @Param("questionId") Integer questionId,
                                 @Param("shopCategoryId") Integer shopCategoryId,
                                 @Param("isManager") Boolean isManager,
                                 @Param("tags") String tags,
                                 @Param("ids") List<Integer> ids);
 
+    @Query(name ="SELECT * FROM calls WHERE timeStart > :timeStart and user_id =:agentId and type =:typeCall")
+    List<Call> findByTimeStartGreaterThanAndAgentIdAndType(@Param("timeStart") Long timeStart,
+                                                           @Param("agentId") Integer agentId,
+                                                           @Param("typeCall") String typeCall);
 
-    @Modifying
-    @Query(name = "SELECT username, chain_id, com_id, time_begin " +
-            "FROM calls JOIN users ON calls.user_id = users.id " +
-            "WHERE user_id = :agentId " +
-            "AND time_begin > :timeStart " +
-            "AND (calls.question_id IS NULL " +
-            "     OR calls.shop_category_id IS NULL " +
-            "     OR calls.avito_link IS NULL) "+
-            "ORDER BY time_begin DESC")
-    List<Call> findByAgentIdAndTimeStartGreaterThan(@Param("agentId") Integer userId, @Param("timeStart") Long timeStart);
 }

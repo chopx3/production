@@ -11,34 +11,23 @@ import javax.persistence.Table;
  * Created by Dmitriy on 03.12.2016.
  */
 
-@Entity
-@Table(name = "calls")
 public class UpdatedCall {
 
-    @Id
-    @Column(name = "id", updatable = false)
     private Integer id;
 
-    @Column(name = "chain_id", updatable = false)
     private String chainId;
 
-    @Column(name = "question_id")
     private Integer questId;
 
-    @Column(name = "shop_category_id")
     private Integer shopCategoryId;
 
-    @Column(name = "user_id", updatable = false)
     private Integer agentId;
 
-    @Column(name = "avito_link")
     private Long avitoUserId;
 
-    @Column(name = "isManager")
     private Boolean isManager;
 
-    @Column(name = "tags")
-    private String tags;
+    private String type;
 
     public UpdatedCall() {
     }
@@ -100,11 +89,11 @@ public class UpdatedCall {
     }
 
     public String getTags() {
-        return tags;
+        return type;
     }
 
     public void setTags(String tags) {
-        this.tags = tags;
+        this.type = tags;
     }
 
     @Override
@@ -117,7 +106,7 @@ public class UpdatedCall {
                 ", agentId=" + agentId +
                 ", avitoUserId=" + avitoUserId +
                 ", isManager=" + isManager +
-                ", tags='" + tags + '\'' +
+                ", type='" + type + '\'' +
                 '}';
     }
 }

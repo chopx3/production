@@ -36,7 +36,7 @@ public class CallFactory {
                 try{
                     Agent agent = agentService.findByOktellLogin(comm.getbStr());
                     call = new Call(
-                            agent.getId(),
+                            agent,
                             chain.getChainId(), comm.getComId(),
                             createPeriod(comm.getTimeStart()),
                             createPeriod(comm.getTimeEnd()),

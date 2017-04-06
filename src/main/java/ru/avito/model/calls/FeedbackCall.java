@@ -10,42 +10,32 @@ import java.util.Arrays;
  * Created by Dmitriy on 25.01.2017.
  */
 
-@Entity
-@Table(name = "calls")
 public class FeedbackCall {
 
-    @Id
-    @Column(name = "id")
     private int id;
 
-    @Column(name = "user_id")
     private int agentId;
 
-    @Column(name ="com_id")
     private String comId;
 
-    @Column(name = "avito_link")
     private int avitoUserId;
 
-    @Column(name = "time_begin")
     private long timeStart;
 
-    @Column(name = "tags")
-    private String tags;
+    private String type;
 
-    @Column (name = "comments")
     private String comments;
 
     public FeedbackCall() {
     }
 
-    public FeedbackCall(int id, int agentId, String comId, int avitoUserId, long timeStart, String tags, String comments) {
+    public FeedbackCall(int id, int agentId, String comId, int avitoUserId, long timeStart, String type, String comments) {
         this.id = id;
         this.agentId = agentId;
         this.comId = comId;
         this.avitoUserId = avitoUserId;
         this.timeStart = timeStart;
-        this.tags = tags;
+        this.type = type;
         this.comments = comments;
     }
 
@@ -89,14 +79,6 @@ public class FeedbackCall {
         this.timeStart = timeStart;
     }
 
-    public String getTags() {
-        return tags;
-    }
-
-    public void setTags(String tags) {
-        this.tags = tags;
-    }
-
     public String getComments() {
         return comments;
     }
@@ -113,7 +95,7 @@ public class FeedbackCall {
                 ", comId='" + comId + '\'' +
                 ", avitoUserId=" + avitoUserId +
                 ", timeStart=" + timeStart +
-                ", tags='" + tags + '\'' +
+                ", tags='" + type + '\'' +
                 ", comments='" + comments + '\'' +
                 '}';
     }

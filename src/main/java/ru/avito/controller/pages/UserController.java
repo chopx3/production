@@ -13,7 +13,7 @@ import ru.avito.services.AgentService;
 
 
 @Controller
-public class HelloController{
+public class UserController{
 
     @Autowired
     AgentService agentService;
@@ -28,12 +28,6 @@ public class HelloController{
 
         model.addAttribute("username", agentService.findByUsername(name).getOktellLogin());
         return "index";
-    }
-
-    @RequestMapping(value = "/hello", method = RequestMethod.GET)
-    public String printHello(ModelMap model) {
-        model.addAttribute("message", "Hello Spring MVC Framework!");
-        return "hello";
     }
 
     @RequestMapping(value = "/login", method = RequestMethod.GET)

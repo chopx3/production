@@ -1,5 +1,9 @@
 package ru.avito.model.agent;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import ru.avito.model.calls.Call;
+
 import javax.persistence.*;
 import java.util.Set;
 
@@ -19,6 +23,7 @@ public class Agent {
     private String username;
 
     @Column(name= "password")
+    @JsonIgnore
     private String password;
 
     @Column(name = "oktell_login")
@@ -27,7 +32,11 @@ public class Agent {
     @ManyToMany
     @JoinTable(name = "user_roles", joinColumns = @JoinColumn(name = "user_id"),
     inverseJoinColumns = @JoinColumn(name = "role_id"))
-    Set<Role> roles;
+    private Set<Role> roles;
+
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "agent")
+    @JsonBackReference
+    private Set<Call> calls;
 
     public Agent() {
     }
@@ -72,14 +81,11 @@ public class Agent {
         this.roles = roles;
     }
 
-    @Override
-    public String toString() {
-        return "Agent{" +
-                "id=" + id +
-                ", username='" + username + '\'' +
-                ", password='" + password + '\'' +
-                ", oktellLogin='" + oktellLogin + '\'' +
-                ", roles=" + roles +
-                '}';
+    public Set<Call> getCalls() {
+        return calls;
+    }
+
+    public void setCalls(Set<Call> calls) {
+        this.calls = calls;
     }
 }

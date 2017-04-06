@@ -11,8 +11,6 @@ import javax.persistence.Table;
  * Класс описывает объект звонка с незаполненными полями. Объект используется для отправки на клиент.
  */ //TODO поменять JSON на клиенте т.к. сейчас обновление по ID звонка
 
-@Entity
-@Table(name = "calls")
 public class EmptyCall {
 
     @Id
@@ -25,7 +23,7 @@ public class EmptyCall {
     @Column(name = "com_id")
     private String comId;
 
-    @Column(name ="time_begin" )
+    @Column(name ="time_begin")
     private Long startTime;
 
     public EmptyCall() {

@@ -1,10 +1,11 @@
 package ru.avito.model.calls;
 
-import com.google.gson.Gson;
-import org.hibernate.annotations.Formula;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import ru.avito.model.agent.Agent;
+import ru.avito.model.tags.Tag;
 
 import javax.persistence.*;
+import java.util.Set;
 
 /**
  * Created by Dmitriy on 26.02.2017.
@@ -19,17 +20,39 @@ public class Call {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer id;
 
-    @Column(name ="user_id", updatable = false)
-    private Integer agentId;
+    @ManyToOne
+    @JoinColumn(name ="user_id", updatable = false)
+    @JsonManagedReference
+    private Agent agent;
 
-    @Column (name = "comments")
-    private String comments;
+
+    @Column(name = "type")
+    private String type;
 
     @Column(name ="time_begin", updatable = false)
     private Long timeStart;
 
     @Column(name = "time_end", updatable = false)
     private Long timeEnd;
+
+
+    @Column(name = "chain_id", updatable = false)
+    private String chainId;
+
+    @Column(name ="com_id", updatable = false)
+    private String comId;
+
+
+    @ManyToMany
+    @JoinTable(name = "calls_tags", joinColumns = @JoinColumn(name = "call_id"),
+    inverseJoinColumns = @JoinColumn(name = "tag_id"))
+    private Set<Tag> tags;
+
+    @Column(name ="isOut")
+    private Boolean isOut;
+
+    @Column (name = "comments")
+    private String comments;
 
     @Column(name = "avito_link")
     private Long avitoUserId;
@@ -40,24 +63,20 @@ public class Call {
     @Column(name = "shop_category_id")
     private Integer shopCategoryId;
 
-    @Column(name = "chain_id", updatable = false)
-    private String chainId;
-
-    @Column(name ="com_id", updatable = false)
-    private String comId;
-
     @Column(name ="isManager")
     private Boolean isManager;
-
-    @Column(name = "tags")
-    private String tags;
-
-    @Column(name ="isOut")
-    private Boolean isOut;
 
     public Call() {
     }
 
+
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
+    }
     public Integer getId() {
 
         return id;
@@ -67,12 +86,12 @@ public class Call {
         this.id = id;
     }
 
-    public Integer getAgentId() {
-        return agentId;
+    public Agent getAgent() {
+        return agent;
     }
 
-    public void setAgentId(Integer agentId) {
-        this.agentId = agentId;
+    public void setAgent(Agent agent) {
+        this.agent = agent;
     }
 
     public String getComments() {
@@ -147,11 +166,11 @@ public class Call {
         isManager = manager;
     }
 
-    public String getTags() {
+    public Set<Tag> getTags() {
         return tags;
     }
 
-    public void setTags(String tags) {
+    public void setTags(Set<Tag> tags) {
         this.tags = tags;
     }
 
@@ -163,20 +182,14 @@ public class Call {
         isOut = out;
     }
 
-    public Call(Integer agentId, String chainId, String comId, Long timeStart, Long timeEnd, Boolean isOut) {
+    public Call(Agent agent, String chainId, String comId, Long timeStart, Long timeEnd, Boolean isOut) {
 
-        this.agentId = agentId;
+        this.agent = agent;
         this.timeStart = timeStart;
         this.timeEnd = timeEnd;
         this.chainId = chainId;
         this.comId = comId;
         this.isOut = isOut;
         this.isManager = false;
-    }
-
-
-    @Override
-    public String toString() {
-        return new Gson().toJson(this);
     }
 }
