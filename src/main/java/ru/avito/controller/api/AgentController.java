@@ -28,7 +28,7 @@ public class AgentController {
         return agentService.findByUsername(username);
     }
 
-    @ResponseStatus(HttpStatus.CREATED)//TODO затестить
+    @ResponseStatus(HttpStatus.CREATED)//TODO затестить + добавление и редактирование заметок
     @RequestMapping(value = "save", method = RequestMethod.POST)
     public Agent saveAgent(@RequestBody Agent agent){
         return agentService.save(agent);

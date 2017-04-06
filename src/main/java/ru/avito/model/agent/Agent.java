@@ -29,6 +29,10 @@ public class Agent {
     @Column(name = "oktell_login")
     private String oktellLogin;
 
+    @Column(name = "notes")
+    private String notes;
+
+
     @ManyToMany
     @JoinTable(name = "user_roles", joinColumns = @JoinColumn(name = "user_id"),
     inverseJoinColumns = @JoinColumn(name = "role_id"))
@@ -71,6 +75,14 @@ public class Agent {
 
     public void setOktellLogin(String oktellLlogin) {
         this.oktellLogin = oktellLogin;
+    }
+
+    public String getNotes() {
+        return notes;
+    }
+
+    public void setNotes(String notes) {
+        this.notes = notes;
     }
 
     public Set<Role> getRoles() {

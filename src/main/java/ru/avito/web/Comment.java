@@ -99,26 +99,6 @@ public class Comment implements WebDebugLogger{
         return response.toJson();
     }
 
-    @POST
-    @Path("notes/put")
-    @Produces(MediaType.APPLICATION_JSON)
-    public String putNotes(
-            @FormParam(value = "agentId") int agentId
-            , @FormParam(value = "text") String text) throws SQLException {
-
-       CommentsModel.putNotes(agentId, text);
-        return "ok";
-    }
-
-    @GET
-    @Path("notes/get")
-    @Produces(MediaType.APPLICATION_JSON)
-    public String getNotes(
-            @QueryParam(value = "agentId") int agentId) throws SQLException {
-
-        return CommentsModel.getNotes(agentId);
-    }
-
     @Override
     public void debugLog(Marker marker, String message) {
         if (LOG.isDebugEnabled())
