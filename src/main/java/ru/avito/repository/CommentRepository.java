@@ -12,9 +12,7 @@ import java.util.List;
  */
 public interface CommentRepository extends JpaRepository<Comment, Integer> {
 
-    @Query(name = "SELECT id, username, time, message " +
-                    "FROM comments JOIN users ON comments.user_id =users.id " +
-                    "WHERE avito_link = :avitoUserId")
+    @Query(name = "SELECT * FROM comments WHERE avito_link = :avitoUserId")
     List<Comment> findAllByAvitoUserId(@Param("avitoUserId") Long avitoUserId);
 
 }

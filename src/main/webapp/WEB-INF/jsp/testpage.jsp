@@ -27,10 +27,17 @@ function getcallsBytags (tags) { // принимает теги как regexp (t
         console.log(request.responseText);
     }
 }
-    var saveURL =host+"/avito/oktell/call/save";
-    var oldUpdateURL =host+"/avito/api/call/oldsave";
-    var updateURL =host+"/avito/api/call/save";
-    var saveChainURL =host+"/avito/api/oktell/chain/save";
+    var saveURL =host+"/firecatcher/oktell/call/save";
+    var oldUpdateURL =host+"/firecatcher/api/call/oldsave";
+    var updateURL =host+"/firecatcher/api/call/save";
+    var saveChainURL =host+"/firecatcher/api/oktell/chain/save";
+    var postCommentURL = host+"/firecatcher/api/comment/save"
+
+    var comment = {
+        "avitoUserId":1939992,
+        "postTime": 1491502656000,
+        "message": "api comment"
+    }
 
 
     var updateCall = {
@@ -42,8 +49,6 @@ function getcallsBytags (tags) { // принимает теги как regexp (t
         "tags": "feedback",
         "isManager": false
     }
-
-
     var fakeCall =  {
         "chainId": "48258FE5-1646-4F10-BC9A-4CEBE64C548B",
         "commutations": [
@@ -390,6 +395,9 @@ Put feedback
 <button onclick="RestPost(newCallInsideRedirectSales, saveChainURL)">newCallInsideRedirectSales</button>
 <button onclick="RestPost(outCommingCall, saveChainURL)">outCommingCall</button>
 <button onclick="RestPost(outCommingCallDoc, saveChainURL)">outCommingCall</button>
+
+
+<button onclick="RestPost(comment, postCommentURL)">putComment</button>
 
 
 

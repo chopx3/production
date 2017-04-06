@@ -38,9 +38,9 @@ public class Agent {
     inverseJoinColumns = @JoinColumn(name = "role_id"))
     private Set<Role> roles;
 
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "agent")
-    @JsonBackReference
-    private Set<Call> calls;
+//    @OneToMany(cascade = CascadeType.ALL, mappedBy = "agent")
+//    @JsonBackReference
+//    private Set<Call> calls; //TODO затестить не сломалось ли чего?
 
     public Agent() {
     }
@@ -93,11 +93,11 @@ public class Agent {
         this.roles = roles;
     }
 
-    public Set<Call> getCalls() {
-        return calls;
-    }
-
-    public void setCalls(Set<Call> calls) {
-        this.calls = calls;
-    }
+//    public Set<Call> getCalls() {
+//        return calls;
+//    }
+//
+//    public void setCalls(Set<Call> calls) {
+//        this.calls = calls;
+//    }
 }

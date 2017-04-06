@@ -1,9 +1,9 @@
 package ru.avito.model;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+import ru.avito.model.agent.Agent;
+
+import javax.persistence.*;
 
 /**
  * Created by Dmitriy on 06.04.2017.
@@ -15,13 +15,11 @@ public class Comment {
 
     @Id
     @Column(name = "id")
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer id;
 
     @Column(name="avito_link")
     private Long avitoUserId;
-
-    @Column(name = "user_id")
-    private Integer agentId;
 
     @Column(name = "time")
     private Long postTime;
@@ -29,6 +27,9 @@ public class Comment {
     @Column(name ="message")
     private String message;
 
+    @ManyToOne
+    @JoinColumn(name = "user_id")
+    private Agent agent;
 
     public Comment() {
     }
@@ -49,14 +50,6 @@ public class Comment {
         this.avitoUserId = avitoUserId;
     }
 
-    public Integer getAgentId() {
-        return agentId;
-    }
-
-    public void setAgentId(Integer agentId) {
-        this.agentId = agentId;
-    }
-
     public Long getPostTime() {
         return postTime;
     }
@@ -71,5 +64,24 @@ public class Comment {
 
     public void setMessage(String message) {
         this.message = message;
+    }
+
+    public Agent getAgent() {
+        return agent;
+    }
+
+    public void setAgent(Agent agent) {
+        this.agent = agent;
+    }
+
+    @Override
+    public String toString() {
+        return "Comment{" +
+                "id=" + id +
+                ", avitoUserId=" + avitoUserId +
+                ", postTime=" + postTime +
+                ", message='" + message + '\'' +
+                ", agent=" + agent +
+                '}';
     }
 }

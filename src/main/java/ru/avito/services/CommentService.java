@@ -11,5 +11,4 @@ public interface CommentService {
 
     Comment save(Comment comment);
     List<Comment> findAllByAvitoUserId(Long avitoUserId);
-
 }
