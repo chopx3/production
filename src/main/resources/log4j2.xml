@@ -85,7 +85,7 @@
             <AppenderRef ref="controller"/>
         </Logger>
 
-        <Logger name="ru.avito.web.Auth" level="${logLevel}" additivity="false">
+        <Logger name="ru.avito.web.*" level="${logLevel}" additivity="false">
             <AppenderRef ref="console" level ="${consoleLogLevel}"/>
             <AppenderRef ref="calls"/>
         </Logger>
@@ -115,32 +115,32 @@
             <AppenderRef ref="stat"/>
         </Logger>
 
-        <Logger name="ru.avito.websocket.WebSocketConnections" level="${logLevel}" additivity="false">
+        <Logger name="ru.avito.controller.WebSocketHandler" level="${logLevel}" additivity="false">
             <AppenderRef ref="console" level ="${consoleLogLevel}"/>
             <AppenderRef ref="sessionPool"/>
         </Logger>
 
-        <Logger name="ru.avito.model.AuthModel" level="${logLevel}" additivity="false">
+        <Logger name="ru.avito.model.*" level="${logLevel}" additivity="false">
             <AppenderRef ref="console" level ="${consoleLogLevel}"/>
             <AppenderRef ref="calls"/>
         </Logger>
 
-        <Logger name="ru.avito.model.CallModel" level="${logLevel}" additivity="false">
+        <Logger name="ru.avito.model.*" level="${logLevel}" additivity="false">
             <AppenderRef ref="console" level ="${consoleLogLevel}"/>
             <AppenderRef ref="calls"/>
         </Logger>
 
-        <Logger name="ru.avito.model.CategoryModel" level="${logLevel}" additivity="false">
+        <Logger name="ru.avito.model.*" level="${logLevel}" additivity="false">
             <AppenderRef ref="console" level ="${consoleLogLevel}"/>
             <AppenderRef ref="questCat"/>
         </Logger>
 
-        <Logger name="ru.avito.model.CommentsModel" level="${logLevel}" additivity="false">
+        <Logger name="ru.avito.model.*" level="${logLevel}" additivity="false">
             <AppenderRef ref="console" level ="${consoleLogLevel}"/>
             <AppenderRef ref="comments"/>
         </Logger>
 
-        <Logger name="ru.avito.model.StatModel" level="${logLevel}" additivity="false">
+        <Logger name="ru.avito.model.*" level="${logLevel}" additivity="false">
             <AppenderRef ref="console" level ="${consoleLogLevel}"/>
             <AppenderRef ref="stat"/>
         </Logger>

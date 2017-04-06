@@ -2,10 +2,12 @@ package ru.avito.controller;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.socket.TextMessage;
 import org.springframework.web.socket.WebSocketSession;
 import org.springframework.web.socket.handler.TextWebSocketHandler;
-import ru.avito.model.AuthModel;
+import ru.avito.services.AgentService;
+
 import java.io.IOException;
 import java.sql.SQLException;
 
@@ -20,6 +22,10 @@ import static ru.avito.model.CallModel.getCallRecordsWithEmptyFields;
 public class WebSocketHandler extends TextWebSocketHandler{ //TODO это просто контроллер, бизнес-логику убрать
 
     private final static Logger LOG = LogManager.getLogger();
+
+    @Autowired
+    private AgentService agentService;
+
 
     @Override
     public void afterConnectionEstablished(WebSocketSession session) throws SQLException, IOException {
@@ -61,6 +67,6 @@ public class WebSocketHandler extends TextWebSocketHandler{ //TODO это про
     }
 
     private int getAgentIdFromDb(String username) throws SQLException {
-        return AuthModel.login(username);
+        return agentService.findByUsername(username).getId();
     }
 }

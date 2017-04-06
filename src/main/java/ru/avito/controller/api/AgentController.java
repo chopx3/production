@@ -28,15 +28,22 @@ public class AgentController {
         return agentService.findByUsername(username);
     }
 
-    @ResponseStatus(HttpStatus.CREATED)
+    @ResponseStatus(HttpStatus.CREATED)//TODO затестить
     @RequestMapping(value = "save", method = RequestMethod.POST)
     public Agent saveAgent(@RequestBody Agent agent){
         return agentService.save(agent);
     }
 
-    @ResponseStatus(HttpStatus.CREATED)
+    @ResponseStatus(HttpStatus.CREATED) //TODO затестить
     @RequestMapping(value = "update", method = RequestMethod.POST)
     public Agent updateAgent(@RequestBody Agent agent){
         return agentService.update(agent);
     }
+
+    @ResponseStatus(HttpStatus.OK)
+    @RequestMapping(value = "oktelllogin/{oktellLogin}", method = RequestMethod.GET)
+    public Agent findByOktellLogin(@PathVariable("oktellLogin") String oktellLogin){
+        return agentService.findByOktellLogin(oktellLogin);
+    }
+
 }
