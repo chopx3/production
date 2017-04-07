@@ -59,6 +59,9 @@
     <bean id="tagGroupService" class="ru.avito.services.impl.TagGroupServiceImpl"/>
     <bean id ="callService" class="ru.avito.services.impl.CallServiceImpl"/>
     <bean id ="commentService" class="ru.avito.services.impl.CommentServiceImpl"/>
+    <bean id ="questionService" class="ru.avito.services.impl.QuestionServiceImpl"/>
+    <bean id ="categoryService" class="ru.avito.services.impl.CategoryServiceImpl"/>
+
     <bean id="callFactory" class="ru.avito.factory.CallFactory"/>
 
     <bean class="org.springframework.web.socket.server.standard.ServletServerContainerFactoryBean">

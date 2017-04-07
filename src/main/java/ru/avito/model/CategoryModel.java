@@ -18,7 +18,6 @@ import static ru.avito.jooqdbmodel.Tables.SHOP_CATEGORY;
  */
 public class CategoryModel {
 
-
         private final static Logger LOG = LogManager.getLogger();
         private final static Marker SQL_QUERY_CATEGORY= MarkerManager.getMarker("SQL_QUERY_CATEGORY");
 
