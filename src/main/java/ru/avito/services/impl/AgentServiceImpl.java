@@ -3,6 +3,7 @@ package ru.avito.services.impl;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import ru.avito.model.agent.Agent;
 import ru.avito.repository.AgentRepository;
 import ru.avito.services.AgentService;
@@ -19,48 +20,54 @@ public class AgentServiceImpl implements AgentService {
     @Autowired
     private AgentRepository agentRepository;
 
-    @Override
+    @Transactional
     public Agent save(Agent agent) {
+        agent.setPassword("test");
         return agentRepository.saveAndFlush(agent);
     }
 
-    @Override
+    @Transactional
     public Agent update(Agent actualAgent) {
         Agent currentAgent = agentRepository.findOne(actualAgent.getId());
         currentAgent.setOktellLogin(actualAgent.getOktellLogin());
-        currentAgent.setPassword(actualAgent.getPassword());
         currentAgent.setRoles(actualAgent.getRoles());
         currentAgent.setUsername(actualAgent.getUsername());
         return agentRepository.saveAndFlush(currentAgent);
     }
 
-    @Override
+    @Transactional
     public void delete(Agent agent) {
         agentRepository.delete(agent);
     }
 
-    @Override
     public Agent findOne(int id) {
         return agentRepository.findOne(id);
     }
 
-    @Override
     public Agent findByUsername(String username) {
         return agentRepository.findByUsername(username);
     }
 
-    @Override
     public List<Agent> findAll() {
         return agentRepository.findAll();
     }
 
-    @Override
     public Agent hidePassword(Agent agent) {
         return null;//TODO как нибудь защитить пароль при отправке на фронт или в логи.
     }
 
-    @Override
     public Agent findByOktellLogin(String oktellLogin) {
             return agentRepository.findByOktellLogin(oktellLogin);
+    }
+
+    @Override
+    public String updateNotes(Agent actualAgent) {
+        Agent currentAgent = agentRepository.findOne(actualAgent.getId());
+        if(actualAgent.getNotes() !=null) {
+            currentAgent.setNotes(actualAgent.getNotes());
+        }
+        currentAgent = agentRepository.saveAndFlush(currentAgent);
+
+        return String.format("{\"id\":%s, \"notes\":\"%s\"}",currentAgent.getId(), currentAgent.getNotes());
     }
 }

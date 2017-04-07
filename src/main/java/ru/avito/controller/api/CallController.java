@@ -21,7 +21,7 @@ import java.util.List;
  */
 
 @RestController
-@RequestMapping(value = Path.API+"call")
+@RequestMapping(value = Path.API+"call") //TODO сделать пагинацию или сортировку
 public class CallController {
 
     private final static Logger LOG = LogManager.getLogger();

@@ -7,7 +7,7 @@ import javax.persistence.*;
  */
 
 @Entity
-@Table(name="shop_category") //TODO переименовать таблицу в БД
+@Table(name="shop_category") //TODO переименовать таблицу в БД на category
 public class Category {
 
     @Id

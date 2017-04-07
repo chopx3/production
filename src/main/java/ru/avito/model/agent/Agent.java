@@ -73,7 +73,7 @@ public class Agent {
         return oktellLogin;
     }
 
-    public void setOktellLogin(String oktellLlogin) {
+    public void setOktellLogin(String oktellLogin) {
         this.oktellLogin = oktellLogin;
     }
 
@@ -100,4 +100,17 @@ public class Agent {
 //    public void setCalls(Set<Call> calls) {
 //        this.calls = calls;
 //    }
+
+
+    @Override
+    public String toString() {
+        return "Agent{" +
+                "id=" + id +
+                ", username='" + username + '\'' +
+                ", password='" + password + '\'' +
+                ", oktellLogin='" + oktellLogin + '\'' +
+                ", notes='" + notes + '\'' +
+                ", roles=" + roles +
+                '}';
+    }
 }

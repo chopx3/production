@@ -1,7 +1,9 @@
 package ru.avito.controller.api;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Role;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.web.bind.annotation.*;
 import ru.avito.controller.Path;
 import ru.avito.model.agent.Agent;
@@ -28,16 +30,25 @@ public class AgentController {
         return agentService.findByUsername(username);
     }
 
-    @ResponseStatus(HttpStatus.CREATED)//TODO затестить + добавление и редактирование заметок
+    @Secured("ROLE_ADMIN")
+    @ResponseStatus(HttpStatus.CREATED)
     @RequestMapping(value = "save", method = RequestMethod.POST)
     public Agent saveAgent(@RequestBody Agent agent){
         return agentService.save(agent);
     }
 
-    @ResponseStatus(HttpStatus.CREATED) //TODO затестить
+    @Secured("ROLE_ADMIN")
+    @ResponseStatus(HttpStatus.OK)
     @RequestMapping(value = "update", method = RequestMethod.POST)
     public Agent updateAgent(@RequestBody Agent agent){
         return agentService.update(agent);
+    }
+
+    @Secured("ROLE_USER")
+    @ResponseStatus(HttpStatus.OK)
+    @RequestMapping(value = "notes/update", method = RequestMethod.POST)
+    public String updateNotesAgent(@RequestBody Agent agent){
+        return agentService.updateNotes(agent);
     }
 
     @ResponseStatus(HttpStatus.OK)
@@ -45,5 +56,4 @@ public class AgentController {
     public Agent findByOktellLogin(@PathVariable("oktellLogin") String oktellLogin){
         return agentService.findByOktellLogin(oktellLogin);
     }
-
 }

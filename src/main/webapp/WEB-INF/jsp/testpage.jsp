@@ -13,33 +13,10 @@ hi ${hello}
     var host = location.protocol + '//' + location.host;
 //    var host = "http://192.168.10.132:8080/avito";
 
-function getEmptyCallsByAgentId (agentId) {
-    request.open("get",host+"/rest/call/getemptycalls?userid="+agentId, true);
-    request.send();
-    request.onload = function () {
-        console.log(request.responseText);
-    }
-}
-function getcallsBytags (tags) { // принимает теги как regexp (tag1|tag2|...) TODO поправить на будущее
-    request.open("get",host+"/rest/call/feedback/get?tags="+tags, true);
-    request.send();
-    request.onload = function () {
-        console.log(request.responseText);
-    }
-}
     var saveURL =host+"/firecatcher/oktell/call/save";
     var oldUpdateURL =host+"/firecatcher/api/call/oldsave";
     var updateURL =host+"/firecatcher/api/call/save";
     var saveChainURL =host+"/firecatcher/api/oktell/chain/save";
-    var postCommentURL = host+"/firecatcher/api/comment/save"
-
-    var comment = {
-        "avitoUserId":1939992,
-        "postTime": 1491502656000,
-        "message": "api comment"
-    }
-
-
     var updateCall = {
         "agentId": "32",
         "chainId": "CC7A96B1-9DF1-41BE-ACF5-9203CFE0B6B8",
@@ -304,6 +281,45 @@ function getcallsBytags (tags) { // принимает теги как regexp (t
             }
         ]
     }
+    var postCommentURL = host+"/firecatcher/api/comment/save"
+
+    var postAgentURL = host+"/firecatcher/api/agent/save"
+    var updateAgentURL = host+"/firecatcher/api/agent/update"
+    var updateAgentNotesURL = host+"/firecatcher/api/agent/notes/update"
+
+    var comment = {
+        "avitoUserId":1939992,
+        "postTime": 1491502656000,
+        "message": "api comment"
+    }
+
+
+    var newAgent ={
+        "username":"apetrov",
+        "password":"test",
+        "oktellLogin":"Anton Petrov",
+        "roles":[{ "id":2,
+                    "name":"ROLE_USER"
+                 }
+        ]
+    };
+
+    var updateAgent ={
+        "id":83,
+        "username": "apetorov",
+        "password": "test",
+        "oktellLogin": "Anton Petorov",
+        "roles":[{ "id": 1,
+            "name": "ROLE_ADMIN"
+        }
+        ]
+    };
+
+    var updateAgentNotes = {
+        "id":83,
+        "notes": "DDD"
+        }
+
 
 
     var RestPost = function(sendData, url) {
@@ -326,6 +342,21 @@ function getcallsBytags (tags) { // принимает теги как regexp (t
                     alert(message)
                 }
             });
+    }
+
+    function getEmptyCallsByAgentId (agentId) {
+        request.open("get",host+"/rest/call/getemptycalls?userid="+agentId, true);
+        request.send();
+        request.onload = function () {
+            console.log(request.responseText);
+        }
+    }
+    function getcallsBytags (tags) { // принимает теги как regexp (tag1|tag2|...) TODO поправить на будущее
+        request.open("get",host+"/rest/call/feedback/get?tags="+tags, true);
+        request.send();
+        request.onload = function () {
+            console.log(request.responseText);
+        }
     }
 
 </script>
@@ -394,12 +425,15 @@ Put feedback
 <button onclick="RestPost(newCallRedirectToDoc, saveChainURL)">newCallRedirectFromDoc</button>
 <button onclick="RestPost(newCallInsideRedirectSales, saveChainURL)">newCallInsideRedirectSales</button>
 <button onclick="RestPost(outCommingCall, saveChainURL)">outCommingCall</button>
-<button onclick="RestPost(outCommingCallDoc, saveChainURL)">outCommingCall</button>
+<button onclick="RestPost(outCommingCallDoc, saveChainURL)">outCommingCallDoc</button>
 
-
+<br>
 <button onclick="RestPost(comment, postCommentURL)">putComment</button>
 
-
+<br>
+<button onclick="RestPost(newAgent, postAgentURL)">add Agent</button>
+<button onclick="RestPost(updateAgent, updateAgentURL)">update Agent</button>
+<button onclick="RestPost(updateAgentNotes, updateAgentNotesURL)">update notes</button>
 
 </body>
 </html>
