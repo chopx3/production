@@ -29,13 +29,13 @@ public interface CallRepository extends JpaRepository<Call,Integer>{ //TODO ре
     @Modifying
     @Query(value = "UPDATE Call c " +
             "SET c.avitoUserId = :avitoUserId, c.questionId = :questionId, c.shopCategoryId = :shopCategoryId, " +
-            "c.isManager = :isManager, c.tags = :tags " +
+            "c.isManager = :isManager, c.type = :type " +
             "WHERE c.id IN (:ids)")
     Integer updateParamsForEmptyCall(@Param("avitoUserId") Long avitoUserId,//TODO тегов нет
                                 @Param("questionId") Integer questionId,
                                 @Param("shopCategoryId") Integer shopCategoryId,
                                 @Param("isManager") Boolean isManager,
-                                @Param("tags") String tags,
+                                @Param("type") String type,
                                 @Param("ids") List<Integer> ids);
 
     @Query(name ="SELECT * FROM calls WHERE timeStart > :timeStart and user_id =:agentId and type =:typeCall")

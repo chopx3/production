@@ -1,11 +1,9 @@
 package ru.avito.model.calls;
 
-import ru.avito.factory.JsonFactory;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import ru.avito.model.tags.Tag;
+import java.util.List;
+import java.util.Set;
 
 /**
  * Created by Dmitriy on 03.12.2016.
@@ -28,6 +26,8 @@ public class UpdatedCall {
     private Boolean isManager;
 
     private String type;
+
+    private Set<Tag> tags;
 
     public UpdatedCall() {
     }
@@ -84,30 +84,24 @@ public class UpdatedCall {
         return isManager;
     }
 
-    public void setIsManager(Boolean manager) {
+    public void setManager(Boolean manager) {
         isManager = manager;
     }
 
-    public String getTags() {
+    public String getType() {
         return type;
     }
 
-    public void setTags(String tags) {
-        this.type = tags;
+    public void setType(String type) {
+        this.type = type;
     }
 
-    @Override
-    public String toString() {
-        return "UpdatedCall{" +
-                "id=" + id +
-                ", chainId='" + chainId + '\'' +
-                ", questId=" + questId +
-                ", shopCategoryId=" + shopCategoryId +
-                ", agentId=" + agentId +
-                ", avitoUserId=" + avitoUserId +
-                ", isManager=" + isManager +
-                ", type='" + type + '\'' +
-                '}';
+    public Set<Tag> getTags() {
+        return tags;
+    }
+
+    public void setTags(Set<Tag> tags) {
+        this.tags = tags;
     }
 }
 

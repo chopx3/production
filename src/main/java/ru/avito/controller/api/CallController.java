@@ -32,28 +32,29 @@ public class CallController {
     @Autowired
     AgentService agentService;
 
-    @RequestMapping(value = "find/{startPeriod}/{endPeriod}/{userId}")//TODO сделать
-    public List<Call> findByAgentIdAndTimeStartBetween(@PathVariable("userId") Integer userId,
+    @RequestMapping(value = "find/{startPeriod}/{endPeriod}")//TODO сделать
+    public List<Call> findByAgentIdAndTimeStartBetween(HttpSession session,
                                              @PathVariable("startPeriod") Long startPeriod,
                                              @PathVariable("endPeriod")Long endPeriod){
+
+        SecurityContext context = (SecurityContext) session.getAttribute("SPRING_SECURITY_CONTEXT");
+        int userId = agentService.findByUsername(context.getAuthentication().getName()).getId();
         LOG.debug(
                 String.format("Find empty calls: startPeriod - %s, endPeriod - %s, userId - %s", startPeriod, endPeriod, userId));
-
         return callService.findByAgentIdAndTimeStartBetween(userId, startPeriod, endPeriod);
     }
 
-    @RequestMapping(value = "save")
-    public Integer saveCall( @RequestBody UpdatedCall updatedCall){
-        LOG.debug("Update call: "+updatedCall);
+    @RequestMapping(value = "update")
+    public Integer saveCall( @RequestBody UpdatedCall updatedCall){ //TODO запилить HttpSession
+//        LOG.debug("Update call: "+updatedCall);
         return callService.save(updatedCall);
     }
 
-    @RequestMapping(value = "test/empty")
-    public List<Call> emptyTestCall(HttpSession session){
+    @RequestMapping(value = "find/type/{typecall}")
+    public List<Call> findEmptyCall(@PathVariable("typecall") String typeCall, HttpSession session){
         SecurityContext context = (SecurityContext) session.getAttribute("SPRING_SECURITY_CONTEXT");
         String username = context.getAuthentication().getName();
         LOG.debug(String.format("Find empty calls for user - %s", username));
-        return callService.findByTimeStartGreaterThanAndAgentIdAndType(agentService.findByUsername(username).getId(),1L);
+        return callService.findByTimeStartGreaterThanAndAgentIdAndType(agentService.findByUsername(username).getId(), typeCall);
     }
-
 }

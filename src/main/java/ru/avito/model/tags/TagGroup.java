@@ -1,6 +1,9 @@
 package ru.avito.model.tags;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
 import javax.persistence.*;
 import java.util.Set;
@@ -26,7 +29,7 @@ public class TagGroup implements Comparable<TagGroup>{
 
     @OrderBy("id ASC")
     @ManyToMany(mappedBy = "tagGroups")
-    @JsonManagedReference
+    @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
     Set<Tag> tags;
 
     public TagGroup() {

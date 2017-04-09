@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import ru.avito.model.agent.Agent;
 import ru.avito.model.calls.Call;
+import ru.avito.model.calls.EmptyCall;
 import ru.avito.model.oktell.Chain;
 import ru.avito.model.oktell.Commutation;
 import ru.avito.services.AgentService;
@@ -35,13 +36,16 @@ public class CallFactory {
                 }
                 try{
                     Agent agent = agentService.findByOktellLogin(comm.getbStr());
-                    call = new Call(
+                    if(agent != null){
+                        call = new Call(
                             agent,
                             chain.getChainId(), comm.getComId(),
                             createPeriod(comm.getTimeStart()),
                             createPeriod(comm.getTimeEnd()),
                             comm.getReasonStart() == 3);
-                    calls.add(call);
+                        call.setType("EMPTY");
+                        calls.add(call);
+                    }
                 }catch (Exception e){
                     LOG.error(e);
                 }
@@ -50,8 +54,18 @@ public class CallFactory {
             return calls;
     }
 
+    public List<EmptyCall> getEmptyCalls(List<Call> calls){
+       List<EmptyCall> emptyCalls = new ArrayList<>(calls.size());
+       calls.forEach(ec -> emptyCalls.add(new EmptyCall(ec.getId(), ec.getChainId(), ec.getComId(), ec.getTimeStart())));
+        return emptyCalls;
+    }
+
+    //TODO может быть сделать такой же лист для Feedback - звонков?
+
+
+
 
     private long createPeriod(long period){
-        return period - 10800;
+        return (period - 10800)*1000;
     }
 }

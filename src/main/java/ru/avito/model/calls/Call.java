@@ -25,7 +25,6 @@ public class Call {
     @JsonManagedReference
     private Agent agent;
 
-
     @Column(name = "type")
     private String type;
 
@@ -191,5 +190,25 @@ public class Call {
         this.comId = comId;
         this.isOut = isOut;
         this.isManager = false;
+    }
+
+    @Override
+    public String toString() {
+        return "Call{" +
+                "id=" + id +
+                ", agent=" + agent +
+                ", type='" + type + '\'' +
+                ", timeStart=" + timeStart +
+                ", timeEnd=" + timeEnd +
+                ", chainId='" + chainId + '\'' +
+                ", comId='" + comId + '\'' +
+                ", tags=" + tags +
+                ", isOut=" + isOut +
+                ", comments='" + comments + '\'' +
+                ", avitoUserId=" + avitoUserId +
+                ", questionId=" + questionId +
+                ", shopCategoryId=" + shopCategoryId +
+                ", isManager=" + isManager +
+                '}';
     }
 }

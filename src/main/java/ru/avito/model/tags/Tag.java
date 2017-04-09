@@ -1,6 +1,6 @@
 package ru.avito.model.tags;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.*;
 
 import javax.persistence.*;
 import java.util.Set;
@@ -31,7 +31,7 @@ public class Tag implements Comparable<Tag> {
     @OrderBy("id ASC")
     @JoinTable(name ="taggroup_tags", joinColumns = @JoinColumn(name = "tag_id"),
             inverseJoinColumns = @JoinColumn(name = "tagGroup_id"))
-    @JsonBackReference
+    @JsonIgnore
     private Set<TagGroup> tagGroups;
 
     public Tag() {

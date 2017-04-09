@@ -1,18 +1,25 @@
 package ru.avito.controller;
 
+import com.google.gson.Gson;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.socket.TextMessage;
 import org.springframework.web.socket.WebSocketSession;
 import org.springframework.web.socket.handler.TextWebSocketHandler;
+import ru.avito.factory.CallFactory;
+import ru.avito.model.calls.Call;
+import ru.avito.model.calls.EmptyCall;
+import ru.avito.response.EmptyCallAsJson;
 import ru.avito.services.AgentService;
+import ru.avito.services.CallService;
 
 import java.io.IOException;
 import java.sql.SQLException;
+import java.util.List;
 
 import static ru.avito.model.agent.AuthorizedUsers.*;
-import static ru.avito.model.CallModel.getCallRecordsWithEmptyFields;
+
 
 /**
  * Created by Dmitriy on 24.12.2016.
@@ -25,6 +32,12 @@ public class WebSocketHandler extends TextWebSocketHandler{ //TODO это про
 
     @Autowired
     private AgentService agentService;
+
+    @Autowired
+    private CallService callService;
+
+    @Autowired
+    private CallFactory callFactory;
 
 
     @Override
@@ -42,10 +55,11 @@ public class WebSocketHandler extends TextWebSocketHandler{ //TODO это про
 
         switch (message.getPayload()){
             case "getMyEmptyCalls":
-                String agentUsername = getAgentName(session);
-                String callRecordsWithEmptyFields =
-                        getCallRecordsWithEmptyFields(authorizedUsers.get(agentUsername).getId(), agentUsername);
-                session.sendMessage(new TextMessage(callRecordsWithEmptyFields));
+                Integer agentId = getAgentIdFromDb(getAgentName(session));
+                List<Call> calls = callService.findByTimeStartGreaterThanAndAgentIdAndType(agentId, "EMPTY");
+                List<EmptyCall> emptyCalls = callFactory.getEmptyCalls(calls);
+                String response = new EmptyCallAsJson(agentId,getAgentName(session),emptyCalls).toJson();
+                session.sendMessage(new TextMessage(response));
             break;
 
             case "ping":

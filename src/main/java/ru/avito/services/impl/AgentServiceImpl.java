@@ -2,6 +2,7 @@ package ru.avito.services.impl;
 
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ru.avito.model.agent.Agent;
@@ -20,11 +21,13 @@ public class AgentServiceImpl implements AgentService {
     @Autowired
     private AgentRepository agentRepository;
 
+
     @Transactional
     public Agent save(Agent agent) {
         agent.setPassword("test");
         return agentRepository.saveAndFlush(agent);
     }
+
 
     @Transactional
     public Agent update(Agent actualAgent) {
@@ -35,14 +38,17 @@ public class AgentServiceImpl implements AgentService {
         return agentRepository.saveAndFlush(currentAgent);
     }
 
+
     @Transactional
     public void delete(Agent agent) {
         agentRepository.delete(agent);
     }
 
+
     public Agent findOne(int id) {
         return agentRepository.findOne(id);
     }
+
 
     public Agent findByUsername(String username) {
         return agentRepository.findByUsername(username);
@@ -60,10 +66,10 @@ public class AgentServiceImpl implements AgentService {
             return agentRepository.findByOktellLogin(oktellLogin);
     }
 
-    @Override
+    @Transactional
     public String updateNotes(Agent actualAgent) {
         Agent currentAgent = agentRepository.findOne(actualAgent.getId());
-        if(actualAgent.getNotes() !=null) {
+        if(actualAgent.getNotes() != null) {
             currentAgent.setNotes(actualAgent.getNotes());
         }
         currentAgent = agentRepository.saveAndFlush(currentAgent);

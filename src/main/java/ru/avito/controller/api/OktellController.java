@@ -27,14 +27,7 @@ public class OktellController {
 
     private final static Logger LOG = LogManager.getLogger();
 
-    @ResponseStatus(HttpStatus.OK)
-    @RequestMapping(value = "load", method = RequestMethod.GET)
-    public ResponseMessage saveCallRecord(){
-        return new ResponseMessage(200 ,"ok");
-    }
-
-
-    @ResponseStatus(HttpStatus.CREATED)
+    @ResponseStatus(HttpStatus.CREATED)//TODO запаролить путь и сделать токен для октелла.
     @RequestMapping(value = "chain/save", method = RequestMethod.POST)
     public ResponseMessage saveChain(@RequestBody Chain chain){
         LOG.info(String.format("New chain: %s", chain));

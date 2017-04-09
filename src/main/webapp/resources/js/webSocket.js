@@ -48,7 +48,9 @@ function getWebsocketMessage(callback){
                 online();
                 console.log("pong");
                 break;
-            default: callback(JSON.parse(webSocketMessage.data));
+            default:
+                console.log(webSocketMessage.data)
+                callback(JSON.parse(webSocketMessage.data));
                 break;
         }
     }

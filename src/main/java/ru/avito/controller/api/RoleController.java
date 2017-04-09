@@ -20,7 +20,7 @@ public class RoleController {
     @Autowired
     private RoleService roleService;
 
-    @RequestMapping(value = "get/all")
+    @RequestMapping(value = "find/all")
     public List<Role> findAllRoles(){
         return roleService.findAll();
     }

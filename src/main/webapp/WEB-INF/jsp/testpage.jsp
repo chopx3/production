@@ -15,16 +15,20 @@ hi ${hello}
 
     var saveURL =host+"/firecatcher/oktell/call/save";
     var oldUpdateURL =host+"/firecatcher/api/call/oldsave";
-    var updateURL =host+"/firecatcher/api/call/save";
+    var updateURL =host+"/firecatcher/api/call/update";
     var saveChainURL =host+"/firecatcher/api/oktell/chain/save";
     var updateCall = {
+        "id": 13418,
         "agentId": "32",
-        "chainId": "CC7A96B1-9DF1-41BE-ACF5-9203CFE0B6B8",
+        "chainId": "D3170343-ED1F-4388-A51D-8361E2C4FAD3",
         "avitoUserId": 1939992,
         "questId": 2,
         "shopCategoryId": 1,
-        "tags": "feedback",
-        "isManager": false
+        "type": "FEEDBACK",
+        "isManager": false,
+        "tags":[{
+            "id": 18,
+        }]
     }
     var fakeCall =  {
         "chainId": "48258FE5-1646-4F10-BC9A-4CEBE64C548B",
@@ -57,8 +61,8 @@ hi ${hello}
         "commutations": [
             {
                 "comId": "82A6C584-A63D-409B-9D10-E6F15E61EB56",
-                "timeStart": 1490954126,
-                "timeEnd": 1490954186,
+                "timeStart": 1491710400,
+                "timeEnd": 1491710800,
                 "aStr": "5356, CallCenter",
                 "bStr": "Avtomonova Alena",
                 "reasonStart": 1
@@ -422,7 +426,7 @@ Put feedback
 <button onclick="RestPost(newCallHoldRedirect, saveChainURL)">newCallHoldRedirect</button>
 <button onclick="RestPost(newCallInsideRedirect, saveChainURL)">newCallInsideRedirect</button>
 <button onclick="RestPost(newCallRedirectFromDoc, saveChainURL)">newCallRedirectFromDoc</button>
-<button onclick="RestPost(newCallRedirectToDoc, saveChainURL)">newCallRedirectFromDoc</button>
+<button onclick="RestPost(newCallRedirectToDoc, saveChainURL)">newCallRedirectToDoc</button>
 <button onclick="RestPost(newCallInsideRedirectSales, saveChainURL)">newCallInsideRedirectSales</button>
 <button onclick="RestPost(outCommingCall, saveChainURL)">outCommingCall</button>
 <button onclick="RestPost(outCommingCallDoc, saveChainURL)">outCommingCallDoc</button>

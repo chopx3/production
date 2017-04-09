@@ -13,6 +13,6 @@ public interface CallService { //TODO доделать
     Integer save(UpdatedCall call);
     Call findOne(Integer id);
     List<Call> findByAgentIdAndTimeStartBetween(Integer userId, Long timeStart, Long timeEnd);
-    List<Call> findByTimeStartGreaterThanAndAgentIdAndType(Integer id, Long startDay);
+    List<Call> findByTimeStartGreaterThanAndAgentIdAndType(Integer agentId, String typeCall);
 
 }
