@@ -1,5 +1,7 @@
 package ru.avito.repository;
 
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
@@ -60,5 +62,5 @@ public interface CallRepository extends JpaRepository<Call,Integer>{ //TODO ре
 
 
     @Query(name = "SELECT * FROM calls WHERE user_id = :avitoUserId")
-    List<Call> findByAvitoUserId(@Param("avitoUserId") Long avitoUserId);
+    List<Call> findByAvitoUserId(@Param("avitoUserId") Long avitoUserId, Pageable aPage);
 }

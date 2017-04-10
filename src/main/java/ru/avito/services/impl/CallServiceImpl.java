@@ -4,6 +4,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.socket.TextMessage;
@@ -12,14 +13,12 @@ import ru.avito.model.agent.AuthorizedUsers;
 import ru.avito.model.calls.*;
 import ru.avito.model.tags.Tag;
 import ru.avito.repository.CallRepository;
-import ru.avito.response.EmptyCallAsJson;
 import ru.avito.services.AgentService;
 import ru.avito.services.CallService;
 
 import java.io.IOException;
 import java.time.LocalDate;
 import java.time.ZoneId;
-import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.concurrent.ConcurrentHashMap;
@@ -108,8 +107,8 @@ public class CallServiceImpl implements CallService {
         return callRepository.findByTags(tagsIds);
     }
 
-    public List<Call> findByAvitoUserId(Long avitoUserId) {
-        return callRepository.findByAvitoUserId(avitoUserId);
+    public List<Call> findByAvitoUserId(Long avitoUserId, PageRequest aPage) {
+        return callRepository.findByAvitoUserId(avitoUserId, aPage);
     }
 
     private Long startCurrentDay(){

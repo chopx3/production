@@ -3,6 +3,8 @@ package ru.avito.controller.api;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.data.repository.query.Param;
 import org.springframework.security.core.context.SecurityContext;
 import org.springframework.web.bind.annotation.*;
@@ -91,9 +93,10 @@ public class CallController {
         return callService.findByTags(tags);
     }
 
-    @RequestMapping(value = "find/{avitoUserId}", method = RequestMethod.GET)
-    public List<Call> findEmptyCall(@Param("avitoUserId") Long avitoUserId){
-        return callService.findByAvitoUserId(avitoUserId);
+    @RequestMapping(value = "find/{avitoUserId}/{page}", method = RequestMethod.GET)
+    public List<Call> findEmptyCall(@PathVariable("avitoUserId") Long avitoUserId, @PathVariable("page") Integer page){
+        PageRequest aPage = new PageRequest(page, 20, Sort.Direction.DESC, "timeStart");
+        return callService.findByAvitoUserId(avitoUserId, aPage);
     }
 
 }

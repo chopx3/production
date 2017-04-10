@@ -31,7 +31,7 @@
             <li><a href="#" id="comments">Комментарии<span class="glyphicon glyphicon-triangle-right glyph pull-right" aria-hidden="true" id="glyphCom"></span></a></li>
             <li><a href="#" id="notes">Заметки<span class="glyphicon glyphicon-triangle-right glyph pull-right" aria-hidden="true" id="glyphNote"></span> </a></li>
             <li><a href="#" id="feedback">Feedback</a></li>
-            <li><a href="#" id="oktell">Oktell</a></li>
+            <%--<li><a href="#" id="oktell">Oktell</a></li>--%>
 			<li><a href="#" id="magic">Magic</a></li>
             <li><a href="${pageContext.request.contextPath}/j_spring_security_logout" id="logout">Выйти</a></li>
             <label id="websocketStatus">Статус </label>
@@ -272,22 +272,22 @@
 				<div class="row" id="forComments">
 				</div>
 			</div>
-<script>
-    (function() {
-        document.getElementById("oktell").onclick = function() {
-            var wnd = window.open("http://web_api:s7cgr3Ev@192.168.3.10:4055/download/", "hello", "width=200,height=200");
+<%--<script>--%>
+    <%--(function() {--%>
+        <%--document.getElementById("oktell").onclick = function() {--%>
+            <%--var wnd = window.open("http://web_api:s7cgr3Ev@192.168.3.10:4055/download/", "hello", "width=200,height=200");--%>
 
-            wnd.onerror = function(){
-                wnd.document.write("Соединение с октелл...");
-                wnd.alert("error");
-            };
-            setTimeout(function() {
-                wnd.close();
-            }, 1500);
-            return false;
-        };
-    })();
-</script>
+            <%--wnd.onerror = function(){--%>
+                <%--wnd.document.write("Соединение с октелл...");--%>
+                <%--wnd.alert("error");--%>
+            <%--};--%>
+            <%--setTimeout(function() {--%>
+                <%--wnd.close();--%>
+            <%--}, 1500);--%>
+            <%--return false;--%>
+        <%--};--%>
+    <%--})();--%>
+<%--</script>--%>
 <script>
     setTimeout(jQuery(function(){
         jQuery('#my_calls').click();

@@ -1,5 +1,6 @@
 package ru.avito.services;
 
+import org.springframework.data.domain.PageRequest;
 import ru.avito.model.calls.*;
 import ru.avito.model.tags.Tag;
 
@@ -17,6 +18,6 @@ public interface CallService { //TODO доделать
     List<Call> findByAgentIdAndTimeStartBetween(Integer userId, Long timeStart, Long timeEnd);
     List<Call> findByTimeStartGreaterThanAndAgentIdAndType(Integer agentId, String typeCall);
     List<Call> findByTags(List<Tag> tagsIds);
-    List<Call> findByAvitoUserId(Long avitoUserId);
+    List<Call> findByAvitoUserId(Long avitoUserId, PageRequest aPage);
 
 }
