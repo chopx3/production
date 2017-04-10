@@ -4,12 +4,12 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContext;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import ru.avito.controller.Path;
+import ru.avito.factory.CallFactory;
+import ru.avito.model.agent.Agent;
 import ru.avito.model.calls.*;
+import ru.avito.response.FeedBackCallsAsJson;
 import ru.avito.services.AgentService;
 import ru.avito.services.CallService;
 
@@ -32,6 +32,9 @@ public class CallController {
     @Autowired
     AgentService agentService;
 
+    @Autowired
+    CallFactory callFactory;
+
     @RequestMapping(value = "find/{startPeriod}/{endPeriod}")//TODO сделать
     public List<Call> findByAgentIdAndTimeStartBetween(HttpSession session,
                                              @PathVariable("startPeriod") Long startPeriod,
@@ -44,17 +47,34 @@ public class CallController {
         return callService.findByAgentIdAndTimeStartBetween(userId, startPeriod, endPeriod);
     }
 
-    @RequestMapping(value = "update")
+    @RequestMapping(value = "update", method = RequestMethod.POST)
     public Integer saveCall( @RequestBody UpdatedCall updatedCall){ //TODO запилить HttpSession
 //        LOG.debug("Update call: "+updatedCall);
         return callService.save(updatedCall);
     }
 
+    @RequestMapping(value = "feedback/save", method = RequestMethod.POST)
+    public Integer saveCall( @RequestBody FeedbackCall feedbackCall){ //TODO запилить HttpSession
+//        LOG.debug("Update call: "+updatedCall);
+        return callService.save(feedbackCall);
+    }
+
+    @RequestMapping(value = "feedback")
+    public FeedBackCallsAsJson findFeedcack(HttpSession httpSession){
+        SecurityContext context = (SecurityContext) httpSession.getAttribute("SPRING_SECURITY_CONTEXT");
+        String username = context.getAuthentication().getName();
+        Agent agent = agentService.findByUsername(username);
+        List<Call> calls = callService.findByTimeStartGreaterThanAndAgentIdAndType(agent.getId(),"FEEDBACK");
+        List<FeedbackCall> feedbackCalls = callFactory.getFeedbackCalls(calls);
+        return new FeedBackCallsAsJson(feedbackCalls, 1L);
+    }
+
+
     @RequestMapping(value = "find/type/{typecall}")
     public List<Call> findEmptyCall(@PathVariable("typecall") String typeCall, HttpSession session){
         SecurityContext context = (SecurityContext) session.getAttribute("SPRING_SECURITY_CONTEXT");
         String username = context.getAuthentication().getName();
-        LOG.debug(String.format("Find empty calls for user - %s", username));
+        LOG.debug(String.format("Find %s calls for user - %s", typeCall, username));
         return callService.findByTimeStartGreaterThanAndAgentIdAndType(agentService.findByUsername(username).getId(), typeCall);
     }
 }

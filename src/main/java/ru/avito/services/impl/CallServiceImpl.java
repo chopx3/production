@@ -29,6 +29,7 @@ import java.util.concurrent.ConcurrentHashMap;
 @Service
 public class CallServiceImpl implements CallService {
 
+    //TODO здесь будут храниться chain_id... наверное...
     private static ConcurrentHashMap<Integer, List<Integer>> commaSeparatedIdCallsByAgent = new ConcurrentHashMap<>();
 
     private final static Logger LOG = LogManager.getLogger();
@@ -46,23 +47,10 @@ public class CallServiceImpl implements CallService {
             callRepository.save(call);
             agentIds.add(call.getAgent());
         }
-        LOG.debug(calls);
+        LOG.debug("line: 54 "+calls);
         for(Agent agent : agentIds){
             try {
-//                List<EmptyCall>emptyCalls = new ArrayList<>();
-//                List<Integer> ids = new ArrayList<>();
-//                for(Call call : callRepository.findByAgentIdAndTimeStartBetween(agent.getId(), startCurrentDay(), startCurrentDay() + 86400)){
-//                    ids.add(call.getId());
-//                    LOG.debug("create emptyCall by: " + call);
-//                    EmptyCall emptyCall = new EmptyCall(call);
-//                    LOG.debug("result: " + emptyCall);
-//                    emptyCalls.add(emptyCall);
-//                    LOG.debug(ids);
-//                    commaSeparatedIdCallsByAgent.put(agent.getId(), ids);
-//                }
-                String response = "Exist empty calls";
-                LOG.debug(response);
-                AuthorizedUsers.webSocketSessions.get(agent.getId()).sendMessage(new TextMessage(response));
+                AuthorizedUsers.webSocketSessions.get(agent.getId()).sendMessage(new TextMessage("Exist empty calls"));
             } catch (IOException e) {
                 LOG.error(e);
             }catch (NullPointerException e ){
@@ -77,15 +65,28 @@ public class CallServiceImpl implements CallService {
     @Transactional
     public Integer save(UpdatedCall updatedCall) {
         LOG.debug(updatedCall);
-        Call currentCall = callRepository.findOne(updatedCall.getId());
-        currentCall.setQuestionId(updatedCall.getQuestId());
-        currentCall.setShopCategoryId(updatedCall.getShopCategoryId());
-        currentCall.setAvitoUserId(updatedCall.getAvitoUserId());
-        currentCall.setManager(updatedCall.getIsManager());
-        currentCall.setType(updatedCall.getType());
-        currentCall.setTags(updatedCall.getTags());
-        callRepository.save(currentCall);
+        List<Call> calls = callRepository.findByChainIdAndAgentId(updatedCall.getChainId(),
+                                                                        updatedCall.getAgentId());
+        LOG.debug(calls);
+
+        for(Call currentCall : calls) {
+            currentCall.setQuestionId(updatedCall.getQuestId());
+            currentCall.setShopCategoryId(updatedCall.getShopCategoryId());
+            currentCall.setAvitoUserId(updatedCall.getAvitoUserId());
+            currentCall.setManager(updatedCall.getIsManager());
+            currentCall.setType(updatedCall.getType());
+            currentCall.setTags(updatedCall.getTags());
+            callRepository.save(currentCall);
+        }
         return 1;//TODO шляпа
+    }
+
+    public Integer save(FeedbackCall actualCall){
+        Call currentCall = findOne(actualCall.getId());
+        currentCall.setComments(actualCall.getComments());
+        currentCall.setTags(actualCall.getTags());
+        callRepository.save(currentCall);
+        return 1;
     }
 
 

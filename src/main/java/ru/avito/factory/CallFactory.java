@@ -7,6 +7,7 @@ import org.springframework.stereotype.Component;
 import ru.avito.model.agent.Agent;
 import ru.avito.model.calls.Call;
 import ru.avito.model.calls.EmptyCall;
+import ru.avito.model.calls.FeedbackCall;
 import ru.avito.model.oktell.Chain;
 import ru.avito.model.oktell.Commutation;
 import ru.avito.services.AgentService;
@@ -60,9 +61,13 @@ public class CallFactory {
         return emptyCalls;
     }
 
-    //TODO может быть сделать такой же лист для Feedback - звонков?
-
-
+    public List<FeedbackCall> getFeedbackCalls(List<Call> calls){
+        List<FeedbackCall> feedbackCalls = new ArrayList<>(calls.size());
+        calls.forEach(fc -> feedbackCalls.add(new FeedbackCall(fc.getId(), fc.getAgent().getId(),
+                                                                fc.getComId(), fc.getAvitoUserId(), fc.getTimeStart(),
+                                                                fc.getType(), fc.getComments(), fc.getTags())));
+        return feedbackCalls;
+    }
 
 
     private long createPeriod(long period){

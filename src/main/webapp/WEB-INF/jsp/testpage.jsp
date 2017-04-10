@@ -14,11 +14,11 @@ hi ${hello}
 //    var host = "http://192.168.10.132:8080/avito";
 
     var saveURL =host+"/firecatcher/oktell/call/save";
-    var oldUpdateURL =host+"/firecatcher/api/call/oldsave";
+    var feedBackSaveURL =host+"/firecatcher/api/call/feedback/save";
     var updateURL =host+"/firecatcher/api/call/update";
     var saveChainURL =host+"/firecatcher/api/oktell/chain/save";
     var updateCall = {
-        "id": 13418,
+        "id": 13430,
         "agentId": "32",
         "chainId": "D3170343-ED1F-4388-A51D-8361E2C4FAD3",
         "avitoUserId": 1939992,
@@ -27,9 +27,25 @@ hi ${hello}
         "type": "FEEDBACK",
         "isManager": false,
         "tags":[{
-            "id": 18,
+            "id": 18
         }]
     }
+
+    var feedBackCAll = {
+        "id": 13430,
+        "comments": "какой-то угар...",
+        "tags":[{
+            "id": 18
+        },
+            {
+                "id":16
+            },
+            {
+                "id":17
+            }]
+    }
+
+
     var fakeCall =  {
         "chainId": "48258FE5-1646-4F10-BC9A-4CEBE64C548B",
         "commutations": [
@@ -61,8 +77,8 @@ hi ${hello}
         "commutations": [
             {
                 "comId": "82A6C584-A63D-409B-9D10-E6F15E61EB56",
-                "timeStart": 1491710400,
-                "timeEnd": 1491710800,
+                "timeStart": 1491786000,
+                "timeEnd": 1491786000,
                 "aStr": "5356, CallCenter",
                 "bStr": "Avtomonova Alena",
                 "reasonStart": 1
@@ -418,7 +434,7 @@ Put feedback
 </script>
 
 <button onclick="RestPost(updateCall, updateURL)">Update call</button>
-<button onclick="RestPost(updateCall, oldUpdateURL)">oldUpdate call</button>
+<button onclick="RestPost(feedBackCAll, feedBackSaveURL)">save feedback call</button>
 <button onclick="RestPost(fakeCall, saveChainURL)">fake call</button>
 <button onclick="RestPost(fakeAgent, saveChainURL)">fake agent</button>
 <button onclick="RestPost(newCall, saveChainURL)">new call</button>

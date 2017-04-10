@@ -103,5 +103,20 @@ public class UpdatedCall {
     public void setTags(Set<Tag> tags) {
         this.tags = tags;
     }
+
+    @Override
+    public String toString() {
+        return "UpdatedCall{" +
+                "id=" + id +
+                ", chainId='" + chainId + '\'' +
+                ", questId=" + questId +
+                ", shopCategoryId=" + shopCategoryId +
+                ", agentId=" + agentId +
+                ", avitoUserId=" + avitoUserId +
+                ", isManager=" + isManager +
+                ", type='" + type + '\'' +
+                ", tags=" + tags +
+                '}';
+    }
 }
 

@@ -43,4 +43,8 @@ public interface CallRepository extends JpaRepository<Call,Integer>{ //TODO ре
                                                            @Param("agentId") Integer agentId,
                                                            @Param("typeCall") String typeCall);
 
+
+    @Query(name ="SELECT * FROM calls WHERE chain_id > :chainId and user_id= :agentId")
+    List<Call> findByChainIdAndAgentId(@Param("chainId") String chainId, @Param("agentId")Integer agentId);
+
 }

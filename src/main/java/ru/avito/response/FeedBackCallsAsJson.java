@@ -4,6 +4,7 @@ import ru.avito.model.calls.FeedbackCall;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by Dmitriy on 25.01.2017.
@@ -13,8 +14,8 @@ public class FeedBackCallsAsJson {
     private ArrayList<FeedbackCall> records;
     private long lastUpdateTimeMs;
 
-    public FeedBackCallsAsJson(ArrayList<FeedbackCall> records, long lastUpdateTimeMs) {
-        this.records = records;
+    public FeedBackCallsAsJson(List<FeedbackCall> records, long lastUpdateTimeMs) {
+        this.records = (ArrayList) records;
         this.lastUpdateTimeMs = LocalDateTime
                 .now() //TODO копипаста (EmptyCallAsJson)
                 .atZone(ZoneId.systemDefault())

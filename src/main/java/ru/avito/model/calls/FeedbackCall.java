@@ -1,10 +1,13 @@
 package ru.avito.model.calls;
 
+import ru.avito.model.tags.Tag;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
 import java.util.Arrays;
+import java.util.Set;
 
 /**
  * Created by Dmitriy on 25.01.2017.
@@ -12,24 +15,26 @@ import java.util.Arrays;
 
 public class FeedbackCall {
 
-    private int id;
+    private Integer id;
 
-    private int agentId;
+    private Integer agentId;
 
     private String comId;
 
-    private int avitoUserId;
+    private Long avitoUserId;
 
-    private long timeStart;
+    private Long timeStart;
 
     private String type;
 
     private String comments;
 
+    private Set<Tag> tags;
+
     public FeedbackCall() {
     }
 
-    public FeedbackCall(int id, int agentId, String comId, int avitoUserId, long timeStart, String type, String comments) {
+    public FeedbackCall(Integer id, Integer agentId, String comId, Long avitoUserId, Long timeStart, String type, String comments, Set<Tag> tags) {
         this.id = id;
         this.agentId = agentId;
         this.comId = comId;
@@ -37,21 +42,22 @@ public class FeedbackCall {
         this.timeStart = timeStart;
         this.type = type;
         this.comments = comments;
+        this.tags = tags;
     }
 
-    public int getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 
-    public int getAgentId() {
+    public Integer getAgentId() {
         return agentId;
     }
 
-    public void setAgentId(int agentId) {
+    public void setAgentId(Integer agentId) {
         this.agentId = agentId;
     }
 
@@ -63,20 +69,28 @@ public class FeedbackCall {
         this.comId = comId;
     }
 
-    public int getAvitoUserId() {
+    public Long getAvitoUserId() {
         return avitoUserId;
     }
 
-    public void setAvitoUserId(int avitoUserId) {
+    public void setAvitoUserId(Long avitoUserId) {
         this.avitoUserId = avitoUserId;
     }
 
-    public long getTimeStart() {
+    public Long getTimeStart() {
         return timeStart;
     }
 
-    public void setTimeStart(long timeStart) {
+    public void setTimeStart(Long timeStart) {
         this.timeStart = timeStart;
+    }
+
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
     }
 
     public String getComments() {
@@ -87,6 +101,14 @@ public class FeedbackCall {
         this.comments = comments;
     }
 
+    public Set<Tag> getTags() {
+        return tags;
+    }
+
+    public void setTags(Set<Tag> tags) {
+        this.tags = tags;
+    }
+
     @Override
     public String toString() {
         return "FeedbackCall{" +
@@ -95,8 +117,9 @@ public class FeedbackCall {
                 ", comId='" + comId + '\'' +
                 ", avitoUserId=" + avitoUserId +
                 ", timeStart=" + timeStart +
-                ", tags='" + type + '\'' +
+                ", type='" + type + '\'' +
                 ", comments='" + comments + '\'' +
+                ", tags=" + tags +
                 '}';
     }
 }
