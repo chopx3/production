@@ -3,17 +3,21 @@ package ru.avito.controller.api;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.repository.query.Param;
 import org.springframework.security.core.context.SecurityContext;
 import org.springframework.web.bind.annotation.*;
 import ru.avito.controller.Path;
 import ru.avito.factory.CallFactory;
 import ru.avito.model.agent.Agent;
 import ru.avito.model.calls.*;
+import ru.avito.model.tags.Tag;
 import ru.avito.response.FeedBackCallsAsJson;
 import ru.avito.services.AgentService;
 import ru.avito.services.CallService;
+import ru.avito.services.TagService;
 
 import javax.servlet.http.HttpSession;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -34,6 +38,9 @@ public class CallController {
 
     @Autowired
     CallFactory callFactory;
+
+    @Autowired
+    TagService tagService;
 
     @RequestMapping(value = "find/{startPeriod}/{endPeriod}")//TODO сделать
     public List<Call> findByAgentIdAndTimeStartBetween(HttpSession session,
@@ -77,4 +84,16 @@ public class CallController {
         LOG.debug(String.format("Find %s calls for user - %s", typeCall, username));
         return callService.findByTimeStartGreaterThanAndAgentIdAndType(agentService.findByUsername(username).getId(), typeCall);
     }
+
+
+    @RequestMapping(value = "find/tags", method = RequestMethod.POST)
+    public List<Call> findEmptyCall(@RequestBody List<Tag> tags){
+        return callService.findByTags(tags);
+    }
+
+    @RequestMapping(value = "find/{avitoUserId}", method = RequestMethod.GET)
+    public List<Call> findEmptyCall(@Param("avitoUserId") Long avitoUserId){
+        return callService.findByAvitoUserId(avitoUserId);
+    }
+
 }

@@ -15,18 +15,18 @@ import java.util.List;
  */
 
 @RestController
-@RequestMapping(value = Path.API+"tag")
+@RequestMapping(value = Path.API+"tags")
 public class TagController {
 
     @Autowired
     TagService tagService;
 
-    @RequestMapping(value ="/")
+    @RequestMapping(value ="find")
     public List <Tag> findAllTags(){
         return tagService.findAll();
     }
 
-    @RequestMapping(value ="/{id}")
+    @RequestMapping(value ="find/{id}")
     public Tag findTagByName(@PathVariable("id") int id){
         return tagService.findOne(id);
     }
@@ -39,7 +39,7 @@ public class TagController {
     }
 
     @ResponseStatus(HttpStatus.CREATED)
-    @RequestMapping(value ="/edit", method = RequestMethod.POST)
+    @RequestMapping(value ="/update", method = RequestMethod.POST)
     public ResponseMessage editTag(@RequestBody Tag tag){
         tagService.edit(tag);
         return new ResponseMessage(201,"ok");

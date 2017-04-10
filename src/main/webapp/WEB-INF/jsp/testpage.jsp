@@ -17,6 +17,12 @@ hi ${hello}
     var feedBackSaveURL =host+"/firecatcher/api/call/feedback/save";
     var updateURL =host+"/firecatcher/api/call/update";
     var saveChainURL =host+"/firecatcher/api/oktell/chain/save";
+    var findFeedBackURL =host+"/firecatcher/api/call/feedback/find";
+
+    var ids=[{"id":17}, {"id":18}]
+
+
+
     var updateCall = {
         "id": 13430,
         "agentId": "32",
@@ -454,6 +460,10 @@ Put feedback
 <button onclick="RestPost(newAgent, postAgentURL)">add Agent</button>
 <button onclick="RestPost(updateAgent, updateAgentURL)">update Agent</button>
 <button onclick="RestPost(updateAgentNotes, updateAgentNotesURL)">update notes</button>
+
+
+<br>
+<button onclick="RestPost(ids, findFeedBackURL)">findFeedback</button>
 
 </body>
 </html>

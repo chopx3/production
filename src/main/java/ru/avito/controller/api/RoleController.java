@@ -16,11 +16,11 @@ import java.util.List;
 @RestController
 @RequestMapping(value = Path.API+"roles")
 public class RoleController {
-
+                                                //TODO сделать CRUD ечли нужно.
     @Autowired
     private RoleService roleService;
 
-    @RequestMapping(value = "find/all")
+    @RequestMapping(value = "find")
     public List<Role> findAllRoles(){
         return roleService.findAll();
     }

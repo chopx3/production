@@ -10,6 +10,7 @@ import org.springframework.web.socket.TextMessage;
 import ru.avito.model.agent.Agent;
 import ru.avito.model.agent.AuthorizedUsers;
 import ru.avito.model.calls.*;
+import ru.avito.model.tags.Tag;
 import ru.avito.repository.CallRepository;
 import ru.avito.response.EmptyCallAsJson;
 import ru.avito.services.AgentService;
@@ -100,6 +101,15 @@ public class CallServiceImpl implements CallService {
 
     public List<Call> findByTimeStartGreaterThanAndAgentIdAndType(Integer agentId, String typeCall) {
         return callRepository.findByTimeStartGreaterThanAndAgentIdAndType(startCurrentDay() * 1000L, agentId, typeCall);
+    }
+
+    @Override
+    public List<Call> findByTags(List<Tag> tagsIds) {
+        return callRepository.findByTags(tagsIds);
+    }
+
+    public List<Call> findByAvitoUserId(Long avitoUserId) {
+        return callRepository.findByAvitoUserId(avitoUserId);
     }
 
     private Long startCurrentDay(){

@@ -17,7 +17,7 @@ import java.util.List;
  */
 
 @RestController
-@RequestMapping(value = Path.API+"comment")
+@RequestMapping(value = Path.API+"comments")
 public class CommentController {
 
     @Autowired
@@ -26,7 +26,7 @@ public class CommentController {
     @Autowired
     AgentService agentService;
 
-    @RequestMapping(value = "find/{avitoUserId}")
+    @RequestMapping(value = "find/{avitoUserId}", method = RequestMethod.GET)
     public List<Comment> findCommentByAvitoUserId(@PathVariable("avitoUserId") Long avitoUserId) {
         return commentService.findAllByAvitoUserId(avitoUserId);
     }

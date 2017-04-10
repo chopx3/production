@@ -1,6 +1,7 @@
 package ru.avito.services;
 
 import ru.avito.model.calls.*;
+import ru.avito.model.tags.Tag;
 
 import java.util.List;
 
@@ -15,5 +16,7 @@ public interface CallService { //TODO доделать
     Call findOne(Integer id);
     List<Call> findByAgentIdAndTimeStartBetween(Integer userId, Long timeStart, Long timeEnd);
     List<Call> findByTimeStartGreaterThanAndAgentIdAndType(Integer agentId, String typeCall);
+    List<Call> findByTags(List<Tag> tagsIds);
+    List<Call> findByAvitoUserId(Long avitoUserId);
 
 }
