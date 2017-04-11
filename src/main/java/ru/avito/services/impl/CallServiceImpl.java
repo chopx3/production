@@ -82,10 +82,14 @@ public class CallServiceImpl implements CallService {
     }
 
     public Integer save(FeedbackCall actualCall){
-        Call currentCall = findOne(actualCall.getId());
-        currentCall.setComments(actualCall.getComments());
-        currentCall.setTags(actualCall.getTags());
-        callRepository.save(currentCall);
+        List<Call> calls = callRepository.findByChainIdAndAgentId(actualCall.getChainId(),
+                actualCall.getAgentId());
+        for(Call currentCall : calls) {
+            currentCall.setComments(actualCall.getComments());
+            currentCall.setTags(actualCall.getTags());
+            currentCall.setType(actualCall.getType());
+            callRepository.save(currentCall);
+        }
         return 1;
     }
 

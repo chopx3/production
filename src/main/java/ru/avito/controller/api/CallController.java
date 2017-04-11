@@ -98,5 +98,4 @@ public class CallController {
         PageRequest aPage = new PageRequest(page, 20, Sort.Direction.DESC, "timeStart");
         return callService.findByAvitoUserId(avitoUserId, aPage);
     }
-
 }

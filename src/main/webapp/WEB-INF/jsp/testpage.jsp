@@ -30,7 +30,7 @@ hi ${hello}
         "avitoUserId": 1939992,
         "questId": 2,
         "shopCategoryId": 1,
-        "type": "FEEDBACK",
+        "type": "UPDATED",
         "isManager": false,
         "tags":[{
             "id": 18

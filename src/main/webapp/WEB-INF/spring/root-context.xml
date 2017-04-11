@@ -61,6 +61,10 @@
     <bean id ="commentService" class="ru.avito.services.impl.CommentServiceImpl"/>
     <bean id ="questionService" class="ru.avito.services.impl.QuestionServiceImpl"/>
     <bean id ="categoryService" class="ru.avito.services.impl.CategoryServiceImpl"/>
+    <bean id ="statService" class="ru.avito.services.impl.StatServiceImpl"/>
+    <bean id ="statDao" class="ru.avito.statdao.StatDaoImpl"/>
+
+
 
     <bean id="callFactory" class="ru.avito.factory.CallFactory"/>
 

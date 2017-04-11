@@ -19,7 +19,7 @@ public class FeedbackCall {
 
     private Integer agentId;
 
-    private String comId;
+    private String chainId;
 
     private Long avitoUserId;
 
@@ -34,10 +34,10 @@ public class FeedbackCall {
     public FeedbackCall() {
     }
 
-    public FeedbackCall(Integer id, Integer agentId, String comId, Long avitoUserId, Long timeStart, String type, String comments, Set<Tag> tags) {
+    public FeedbackCall(Integer id, Integer agentId, String chainId, Long avitoUserId, Long timeStart, String type, String comments, Set<Tag> tags) {
         this.id = id;
         this.agentId = agentId;
-        this.comId = comId;
+        this.chainId = chainId;
         this.avitoUserId = avitoUserId;
         this.timeStart = timeStart;
         this.type = type;
@@ -61,12 +61,12 @@ public class FeedbackCall {
         this.agentId = agentId;
     }
 
-    public String getComId() {
-        return comId;
+    public String getChainId() {
+        return chainId;
     }
 
-    public void setComId(String comId) {
-        this.comId = comId;
+    public void setChainId(String chainId) {
+        this.chainId = chainId;
     }
 
     public Long getAvitoUserId() {
@@ -114,7 +114,7 @@ public class FeedbackCall {
         return "FeedbackCall{" +
                 "id=" + id +
                 ", agentId=" + agentId +
-                ", comId='" + comId + '\'' +
+                ", chainId='" + chainId + '\'' +
                 ", avitoUserId=" + avitoUserId +
                 ", timeStart=" + timeStart +
                 ", type='" + type + '\'' +
