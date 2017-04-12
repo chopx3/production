@@ -98,4 +98,11 @@ public class CallController {
         PageRequest aPage = new PageRequest(page, 20, Sort.Direction.DESC, "timeStart");
         return callService.findByAvitoUserId(avitoUserId, aPage);
     }
+
+    @RequestMapping(value = "find/questions/{startPeriod}/{endPeriod}", method = RequestMethod.POST)
+    public List<Call> findByQuestionIdAndTimeStartBetween(@PathVariable("startPeriod") Long startPeriod,
+                                    @PathVariable("endPeriod") Long endPeriod,
+                                    @RequestBody List<Integer> ids){
+        return callService.findByQuestionIdAndTimeStartBetween(ids, startPeriod, endPeriod);
+    }
 }

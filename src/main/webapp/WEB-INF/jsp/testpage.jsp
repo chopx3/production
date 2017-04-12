@@ -18,10 +18,12 @@ hi ${hello}
     var updateURL =host+"/firecatcher/api/call/update";
     var saveChainURL =host+"/firecatcher/api/oktell/chain/save";
     var findFeedBackURL =host+"/firecatcher/api/call/feedback/find";
+    var findByQuestionURL = host+"/firecatcher/api/call/find/questions/1491782400000/1491868800000"
+
 
     var ids=[{"id":17}, {"id":18}]
 
-
+    var qIds=[7];
 
     var updateCall = {
         "id": 13430,
@@ -307,7 +309,7 @@ hi ${hello}
             }
         ]
     }
-    var postCommentURL = host+"/firecatcher/api/comment/save"
+    var postCommentURL = host+"/firecatcher/api/comments/save"
 
     var postAgentURL = host+"/firecatcher/api/agent/save"
     var updateAgentURL = host+"/firecatcher/api/agent/update"
@@ -464,6 +466,11 @@ Put feedback
 
 <br>
 <button onclick="RestPost(ids, findFeedBackURL)">findFeedback</button>
+
+<br>
+<button onclick="RestPost(qIds, findByQuestionURL)">find by question</button>
+
+
 
 </body>
 </html>

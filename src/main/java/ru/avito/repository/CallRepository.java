@@ -63,4 +63,9 @@ public interface CallRepository extends JpaRepository<Call,Integer>{ //TODO ре
 
     @Query(name = "SELECT * FROM calls WHERE user_id = :avitoUserId")
     List<Call> findByAvitoUserId(@Param("avitoUserId") Long avitoUserId, Pageable aPage);
+
+    @Query("SELECT c FROM Call c WHERE c.questionId IN (:ids) AND c.timeStart BETWEEN :timeStart AND :timeEnd")
+    List<Call> findByQuestionIdAndTimeStartBetween(@Param("ids") List<Integer> ids,
+                                                   @Param("timeStart") Long timeStart,
+                                                   @Param("timeEnd") Long timeEnd);
 }

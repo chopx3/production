@@ -5,6 +5,7 @@ import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.socket.TextMessage;
@@ -114,6 +115,11 @@ public class CallServiceImpl implements CallService {
     public List<Call> findByAvitoUserId(Long avitoUserId, PageRequest aPage) {
         return callRepository.findByAvitoUserId(avitoUserId, aPage);
     }
+
+    public List<Call> findByQuestionIdAndTimeStartBetween(List<Integer> ids, Long timeStart, Long timeEnd){
+        return callRepository.findByQuestionIdAndTimeStartBetween(ids, timeStart, timeEnd);
+    }
+
 
     private Long startCurrentDay(){
         LocalDate now = LocalDate.now();

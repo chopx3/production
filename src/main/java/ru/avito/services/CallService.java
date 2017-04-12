@@ -19,5 +19,6 @@ public interface CallService { //TODO доделать
     List<Call> findByTimeStartGreaterThanAndAgentIdAndType(Integer agentId, String typeCall);
     List<Call> findByTags(List<Tag> tagsIds);
     List<Call> findByAvitoUserId(Long avitoUserId, PageRequest aPage);
+    List<Call> findByQuestionIdAndTimeStartBetween(List<Integer> ids, Long timeStart, Long timeEnd);
 
 }

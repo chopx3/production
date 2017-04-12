@@ -30,6 +30,7 @@ public class StatDaoImpl implements StatDao {
                             "FROM calls JOIN shop_category ON calls.shop_category_id = shop_category.id "+
                             "WHERE shop_category_id = shop_category.id "+
                             "AND time_begin BETWEEN ? AND ? "+
+                            "AND isOut = FALSE " +
                             "GROUP BY shop_category_id "+
                             "ORDER BY 2 DESC");
 
