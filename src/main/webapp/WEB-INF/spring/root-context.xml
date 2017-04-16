@@ -23,7 +23,7 @@
     <bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource" destroy-method="close">
         <property name="username" value="root"/>
         <property name="password" value="root"/>
-        <property name="url" value="jdbc:mysql://localhost:3306/avito"/>
+        <property name="url" value="jdbc:mysql://localhost:3306/firecatcher"/>
         <property name="driverClassName" value="com.mysql.jdbc.Driver"/>
         <property name="initialSize" value="50"/>
         <property name="maxActive" value="100"/>
@@ -61,6 +61,8 @@
     <bean id ="commentService" class="ru.avito.services.impl.CommentServiceImpl"/>
     <bean id ="questionService" class="ru.avito.services.impl.QuestionServiceImpl"/>
     <bean id ="categoryService" class="ru.avito.services.impl.CategoryServiceImpl"/>
+    <bean id ="nestedCategoryService" class="ru.avito.services.impl.NestedCategoryServiceImpl"/>
+
     <bean id ="statService" class="ru.avito.services.impl.StatServiceImpl"/>
     <bean id ="statDao" class="ru.avito.statdao.StatDaoImpl"/>
 

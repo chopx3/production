@@ -41,10 +41,18 @@ public interface CallRepository extends JpaRepository<Call,Integer>{ //TODO ре
                                 @Param("type") String type,
                                 @Param("ids") List<Integer> ids);
 
-    @Query(name ="SELECT * FROM calls WHERE timeStart > :timeStart and user_id =:agentId and type =:typeCall")
-    List<Call> findByTimeStartGreaterThanAndAgentIdAndType(@Param("timeStart") Long timeStart,
+    @Query(name ="SELECT * FROM calls WHERE timeStart BETWEEN :timeStart and :timeEnd AND user_id =:agentId and type =:typeCall")
+    List<Call> findByTimeStartBetweenAndAgentIdAndType(@Param("timeStart") Long timeStart,
+                                                           @Param("timeEnd") Long timeEnd,
                                                            @Param("agentId") Integer agentId,
                                                            @Param("typeCall") String typeCall);
+
+
+    @Query(name ="SELECT * FROM calls WHERE timeStart BETWEEN :timeStart and :timeEnd AND type =:typeCall")
+    List<Call> findByTimeStartBetweenAndType(@Param("timeStart") Long timeStart,
+                                             @Param("timeEnd") Long timeEnd,
+                                             @Param("typeCall") String typeCall);
+
 
 
     @Query(name ="SELECT * FROM calls WHERE chain_id > :chainId and user_id= :agentId")

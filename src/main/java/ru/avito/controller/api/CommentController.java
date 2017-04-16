@@ -27,8 +27,8 @@ public class CommentController {
     AgentService agentService;
 
     @RequestMapping(value = "find/{avitoUserId}", method = RequestMethod.GET)
-    public List<Comment> findCommentByAvitoUserId(@PathVariable("avitoUserId") Long avitoUserId) {
-        return commentService.findAllByAvitoUserId(avitoUserId);
+    public List<Comment> findAllByAvitoUserIdOrderByPostTimeDesc(@PathVariable("avitoUserId") Long avitoUserId) {
+        return commentService.findAllByAvitoUserIdOrderByPostTimeDesc(avitoUserId);
     }
 
     @RequestMapping(value = "save", method = RequestMethod.POST)//TODO затестить

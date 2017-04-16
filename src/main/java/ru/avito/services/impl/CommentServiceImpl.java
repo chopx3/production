@@ -21,7 +21,7 @@ public class CommentServiceImpl implements CommentService{
     }
 
     @Override
-    public List<Comment> findAllByAvitoUserId(Long avitoUserId) {
-        return commentRepository.findAllByAvitoUserId(avitoUserId);
+    public List<Comment> findAllByAvitoUserIdOrderByPostTimeDesc(Long avitoUserId) {
+        return commentRepository.findAllByAvitoUserIdOrderByPostTimeDesc(avitoUserId);
     }
 }

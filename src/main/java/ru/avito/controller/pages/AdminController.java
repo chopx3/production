@@ -26,6 +26,12 @@ public class AdminController { //TODO сделать нормальную стр
         return "api";
     }
 
+    @RequestMapping(value = "feedback", method = RequestMethod.GET)
+    public String getFeedbackPage(ModelMap model) {
+        return "feedback";
+    }
+
+
 
     @RequestMapping(value = "downloader", method = RequestMethod.GET)
     public String getDownloadPage(ModelMap model) {

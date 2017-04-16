@@ -1,0 +1,135 @@
+.tag-form {
+    font-size: 13px;
+    background-color: white;
+   
+    z-index: 1;
+    background-clip: padding-box;
+    text-align: center;
+	border-radius:5px;
+    padding: 10px;
+	overflow-x:auto;
+	
+}
+.tag-form-header {
+    text-align: left;
+    margin-bottom: 10px;
+    font-weight: bold;
+	padding-left:10px;
+	font-size:1.2em;
+    color: black;
+}
+.tag-form-container {
+    display: flex;
+    justify-content: left;
+	flex-wrap:wrap;
+	flex-direction: column;
+	height: 72vh;
+	border-radius:10px;
+}
+.container-column {
+    display: flex;
+    justify-content: left;
+  	margin-left: 10px;
+	flex-wrap:nowrap;
+	
+}
+
+.container-column-group {
+    
+}
+div.container-column-group ul.group-list {
+    display: flex;
+    justify-content: space-between;
+    flex-direction: column;
+    height: auto;
+    box-shadow: rgba(0, 0, 0, 0.172549) 0px 0px 12px;
+    margin: 0px 0px 8px;
+    border-radius: 4px;
+}
+.group-list {
+    z-index: 1;
+    color: black;
+    width: 260px;
+    height: 100%;
+    font-size: 14px;
+    text-align: left;
+    background-color: rgb(255, 255, 255);
+    background-clip: padding-box;
+    box-shadow: rgba(0, 0, 0, 0.172549) 0px 6px 12px;
+    padding: 8px 0px;
+    list-style: none;
+    border-width: 1px;
+    border-style: solid;
+    border-color: rgba(0, 0, 0, 0.14902);
+    border-image: initial;
+    border-radius: 4px;
+}
+.tag-form .group-list-item {
+    cursor: pointer;
+    height: auto;
+    line-height: 30px;
+    padding: 0px 35px 0px 8px;
+}
+.group-list-item {
+    cursor: pointer;
+    height: 30px;
+    line-height: 30px;
+    padding: 0px 8px;
+}
+li {
+    display: list-item;
+    text-align: -webkit-match-parent;
+}
+.group-list-checkbox {
+    cursor: pointer;
+    display: none;
+}
+.group-list-checkbox + label {
+    cursor: pointer;
+    position: relative;
+    width: 100%;
+    display: inline-block;
+    font-weight: 700;
+    margin-bottom: 0px;
+}
+.group-header
+{
+	margin-left:5px;
+}
+.group-list-checkbox + label span {
+    cursor: pointer;
+    padding-left: 20px;
+    display: inline-block;
+}
+.group-list-item:hover {
+    background-color:#EEE;
+}
+.group-list-item label::before {
+    content: "";
+    display: inline-block;
+    width: 16px;
+    height: 16px;
+    margin-right: 5px;
+    box-shadow: rgba(0, 0, 0, 0.298039) 0px 0px 2px 1px inset, rgba(255, 255, 255, 0.8) 0px 1px 0px 0px;
+    position: absolute;
+    top: 7px;
+    border-radius: 3px;
+}
+label.blueOne::before
+{
+	background-color:lightblue;
+}
+.tag-form .tag-form-footer {
+    text-align: center;
+    margin-top: 2px;
+}
+.tag-form-footer {
+    text-align: center;
+    margin-top: 10px;
+}
+#serviceFeedbackMessage{
+	padding-left:20px;
+}
+#commentBox{
+	padding: 5px 20px;
+}

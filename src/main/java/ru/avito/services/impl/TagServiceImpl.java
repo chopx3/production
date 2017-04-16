@@ -58,6 +58,11 @@ public class TagServiceImpl implements TagService {
     }
 
     @Override
+    public Tag findByValue(String value) {
+        return tagRepository.findByValue(value);
+    }
+
+    @Override
     public List<Tag> findAll() {
         List<Tag> tags=tagRepository.findAll();
         return tags;

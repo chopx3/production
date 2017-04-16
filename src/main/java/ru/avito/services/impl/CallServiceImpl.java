@@ -5,7 +5,6 @@ import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.data.domain.PageRequest;
-import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.socket.TextMessage;
@@ -83,12 +82,15 @@ public class CallServiceImpl implements CallService {
     }
 
     public Integer save(FeedbackCall actualCall){
+        LOG.debug(actualCall);
         List<Call> calls = callRepository.findByChainIdAndAgentId(actualCall.getChainId(),
                 actualCall.getAgentId());
+        LOG.debug(calls);
         for(Call currentCall : calls) {
             currentCall.setComments(actualCall.getComments());
             currentCall.setTags(actualCall.getTags());
             currentCall.setType(actualCall.getType());
+            LOG.debug(currentCall);
             callRepository.save(currentCall);
         }
         return 1;
@@ -103,8 +105,8 @@ public class CallServiceImpl implements CallService {
         return callRepository.findByAgentIdAndTimeStartBetween(agentId, timeStart, timeEnd);
     }
 
-    public List<Call> findByTimeStartGreaterThanAndAgentIdAndType(Integer agentId, String typeCall) {
-        return callRepository.findByTimeStartGreaterThanAndAgentIdAndType(startCurrentDay() * 1000L, agentId, typeCall);
+    public List<Call> findByTimeStartBetweenAndAgentIdAndType(Integer agentId, Long startPeriod, Long endPeriod, String typeCall) {
+        return callRepository.findByTimeStartBetweenAndAgentIdAndType(startPeriod, endPeriod, agentId, typeCall);
     }
 
     @Override
@@ -120,6 +122,10 @@ public class CallServiceImpl implements CallService {
         return callRepository.findByQuestionIdAndTimeStartBetween(ids, timeStart, timeEnd);
     }
 
+    @Override
+    public List<Call> findByTimeStartBetweenAndType(Long timeStart, Long timeEnd, String typeCall) {
+        return callRepository.findByTimeStartBetweenAndType(timeStart, timeEnd, typeCall);
+    }
 
     private Long startCurrentDay(){
         LocalDate now = LocalDate.now();

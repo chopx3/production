@@ -1,5 +1,5 @@
 'use strict';
-var webSocketHost = location.host+'/firecatcher';
+var webSocketHost = location.host+':8080/firecatcher';
 var websocket;
 var websocketUrl = "ws://"+webSocketHost+"/websocket/start";
 var wsCount = 0;

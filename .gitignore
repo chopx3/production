@@ -8,3 +8,6 @@
 *.out
 *.sql
 /logs
+src/main/java/ru/avito/controller/UtilController.java
+src/main/java/ru/avito/repository/CallsTagsNameRepository.java
+src/main/java/ru/avito/model/CallsTagsName.java

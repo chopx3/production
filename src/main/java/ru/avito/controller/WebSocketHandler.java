@@ -1,6 +1,5 @@
 package ru.avito.controller;
 
-import com.google.gson.Gson;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,6 +15,8 @@ import ru.avito.services.CallService;
 
 import java.io.IOException;
 import java.sql.SQLException;
+import java.time.LocalDate;
+import java.time.ZoneId;
 import java.util.List;
 
 import static ru.avito.model.agent.AuthorizedUsers.*;
@@ -56,7 +57,7 @@ public class WebSocketHandler extends TextWebSocketHandler{ //TODO это про
         switch (message.getPayload()){
             case "getMyEmptyCalls":
                 Integer agentId = getAgentIdFromDb(getAgentName(session));
-                List<Call> calls = callService.findByTimeStartGreaterThanAndAgentIdAndType(agentId, "EMPTY");
+                List<Call> calls = callService.findByTimeStartBetweenAndAgentIdAndType(agentId, startCurrentDay()*1000, (startCurrentDay()+86400) *1000, "EMPTY");
                 List<EmptyCall> emptyCalls = callFactory.getEmptyCalls(calls);
                 String response = new EmptyCallAsJson(agentId,getAgentName(session),emptyCalls).toJson();
                 session.sendMessage(new TextMessage(response));
@@ -83,4 +84,11 @@ public class WebSocketHandler extends TextWebSocketHandler{ //TODO это про
     private int getAgentIdFromDb(String username) throws SQLException {
         return agentService.findByUsername(username).getId();
     }
+
+    private Long startCurrentDay(){
+        LocalDate now = LocalDate.now();
+        ZoneId zoneId = ZoneId.systemDefault();
+        return now.atStartOfDay(zoneId).toEpochSecond();
+    }
+
 }

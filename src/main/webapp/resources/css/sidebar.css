@@ -114,10 +114,11 @@ input[type=number]::-webkit-outer-spin-button {
 	z-index: 1;
 	position: fixed;
 	overflow-y: hidden;
-	right:2vh;
-	top:12vh;
+	overflow-x: hidden;
+	right:0;
 	display:none;
-	max-width:33%;
+	width:44vw;
+	top:5px;
 }
 #FeedbackForm.Add
 {
@@ -218,10 +219,6 @@ h1
 #page-content-wrapper #CallForm.inactive
 {
 	display: inline;
-}
-#IDNum
-{
-	width: 20vw;
 }
 div.woop
 {

@@ -7,25 +7,47 @@ var commentArray = [];
 var sentCall=false;
 var noteArray = [];
 var httpHost = location.host+'/firecatcher';
-var questNum="1";
-var catNum="1";
+var questNum=1;
+var catNum=1;
 var catTagNum="1";
 var feedbackStr = "";
-var agentId='';
+var agentId="";
 var tagsString ="";
-var getCommentsURL = "http://"+httpHost+'/rest/comment/get?userid=';
-var getCallsURL = "http://"+httpHost+"/rest/call/getcallsforaccount?userid=";
-var updateEmptyCalls = "http://"+httpHost +"/rest/call/update";
-var postCommentUrl = "http://"+httpHost+'/rest/comment/put';
-var oktell = "http://web_api:s7cgr3Ev@192.168.3.10:4055/download/byscript?name=Avito_get_file_by_id_conn&attachment=1&startparam1=";
-var feedbackUrl = "http://"+httpHost+"/rest/call/feedback/put"
-var getFeedbackForAgent = "http://"+httpHost+"/rest/call/feedback/agent/get?id=";
-var getNotesUrl = 'http://' + httpHost + '/rest/comment/notes/get?agentId=';
-var updateNotesUrl = 'http://' + httpHost + '/rest/comment/notes/put';
+var getCommentsURL = "http://"+httpHost+'/api/comments/find/';
+var getCallsURL = "http://"+httpHost+"/api/call/find/";
+var updateEmptyCalls = "http://"+httpHost +"/api/call/update";
+var postCommentUrl = "http://"+httpHost+'/api/comments/save';
+var oktell = "http://"+httpHost+"/oktell/calls?name=Avito_get_file_by_id_conn&attachment=1&startparam1=";
+var feedbackUrl = "http://"+httpHost+"/api/call/feedback/save"
+var getFeedbackForAgent = "http://"+httpHost+"/api/call/find/type/empty_feedback/1/";
+var getNotesUrl = 'http://' + httpHost + '/api/agent/find/id/';
+var updateNotesUrl = 'http://' + httpHost + '/api/agent/notes/update';
 var tagBuffer="";
 var comH = 0;
 var noteH= 0;
+var tagGroupUrl = 'http://' + httpHost + '/api/taggroup/find';
+var additionalTags;
+var RestPost = function(sendData, url) {
 
+        console.log(url)
+        console.log(sendData)
+
+            $.ajax({
+                url: url,
+                type: "post",
+                contentType: "application/json; charset=utf-8",
+                data: JSON.stringify(sendData), //Stringified Json Object
+                async: false,    //Cross-domain requests and dataType: "jsonp" requests do not support synchronous operation
+                cache: false,    //This will force requested pages not to be cached by the browser
+                processData: false, //To avoid making query String instead of JSON
+                success: function (resposeJsonObject) {
+                    // Success Action
+                },
+                error: function (message) {
+                    alert(message)
+                }
+            });
+    };
 
 
 $(document).ready(function() {
@@ -54,6 +76,7 @@ else
 	console.log(false);
 }
 });
+
 //Вопрос
 	$('input[name="question"]').change(function(e){
 		questNum = $(this).attr("value");
@@ -73,9 +96,7 @@ else
 		if (chainId=="") {
 			$('#serviceMessage').text("Выберите звонок");
 		} else {
-			collectTags($(this).attr("value"));
-			//dataArray = [chainId, -1, 9, 6, false];
-			dataArray = [chainId, -1, 9, 6, false, tagsString];
+			dataArray = [chainId, -1, 9, 6, false, "UPDATED", ""];
 			fillData(dataArray);
 			sentCall = true;
 			clearData();
@@ -117,9 +138,11 @@ else
 			if(questVal&&IDVal&&catVal) {
 				$('#serviceMessage').text("");
 				collectTags($(this).attr("value"));
-				//dataArray = [chainId, $('#IDNum').val(), questNum, catNum, $("#IsManager").prop("checked")];
-				dataArray = [chainId, $('#IDNum').val(), questNum, catNum, $("#IsManager").prop("checked"), tagsString];
-				console.log(dataArray);
+				console.log($('input[value="4"]').is(':checked'));
+				var isFeedback=($('input[value="4"]').is(':checked')) ?"EMPTY_FEEDBACK":"UPDATED";
+			
+				dataArray = [chainId, $('#IDNum').val(), questNum, catNum, $("#IsManager").prop("checked"),isFeedback, JSON.parse(tagsString)];
+				console.log(dataArray);				
 				fillData(dataArray);
 				clearData();
 				sentCall=true;
@@ -132,8 +155,8 @@ else
 		}
 	});
 //Подсветка бокового меню
-	$('li').click(function(){
-		$('li').removeClass('highlight');
+	$('li.hl').click(function(){
+		$('li.hl').removeClass('highlight');
 		$(this).toggleClass('highlight');
 	});
 
@@ -212,7 +235,7 @@ else
 		//clearFeedback();???
 		chainId=="";
 		drawFeedback();
-		
+		createTagsTable();	
 	});
 //
 
@@ -304,12 +327,14 @@ function fillInfo(callForm, headerText, MainForm) {
 function getComments(){
 		idNumber = $('#IDforComments').val();
 		idSaver = $('#IDforComments').val();
-		$.get(getCommentsURL+idNumber+'&time=14838130170000')
+		if (idNumber!="")
+		{
+			$('#IDforComments').css({ "border": ''});
+		$.get(getCommentsURL+idNumber)
 			.done(function (data) {
 				document.getElementById("forComments").innerHTML = '';
+				$('#IDforComments').css({ "border": ''});
 				var commentsInfo = data;
-				var commentsAsJSON = JSON.stringify(commentsInfo.result);
-				var parsedComments = JSON.parse(JSON.parse(commentsAsJSON));
 				var outputComments = '';
 				var thead = "";
 				var tbot = "";
@@ -318,13 +343,13 @@ function getComments(){
 					'<div class="row"><div class="col-lg-12"><div class="input-group"><textarea class="form-control" id="addCommentBlock" rows="3"></textarea>'+
 					'<span class="input-group-addon btn btn-success" onclick=postComment()>+</span>'+
 					'</div></div></div>';
-				if (parsedComments.records.length != 0) {
+				if (commentsInfo.length != 0) {
 					thead = '<div class="row"><div class="table-scroll col-lg-12"><table id="commentTable" class="table table-striped table-hover" ><thead><tr><th >Агент</th><th>Комментарий</th></tr></thead><tbody>';
 					tbot = '</tbody></table></div></div>';
-					for (var i = 0; i < parsedComments.records.length; i++) {
-						var message = parsedComments.records[i][0];
-						var nametag = parsedComments.records[i][1];
-						var timetag = $.format.date(new Date().setTime(parsedComments.records[i][2]), 'dd.MM.yy HH:mm');
+					for (var i = 0; i < commentsInfo.length; i++) {
+						var message = commentsInfo[i].message;
+						var nametag = commentsInfo[i].agent.username;
+						var timetag = $.format.date(new Date().setTime(commentsInfo[i].postTime), 'dd.MM.yy HH:mm');
 						outputComments += '<tr><td>'+timetag +'\n'+ nametag +'</td><td class="breakable" >'+message+'</td></tr>'
 					}
 				} else {
@@ -336,25 +361,27 @@ function getComments(){
 					console.log("---");
 				}
 			);
+		}
+		else {
+			$('#IDforComments').css({ "border": '1px solid red'});
+		}
 	}
 // Функция для вывода информации по ID, звонки или комментарии.
 function getCalls(){
 	console.log();
 	idNumber = $('#IDforInfo').val();
 	idSaver = $('#IDforInfo').val();
-		$.get(getCallsURL + idNumber + '&time=14838130170000')
+		$.get(getCallsURL + idNumber+"/0")
 			.done(
 				function (data) {
 					outputCalls ='';
 					var callsInfo = data;
 					document.getElementById("MainForm").innerHTML = '';
-					var callsAsJSON = JSON.stringify(callsInfo.result);
-					var parsedCalls = JSON.parse(JSON.parse(callsAsJSON));
-					if (parsedCalls.records.length != 0&&idNumber!='') {
-						for (var i = 0; i < parsedCalls.records.length; i++) {
-							var audiotag = parsedCalls.records[i][0];
-							var nametag = parsedCalls.records[i][1];
-							var timetag = $.format.date(new Date().setTime(parsedCalls.records[i][2]), 'dd/MM/yyyy@HH:mm:ss');
+					if (callsInfo.length != 0&&idNumber!='') {
+						for (var i = 0; i < callsInfo.length; i++) {
+							var audiotag = callsInfo[i].comId;
+							var nametag = callsInfo[i].agent.username;
+							var timetag = $.format.date(new Date().setTime(callsInfo[i].timeStart), 'dd/MM/yyyy@HH:mm:ss');
 							var audioURL = '<audio src="'+oktell + audiotag + '" controls></audio><a href="'+oktell+ audiotag +'" target="_blank">' + '<\/a>';
 							outputCalls += '<div class="history" data-time="'+timetag+'" data-sign="'+nametag+'"><span class="history-info">'+ timetag +' '+nametag + '</span><br>' + audioURL + '</div>';
 						}
@@ -398,7 +425,7 @@ function clearData() {
 	$('input:radio[name=category]').each(function () { $(this).prop('checked', false); });
 	$('#label-quest-1').removeClass('active').siblings().removeClass('active');
 	$('input:radio[name=question]').each(function () { $(this).prop('checked', false); });
-	$('#label-tag-1').removeClass('active').siblings().removeClass('active');
+	$('label[name=addTags]').each(function () { $(this).removeClass('active'); });
 	$('input:checkbox[name=addTags]').each(function () { $(this).prop('checked', false); });
 	$('#IDNum').val("");
 
@@ -409,44 +436,36 @@ function clearData() {
 	}
 }
 function clearFeedback() {
-	for (i=1;i<=14;i++)
-	{
-		$('#feed-tag-'+i).removeClass('active');
-	}
-	$('input:checkbox[name=feedTags]').each(function () { $(this).prop('checked', false); });
+	$('input:checkbox[class=group-list-checkbox]').each(function () { $(this).prop('checked', false); });
+	$('label[name=info-label]').removeClass('blueOne');
 	$('#feedbackComment').val("");
 	$('#serviceFeedbackMessage').text("").css({"color":"black"});
 }
 //Отправка данных из боковой формы на сервер
 function fillData(dataArray) {
-	$("#JsonText").val("uChainId:"+dataArray[0]+",\n"+
-		"uAvitoUserId:"+dataArray[1]+",\n"+
+	/* Comment later , Отладка 
+	$("#JsonText").val("agentId:" + agentId+",\n"+
+		"ChainId:"+dataArray[0]+",\n"+
+		"AvitoUserId:"+dataArray[1]+",\n"+
 		"question:"+dataArray[2]+",\n"+
 		"shop_category:"+dataArray[3]+",\n"+
-		"isManager:"+dataArray[4]);
-
-	$.get(
-		updateEmptyCalls, {
-			uAgentId: agentId,
-			uChainId: dataArray[0],
-			uAvitoUserId: dataArray[1],
-			question : dataArray[2],
-			shop_category : dataArray[3],
-			isManager : dataArray[4],
-			tags : dataArray[5]
-		}
-	).done(
-		function (response) {
-			if (response.status != 'ok') {
-				errorHandler(response.description);
-			}
-			console.log(response);
-		}
-	).fail(
-		function () {
-			errorHandler('Ошибка соединения с сервером.');
-		}
-	);
+		"isManager:"+dataArray[4]+",\n"+
+		"type:" + dataArray[5]+",\n"+
+		"tags:"  + dataArray[6]);
+	/* Comment later , Отладка */
+/* Uncomment later */
+	var updateCall = {
+			"agentId": agentId,
+			"chainId": dataArray[0],
+			"avitoUserId": dataArray[1],
+			"questId": dataArray[2],
+			"shopCategoryId": dataArray[3],
+			"type": dataArray[5],
+			"isManager": dataArray[4],
+			"tags":  dataArray[6]
+    }	
+	console.log(updateCall);
+	RestPost(updateCall, updateEmptyCalls);
 }
 function fortesting()
 {
@@ -464,52 +483,51 @@ function change_call(chain, i) {
 		clearData();
 	}
 	chainId = chain;
+	additionalTags =$(feedId).attr("name");
+	console.log(additionalTags);
 	//fortesting();
 }
 //Проверка тегов
 function collectTags (feedOrCall)
 {
-	//console.log(feedOrCall);
+	console.log(feedOrCall);
 	var choice = feedOrCall;
 	tagsString = "";
 	$('input:checkbox[name='+choice+']').each(function ()
 	{
 		if ($(this).prop("checked"))
 		{
-			tagsString +=$(this).attr("value") + " ";
+			tagsString +="{\"id\":" +$(this).attr("value") +"},";
 		}
 	});
+	tagsString= "[" + tagsString.substring(0, tagsString.length - 1) + "]";
 	//console.log(tagsString+ $("#feedbackComment").val());
 }
 //Comments
 function postComment () {
-	commentArray =[idSaver,new Date().getTime(),$('#addCommentBlock').val(), agentId];
-	if ($('#addCommentBlock').val()!= "" && idSaver != "") {
-	$.post(
-		postCommentUrl, {
-			userid: commentArray[0],
-			time: commentArray[1],
-			message: commentArray[2],
-			author: commentArray[3]
-		}
-	).done(
-		function (response) {
-			if (response.status != 'ok') {
-				errorHandler(response.description);
-			}
-			console.log(response);
-		}
-	).fail(
-		function () {
-			errorHandler('Ошибка соединения с сервером.');
-		}
-	);
+	var comment = {
+        "avitoUserId":idSaver,
+        "postTime": new Date().getTime(),
+        "message": $('#addCommentBlock').val()
+    }
+	if (idSaver != "") {
+		console.log("I'm here");
+		if ($('#addCommentBlock').val()!= "")
+		{
+		
+	RestPost(comment, postCommentUrl);
+	$('#addCommentBlock').css({ "border": ''});
+	$('#IdforComments').css({ "border": ''});
 	setTimeout(function() {
 	getComments();
 	}, 800);
 	}
 	else {
-		$('#addCommentBlock').val("Введите корректные данные ");
+		$('#addCommentBlock').css({ "border": '1px solid red'});
+	}
+	}
+	else {
+		$('#IdforComments').css({ "border": '1px solid red'});
 	}
 }
 
@@ -518,8 +536,11 @@ function  draw(emptyCallsInfo) {
 	agentId = emptyCallsInfo.agentId;
 	var nametag = emptyCallsInfo.agentName;
 	var outputEmptyCalls = '';
-	if(emptyCallsInfo.emptyCallList.length!=0)
+	if(emptyCallsInfo.emptyCallList.length==0)
 	{
+		document.getElementById("MainForm").innerHTML = "Все звонки заполнены";
+	}
+	else {
 		var audioURL,addButton,audiosrc,chain;
 		for (var i = 0; i < emptyCallsInfo.emptyCallList.length; i++) {
 			chain = emptyCallsInfo.emptyCallList[i].chainId;
@@ -530,11 +551,6 @@ function  draw(emptyCallsInfo) {
 			outputEmptyCalls += '<div id="divAddButton' +i+'" onclick=change_call("'+chain+'",'+i+') class="history" data-time="'+timetag+'" data-sign="'+nametag+'"><span class="history-info">'+ timetag +' '+nametag +'\t\t' + addButton + '</span><br>' + audioURL + '</div>';
 		}
 		document.getElementById("MainForm").innerHTML = outputEmptyCalls;
-	}
-	else
-	{
-		document.getElementById("MainForm").innerHTML = "Все звонки заполнены";
-
 	}
 //Функция по остановке всех остальных аудио-файлов
 	$("audio").each(function(){
@@ -552,31 +568,34 @@ function stopAll(e){
 	});
 }
 function drawFeedback() {
-	$.get(getFeedbackForAgent+agentId)
+	var timeNow = moment().unix()*1000;
+	console.log(timeNow);
+	$.get(getFeedbackForAgent+timeNow+"/")
 	 .done(
-	 function (data) {
-
-	 var feedbackInfo = data;
+	function (data) {
+	var feedbackInfo = data;
 	var chainId = "";
 	var outputEmptyCalls = "";
 	console.log(feedbackInfo);
-	if(feedbackInfo.records.length!=0) 	{
-		//var com_id, chain_id, user_id, timestamp, tags, comment, agent, shop_category, question;
+	if(feedbackInfo.length==0) 	{
+		document.getElementById("MainForm").innerHTML = "Все звонки заполнены";
+		
+	}
+	else { 
 		var callInfo = [];
 		var timetag,audioURL;
-		for (var i = 0; i < feedbackInfo.records.length; i++) {
-			for (var j = 0; j< feedbackInfo.fields.length;j++) {
-				callInfo[j] = feedbackInfo.records[i][j];
+		
+		//var com_id, chain_id, user_id, timestamp, tags, comment, agent, shop_category, question;
+		for (var i = 0; i < feedbackInfo.length; i++) {
+			var tagCollector ="";
+			for (var j=0;j<feedbackInfo[i].tags.length;j++){
+				tagCollector +='{\"id\":' + feedbackInfo[i].tags[j].id + '},';
 			}
-			timetag = $.format.date(new Date().setTime(callInfo[3]), 'dd/MM/yyyy@HH:mm:ss');
-			audioURL = '<audio id="audio'+i+'" src="' + oktell + callInfo[0] + '" onplay=change_call("'+callInfo[1]+'",'+i+') controls></audio><a href="'+ oktell + callInfo[1] +'" target="_blank">' + '</a>';
-			outputEmptyCalls += '<div id="feedbackCall' +i+'" onclick=change_call("'+callInfo[1]+'",'+i+') class="history" data-time="'+timetag+'" data-sign="'+callInfo[6]+'" value="'+ callInfo[4]+'"><span class="history-info">'+ timetag +' '+ callInfo[6] + '</span><br>' + audioURL + '</div>';
+			timetag = $.format.date(new Date().setTime(feedbackInfo[i].timeStart), 'dd/MM/yyyy HH:mm:ss');
+			audioURL = '<audio id="audio'+i+'" src="' + oktell + feedbackInfo[i].comId + '" onplay=change_call("'+feedbackInfo[i].chainId+'",'+i+') controls></audio><a href="'+ oktell + feedbackInfo[i].chainId +'" target="_blank">' + '</a>';
+			outputEmptyCalls += '<div id="feedbackCall' +i+'" onclick=change_call("'+feedbackInfo[i].chainId+'",'+i+') class="history" data-time="'+timetag+'" data-sign="'+feedbackInfo[i].agent.username+'" value="'+ feedbackInfo[i].type+'" name='+ tagCollector +'><span class="history-info">'+ timetag +' '+ feedbackInfo[i].agent.username + '</span><br>' + audioURL + '</div>';
 		}
-		document.getElementById("MainForm").innerHTML = outputEmptyCalls;
-	}
-	else
-	{
-		document.getElementById("MainForm").innerHTML = "Все звонки заполнены";
+		document.getElementById("MainForm").innerHTML = outputEmptyCalls;		
 	}
 	$("audio").each(function(){
 		$(this).bind("play",stopAll);
@@ -585,58 +604,29 @@ function drawFeedback() {
 }
 )}
 function postFeedback () {
-	feedbackArray =[$('#feedbackComment').val(),tagsString+tagBuffer,agentId, chainId];
-	console.log(feedbackArray);
-	
-	 $.get(
-	 feedbackUrl, {
-	 comment: feedbackArray[0],
-	 tags: feedbackArray[1],
-	 agentId: feedbackArray[2],
-	 //userId: feedbackArray[2],
-	 chainId: feedbackArray[3]
-	 }
-	 ).done(
-		function (response) {
-			if (response.status != 'ok') {
-				errorHandler(response.description);
-			}
-			console.log(response);
-		}
-	).fail(
-		function () {
-			errorHandler('Ошибка соединения с сервером.');
-		}
-	);
+	var updateFeedbackCall = {
+		"agentId": agentId,
+		"chainId" : chainId,
+        "comments":$('#feedbackComment').val(),
+        "tags": JSON.parse(outputTags),
+		"type": "FULL_FEEDBACK"
+        }
+		console.log(updateFeedbackCall);
+	RestPost(updateFeedbackCall, feedbackUrl);
 }
 function updateNotes() {
-	noteArray = [agentId, $('#noteArea').val()];
-	console.log(noteArray);
-	console.log(updateNotesUrl);
-	$.post(
-                updateNotesUrl, {
-                    agentId: noteArray[0],
-                    text: noteArray[1]
-                }
-            ).done(
-		function (response) {
-			if (response.status != 'ok') {
-				errorHandler(response.description);
-			}
-			console.log(response);
-		}
-	).fail(
-		function () {
-			console.log("Problem with note update");
-		}
-	);
+	var updateAgentNotes = {
+        "id":agentId,
+        "notes": $('#noteArea').val()
+        }
+	RestPost(updateAgentNotes, updateNotesUrl);
 } 
 function getNotes () {
 	$.get(getNotesUrl+agentId)
 	 .done(
 	 function (data) {
 		 console.log(data);
-		 var noteInfo = data.records[0];
+		 var noteInfo = data.notes;
 		$('#noteArea').val(noteInfo);
 		 }
 )}

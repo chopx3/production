@@ -5,21 +5,21 @@ import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
-import org.springframework.data.repository.query.Param;
 import org.springframework.security.core.context.SecurityContext;
 import org.springframework.web.bind.annotation.*;
 import ru.avito.controller.Path;
 import ru.avito.factory.CallFactory;
 import ru.avito.model.agent.Agent;
+import ru.avito.model.agent.Role;
 import ru.avito.model.calls.*;
 import ru.avito.model.tags.Tag;
 import ru.avito.response.FeedBackCallsAsJson;
 import ru.avito.services.AgentService;
 import ru.avito.services.CallService;
+import ru.avito.services.RoleService;
 import ru.avito.services.TagService;
 
 import javax.servlet.http.HttpSession;
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -44,6 +44,9 @@ public class CallController {
     @Autowired
     TagService tagService;
 
+    @Autowired
+    RoleService roleService;
+
     @RequestMapping(value = "find/{startPeriod}/{endPeriod}")//TODO сделать
     public List<Call> findByAgentIdAndTimeStartBetween(HttpSession session,
                                              @PathVariable("startPeriod") Long startPeriod,
@@ -64,27 +67,36 @@ public class CallController {
 
     @RequestMapping(value = "feedback/save", method = RequestMethod.POST)
     public Integer saveCall( @RequestBody FeedbackCall feedbackCall){ //TODO запилить HttpSession
-//        LOG.debug("Update call: "+updatedCall);
+        LOG.debug("Feedback call: "+feedbackCall);
         return callService.save(feedbackCall);
     }
 
-    @RequestMapping(value = "feedback")
-    public FeedBackCallsAsJson findFeedcack(HttpSession httpSession){
-        SecurityContext context = (SecurityContext) httpSession.getAttribute("SPRING_SECURITY_CONTEXT");
-        String username = context.getAuthentication().getName();
-        Agent agent = agentService.findByUsername(username);
-        List<Call> calls = callService.findByTimeStartGreaterThanAndAgentIdAndType(agent.getId(),"FEEDBACK");
-        List<FeedbackCall> feedbackCalls = callFactory.getFeedbackCalls(calls);
-        return new FeedBackCallsAsJson(feedbackCalls, 1L);
-    }
+//    @RequestMapping(value = "feedback")
+//    public FeedBackCallsAsJson findFeedack(HttpSession httpSession){
+//        SecurityContext context = (SecurityContext) httpSession.getAttribute("SPRING_SECURITY_CONTEXT");
+//        String username = context.getAuthentication().getName();
+//        Agent agent = agentService.findByUsername(username);
+//        List<Call> calls = callService.findByTimeStartGreaterThanAndAgentIdAndType(agent.getId(), startPeriod, endPeriod, "EMPTY_FEEDBACK");
+//        List<FeedbackCall> feedbackCalls = callFactory.getFeedbackCalls(calls);
+//        return new FeedBackCallsAsJson(feedbackCalls, 1L);
+//    }
 
 
-    @RequestMapping(value = "find/type/{typecall}")
-    public List<Call> findEmptyCall(@PathVariable("typecall") String typeCall, HttpSession session){
+    @RequestMapping(value = "find/type/{typecall}/{startPeriod}/{endPeriod}/", method = RequestMethod.GET)
+    public List<Call> findEmptyCall(@PathVariable("typecall") String typeCall,
+                                    @PathVariable("startPeriod") Long startPeriod,
+                                    @PathVariable("endPeriod") Long endPeriod,
+                                    HttpSession session){
         SecurityContext context = (SecurityContext) session.getAttribute("SPRING_SECURITY_CONTEXT");
         String username = context.getAuthentication().getName();
+        Agent agent = agentService.findByUsername(username);
         LOG.debug(String.format("Find %s calls for user - %s", typeCall, username));
-        return callService.findByTimeStartGreaterThanAndAgentIdAndType(agentService.findByUsername(username).getId(), typeCall);
+        Role roleAdmin = roleService.findOne(1);
+        if (agent.getRoles().contains(roleAdmin)){
+            return callService.findByTimeStartBetweenAndType(startPeriod, endPeriod, typeCall);
+        } else {
+            return callService.findByTimeStartBetweenAndAgentIdAndType(agent.getId(), startPeriod, endPeriod, typeCall);
+        }
     }
 
 

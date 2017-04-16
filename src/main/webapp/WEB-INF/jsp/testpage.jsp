@@ -27,21 +27,31 @@ hi ${hello}
 
     var updateCall = {
         "id": 13430,
-        "agentId": "32",
+        "agentId": "2",
         "chainId": "D3170343-ED1F-4388-A51D-8361E2C4FAD3",
         "avitoUserId": 1939992,
         "questId": 2,
         "shopCategoryId": 1,
-        "type": "UPDATED",
+        "type": "EMPTY_FEEDBACK",
         "isManager": false,
         "tags":[{
             "id": 18
-        }]
+        },
+            {
+                "id": 1
+            },
+            {
+                "id": 2
+            },{
+                "id": 3
+            }]
     }
 
     var feedBackCAll = {
-        "id": 13430,
+        "agentId":2,
+        "chainId": "D3170343-ED1F-4388-A51D-8361E2C4FAD3",
         "comments": "какой-то угар...",
+        "type": "FULL_FEEDBACK",
         "tags":[{
             "id": 18
         },
@@ -84,11 +94,11 @@ hi ${hello}
         "chainId": "D3170343-ED1F-4388-A51D-8361E2C4FAD3",
         "commutations": [
             {
-                "comId": "82A6C584-A63D-409B-9D10-E6F15E61EB56",
-                "timeStart": 1491786000,
-                "timeEnd": 1491786000,
+                "comId": "82A6C5sas84-A63D-409B-9D10-E6F15E61EB56",
+                "timeStart": 1492178013,
+                "timeEnd": 1492178113,
                 "aStr": "5356, CallCenter",
-                "bStr": "Avtomonova Alena",
+                "bStr": "Okunev Dmitry",
                 "reasonStart": 1
             }
         ]

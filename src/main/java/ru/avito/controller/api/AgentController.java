@@ -4,11 +4,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Role;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.access.annotation.Secured;
+import org.springframework.security.core.context.SecurityContext;
 import org.springframework.web.bind.annotation.*;
+import ru.avito.JsonConverter;
 import ru.avito.controller.Path;
 import ru.avito.model.agent.Agent;
 import ru.avito.services.AgentService;
 
+import javax.servlet.http.HttpSession;
 import java.util.List;
 
 /**
@@ -55,4 +58,11 @@ public class AgentController {
         return agentService.updateNotes(agent);
     }
 
+    @ResponseStatus(HttpStatus.OK)
+    @RequestMapping(value = "notes/find", method = RequestMethod.GET)
+    public String findNotesAgent(HttpSession session){
+        SecurityContext context = (SecurityContext) session.getAttribute("SPRING_SECURITY_CONTEXT");
+        Agent agent = agentService.findByUsername(context.getAuthentication().getName());
+        return JsonConverter.buildJsonByField(agent);
+    }
 }
