@@ -54,20 +54,24 @@ public class CallController {
 
         SecurityContext context = (SecurityContext) session.getAttribute("SPRING_SECURITY_CONTEXT");
         int userId = agentService.findByUsername(context.getAuthentication().getName()).getId();
-        LOG.debug(
-                String.format("Find empty calls: startPeriod - %s, endPeriod - %s, userId - %s", startPeriod, endPeriod, userId));
+
+        if(LOG.isDebugEnabled())
+             LOG.debug(
+                     String.format("Find empty calls: startPeriod - %s, endPeriod - %s, userId - %s", startPeriod, endPeriod, userId));
         return callService.findByAgentIdAndTimeStartBetween(userId, startPeriod, endPeriod);
     }
 
     @RequestMapping(value = "update", method = RequestMethod.POST)
     public Integer saveCall( @RequestBody UpdatedCall updatedCall){ //TODO запилить HttpSession
-//        LOG.debug("Update call: "+updatedCall);
+        if(LOG.isDebugEnabled())
+            LOG.debug("Incoming Updated call: "+updatedCall);
         return callService.save(updatedCall);
     }
 
     @RequestMapping(value = "feedback/save", method = RequestMethod.POST)
     public Integer saveCall( @RequestBody FeedbackCall feedbackCall){ //TODO запилить HttpSession
-        LOG.debug("Feedback call: "+feedbackCall);
+        if(LOG.isDebugEnabled())
+            LOG.debug("Incoming Feedback call: "+feedbackCall);
         return callService.save(feedbackCall);
     }
 

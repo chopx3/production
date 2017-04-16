@@ -71,7 +71,7 @@ outputTags ="";
 	}
 })
 outputTags= "[" + additionalTags + outputTags.substring(0, outputTags.length - 1)+"]";
-console.log(outputTags);
+//console.log(outputTags);
 isInfoCorrect();
 }
 
@@ -80,7 +80,7 @@ function isInfoCorrect(){
 var commentVal, tagVal;
 $('#feedbackComment').css({ "box-shadow": ""});
 $('div.tag-form').css({"box-shadow": ""});
-console.log(chainId);
+//console.log(chainId);
 //Выделение красным неправильно введенных данных
 if (chainId=="") {
 	$('#serviceFeedbackMessage').text("Выберите звонок").css({"color":"red"});
@@ -106,11 +106,11 @@ if (chainId=="") {
 					clearFeedback();
 					drawFeedback();
 				}, 800);
-				console.log("--:");
+				//console.log("--:");
 			} else {
 				$('#serviceFeedbackMessage').text("Введены не все данные").css({"color":"red"});
 			}
 		}
-		console.log(commentVal + ' ' + tagVal);
+		//console.log(commentVal + ' ' + tagVal);
 	
 }

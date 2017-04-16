@@ -47,7 +47,8 @@ public class CallServiceImpl implements CallService {
             callRepository.save(call);
             agentIds.add(call.getAgent());
         }
-        LOG.debug("line: 54 "+calls);
+        if(LOG.isDebugEnabled())
+        LOG.debug("line: 51 "+calls);
         for(Agent agent : agentIds){
             try {
                 AuthorizedUsers.webSocketSessions.get(agent.getId()).sendMessage(new TextMessage("Exist empty calls"));
@@ -64,10 +65,12 @@ public class CallServiceImpl implements CallService {
 
     @Transactional
     public Integer save(UpdatedCall updatedCall) {
-        LOG.debug(updatedCall);
+        if(LOG.isDebugEnabled())
+        LOG.debug("Updating call: "+updatedCall);
         List<Call> calls = callRepository.findByChainIdAndAgentId(updatedCall.getChainId(),
                                                                         updatedCall.getAgentId());
-        LOG.debug(calls);
+        if(LOG.isDebugEnabled())
+        LOG.debug("Calls to update: "+ calls);
 
         for(Call currentCall : calls) {
             currentCall.setQuestionId(updatedCall.getQuestId());
@@ -82,16 +85,19 @@ public class CallServiceImpl implements CallService {
     }
 
     public Integer save(FeedbackCall actualCall){
-        LOG.debug(actualCall);
+        if(LOG.isDebugEnabled())
+             LOG.debug("Feedback calls updating "+actualCall);
         List<Call> calls = callRepository.findByChainIdAndAgentId(actualCall.getChainId(),
                 actualCall.getAgentId());
-        LOG.debug(calls);
+        if(LOG.isDebugEnabled())
+             LOG.debug("Calls by chainId fo agent: "+calls);
         for(Call currentCall : calls) {
             currentCall.setComments(actualCall.getComments());
             currentCall.setTags(actualCall.getTags());
             currentCall.setType(actualCall.getType());
-            LOG.debug(currentCall);
             callRepository.save(currentCall);
+            if(LOG.isDebugEnabled())
+                LOG.debug("Feedback call was updated: "+currentCall);
         }
         return 1;
     }

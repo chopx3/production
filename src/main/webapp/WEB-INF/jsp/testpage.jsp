@@ -91,12 +91,12 @@ hi ${hello}
         ]
     }
     var newCall =  {
-        "chainId": "D3170343-ED1F-4388-A51D-8361E2C4FAD3",
+        "chainId": "ABCD-ABCD-3",
         "commutations": [
             {
-                "comId": "82A6C5sas84-A63D-409B-9D10-E6F15E61EB56",
-                "timeStart": 1492178013,
-                "timeEnd": 1492178113,
+                "comId": "ABCD-ABCD-31",
+                "timeStart": 1492354024,
+                "timeEnd": 1492354324,
                 "aStr": "5356, CallCenter",
                 "bStr": "Okunev Dmitry",
                 "reasonStart": 1

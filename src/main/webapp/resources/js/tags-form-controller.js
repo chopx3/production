@@ -16,7 +16,7 @@ $("#tags-clear-button").click(function(){
 	var tagId = '#tags-checkbox-';
 	$('input:checkbox[class=group-list-checkbox]').each(function () { $(this).prop('checked', false); });
 	$('label[name=info-label]').removeClass('blueOne');
-console.log(outputTags);
+// console.log(outputTags);
 TagActiveChecker();
 })
 $("#tags-all-button").click(function(){
@@ -59,10 +59,10 @@ for (i=1;i<=AllTags;i++)
 	}
 	else{activeTags[i]=0;}
 }
-console.log(activeTags);
+// console.log(activeTags);
 TagWatcher();
 }
 function TagConsole()
 {
-	console.log("Всего тегов: "+tagCounter+". Выбранные теги: "+outputTags);
+	// console.log("Всего тегов: "+tagCounter+". Выбранные теги: "+outputTags);
 }

@@ -17,26 +17,26 @@ function getCats () {//типа юмор, Categories -> Cats, смешно, да
 	$.get(getCatsUrl)
 	 .done(
 	 function (data) {
-		 console.log(data);
+		// console.log(data);
 		 var catInfo = data;
 		for (var i=0;i<catInfo.length;i++){
 			Categories[i]=catInfo[i].description;
 		}
-		console.log(Categories);
+		//console.log(Categories);
 		 }
 )}
 
 function smth(){
 		TagConsole();
 		calendarConsole();
-		console.log(catNum);
+	//	console.log(catNum);
 		getCalls();
 	};
 function getCalls(){
-	console.log(startDate + "," + endDate);
+//	console.log(startDate + "," + endDate);
 	var timeStart = moment(startDate, "DD-MM-YYYY").unix()*1000;
 	var timeEnd = moment(endDate, "DD-MM-YYYY").unix()*1000;
-	console.log(timeStart + "," + timeEnd);
+//	console.log(timeStart + "," + timeEnd);
 	idNumber = $('#IDforInfo').val();
 	idSaver = $('#IDforInfo').val();
 		$.get(getFeedbackForAgent+timeStart+"/"+timeEnd+"/")
@@ -47,7 +47,7 @@ function getCalls(){
 					document.getElementById("MainForm").innerHTML = '';
 					var callInfo = [];
 					var parsedCalls = data;
-					console.log(parsedCalls);
+					//console.log(parsedCalls);
 					if (parsedCalls.length != 0) {
 						for (var i = 0; i < parsedCalls.length; i++) {
 							/*for (var j = 0; j< parsedCalls.fields.length;j++) {																
@@ -69,8 +69,8 @@ function getCalls(){
 								}
 								else{tagCheck=(tagCount>0)}
 								
-								console.log(activeTags+" " + bitNum1);
-								console.log(activeTagsCheck+" " + bitNum2);
+							//	console.log(activeTags+" " + bitNum1);
+							//	console.log(activeTagsCheck+" " + bitNum2);
 							if((catNum==6||catNum==parsedCalls[i].shopCategoryId-1)&&tagCheck){	
 							timetag = moment(parsedCalls[i].timeStart).format("DD/MM/YYYY HH:mm:ss");
 							audioURL = '<audio id="audio'+i+'" src="' + oktell + parsedCalls[i].comId + '" controls></audio><a href="'+ oktell + parsedCalls[i].chainId +'" target="_blank">' + '</a>';

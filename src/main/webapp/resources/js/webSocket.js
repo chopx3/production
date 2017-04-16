@@ -46,10 +46,10 @@ function getWebsocketMessage(callback){
                 break;
             case "pong":
                 online();
-                console.log("pong");
+                // console.log("pong");
                 break;
             default:
-                console.log(webSocketMessage.data)
+                // console.log(webSocketMessage.data)
                 callback(JSON.parse(webSocketMessage.data));
                 break;
         }

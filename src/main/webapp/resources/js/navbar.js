@@ -29,8 +29,8 @@ var tagGroupUrl = 'http://' + httpHost + '/api/taggroup/find';
 var additionalTags;
 var RestPost = function(sendData, url) {
 
-        console.log(url)
-        console.log(sendData)
+        // console.log(url)
+        // console.log(sendData)
 
             $.ajax({
                 url: url,
@@ -57,7 +57,7 @@ $(document).ready(function() {
 	var outputCalls;
 	var isManager=false;
 $('#IDforComments').keypress(function (e) {
- console.log("clicked");
+ // console.log("clicked");
  var key = e.which;
  if(key == 13)  // the enter key code
   {
@@ -67,13 +67,13 @@ $('#IDforComments').keypress(function (e) {
 $('#magic').click(function(){
 if ($('#colours').prop("disabled"))
 {
-	console.log(true);
+	// console.log(true);
 	$('#colours').prop("disabled", false);
 }
 else
 {
 	$('#colours').prop("disabled", true);
-	console.log(false);
+	// console.log(false);
 }
 });
 
@@ -88,7 +88,7 @@ else
 	});
 //Заметки
 	$('#noteArea').change(function(e){
-		console.log($('#noteArea').val());
+		// console.log($('#noteArea').val());
 		updateNotes();
 	});
 //Кнопка "Частник"
@@ -138,11 +138,11 @@ else
 			if(questVal&&IDVal&&catVal) {
 				$('#serviceMessage').text("");
 				collectTags($(this).attr("value"));
-				console.log($('input[value="4"]').is(':checked'));
+				//console.log($('input[value="4"]').is(':checked'));
 				var isFeedback=($('input[value="4"]').is(':checked')) ?"EMPTY_FEEDBACK":"UPDATED";
 			
 				dataArray = [chainId, $('#IDNum').val(), questNum, catNum, $("#IsManager").prop("checked"),isFeedback, JSON.parse(tagsString)];
-				console.log(dataArray);				
+				// console.log(dataArray);
 				fillData(dataArray);
 				clearData();
 				sentCall=true;
@@ -245,7 +245,7 @@ $('#sendFeedbackButton').click(function() {
 		$('#feedbackComment').css({ "border": ''});
 		$('#TagLabel').css({"color":"black"});
 		$('#commentLabel').css({"color":"black"});
-		console.log(chainId);
+		// console.log(chainId);
 		//Выделение красным неправильно введенных данных
 		if (chainId=="") {
 			$('#serviceFeedbackMessage').text("Выберите звонок").css({"color":"red"});
@@ -273,12 +273,12 @@ $('#sendFeedbackButton').click(function() {
 					clearFeedback();
 					drawFeedback();
 				}, 800);
-				console.log("--:");
+				// console.log("--:");
 			} else {
 				$('#serviceFeedbackMessage').text("Введены не все данные").css({"color":"red"});
 			}
 		}
-		console.log(commentVal + ' ' + tagVal);
+		// console.log(commentVal + ' ' + tagVal);
 	});
 });
 
@@ -301,7 +301,7 @@ function showMyEmptyCalls() {
 	fillInfo("remove","Мои звонки", "");
 
 	getWebsocketMessage(function(emptyCallsInfo){
-		console.log(emptyCallsInfo);
+		// console.log(emptyCallsInfo);
 		draw(emptyCallsInfo);
 	});
 	$("#SubForm").addClass("Add");
@@ -368,7 +368,7 @@ function getComments(){
 	}
 // Функция для вывода информации по ID, звонки или комментарии.
 function getCalls(){
-	console.log();
+	// console.log();
 	idNumber = $('#IDforInfo').val();
 	idSaver = $('#IDforInfo').val();
 		$.get(getCallsURL + idNumber+"/0")
@@ -406,7 +406,7 @@ function addButton() {
 			+ '</div>'
 		+ '</div>'; 
 $('#IDforInfo').keypress(function (e) {
- console.log("clicked");
+ // console.log("clicked");
  var key = e.which;
  if(key == 13)  // the enter key code
   {
@@ -464,12 +464,12 @@ function fillData(dataArray) {
 			"isManager": dataArray[4],
 			"tags":  dataArray[6]
     }	
-	console.log(updateCall);
+	// console.log(updateCall);
 	RestPost(updateCall, updateEmptyCalls);
 }
 function fortesting()
 {
-	console.log(chainId, $('#IDNum').val(), questNum, catNum, $("#IsManager").prop("checked"));
+	// console.log(chainId, $('#IDNum').val(), questNum, catNum, $("#IsManager").prop("checked"));
 }
 // Добавление стиля выбранного звонка
 function change_call(chain, i) {
@@ -484,13 +484,13 @@ function change_call(chain, i) {
 	}
 	chainId = chain;
 	additionalTags =$(feedId).attr("name");
-	console.log(additionalTags);
+	// console.log(additionalTags);
 	//fortesting();
 }
 //Проверка тегов
 function collectTags (feedOrCall)
 {
-	console.log(feedOrCall);
+	// console.log(feedOrCall);
 	var choice = feedOrCall;
 	tagsString = "";
 	$('input:checkbox[name='+choice+']').each(function ()
@@ -511,7 +511,7 @@ function postComment () {
         "message": $('#addCommentBlock').val()
     }
 	if (idSaver != "") {
-		console.log("I'm here");
+		// console.log("I'm here");
 		if ($('#addCommentBlock').val()!= "")
 		{
 		
@@ -569,14 +569,14 @@ function stopAll(e){
 }
 function drawFeedback() {
 	var timeNow = moment().unix()*1000;
-	console.log(timeNow);
+	// console.log(timeNow);
 	$.get(getFeedbackForAgent+timeNow+"/")
 	 .done(
 	function (data) {
 	var feedbackInfo = data;
 	var chainId = "";
 	var outputEmptyCalls = "";
-	console.log(feedbackInfo);
+	// console.log(feedbackInfo);
 	if(feedbackInfo.length==0) 	{
 		document.getElementById("MainForm").innerHTML = "Все звонки заполнены";
 		
@@ -611,7 +611,7 @@ function postFeedback () {
         "tags": JSON.parse(outputTags),
 		"type": "FULL_FEEDBACK"
         }
-		console.log(updateFeedbackCall);
+		// console.log(updateFeedbackCall);
 	RestPost(updateFeedbackCall, feedbackUrl);
 }
 function updateNotes() {
@@ -625,7 +625,7 @@ function getNotes () {
 	$.get(getNotesUrl+agentId)
 	 .done(
 	 function (data) {
-		 console.log(data);
+		 // console.log(data);
 		 var noteInfo = data.notes;
 		$('#noteArea').val(noteInfo);
 		 }

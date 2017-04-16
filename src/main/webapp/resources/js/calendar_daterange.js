@@ -1,5 +1,5 @@
 function calendarConsole(){
-	console.log("Начальная дата: " + startDate + ", конечная дата: " +endDate);
+	// console.log("Начальная дата: " + startDate + ", конечная дата: " +endDate);
 }
 
 function cb(start, end) {
@@ -64,8 +64,8 @@ $("#yesterday").click(function () {
 		
 		startDate = moment().subtract(1, 'days').format("DD-MM-YYYY");
 		endDate = moment().format("DD-MM-YYYY");
-		console.log(startDate);
-		console.log(endDate);
+		// console.log(startDate);
+		// console.log(endDate);
 		createCalendar(startDate, endDate);
 		cb(startDate, endDate);
 });

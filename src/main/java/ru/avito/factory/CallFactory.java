@@ -51,6 +51,7 @@ public class CallFactory {
                     LOG.error(e);
                 }
             }
+            if(LOG.isDebugEnabled())
             LOG.debug(calls);
             return calls;
     }
@@ -61,7 +62,7 @@ public class CallFactory {
         return emptyCalls;
     }
 
-    public List<FeedbackCall> getFeedbackCalls(List<Call> calls){
+    public List<FeedbackCall> getFeedbackCalls(List<Call> calls){//TODO заюзать где нибудь
         List<FeedbackCall> feedbackCalls = new ArrayList<>(calls.size());
         calls.forEach(fc -> feedbackCalls.add(new FeedbackCall(fc.getId(), fc.getAgent().getId(),
                                                                 fc.getComId(), fc.getAvitoUserId(), fc.getTimeStart(),
