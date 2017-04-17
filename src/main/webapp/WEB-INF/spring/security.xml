@@ -13,7 +13,7 @@ http://www.springframework.org/schema/beans/spring-beans-4.0.xsd"
         <intercept-url pattern="/hello" access="isAuthenticated()"/>
         <intercept-url pattern="/" access="isAuthenticated()"/>
         <intercept-url pattern="/api/agent/notes/**" access="isAuthenticated()"/>
-        <!--<intercept-url pattern="/admin/**" access="hasRole('ROLE_ADMIN')"/>-->
+        <intercept-url pattern="/admin/**" access="hasRole('ROLE_ADMIN')"/>
         <intercept-url pattern="/api/roles/**" access="hasRole('ROLE_ADMIN')"/>
         <intercept-url pattern="/api/agent/**" access="hasRole('ROLE_ADMIN')"/>
 
