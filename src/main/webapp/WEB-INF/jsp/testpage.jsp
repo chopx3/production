@@ -402,7 +402,7 @@
     }
 
 </script>
-<!--
+
 <%--<form action="http://192.168.10.132:8080/avito/rest/oktell/savecallrecord" method="get">--%>
     <form action="http://10.10.37.132:8080/avito/rest/oktell/savecallrecord" method="get">
     <input type="text" name="Bstr" value="Okunev Dmitry">Bstr<br>
@@ -484,7 +484,7 @@ Put feedback
 <br>
 <button onclick="RestPost(qIds, findByQuestionURL)">find by question</button>
 Old form
--->
+
 <nav class="navbar navbar-default navbar-fixed-top">
   <div class="container-fluid">
     <!-- Brand and toggle get grouped for better mobile display -->

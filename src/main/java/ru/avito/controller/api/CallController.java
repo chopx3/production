@@ -19,7 +19,6 @@ import ru.avito.services.AgentService;
 import ru.avito.services.CallService;
 import ru.avito.services.RoleService;
 import ru.avito.services.TagService;
-
 import javax.servlet.http.HttpSession;
 import java.util.List;
 
@@ -78,17 +77,6 @@ public class CallController {
             LOG.debug("Incoming Feedback call: "+feedbackCall);
         return callService.save(feedbackCall);
     }
-
-//    @RequestMapping(value = "feedback")
-//    public FeedBackCallsAsJson findFeedack(HttpSession httpSession){
-//        SecurityContext context = (SecurityContext) httpSession.getAttribute("SPRING_SECURITY_CONTEXT");
-//        String username = context.getAuthentication().getName();
-//        Agent agent = agentService.findByUsername(username);
-//        List<Call> calls = callService.findByTimeStartGreaterThanAndAgentIdAndType(agent.getId(), startPeriod, endPeriod, "EMPTY_FEEDBACK");
-//        List<FeedbackCall> feedbackCalls = callFactory.getFeedbackCalls(calls);
-//        return new FeedBackCallsAsJson(feedbackCalls, 1L);
-//    }
-
 
     @RequestMapping(value = "find/type/{typecall}/{startPeriod}/{endPeriod}", method = RequestMethod.GET)//TODO Проверить URL на фронте
     public List<Call> findEmptyCall(@PathVariable("typecall") String typeCall,

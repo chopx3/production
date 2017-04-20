@@ -25,17 +25,16 @@ public class UserController{
         if(principal instanceof UserDetails) {
              name = ((UserDetails) principal).getUsername();
         }
-
         model.addAttribute("username", agentService.findByUsername(name).getOktellLogin());
         return "index";
     }
 
     @RequestMapping(value = "/login", method = RequestMethod.GET)
     public ModelAndView getLoginPage(@RequestParam(value = "error", required = false) String error) {
-
         ModelAndView modelAndView = new ModelAndView();
-        if(error != null)
+        if(error != null) {
             modelAndView.addObject("error", "Username or password incorrect.");
+        }
             modelAndView.setViewName("login");
 
         return modelAndView;

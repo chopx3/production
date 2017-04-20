@@ -8,8 +8,6 @@ import ru.avito.JsonConverter;
 import ru.avito.controller.Path;
 import ru.avito.model.agent.Agent;
 import ru.avito.services.AgentService;
-import ru.avito.services.impl.AgentServiceImpl;
-
 import javax.servlet.http.HttpSession;
 import java.util.List;
 
@@ -18,7 +16,7 @@ import java.util.List;
  */
 
 @RestController
-@RequestMapping(value = Path.API+"agent") //TODO добавить CRUD для данных агентов, Подумать как защитить пароль. Сейчас он просто заменяется словом PROTECTED
+@RequestMapping(value = Path.API+"agent") //TODO Подумать как защитить пароль. Сейчас он просто заменяется словом PROTECTED
 public class AgentController {
 
     @Autowired

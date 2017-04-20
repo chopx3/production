@@ -31,16 +31,12 @@ public class CommentController {
         return commentService.findAllByAvitoUserIdOrderByPostTimeDesc(avitoUserId);
     }
 
-    @RequestMapping(value = "save", method = RequestMethod.POST)//TODO затестить
+    @RequestMapping(value = "save", method = RequestMethod.POST)
     public Comment save(@RequestBody Comment comment, HttpSession httpSession) {
-
         SecurityContext context = (SecurityContext) httpSession.getAttribute("SPRING_SECURITY_CONTEXT");
         String username = context.getAuthentication().getName();
         Agent agent = agentService.findByUsername(username); //TODO лишнее обращение к БД
         comment.setAgent(agent);
-
-        System.out.println(comment);
-
         return commentService.save(comment);
     }
 
