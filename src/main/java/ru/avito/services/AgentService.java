@@ -10,7 +10,6 @@ package ru.avito.services;
 public interface AgentService {
     Agent save(Agent agent);
     Agent update(Agent agent);
-    void delete(Agent agent);
     Agent findOne(int id);
     Agent findByUsername(String username);
     List<Agent> findAll();

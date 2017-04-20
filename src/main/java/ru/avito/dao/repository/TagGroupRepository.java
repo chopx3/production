@@ -10,6 +10,4 @@ import ru.avito.model.tags.TagGroup;
  */
 public interface TagGroupRepository extends JpaRepository<TagGroup, Integer> {
 
-    @Query(name = "select tg from TagGroup tg where tg.name = :name")
-    TagGroup findByName(@Param("name") String name);
 }

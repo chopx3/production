@@ -10,6 +10,4 @@ import ru.avito.model.agent.Role;
  */
 public interface RoleRepository extends JpaRepository<Role, Integer> {
 
-    @Query(name="select r from Role r where r.name =:rolename")
-    Role findByName(@Param("rolename") String rolename);
 }

@@ -40,11 +40,6 @@ public class TagGroupServiceImpl implements TagGroupService {
     }
 
     @Override
-    public TagGroup getByName(String name) {
-        return tagGroupRepository.findByName(name);
-    }
-
-    @Override
     public void delete(int id) {
 
     }

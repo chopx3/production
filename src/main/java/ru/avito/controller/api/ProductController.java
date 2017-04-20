@@ -20,7 +20,6 @@ public class ProductController {
     @Autowired
     private ProductService productService;
 
-
     @RequestMapping(value = "save",method = RequestMethod.POST)
     public Product save(@RequestBody Product product){
         return productService.save(product);

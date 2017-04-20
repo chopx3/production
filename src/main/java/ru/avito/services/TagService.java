@@ -13,8 +13,4 @@ public interface TagService {
     Tag edit(Tag tag);
     Tag findOne(int id);
     List<Tag> findAll();
-    Tag findByName(String name);
-    Tag findByValue(String value);
-
-
 }

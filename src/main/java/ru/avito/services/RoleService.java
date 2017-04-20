@@ -9,9 +9,8 @@ import java.util.List;
 public interface RoleService {
 
     Role save(Role role);
-    Role edit(Role role);
+    Role update(Role role);
     Role findOne(int id);
     void delete (int id);
-    Role findByName(String rolename);
     List<Role> findAll();
 }

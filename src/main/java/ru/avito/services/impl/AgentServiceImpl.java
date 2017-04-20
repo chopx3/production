@@ -20,7 +20,6 @@ public class AgentServiceImpl implements AgentService {
     @Autowired
     private AgentRepository agentRepository;
 
-
     @Transactional
     public Agent save(Agent agent) {
         agent.setPassword("test"); //TODO убрать хардкод
@@ -36,7 +35,6 @@ public class AgentServiceImpl implements AgentService {
         currentAgent.setUsername(actualAgent.getUsername());
         return agentRepository.saveAndFlush(currentAgent);
     }
-
 
     public void delete(Agent agent) {
         agentRepository.delete(agent);

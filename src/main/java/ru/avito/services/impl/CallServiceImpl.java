@@ -29,9 +29,6 @@ import java.util.concurrent.ConcurrentHashMap;
 @Service
 public class CallServiceImpl implements CallService {
 
-    //TODO здесь будут храниться chain_id... наверное...
-    private static ConcurrentHashMap<Integer, List<Integer>> commaSeparatedIdCallsByAgent = new ConcurrentHashMap<>();
-
     private final static Logger LOG = LogManager.getLogger();
 
     @Autowired
@@ -40,15 +37,15 @@ public class CallServiceImpl implements CallService {
     @Autowired
     AgentService agentService;
 
-
     public List<Call> save(List<Call> calls) {
         HashSet<Agent> agentIds = new HashSet<>();
         for(Call call : calls){
             callRepository.save(call);
             agentIds.add(call.getAgent());
         }
-        if(LOG.isDebugEnabled())
+        if(LOG.isDebugEnabled()) {
             LOG.debug(calls);
+        }
         for(Agent agent : agentIds){
             try {
                 AuthorizedUsers.webSocketSessions.get(agent.getId()).sendMessage(new TextMessage("Exist empty calls"));
@@ -56,7 +53,7 @@ public class CallServiceImpl implements CallService {
                 LOG.error(e);
             }catch (NullPointerException e ){
                 LOG.error(String.format("Agent %s is offline!!!", agent.getUsername()));
-            }catch(DataIntegrityViolationException e){
+            }catch(DataIntegrityViolationException e){ //TODO лишний кэч
                 LOG.error("Duplicate com_id");
             }
         }
@@ -65,12 +62,14 @@ public class CallServiceImpl implements CallService {
 
     @Transactional
     public Integer save(UpdatedCall updatedCall) {
-        if(LOG.isDebugEnabled())
-        LOG.debug("Updating call: "+updatedCall);
+        if(LOG.isDebugEnabled()) {
+            LOG.debug("Updating call: " + updatedCall);
+        }
         List<Call> calls = callRepository.findByChainIdAndAgentId(updatedCall.getChainId(),
                                                                         updatedCall.getAgentId());
-        if(LOG.isDebugEnabled())
-        LOG.debug("Calls to update: "+ calls);
+        if(LOG.isDebugEnabled()) {
+            LOG.debug("Calls to update: " + calls);
+        }
 
         for(Call currentCall : calls) {
             currentCall.setQuestionId(updatedCall.getQuestId());
@@ -85,23 +84,25 @@ public class CallServiceImpl implements CallService {
     }
 
     public Integer save(FeedbackCall actualCall){
-        if(LOG.isDebugEnabled())
-             LOG.debug("Feedback calls updating "+actualCall);
+        if(LOG.isDebugEnabled()) {
+            LOG.debug("Feedback calls updating " + actualCall);
+        }
         List<Call> calls = callRepository.findByChainIdAndAgentId(actualCall.getChainId(),
                 actualCall.getAgentId());
-        if(LOG.isDebugEnabled())
-             LOG.debug("Calls by chainId fo agent: "+calls);
+        if(LOG.isDebugEnabled()) {
+            LOG.debug("Calls by chainId fo agent: " + calls);
+        }
         for(Call currentCall : calls) {
             currentCall.setComments(actualCall.getComments());
             currentCall.setTags(actualCall.getTags());
             currentCall.setType(actualCall.getType());
             callRepository.save(currentCall);
-            if(LOG.isDebugEnabled())
-                LOG.debug("Feedback call was updated: "+currentCall);
+            if (LOG.isDebugEnabled()) {
+                LOG.debug("Feedback call was updated: " + currentCall);
+            }
         }
         return 1;
     }
-
 
     public Call findOne(Integer id) {
         return callRepository.findOne(id);
@@ -132,11 +133,4 @@ public class CallServiceImpl implements CallService {
     public List<Call> findByTimeStartBetweenAndType(Long timeStart, Long timeEnd, String typeCall) {
         return callRepository.findByTimeStartBetweenAndType(timeStart, timeEnd, typeCall);
     }
-
-    private Long startCurrentDay(){
-        LocalDate now = LocalDate.now();
-        ZoneId zoneId = ZoneId.systemDefault();
-        return now.atStartOfDay(zoneId).toEpochSecond();
-    }
-
 }

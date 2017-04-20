@@ -10,10 +10,4 @@ import ru.avito.model.tags.Tag;
  */
 public interface TagRepository extends JpaRepository<Tag, Integer>{
 
-    @Query(name = "select t from Tag t where t.name = :name")
-    Tag findByName(@Param("name") String name);
-
-    @Query(name = "select t from Tag t where t.value = :value")
-    Tag findByValue(@Param("value") String value);
-
 }

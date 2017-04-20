@@ -45,15 +45,11 @@ public class NestedCategoryServiceImpl implements NestedCategoryService {
     }
 
     @Override
-    public List<NestedCategoryMap> findCategoryMap() { //TODO делаем два SQL запроса и выдаем
-                                      //TODO структурированную карту категорий с колличеством айтемов в каждой
-
+    public List<NestedCategoryMap> findCategoryMap() {
         return nestedCategoryMapRepository.findCategoryItemsByLevel();
     }
 
     public NestedCategory findCategoryIdNameLftRgtByName(String childName){
         return nestedCategoryRepository.findCategoryIdNameLftRgtByName(childName);
     }
-
-
 }

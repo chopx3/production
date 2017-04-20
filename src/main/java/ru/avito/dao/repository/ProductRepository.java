@@ -12,6 +12,6 @@ import java.util.List;
  */
 public interface ProductRepository extends JpaRepository<Product, Integer> {
 
-    @Query(name = "SELECT * FROM product WHERE category_id=:categoryId")
-    List<Product> findByCategoryId(@Param("categoryId") Integer categoryId);
+
+    List<Product> findByCategoryId(Integer categoryId);
 }

@@ -20,7 +20,7 @@ public class RoleServiceImpl implements RoleService{
     }
 
     @Override
-    public Role edit(Role actualRole) {
+    public Role update(Role actualRole) {
         Role currentRole = roleRepository.findOne(actualRole.getId());
         currentRole.setName(actualRole.getName());
         return roleRepository.saveAndFlush(currentRole);
@@ -34,11 +34,6 @@ public class RoleServiceImpl implements RoleService{
     @Override
     public void delete(int id) {
         roleRepository.delete(id);
-    }
-
-    @Override
-    public Role findByName(String rolename) {
-        return roleRepository.findByName(rolename);
     }
 
     @Override

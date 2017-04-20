@@ -12,7 +12,7 @@ import java.util.List;
  */
 public interface CommentRepository extends JpaRepository<Comment, Integer> {
 
-    @Query(name = "SELECT * FROM comments WHERE avito_link = :avitoUserId")
-    List<Comment> findAllByAvitoUserIdOrderByPostTimeDesc(@Param("avitoUserId") Long avitoUserId);
+
+    List<Comment> findAllByAvitoUserIdOrderByPostTimeDesc(Long avitoUserId);
 
 }

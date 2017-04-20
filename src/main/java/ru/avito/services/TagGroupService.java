@@ -12,6 +12,5 @@ public interface TagGroupService {
     TagGroup update(TagGroup tagGroup);
     List<TagGroup> findAll();
     TagGroup findOne(int id);
-    TagGroup getByName(String name);
     void delete(int id);
 }

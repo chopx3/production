@@ -20,10 +20,8 @@ public class CategoryController {
     @Autowired
     CategoryService categoryService;
 
-
     @RequestMapping(value = {"", "/"})
     public List<Category> findAll(){
         return categoryService.findAll();
     }
-
 }
