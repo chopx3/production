@@ -2,11 +2,10 @@ package ru.avito.services.impl;
 
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.access.annotation.Secured;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ru.avito.model.agent.Agent;
-import ru.avito.repository.AgentRepository;
+import ru.avito.dao.repository.AgentRepository;
 import ru.avito.services.AgentService;
 import java.util.List;
 
@@ -24,7 +23,7 @@ public class AgentServiceImpl implements AgentService {
 
     @Transactional
     public Agent save(Agent agent) {
-        agent.setPassword("test");
+        agent.setPassword("test"); //TODO убрать хардкод
         return agentRepository.saveAndFlush(agent);
     }
 
@@ -39,16 +38,13 @@ public class AgentServiceImpl implements AgentService {
     }
 
 
-    @Transactional
     public void delete(Agent agent) {
         agentRepository.delete(agent);
     }
 
-
     public Agent findOne(int id) {
         return agentRepository.findOne(id);
     }
-
 
     public Agent findByUsername(String username) {
         return agentRepository.findByUsername(username);

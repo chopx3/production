@@ -36,7 +36,7 @@ public class CommentController {
 
         SecurityContext context = (SecurityContext) httpSession.getAttribute("SPRING_SECURITY_CONTEXT");
         String username = context.getAuthentication().getName();
-        Agent agent = agentService.findByUsername(username);
+        Agent agent = agentService.findByUsername(username); //TODO лишнее обращение к БД
         comment.setAgent(agent);
 
         System.out.println(comment);

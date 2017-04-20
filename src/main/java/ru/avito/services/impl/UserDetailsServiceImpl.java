@@ -10,7 +10,7 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.transaction.annotation.Transactional;
 import ru.avito.model.agent.Agent;
 import ru.avito.model.agent.Role;
-import ru.avito.repository.AgentRepository;
+import ru.avito.dao.repository.AgentRepository;
 import java.util.HashSet;
 import java.util.Set;
 

@@ -1,4 +1,4 @@
-package ru.avito.repository;
+package ru.avito.dao.repository;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import ru.avito.model.Category;

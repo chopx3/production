@@ -12,7 +12,7 @@ import ru.avito.model.agent.Agent;
 import ru.avito.model.agent.AuthorizedUsers;
 import ru.avito.model.calls.*;
 import ru.avito.model.tags.Tag;
-import ru.avito.repository.CallRepository;
+import ru.avito.dao.repository.CallRepository;
 import ru.avito.services.AgentService;
 import ru.avito.services.CallService;
 
@@ -48,7 +48,7 @@ public class CallServiceImpl implements CallService {
             agentIds.add(call.getAgent());
         }
         if(LOG.isDebugEnabled())
-        LOG.debug("line: 51 "+calls);
+            LOG.debug(calls);
         for(Agent agent : agentIds){
             try {
                 AuthorizedUsers.webSocketSessions.get(agent.getId()).sendMessage(new TextMessage("Exist empty calls"));

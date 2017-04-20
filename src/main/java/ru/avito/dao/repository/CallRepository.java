@@ -1,17 +1,13 @@
-package ru.avito.repository;
+package ru.avito.dao.repository;
 
-import org.springframework.data.domain.PageRequest;
+
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
-import org.springframework.transaction.annotation.Transactional;
 import ru.avito.model.calls.Call;
-import ru.avito.model.calls.EmptyCall;
 import ru.avito.model.tags.Tag;
-
-import javax.ws.rs.QueryParam;
 import java.util.List;
 
 /**
@@ -20,21 +16,23 @@ import java.util.List;
 public interface CallRepository extends JpaRepository<Call,Integer>{ //TODO реализовать репозиторий
 
 
-        @Query(name = "SELECT username, chain_id, com_id, time_begin " +
+        @Query(name = "SELECT id, username, chain_id,com_id, time_begin " +
                 "FROM calls JOIN users ON calls.user_id = users.id " +//TODO поправить
-                "WHERE user_id = :agentId " +
-                "AND time_begin BETWEEN :timeStart AND :timeEnd " +
-                "ORDER BY time_begin ASC")
+                "WHERE calls.user_id = :agentId " +
+                "AND calls.time_begin BETWEEN :timeStart AND :timeEnd " +
+                "ORDER BY calls.time_begin ASC")
         List<Call> findByAgentIdAndTimeStartBetween(@Param("agentId") Integer agentId,
                                         @Param("timeStart") Long timeStart,
                                         @Param("timeEnd") Long timeEnd);
+
+//    List<Call> findByAgentIdAndTimeStartBetween(Integer agentId, Long timeStart, Long timeEnd);
 
     @Modifying
     @Query(value = "UPDATE Call c " +
             "SET c.avitoUserId = :avitoUserId, c.questionId = :questionId, c.shopCategoryId = :shopCategoryId, " +
             "c.isManager = :isManager, c.type = :type " +
             "WHERE c.id IN (:ids)")
-    Integer updateParamsForEmptyCall(@Param("avitoUserId") Long avitoUserId,//TODO тегов нет
+    Integer updateParamsForEmptyCall(@Param("avitoUserId") Long avitoUserId,
                                 @Param("questionId") Integer questionId,
                                 @Param("shopCategoryId") Integer shopCategoryId,
                                 @Param("isManager") Boolean isManager,

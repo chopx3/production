@@ -1,14 +1,18 @@
 <%@ page language="java" contentType="text/html; charset=utf-8" pageEncoding="utf-8"%>
 <html>
 <head>
-    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
+	<script src="${pageContext.request.contextPath}/resources/js/testpageAgentsController.js"></script>
+	<script src="${pageContext.request.contextPath}/resources/js/testpageTagsController.js"></script>
+	<script src="${pageContext.request.contextPath}/resources/js/testpageCommonController.js"></script>
+	<link href="${pageContext.request.contextPath}/resources/css/testPage.css" rel="stylesheet">
 </head>
 <body>
-<h2>Hello World!</h2>
-
-hi ${hello}
-
 <script>
+
     var request = new XMLHttpRequest();
     var host = location.protocol + '//' + location.host;
 //    var host = "http://192.168.10.132:8080/avito";
@@ -91,12 +95,12 @@ hi ${hello}
         ]
     }
     var newCall =  {
-        "chainId": "ABCD-ABCD-3",
+        "chainId": "D3170343-ED1F-4388-A51D-8361E2C4FAD3",
         "commutations": [
             {
-                "comId": "ABCD-ABCD-31",
-                "timeStart": 1492374319,
-                "timeEnd": 1492374619,
+                "comId": "82A6C5sas84-A63D-409B-9D10-E6F15E61EB56",
+                "timeStart": 1492178013,
+                "timeEnd": 1492178113,
                 "aStr": "5356, CallCenter",
                 "bStr": "Okunev Dmitry",
                 "reasonStart": 1
@@ -333,9 +337,9 @@ hi ${hello}
 
 
     var newAgent ={
-        "username":"apetrov",
+        "username":"tester",
         "password":"test",
-        "oktellLogin":"Anton Petrov",
+        "oktellLogin":"Anton Test",
         "roles":[{ "id":2,
                     "name":"ROLE_USER"
                  }
@@ -398,7 +402,7 @@ hi ${hello}
     }
 
 </script>
-
+<!--
 <%--<form action="http://192.168.10.132:8080/avito/rest/oktell/savecallrecord" method="get">--%>
     <form action="http://10.10.37.132:8080/avito/rest/oktell/savecallrecord" method="get">
     <input type="text" name="Bstr" value="Okunev Dmitry">Bstr<br>
@@ -479,7 +483,77 @@ Put feedback
 
 <br>
 <button onclick="RestPost(qIds, findByQuestionURL)">find by question</button>
+Old form
+-->
+<nav class="navbar navbar-default navbar-fixed-top">
+  <div class="container-fluid">
+    <!-- Brand and toggle get grouped for better mobile display -->
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="#">Админка</a>
+    </div>
 
+    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+      <ul class="nav navbar-nav">
+        <li class="active"><a href="#" onclick=fillAgents()>Агенты <span class="sr-only">(current)</span></a></li>
+        <li><a href="#" onclick=fillTags()>Тэги</a></li>
+      </ul>
+      <form class="navbar-form navbar-left">
+        <div id=searchBar>
+			<div class="input-group">
+			  <input type="text" class="form-control" placeholder="Username or value" id=searchField>
+			  <span class="input-group-btn">
+				<button class="btn btn-secondary" type="button" id=searchButton>Поиск</button>
+			  </span>
+			</div>
+		</div>
+      </form>
+    </div><!-- /.navbar-collapse -->
+  </div><!-- /.container-fluid -->
+</nav>
+<!--
+
+
+-->
+<div id="wrapper" class="col-lg-12">
+	<div id="agents" class="col-lg-12">
+		<div class="row">
+		<div id="allAgentsTable" class="col-lg-8">
+			
+		</div>
+		<div id="updateAgent" class="col-lg-4">
+			<div id=updateWrapper class=uniForm>
+				<div id=updHeader>
+				<label>Изменить информацию</label>
+				</div>
+				<div id=updBody class="form-group form-body">
+					
+				</div>
+				<div class=Footer id=updFooter>
+				
+				</div>
+			</div>
+			<div id=addWrapper class=uniForm>
+				<div id=addHeader>
+				<label>Добавить информацию</label>
+				</div>
+				<div id=addBody class="form-group form-body">
+					
+				</div>
+				<div class=Footer id=addFooter>
+				
+				</div>
+			</div>
+		</div>
+
+		</div>
+	</div>
+</div>
 
 
 </body>

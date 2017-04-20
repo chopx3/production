@@ -2,7 +2,7 @@ package ru.avito.services.impl;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import ru.avito.model.agent.Role;
-import ru.avito.repository.RoleRepository;
+import ru.avito.dao.repository.RoleRepository;
 import ru.avito.services.RoleService;
 import java.util.List;
 

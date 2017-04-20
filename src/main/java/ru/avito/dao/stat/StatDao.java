@@ -1,6 +1,4 @@
-package ru.avito.statdao;
-
-import java.sql.ResultSet;
+package ru.avito.dao.stat;
 
 /**
  * Created by Dmitriy on 11.04.2017.

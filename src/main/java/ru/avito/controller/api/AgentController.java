@@ -1,15 +1,14 @@
 package ru.avito.controller.api;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Role;
 import org.springframework.http.HttpStatus;
-import org.springframework.security.access.annotation.Secured;
 import org.springframework.security.core.context.SecurityContext;
 import org.springframework.web.bind.annotation.*;
 import ru.avito.JsonConverter;
 import ru.avito.controller.Path;
 import ru.avito.model.agent.Agent;
 import ru.avito.services.AgentService;
+import ru.avito.services.impl.AgentServiceImpl;
 
 import javax.servlet.http.HttpSession;
 import java.util.List;
@@ -45,6 +44,7 @@ public class AgentController {
     public Agent saveAgent(@RequestBody Agent agent){
         return agentService.save(agent);
     }
+
 
     @ResponseStatus(HttpStatus.OK)
     @RequestMapping(value = "update", method = RequestMethod.POST)

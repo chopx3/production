@@ -37,7 +37,7 @@ public class Tag implements Comparable<Tag> {
     public Tag() {
     }
 
-    public int getId() {
+    public Integer getId() {
         return id;
     }
 

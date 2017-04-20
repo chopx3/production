@@ -2,7 +2,7 @@ package ru.avito.services.impl;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import ru.avito.model.tags.TagGroup;
-import ru.avito.repository.TagGroupRepository;
+import ru.avito.dao.repository.TagGroupRepository;
 import ru.avito.services.TagGroupService;
 import java.util.List;
 

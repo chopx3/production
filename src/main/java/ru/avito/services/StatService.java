@@ -1,8 +1,5 @@
 package ru.avito.services;
 
-import java.sql.ResultSet;
-import java.util.List;
-
 /**
  * Created by Dmitriy on 11.04.2017.
  */
@@ -21,5 +18,4 @@ public interface StatService {
      String findTotalCallsByAgent(Long timeStart, Long timeEnd);
 
      String findTotalEmptyCallsByAgent(Long timeStart, Long timeEnd);
-
 }

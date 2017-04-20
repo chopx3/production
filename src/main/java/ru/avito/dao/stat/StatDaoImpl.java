@@ -1,9 +1,8 @@
-package ru.avito.statdao;
+package ru.avito.dao.stat;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import org.apache.commons.dbcp.BasicDataSource;
-import org.apache.commons.dbcp.DelegatingResultSet;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.sql.Connection;
@@ -26,7 +25,7 @@ public class StatDaoImpl implements StatDao {
         try {
             connection = dataSource.getConnection();
             PreparedStatement p =connection.prepareStatement(
-                    "SELECT shop_category.description AS Category, count(DISTINCT(calls.chain_id)) AS Total "+
+                    "SELECT shop_category.description AS Field, count(DISTINCT(calls.chain_id)) AS Total "+
                             "FROM calls JOIN shop_category ON calls.shop_category_id = shop_category.id "+
                             "WHERE shop_category_id = shop_category.id "+
                             "AND time_begin BETWEEN ? AND ? "+
@@ -37,7 +36,7 @@ public class StatDaoImpl implements StatDao {
             p.setLong(1,timeStart);
             p.setLong(2,timeEnd);
             ResultSet resultSet = p.executeQuery();
-            result = convert(resultSet, "Category","Total");
+            result = convert(resultSet, "Field","Total");
             System.out.println(getClass()+" "+result);
         } catch (SQLException e) {
             System.out.println(e);
@@ -61,7 +60,7 @@ public class StatDaoImpl implements StatDao {
         try {
             connection = dataSource.getConnection();
             PreparedStatement p =connection.prepareStatement(
-                    "SELECT shop_category.description AS Category, calls.avito_link AS User_ID, count(DISTINCT(calls.chain_id)) AS Total "+
+                    "SELECT shop_category.description AS Field, calls.avito_link AS User_ID, count(DISTINCT(calls.chain_id)) AS Total "+
                     "FROM calls JOIN shop_category ON calls.shop_category_id = shop_category.id "+
                     "WHERE shop_category_id = shop_category.id "+
                     "AND time_begin BETWEEN ? AND ? "+
@@ -71,7 +70,7 @@ public class StatDaoImpl implements StatDao {
             p.setLong(1, timeStart);
             p.setLong(2, timeEnd);
             ResultSet resultSet = p.executeQuery();
-            result = convert(resultSet, "Category","User_ID", "Total");
+            result = convert(resultSet, "Field","User_ID", "Total");
             System.out.println(getClass()+" "+result);
         } catch (SQLException e) {
             System.out.println(e);
@@ -96,7 +95,7 @@ public class StatDaoImpl implements StatDao {
         try {
             connection = dataSource.getConnection();
             PreparedStatement p =connection.prepareStatement(
-                    "SELECT shop_category.description AS Category, count(DISTINCT(calls.chain_id)) AS Total " +
+                    "SELECT shop_category.description AS Field, count(DISTINCT(calls.chain_id)) AS Total " +
                             "FROM calls JOIN shop_category ON calls.shop_category_id = shop_category.id " +
                             "WHERE shop_category_id = shop_category.id " +
                             "AND time_begin BETWEEN ? AND ? " +
@@ -107,7 +106,7 @@ public class StatDaoImpl implements StatDao {
             p.setLong(1, timeStart);
             p.setLong(2, timeEnd);
             ResultSet resultSet = p.executeQuery();
-            result = convert(resultSet, "Category", "Total");
+            result = convert(resultSet, "Field", "Total");
             System.out.println(getClass()+" "+result);
         } catch (SQLException e) {
             System.out.println(e);
@@ -132,7 +131,7 @@ public class StatDaoImpl implements StatDao {
         try {
             connection = dataSource.getConnection();
             PreparedStatement p =connection.prepareStatement(
-                    "SELECT question.description AS Question, count(DISTINCT(chain_id)) As Total " +
+                    "SELECT question.description AS Field, count(DISTINCT(chain_id)) As Total " +
                             "FROM calls JOIN question ON calls.question_id = question.id " +
                             "WHERE question_id=question.id " +
                             "AND time_begin BETWEEN ? AND ? " +
@@ -142,7 +141,7 @@ public class StatDaoImpl implements StatDao {
             p.setLong(1, timeStart);
             p.setLong(2, timeEnd);
             ResultSet resultSet = p.executeQuery();
-            result = convert(resultSet, "Question", "Total");
+            result = convert(resultSet, "Field", "Total");
             System.out.println(getClass()+" "+result);
         } catch (SQLException e) {
             System.out.println(e);
@@ -166,7 +165,7 @@ public class StatDaoImpl implements StatDao {
         try {
             connection = dataSource.getConnection();
             PreparedStatement p =connection.prepareStatement(
-                    "SELECT shop_category.description AS Category, count(isOut) AS Total " +
+                    "SELECT shop_category.description AS Field, count(isOut) AS Total " +
                             "FROM calls JOIN shop_category ON calls.shop_category_id = shop_category.id " +
                             "WHERE  isOut = TRUE " +
                             "AND time_begin BETWEEN ? AND ? " +
@@ -176,7 +175,7 @@ public class StatDaoImpl implements StatDao {
             p.setLong(1, timeStart);
             p.setLong(2, timeEnd);
             ResultSet resultSet = p.executeQuery();
-            result = convert(resultSet, "Category", "Total");
+            result = convert(resultSet, "Field", "Total");
             System.out.println(getClass()+" "+result);
         } catch (SQLException e) {
             System.out.println(e);
@@ -201,7 +200,7 @@ public class StatDaoImpl implements StatDao {
         try {
             connection = dataSource.getConnection();
             PreparedStatement p =connection.prepareStatement(
-                    " SELECT users.oktell_login AS \"Agent name\", count(DISTINCT(chain_id)) AS \"Empty calls\" " +
+                    " SELECT users.oktell_login AS Field, count(DISTINCT(chain_id)) AS Total " +
                             "FROM calls JOIN users ON calls.user_id = users.id " +
                             "WHERE type =\"EMPTY\" " +
                             "AND time_begin BETWEEN ? AND ? " +
@@ -211,7 +210,7 @@ public class StatDaoImpl implements StatDao {
             p.setLong(1, timeStart);
             p.setLong(2, timeEnd);
             ResultSet resultSet = p.executeQuery();
-            result = convert(resultSet, "Agent name", "Empty calls");
+            result = convert(resultSet, "Field", "Total");
             System.out.println(getClass()+" "+result);
         } catch (SQLException e) {
             System.out.println(e);
@@ -235,7 +234,7 @@ public class StatDaoImpl implements StatDao {
         try {
             connection = dataSource.getConnection();
             PreparedStatement p =connection.prepareStatement(
-                    " SELECT users.oktell_login AS \"Agent name\", count(DISTINCT(chain_id)) AS \"Total calls\" " +
+                    " SELECT users.oktell_login AS Field, count(DISTINCT(chain_id)) AS Total " +
                             "FROM calls JOIN users ON calls.user_id = users.id " +
                             "WHERE time_begin BETWEEN ? AND ? " +
                             "GROUP BY user_id " +
@@ -244,7 +243,7 @@ public class StatDaoImpl implements StatDao {
             p.setLong(1, timeStart);
             p.setLong(2, timeEnd);
             ResultSet resultSet = p.executeQuery();
-            result = convert(resultSet, "Agent name", "Total calls");
+            result = convert(resultSet, "Field", "Total");
             System.out.println(getClass()+" "+result);
         } catch (SQLException e) {
             System.out.println(e);
@@ -260,6 +259,9 @@ public class StatDaoImpl implements StatDao {
         }
         return result;
     }
+
+
+
 
     private String convert(ResultSet rs, String... columnsName) {
         String jsonStructure = "{\"fields\":%s, \"columns\":%s}";

@@ -2,7 +2,7 @@ package ru.avito.services.impl;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import ru.avito.model.Category;
-import ru.avito.repository.CategoryRepository;
+import ru.avito.dao.repository.CategoryRepository;
 import ru.avito.services.CategoryService;
 
 import java.util.List;

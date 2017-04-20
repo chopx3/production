@@ -11,7 +11,6 @@ public class JsonConverter {
 
     public static String buildJsonByField(Agent agent){
         ObjectNode node = new ObjectMapper().createObjectNode();
-//        String jsonStructure = "{\"username\":%s, \"agentId\":%s}";
         node.put("username", agent.getUsername());
         node.put("notes", agent.getNotes());
         return node.toString();

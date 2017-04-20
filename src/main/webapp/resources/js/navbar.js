@@ -96,7 +96,7 @@ else
 		if (chainId=="") {
 			$('#serviceMessage').text("Выберите звонок");
 		} else {
-			dataArray = [chainId, -1, 9, 6, false, "UPDATED", ""];
+			dataArray = [chainId, -1, 9, 6, false, "UPDATED"];
 			fillData(dataArray);
 			sentCall = true;
 			clearData();
@@ -139,7 +139,7 @@ else
 				$('#serviceMessage').text("");
 				collectTags($(this).attr("value"));
 				//console.log($('input[value="4"]').is(':checked'));
-				var isFeedback=($('input[value="4"]').is(':checked')) ?"EMPTY_FEEDBACK":"UPDATED";
+				var isFeedback=($('#tag-feedback').is(':checked')) ?"EMPTY_FEEDBACK":"UPDATED";
 			
 				dataArray = [chainId, $('#IDNum').val(), questNum, catNum, $("#IsManager").prop("checked"),isFeedback, JSON.parse(tagsString)];
 				// console.log(dataArray);

@@ -3,17 +3,18 @@ package ru.avito.controller.api;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.security.core.context.SecurityContext;
 import org.springframework.web.bind.annotation.*;
 import ru.avito.controller.Path;
+import ru.avito.dao.repository.CallRepository;
 import ru.avito.factory.CallFactory;
 import ru.avito.model.agent.Agent;
 import ru.avito.model.agent.Role;
 import ru.avito.model.calls.*;
 import ru.avito.model.tags.Tag;
-import ru.avito.response.FeedBackCallsAsJson;
 import ru.avito.services.AgentService;
 import ru.avito.services.CallService;
 import ru.avito.services.RoleService;
@@ -47,7 +48,10 @@ public class CallController {
     @Autowired
     RoleService roleService;
 
-    @RequestMapping(value = "find/{startPeriod}/{endPeriod}")//TODO сделать
+    @Autowired
+    CallRepository callRepository;
+
+    @RequestMapping(value = "find/agent/{startPeriod}/{endPeriod}")//TODO сделать (проверить URL на фронте)
     public List<Call> findByAgentIdAndTimeStartBetween(HttpSession session,
                                              @PathVariable("startPeriod") Long startPeriod,
                                              @PathVariable("endPeriod")Long endPeriod){
@@ -86,7 +90,7 @@ public class CallController {
 //    }
 
 
-    @RequestMapping(value = "find/type/{typecall}/{startPeriod}/{endPeriod}/", method = RequestMethod.GET)
+    @RequestMapping(value = "find/type/{typecall}/{startPeriod}/{endPeriod}", method = RequestMethod.GET)//TODO Проверить URL на фронте
     public List<Call> findEmptyCall(@PathVariable("typecall") String typeCall,
                                     @PathVariable("startPeriod") Long startPeriod,
                                     @PathVariable("endPeriod") Long endPeriod,
@@ -109,8 +113,8 @@ public class CallController {
         return callService.findByTags(tags);
     }
 
-    @RequestMapping(value = "find/{avitoUserId}/{page}", method = RequestMethod.GET)
-    public List<Call> findEmptyCall(@PathVariable("avitoUserId") Long avitoUserId, @PathVariable("page") Integer page){
+    @RequestMapping(value = "find/user/{avitoUserId}/{page}", method = RequestMethod.GET)//TODD сделать красиво пагинацию
+    public List<Call> findByAvitoUserId(@PathVariable("avitoUserId") Long avitoUserId, @PathVariable("page") Integer page){
         PageRequest aPage = new PageRequest(page, 20, Sort.Direction.DESC, "timeStart");
         return callService.findByAvitoUserId(avitoUserId, aPage);
     }

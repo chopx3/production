@@ -26,7 +26,6 @@ public class StatController {
         return statService.findTotalCallsByShopCategory(startPeriod, endPeriod);
     }
 
-
     @RequestMapping(value = "find/outcomings/total/{startPeriod}/{endPeriod}", produces = "application/json;charset=UTF-8")
     public String findTotalOutcommingCalls(@PathVariable("startPeriod") Long startPeriod,
                                            @PathVariable("endPeriod") Long endPeriod) {
@@ -56,11 +55,10 @@ public class StatController {
                                                        @PathVariable("endPeriod") Long endPeriod) {
         return statService.findTotalCallsByAgent(startPeriod, endPeriod);
     }
-
-    @RequestMapping(value = "find/agents/empties/{startPeriod}/{endPeriod}", produces = "application/json;charset=UTF-8")
+//todo проверить url на фронте
+    @RequestMapping(value = "find/agents/empty/total/{startPeriod}/{endPeriod}", produces = "application/json;charset=UTF-8")
     public String findTotalEmptyCallsByAgent(@PathVariable("startPeriod") Long startPeriod,
                                              @PathVariable("endPeriod") Long endPeriod) {
         return statService.findTotalEmptyCallsByAgent(startPeriod, endPeriod);
     }
-
 }

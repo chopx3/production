@@ -15,7 +15,7 @@
         http://www.springframework.org/schema/data/jpa
         http://www.springframework.org/schema/data/jpa/spring-jpa.xsd">
 
-    <jpa:repositories base-package="ru.avito.repository"/>
+    <jpa:repositories base-package="ru.avito.dao.repository"/>
     <context:component-scan base-package="ru.avito"/>
     <tx:annotation-driven transaction-manager="transactionManager"/>
     <!--<tx:annotation-driven transaction-manager="jpaTransactionManager"/>-->
@@ -62,12 +62,11 @@
     <bean id ="questionService" class="ru.avito.services.impl.QuestionServiceImpl"/>
     <bean id ="categoryService" class="ru.avito.services.impl.CategoryServiceImpl"/>
     <bean id ="nestedCategoryService" class="ru.avito.services.impl.NestedCategoryServiceImpl"/>
+    <bean id ="productService" class="ru.avito.services.impl.ProductServiceImpl"/>
 
     <bean id ="statService" class="ru.avito.services.impl.StatServiceImpl"/>
-    <bean id ="statDao" class="ru.avito.statdao.StatDaoImpl"/>
-
-
-
+    <bean id ="statDao" class="ru.avito.dao.stat.StatDaoImpl"/>
+    <bean id ="nestedCategoryDao" class="ru.avito.dao.stat.NestedCategoryDaoImpl"/>
     <bean id="callFactory" class="ru.avito.factory.CallFactory"/>
 
     <bean class="org.springframework.web.socket.server.standard.ServletServerContainerFactoryBean">

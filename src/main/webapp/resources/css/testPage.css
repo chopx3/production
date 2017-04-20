@@ -1,0 +1,57 @@
+.uniForm{
+	font-size: 13px;
+    background-color: white;
+    box-shadow: rgba(0, 0, 0, 0.498039) 0px 5px 15px;
+    z-index: 1080;
+    background-clip: padding-box;
+    text-align: center;
+    border-width: 1px;
+    border-style: solid;
+    border-color: rgba(0, 0, 0, 0.2);
+    border-image: initial;
+    border-radius: 10px;
+    padding: 10px;
+	padding-bottom:5px;
+	position:fixed;
+	width:30%;
+}
+.Footer{
+	margin-top:10px;
+}
+
+.box-shadow{
+box-shadow: inset 0 0 0.5em red;
+}
+#searchBar{
+	top:1%;
+}
+#updateWrapper{
+top:10%;
+display:none;
+}
+#updateWrapper.active{
+top:10%;
+display:block;
+}
+#addWrapper{
+bottom:10%;
+display:none;
+}
+#addWrapper.active{
+display:block;
+}
+#wrapper{
+	top:50;
+}
+.form-body{
+	margin-bottom:10px;
+}
+.upd-text{
+	width:70%;
+	display: inline-block;
+}
+.updLabel{
+	text-align:left;
+	width:20%;
+	padding:5px;
+}

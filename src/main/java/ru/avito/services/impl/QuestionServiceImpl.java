@@ -2,7 +2,7 @@ package ru.avito.services.impl;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import ru.avito.model.Question;
-import ru.avito.repository.QuestionRepository;
+import ru.avito.dao.repository.QuestionRepository;
 import ru.avito.services.QuestionService;
 
 import java.util.List;

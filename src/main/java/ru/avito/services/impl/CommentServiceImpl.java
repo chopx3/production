@@ -2,7 +2,7 @@ package ru.avito.services.impl;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import ru.avito.model.Comment;
-import ru.avito.repository.CommentRepository;
+import ru.avito.dao.repository.CommentRepository;
 import ru.avito.services.CommentService;
 
 import java.util.List;
