@@ -11,13 +11,9 @@ import ru.avito.model.calls.FeedbackCall;
 import ru.avito.model.oktell.Chain;
 import ru.avito.model.oktell.Commutation;
 import ru.avito.services.AgentService;
-
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * Created by Dmitriy on 26.02.2017.
- */
 
 @Component
 public class CallFactory {

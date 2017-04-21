@@ -31,9 +31,9 @@
 
     var updateCall = {
         "id": 13430,
-        "agentId": "2",
+        "agentId": "32",
         "chainId": "D3170343-ED1F-4388-A51D-8361E2C4FAD3",
-        "avitoUserId": 1939992,
+        "avitoUserId": 99999,
         "questId": 2,
         "shopCategoryId": 1,
         "type": "EMPTY_FEEDBACK",
