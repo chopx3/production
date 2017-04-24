@@ -37,7 +37,7 @@ public class StatDaoImpl implements StatDao {
             p.setLong(2,timeEnd);
             ResultSet resultSet = p.executeQuery();
             result = convert(resultSet, "Field","Total");
-            System.out.println(getClass()+" "+result);
+
         } catch (SQLException e) {
             System.out.println(e);
         }
@@ -71,7 +71,6 @@ public class StatDaoImpl implements StatDao {
             p.setLong(2, timeEnd);
             ResultSet resultSet = p.executeQuery();
             result = convert(resultSet, "Field","User_ID", "Total");
-            System.out.println(getClass()+" "+result);
         } catch (SQLException e) {
             System.out.println(e);
         }
@@ -107,7 +106,6 @@ public class StatDaoImpl implements StatDao {
             p.setLong(2, timeEnd);
             ResultSet resultSet = p.executeQuery();
             result = convert(resultSet, "Field", "Total");
-            System.out.println(getClass()+" "+result);
         } catch (SQLException e) {
             System.out.println(e);
         }
@@ -142,7 +140,6 @@ public class StatDaoImpl implements StatDao {
             p.setLong(2, timeEnd);
             ResultSet resultSet = p.executeQuery();
             result = convert(resultSet, "Field", "Total");
-            System.out.println(getClass()+" "+result);
         } catch (SQLException e) {
             System.out.println(e);
         }
@@ -176,7 +173,6 @@ public class StatDaoImpl implements StatDao {
             p.setLong(2, timeEnd);
             ResultSet resultSet = p.executeQuery();
             result = convert(resultSet, "Field", "Total");
-            System.out.println(getClass()+" "+result);
         } catch (SQLException e) {
             System.out.println(e);
         }
@@ -211,7 +207,6 @@ public class StatDaoImpl implements StatDao {
             p.setLong(2, timeEnd);
             ResultSet resultSet = p.executeQuery();
             result = convert(resultSet, "Field", "Total");
-            System.out.println(getClass()+" "+result);
         } catch (SQLException e) {
             System.out.println(e);
         }
@@ -244,7 +239,6 @@ public class StatDaoImpl implements StatDao {
             p.setLong(2, timeEnd);
             ResultSet resultSet = p.executeQuery();
             result = convert(resultSet, "Field", "Total");
-            System.out.println(getClass()+" "+result);
         } catch (SQLException e) {
             System.out.println(e);
         }

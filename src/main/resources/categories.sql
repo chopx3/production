@@ -37,7 +37,16 @@ INSERT INTO product(name, category_id) VALUES('20" TV',3),
                                               ('CD To go!',9),
                                               ('Family Talk 360',10);
 
+DROP TABLE if EXISTS root_category;
+CREATE TABLE root_category(
+  id INT AUTO_INCREMENT PRIMARY KEY  NOT NULL,
+  cat_id INT NOT NULL,
 
+  FOREIGN KEY (cat_id) REFERENCES nested_category(category_id)
+)
+  ENGINE =InnoDB;
+
+INSERT INTO root_category(cat_id) VALUES (1);
 
 #CRUD Nodes
 DROP PROCEDURE IF EXISTS addNode;
@@ -72,6 +81,21 @@ LANGUAGE SQL
   SQL SECURITY INVOKER
   COMMENT 'Удаление узла с учетом дочерних узлов'
   BEGIN
+    UPDATE product
+    SET category_id = (SELECT t2.category_id
+                       FROM nested_category t2,
+                         nested_category t1
+                       WHERE t2.lft < t1.lft
+                             AND t2.rgt > t1.rgt
+                             AND t1.name = categoryName
+                       ORDER BY t2.rgt-t1.rgt ASC LIMIT 1)
+    WHERE category_id IN (SELECT node.category_id
+                          FROM nested_category AS node,
+                            nested_category AS parent
+                          WHERE node.lft BETWEEN parent.lft AND parent.rgt
+                                AND parent.name = categoryName
+                          ORDER BY node.lft);
+
     SELECT @myLeft := lft, @myRight := rgt, @myWidth := rgt - lft + 1
     FROM nested_category
     WHERE name = categoryName;
@@ -122,4 +146,3 @@ FROM nested_category t1 WHERE name ='LCD';
                 AND t1.name='LCD'
                 ORDER BY t2.rgt-t1.rgt ASC LIMIT 1) AS t2
 ON t1.category_id = t2.category_id;
-

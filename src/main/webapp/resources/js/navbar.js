@@ -14,7 +14,7 @@ var feedbackStr = "";
 var agentId="";
 var tagsString ="";
 var getCommentsURL = "http://"+httpHost+'/api/comments/find/';
-var getCallsURL = "http://"+httpHost+"/api/call/find/";
+var getCallsURL = "http://"+httpHost+"/api/call/find/user/";
 var updateEmptyCalls = "http://"+httpHost +"/api/call/update";
 var postCommentUrl = "http://"+httpHost+'/api/comments/save';
 var oktell = "http://"+httpHost+"/oktell/calls?name=Avito_get_file_by_id_conn&attachment=1&startparam1=";

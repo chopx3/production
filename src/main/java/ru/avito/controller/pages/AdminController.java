@@ -15,26 +15,25 @@ import ru.avito.controller.Path;
 @RequestMapping("admin")
 public class AdminController { //TODO сделать нормальную страницу об отказе в доступе. Перенести сервлет CRUD Agent
 
-    @RequestMapping(value = "test", method = RequestMethod.GET)
-    public String getTestPage(ModelMap model) {
-        model.addAttribute("hello", "Hi user");
-        return "testpage";
+    @RequestMapping(value = {"/",""}, method = RequestMethod.GET)
+    public String getTestPage() {
+        return "admin";
     }
 
     @RequestMapping(value = "feedback", method = RequestMethod.GET)
-    public String getFeedbackPage(ModelMap model) {
+    public String getFeedbackPage() {
         return "feedback";
     }
 
 //Мертвые страницы
 
     @RequestMapping(value = "api", method = RequestMethod.GET)
-    public String getApiPage(ModelMap model) {
+    public String getApiPage() {
         return "api";
     }
 
     @RequestMapping(value = "downloader", method = RequestMethod.GET)
-    public String getDownloadPage(ModelMap model) {
+    public String getDownloadPage() {
         return "downloader";
     }
 

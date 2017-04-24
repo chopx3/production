@@ -10,12 +10,22 @@ http://www.springframework.org/schema/beans/spring-beans-4.0.xsd"
 
     <http use-expressions="true">
         <intercept-url pattern="/index" access="isAuthenticated()"/>
-        <intercept-url pattern="/hello" access="isAuthenticated()"/>
         <intercept-url pattern="/" access="isAuthenticated()"/>
         <intercept-url pattern="/api/agent/notes/**" access="isAuthenticated()"/>
+        <intercept-url pattern="/api/stat/find/agents/**" access="permitAll"/>
+
+        <intercept-url pattern="api/tags/find/**" access="permitAll"/>
+        <intercept-url pattern="api/taggroup/find/**" access="permitAll"/>
+
         <intercept-url pattern="/admin/**" access="hasRole('ROLE_ADMIN')"/>
         <intercept-url pattern="/api/roles/**" access="hasRole('ROLE_ADMIN')"/>
         <intercept-url pattern="/api/agent/**" access="hasRole('ROLE_ADMIN')"/>
+        <intercept-url pattern="/api/category/nested/**" access="hasRole('ROLE_ADMIN')"/>
+        <intercept-url pattern="/api/product/**" access="hasRole('ROLE_ADMIN')"/>
+        <intercept-url pattern="/api/stat/**" access="hasRole('ROLE_ADMIN')"/>
+        <intercept-url pattern="/api/tags/**" access="hasRole('ROLE_ADMIN')"/>
+        <intercept-url pattern="/api/taggroup/**" access="hasRole('ROLE_ADMIN')"/>
+
 
 
         <form-login

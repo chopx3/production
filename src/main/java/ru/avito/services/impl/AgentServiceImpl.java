@@ -2,12 +2,24 @@ package ru.avito.services.impl;
 
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.context.SecurityContext;
+import org.springframework.security.web.context.HttpSessionSecurityContextRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import ru.avito.dao.repository.RoleRepository;
 import ru.avito.model.agent.Agent;
 import ru.avito.dao.repository.AgentRepository;
+import ru.avito.model.agent.Role;
 import ru.avito.services.AgentService;
+
+import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 /**
  * Created by Dmitriy on 30.12.2016.
@@ -20,9 +32,15 @@ public class AgentServiceImpl implements AgentService {
     @Autowired
     private AgentRepository agentRepository;
 
+    @Autowired
+    private RoleRepository roleRepository;
+
     @Transactional
     public Agent save(Agent agent) {
         agent.setPassword("test"); //TODO убрать хардкод
+        Set<Role> roles = new HashSet<>();
+        roles.add(roleRepository.findOne(2));
+        agent.setRoles(roles);
         return agentRepository.saveAndFlush(agent);
     }
 
@@ -33,7 +51,7 @@ public class AgentServiceImpl implements AgentService {
         currentAgent.setOktellLogin(actualAgent.getOktellLogin());
         currentAgent.setRoles(actualAgent.getRoles());
         currentAgent.setUsername(actualAgent.getUsername());
-        return agentRepository.saveAndFlush(currentAgent);
+        return agentRepository.save(currentAgent);
     }
 
     public void delete(Agent agent) {

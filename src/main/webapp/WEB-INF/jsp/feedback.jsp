@@ -28,17 +28,8 @@
 <script type="text/javascript">
     $(function() {
 
-        var start = moment();
-        var end = moment().add(1,'days');
-
-        $('input[name="daterange"]').daterangepicker({
-            "format": "DD-MM-YYYY",
-            startDate: start,
-            endDate: end
-        }, cb);
-
-        cb(start, end);
-
+        StartCalendar();
+		jQuery('#today').click();
     });
 </script>
 <div id="wrapper">

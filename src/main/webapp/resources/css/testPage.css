@@ -13,7 +13,7 @@
     padding: 10px;
 	padding-bottom:5px;
 	position:fixed;
-	width:30%;
+	right:20;
 }
 .Footer{
 	margin-top:10px;
@@ -21,6 +21,10 @@
 
 .box-shadow{
 box-shadow: inset 0 0 0.5em red;
+}
+.groupTag{
+	font-size:1.1em;
+	font-weight:bold;
 }
 #searchBar{
 	top:1%;
@@ -40,6 +44,10 @@ display:none;
 #addWrapper.active{
 display:block;
 }
+#addWrapper.higher{
+display:block;
+bottom:40%;
+}
 #wrapper{
 	top:50;
 }
@@ -54,4 +62,11 @@ display:block;
 	text-align:left;
 	width:20%;
 	padding:5px;
+}
+.sum{
+	font-style: italic;
+	font-weight: bold;
+}
+.navbar-default .navbar-nav>li>a:hover, .navbar-default .navbar-nav>li>a:focus, .navbar-default .navbar-nav>li>a:active, .navbar-default .navbar-nav>li>a.active, .highlight{
+	background-color: #CCC;
 }

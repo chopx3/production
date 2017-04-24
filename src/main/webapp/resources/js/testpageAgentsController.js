@@ -1,25 +1,25 @@
-var allAgentsUrl = "http://192.168.10.132:8080/firecatcher/api/agent/find";
-var addAgentUrl = "http://192.168.10.132:8080/firecatcher/api/agent/save";
-var updAgentUrl = "http://192.168.10.132:8080/firecatcher/api/agent/update";
+var allAgentsUrl = location.protocol+"//"+location.host+"/firecatcher/api/agent/find";
+var addAgentUrl = location.protocol+"//"+location.host+"/firecatcher/api/agent/save";
+var updAgentUrl = location.protocol+"//"+location.host+"/firecatcher/api/agent/update";
 var roleUser = '[{ "id":2,"name":"ROLE_USER" }]';
 var roleAdmin = '[{ "id":1,"name":"ROLE_ADMIN" }]';
 var idNum;
 var dataArray = [];
 function fillAgents(){
 		drawInfo("agents");
-		$("#addWrapper").addClass("active");
+		$("#addWrapper").addClass("active").removeClass("higher");
 		$.get(allAgentsUrl)
 		.done(function (data) {
 			var info = data;
 			var tbody ="";
-			var thead = '<div class="table-scroll col-lg-12"><table id="commentTable" class="table table-striped table-hover" ><thead><tr><th class="col-lg-2">id</th><th class="col-lg-4">username</th><th class=col-lg-4>login</th><th class="col-lg-2">edit</th></tr></thead><tbody>';
+			var thead = '<div class="table-scroll col-lg-12"><table id="commentTable" class="table table-striped table-hover" ><thead><tr><th class="col-lg-2">id</th><th class="col-lg-4">username</th><th class=col-lg-4>OktellLogin</th><th class="col-lg-2">edit</th></tr></thead><tbody>';
 			var tbot = '</tbody></table></div>';
 			for(var i=0;i<info.length;i++){
 				var id = info[i].id;
 				var login = info[i].oktellLogin;
 				var name = info[i].username;
 				var notes = info[i].notes;
-				dataArray = [id, login, name, id];
+				dataArray = [id, name, login, id];
 				
 				tbody += "<tr id="+name+">"+
 					"<td>"+id+"</td>"+

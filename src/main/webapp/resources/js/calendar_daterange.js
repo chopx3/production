@@ -1,3 +1,5 @@
+var startDate;
+var endDate;
 function calendarConsole(){
 	// console.log("Начальная дата: " + startDate + ", конечная дата: " +endDate);
 }
@@ -50,10 +52,11 @@ function createCalendar(startDate, endDate)
         "firstDay": 1
     },
 			"startDate": startDate,
-			"endDate": endDate
+			"endDate": endDate,
+			"opens": "left"
     }, cb);
 }
-$(function () {
+function StartCalendar() {
 	$(function() {
 
     createCalendar(startDate, endDate);
@@ -90,7 +93,7 @@ $("#month").click(function () {
         createCalendar(startDate, endDate);
 		cb(startDate, endDate);	
 });
-});
+};
 
 
 /*

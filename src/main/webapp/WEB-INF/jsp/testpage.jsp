@@ -6,13 +6,16 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
     <script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
 	<script src="${pageContext.request.contextPath}/resources/js/testpageAgentsController.js"></script>
+	<script src="${pageContext.request.contextPath}/resources/js/testpageStatController.js" type="text/javascript"charset="cp1251"></script>
+	<script src="${pageContext.request.contextPath}/resources/js/calendar_daterange.js" type="text/javascript" charset="utf-8"></script>
 	<script src="${pageContext.request.contextPath}/resources/js/testpageTagsController.js"></script>
 	<script src="${pageContext.request.contextPath}/resources/js/testpageCommonController.js"></script>
 	<link href="${pageContext.request.contextPath}/resources/css/testPage.css" rel="stylesheet">
+	<script type="text/javascript" src="https://cdn.jsdelivr.net/bootstrap.daterangepicker/2/daterangepicker.js"></script>
+	<link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/bootstrap.daterangepicker/2/daterangepicker.css" />
 </head>
 <body>
 <script>
-
     var request = new XMLHttpRequest();
     var host = location.protocol + '//' + location.host;
 //    var host = "http://192.168.10.132:8080/avito";
@@ -31,9 +34,9 @@
 
     var updateCall = {
         "id": 13430,
-        "agentId": "32",
+        "agentId": "2",
         "chainId": "D3170343-ED1F-4388-A51D-8361E2C4FAD3",
-        "avitoUserId": 99999,
+        "avitoUserId": 1939992,
         "questId": 2,
         "shopCategoryId": 1,
         "type": "EMPTY_FEEDBACK",
@@ -402,7 +405,7 @@
     }
 
 </script>
-
+<!--
 <%--<form action="http://192.168.10.132:8080/avito/rest/oktell/savecallrecord" method="get">--%>
     <form action="http://10.10.37.132:8080/avito/rest/oktell/savecallrecord" method="get">
     <input type="text" name="Bstr" value="Okunev Dmitry">Bstr<br>
@@ -484,7 +487,7 @@ Put feedback
 <br>
 <button onclick="RestPost(qIds, findByQuestionURL)">find by question</button>
 Old form
-
+-->
 <nav class="navbar navbar-default navbar-fixed-top">
   <div class="container-fluid">
     <!-- Brand and toggle get grouped for better mobile display -->
@@ -499,9 +502,11 @@ Old form
     </div>
 
     <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-      <ul class="nav navbar-nav">
-        <li class="active"><a href="#" onclick=fillAgents()>Агенты <span class="sr-only">(current)</span></a></li>
-        <li><a href="#" onclick=fillTags()>Тэги</a></li>
+      <ul class="nav navbar-nav topbar">
+        <li class="hl"><a href="#" onclick=fillAgents()>Агенты </a></li>
+        <li class="hl"><a href="#" onclick=fillTags("tags")>Тэги</a></li>
+		<li class="hl"><a href="#" onclick=fillTags("group")>Группы тэгов</a></li>
+		<li class="hl"><a href="#" onclick=openStat()>Статистика</a></li>
       </ul>
       <form class="navbar-form navbar-left">
         <div id=searchBar>
@@ -527,9 +532,9 @@ Old form
 			
 		</div>
 		<div id="updateAgent" class="col-lg-4">
-			<div id=updateWrapper class=uniForm>
+			<div id=updateWrapper class="uniForm col-lg-4">
 				<div id=updHeader>
-				<label>Изменить информацию</label>
+				
 				</div>
 				<div id=updBody class="form-group form-body">
 					
@@ -538,9 +543,9 @@ Old form
 				
 				</div>
 			</div>
-			<div id=addWrapper class=uniForm>
+			<div id=addWrapper class="uniForm col-lg-4">
 				<div id=addHeader>
-				<label>Добавить информацию</label>
+				
 				</div>
 				<div id=addBody class="form-group form-body">
 					

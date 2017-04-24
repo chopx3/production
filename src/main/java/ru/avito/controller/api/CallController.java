@@ -101,7 +101,7 @@ public class CallController {
         return callService.findByTags(tags);
     }
 
-    @RequestMapping(value = "find/user/{avitoUserId}/{page}", method = RequestMethod.GET)//TODD сделать красиво пагинацию
+    @RequestMapping(value = "find/user/{avitoUserId}/{page}", method = RequestMethod.GET) //TODO сделать красиво пагинацию
     public List<Call> findByAvitoUserId(@PathVariable("avitoUserId") Long avitoUserId, @PathVariable("page") Integer page){
         PageRequest aPage = new PageRequest(page, 20, Sort.Direction.DESC, "timeStart");
         return callService.findByAvitoUserId(avitoUserId, aPage);
