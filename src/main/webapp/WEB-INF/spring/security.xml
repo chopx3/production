@@ -22,9 +22,9 @@ http://www.springframework.org/schema/beans/spring-beans-4.0.xsd"
         <intercept-url pattern="/api/agent/**" access="hasRole('ROLE_ADMIN')"/>
         <intercept-url pattern="/api/category/nested/**" access="hasRole('ROLE_ADMIN')"/>
         <intercept-url pattern="/api/product/**" access="hasRole('ROLE_ADMIN')"/>
-        <intercept-url pattern="/api/stat/**" access="hasRole('ROLE_ADMIN')"/>
-        <intercept-url pattern="/api/tags/**" access="hasRole('ROLE_ADMIN')"/>
-        <intercept-url pattern="/api/taggroup/**" access="hasRole('ROLE_ADMIN')"/>
+        <intercept-url pattern="/api/stat/" access="hasRole('ROLE_ADMIN')"/>
+        <intercept-url pattern="/api/tags/" access="hasRole('ROLE_ADMIN')"/>
+        <intercept-url pattern="/api/taggroup/" access="hasRole('ROLE_ADMIN')"/>
 
 
 
