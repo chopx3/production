@@ -19,7 +19,6 @@ http://www.springframework.org/schema/beans/spring-beans-4.0.xsd"
 
         <intercept-url pattern="/admin/**" access="hasRole('ROLE_ADMIN')"/>
         <intercept-url pattern="/api/roles/**" access="hasRole('ROLE_ADMIN')"/>
-        <intercept-url pattern="/api/agent/**" access="hasRole('ROLE_ADMIN')"/>
         <intercept-url pattern="/api/category/nested/**" access="hasRole('ROLE_ADMIN')"/>
         <intercept-url pattern="/api/product/**" access="hasRole('ROLE_ADMIN')"/>
         <intercept-url pattern="/api/stat/" access="hasRole('ROLE_ADMIN')"/>
@@ -41,7 +40,7 @@ http://www.springframework.org/schema/beans/spring-beans-4.0.xsd"
     </http>
 
     <authentication-manager alias="authenticationManager">
-       <authentication-provider user-service-ref="userDetailsServiceImpl"/>
+        <authentication-provider user-service-ref="userDetailsServiceImpl"/>
     </authentication-manager>
     <beans:bean id="userDetailsServiceImpl" class="ru.avito.services.impl.UserDetailsServiceImpl"/>
 
