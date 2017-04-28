@@ -37,10 +37,10 @@
 
             <div>
                 <ul class="nav navbar-nav add-height">
-
+					
                     <li class="col-lg-3 li-centered">
-
-                        <p class="same-height">Категория вопроса</p>
+						
+                        <p class="same-height"><a href="/firecatcher/admin"><span class="glyphicon glyphicon-stats pull-left" style="font-size:30px;"></span></a>Категория вопроса</p>
                         <p><div class="row">
                         <div class="btn-group btn-group-justified col-lg-3" data-toggle="buttons" id="catButtonGroup">
                             <label class="btn btn-primary box-shadow btn-avito-blue active" id="label-cat-0">
@@ -86,12 +86,12 @@
                                         <ul class="group-list">
                                             <label class="group-header">Инфологическая модель</label>
                                             <li class="group-list-item">
-                                                <input type="checkbox" id="tags-checkbox-1" value="model_geo" class="group-list-checkbox">
-                                                <label for="tags-checkbox-1" id="label-checkbox-1" name="info-label" value="model_geo"><span>model_geo</span></label>
+                                                <input type="checkbox" id="tags-checkbox-5" value="model_geo" class="group-list-checkbox">
+                                                <label for="tags-checkbox-5" id="label-checkbox-5" name="info-label" value="model_geo"><span>model_geo</span></label>
                                             </li>
                                             <li class="group-list-item">
-                                                <input type="checkbox" id="tags-checkbox-2" value="model_cat" class="group-list-checkbox">
-                                                <label for="tags-checkbox-2" id="label-checkbox-2" name="info-label" value="model_cat"><span>model_cat</span></label>
+                                                <input type="checkbox" id="tags-checkbox-6" value="model_cat" class="group-list-checkbox">
+                                                <label for="tags-checkbox-6" id="label-checkbox-6" name="info-label" value="model_cat"><span>model_cat</span></label>
                                             </li>
                                         </ul>
                                     </div>
@@ -99,24 +99,24 @@
                                         <ul class="group-list">
                                             <label class="group-header">Работа с сайтом</label>
                                             <li class="group-list-item">
-                                                <input type="checkbox" id="tags-checkbox-3" value="site_navigation" class="group-list-checkbox">
-                                                <label for="tags-checkbox-3" id="label-checkbox-3" name="info-label" value="site_navigation"><span>site_navigation</span></label>
+                                                <input type="checkbox" id="tags-checkbox-14" value="site_navigation" class="group-list-checkbox">
+                                                <label for="tags-checkbox-14" id="label-checkbox-14" name="info-label" value="site_navigation"><span>site_navigation</span></label>
                                             </li>
                                             <li class="group-list-item">
-                                                <input type="checkbox" id="tags-checkbox-4" value="site_mobile" class="group-list-checkbox">
-                                                <label for="tags-checkbox-4" id="label-checkbox-4" name="info-label" value="site_mobile"><span>site_mobile</span></label>
+                                                <input type="checkbox" id="tags-checkbox-15" value="site_mobile" class="group-list-checkbox">
+                                                <label for="tags-checkbox-15" id="label-checkbox-15" name="info-label" value="site_mobile"><span>site_mobile</span></label>
                                             </li>
                                             <li class="group-list-item">
-                                                <input type="checkbox" id="tags-checkbox-5" value="site_messenger" class="group-list-checkbox">
-                                                <label for="tags-checkbox-5" id="label-checkbox-5" name="info-label" value="site_messenger"><span>site_messenger</span></label>
+                                                <input type="checkbox" id="tags-checkbox-16" value="site_messenger" class="group-list-checkbox">
+                                                <label for="tags-checkbox-16" id="label-checkbox-16" name="info-label" value="site_messenger"><span>site_messenger</span></label>
                                             </li>
                                             <li class="group-list-item">
-                                                <input type="checkbox" id="tags-checkbox-6" value="site_safety" class="group-list-checkbox">
-                                                <label for="tags-checkbox-6" id="label-checkbox-6" name="info-label" value="site_safety"><span>site_safety</span></label>
+                                                <input type="checkbox" id="tags-checkbox-17" value="site_safety" class="group-list-checkbox">
+                                                <label for="tags-checkbox-17" id="label-checkbox-17" name="info-label" value="site_safety"><span>site_safety</span></label>
                                             </li>
                                             <li class="group-list-item">
-                                                <input type="checkbox" id="tags-checkbox-7" value="site_other" class="group-list-checkbox">
-                                                <label for="tags-checkbox-7" id="label-checkbox-7" name="info-label" value="site_other"><span>site_other</span></label>
+                                                <input type="checkbox" id="tags-checkbox-18" value="site_other" class="group-list-checkbox">
+                                                <label for="tags-checkbox-18" id="label-checkbox-18" name="info-label" value="site_other"><span>site_other</span></label>
                                             </li>
                                         </ul>
                                     </div>
@@ -126,16 +126,16 @@
                                         <ul class="group-list">
                                             <label class="group-header">Поиск на сайте</label>
                                             <li class="group-list-item">
-                                                <input type="checkbox" id="tags-checkbox-8" value="search_filters" class="group-list-checkbox">
-                                                <label for="tags-checkbox-8" id="label-checkbox-8" name="info-label" value="search_filters"><span>search_filters</span></label>
+                                                <input type="checkbox" id="tags-checkbox-7" value="search_filters" class="group-list-checkbox">
+                                                <label for="tags-checkbox-7" id="label-checkbox-7" name="info-label" value="search_filters"><span>search_filters</span></label>
                                             </li>
                                             <li class="group-list-item">
-                                                <input type="checkbox" id="tags-checkbox-9" value="search_problems" class="group-list-checkbox">
-                                                <label for="tags-checkbox-9" id="label-checkbox-9" name="info-label" value="search_problems"><span>search_problems</span></label>
+                                                <input type="checkbox" id="tags-checkbox-8" value="search_problems" class="group-list-checkbox">
+                                                <label for="tags-checkbox-8" id="label-checkbox-8" name="info-label" value="search_problems"><span>search_problems</span></label>
                                             </li>
                                             <li class="group-list-item">
-                                                <input type="checkbox" id="tags-checkbox-10" value="search_favourite" class="group-list-checkbox">
-                                                <label for="tags-checkbox-10" id="label-checkbox-10" name="info-label" value="search_favourite"><span>search_favourite</span></label>
+                                                <input type="checkbox" id="tags-checkbox-9" value="search_favourite" class="group-list-checkbox">
+                                                <label for="tags-checkbox-9" id="label-checkbox-9" name="info-label" value="search_favourite"><span>search_favourite</span></label>
                                             </li>
                                         </ul>
                                     </div>
@@ -143,20 +143,20 @@
                                         <ul class="group-list">
                                             <label class="group-header">Работа с объявлениями</label>
                                             <li class="group-list-item">
-                                                <input type="checkbox" id="tags-checkbox-11" value="item_inside" class="group-list-checkbox">
-                                                <label for="tags-checkbox-11" id="label-checkbox-11" name="info-label" value="item_inside"><span>item_inside</span></label>
+                                                <input type="checkbox" id="tags-checkbox-10" value="item_inside" class="group-list-checkbox">
+                                                <label for="tags-checkbox-10" id="label-checkbox-10" name="info-label" value="item_inside"><span>item_inside</span></label>
                                             </li>
                                             <li class="group-list-item">
-                                                <input type="checkbox" id="tags-checkbox-12" value="item_add" class="group-list-checkbox">
-                                                <label for="tags-checkbox-12" id="label-checkbox-12" name="info-label" value="item_add"><span>item_add</span></label>
+                                                <input type="checkbox" id="tags-checkbox-11" value="item_add" class="group-list-checkbox">
+                                                <label for="tags-checkbox-11" id="label-checkbox-11" name="info-label" value="item_add"><span>item_add</span></label>
                                             </li>
                                             <li class="group-list-item">
-                                                <input type="checkbox" id="tags-checkbox-13" value="item_review" class="group-list-checkbox">
-                                                <label for="tags-checkbox-13" id="label-checkbox-13" name="info-label" value="item_review"><span>item_review</span></label>
+                                                <input type="checkbox" id="tags-checkbox-12" value="item_review" class="group-list-checkbox">
+                                                <label for="tags-checkbox-12" id="label-checkbox-12" name="info-label" value="item_review"><span>item_review</span></label>
                                             </li>
                                             <li class="group-list-item">
-                                                <input type="checkbox" id="tags-checkbox-14" value="item_lf" class="group-list-checkbox">
-                                                <label for="tags-checkbox-14" id="label-checkbox-14" name="info-label" value="item_lf"><span>item_lf</span></label>
+                                                <input type="checkbox" id="tags-checkbox-13" value="item_lf" class="group-list-checkbox">
+                                                <label for="tags-checkbox-13" id="label-checkbox-13" name="info-label" value="item_lf"><span>item_lf</span></label>
                                             </li>
                                         </ul>
                                     </div>

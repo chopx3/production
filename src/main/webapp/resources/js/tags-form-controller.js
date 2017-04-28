@@ -46,9 +46,9 @@ function TagActiveChecker() //Переписать
 outputTags="";
 tagCounter = 0;
 var AllTags = 14;
-activeTags[0]=0;
+for (i=0;i<5;i++){activeTags[i]=0;}
 
-for (i=1;i<=AllTags;i++)
+for (i=5;i<AllTags+5;i++)
 {
 	var tagId = '#label-checkbox-' + i;
 	if($(tagId).hasClass('blueOne'))
@@ -59,7 +59,7 @@ for (i=1;i<=AllTags;i++)
 	}
 	else{activeTags[i]=0;}
 }
-// console.log(activeTags);
+ console.log(activeTags);
 TagWatcher();
 }
 function TagConsole()

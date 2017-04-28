@@ -18,7 +18,9 @@
 .Footer{
 	margin-top:10px;
 }
-
+.activeButton, .activeButton.active, .activeButton:active, .activeButton:focus, .activeButton:hover{
+	background-color:#3e91d8;
+}
 .box-shadow{
 box-shadow: inset 0 0 0.5em red;
 }

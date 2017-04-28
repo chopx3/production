@@ -1,4 +1,4 @@
-var host = "http://192.168.10.132/firecatcher/api";
+var host = "http://"+location.host+"/firecatcher/api";
 var statURL = host+"/stat/find/";
 var allAgentsUrl = host +"/agent/find";
 var addAgentUrl = host +"/agent/save";
@@ -9,6 +9,7 @@ var updTagUrl = host+"/tags/update";
 var tagGroupUrl = host+"/taggroup/find";
 var addTagGroupUrl = host+"/taggroup/save";
 var updTagGroupUrl = host+"/taggroup/update";
+var tempValue;
 function drawInfo(value){
 	$("#updateWrapper").removeClass("active");
 	var addInfoBody, addInfoFooter, updInfoBody, updInfoFooter, addInfoHeader, updInfoHeader;
@@ -68,16 +69,16 @@ function drawInfo(value){
 	'<input type="text" name="daterange" value="01-01-2015 - 01-31-2015" />'+
 	'</p>'+
 	'</form>'+
-	'<button class="btn btn-info" id="yesterday">Вчера</button>'+
+	'<button class="btn btn-info" id="yesterday" >Вчера</button>'+
 	'<button class="btn btn-info" id="today">Сегодня</button>'+
 	'<button class="btn btn-info" id="week">Неделя</button>'+
 	'<button class="btn btn-info" id="month">Месяц</button>';
 	updInfoFooter = "";
 	addInfoHeader = "<label>Выбор категории звонка</label>";
 	addInfoBody=
-	'<div class=row><label class="updLabel">Звонки</label><div class="upd-text"><button class="btn btn-primary" onclick="getInfo(\'categories\')">Категория</button><button class="btn btn-primary" onclick="getInfo(\'users\')">Users</button><button class="btn btn-primary" onclick="getInfo(\'questions\')">Вопросы</button></div></div>'+
-	'<div class=row><label class="updLabel">Агенты</label><div class="upd-text"><button class="btn btn-primary" onclick="getInfo(\'agents\/empty\')" >Незаполненные</button><button class="btn btn-primary" onclick="getInfo(\'agents\')" id="allCalls"> Всего</button></div></div>'+
-	'<div class=row><label class="updLabel">Другие</label><div class="upd-text"><button class="btn btn-primary" onclick="getInfo(\'managers\')">Менеджер</button><button class="btn btn-primary" onclick="getInfo(\'outcomings\')">Исходящие</button></div></div>';
+	'<div class=row><label class="updLabel">Звонки</label><div class="upd-text"><button class="btn btn-primary catButtons" value="categories" onclick="getInfo(\'categories\')">Категория</button><button class="btn btn-primary catButtons" value="users" onclick="getInfo(\'users\')">Users</button><button class="btn btn-primary catButtons" value="questions" onclick="getInfo(\'questions\')">Вопросы</button></div></div>'+
+	'<div class=row><label class="updLabel">Агенты</label><div class="upd-text"><button class="btn btn-primary catButtons" value="agents\/empty" onclick="getInfo(\'agents\/empty\')" >Незаполненные</button><button class="btn btn-primary catButtons" value="agents" onclick="getInfo(\'agents\')" id="allCalls"> Всего</button></div></div>'+
+	'<div class=row><label class="updLabel">Другие</label><div class="upd-text"><button class="btn btn-primary catButtons" value="managers" onclick="getInfo(\'managers\')">Менеджер</button><button class="btn btn-primary catButtons" value="outcomings" onclick="getInfo(\'outcomings\')">Исходящие</button></div></div>';
 	addInfoFooter = "";
 	}
 	document.getElementById("updBody").innerHTML = updInfoBody;

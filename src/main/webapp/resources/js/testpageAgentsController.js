@@ -10,7 +10,7 @@ function fillAgents(){
 		.done(function (data) {
 			var info = data;
 			var tbody ="";
-			var thead = '<div class="table-scroll col-lg-12"><table id="commentTable" class="table table-striped table-hover" ><thead><tr><th class="col-lg-2">id</th><th class="col-lg-4">username</th><th class=col-lg-4>OktellLogin</th><th class="col-lg-2">edit</th></tr></thead><tbody>';
+			var thead = '<div class="table-scroll col-lg-12"><table id="commentTable" class="table table-striped table-hover" ><thead><tr><th class="col-lg-1">id</th><th class="col-lg-5">username</th><th class=col-lg-5>OktellLogin</th><th class="col-lg-1">edit</th></tr></thead><tbody>';
 			var tbot = '</tbody></table></div>';
 			for(var i=0;i<info.length;i++){
 				var id = info[i].id;
@@ -75,4 +75,11 @@ $(document).ready(function() {
 		var target_top= $('#'+$("#searchField").val()).offset().top;
 		$('html, body').animate({scrollTop:target_top-50}, 'slow');
 	});
+	$('#searchField').keypress(function (e) {
+ console.log("clicked");
+ var key = e.which;
+ if(key == 13)   {
+   jQuery('#searchButton').click();
+  }
+});
 })

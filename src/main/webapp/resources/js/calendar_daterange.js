@@ -5,16 +5,14 @@ function calendarConsole(){
 }
 
 function cb(start, end) {
-			if (start.length==10)
-			{
+			if (start.length==10){
 				startDate = start;
 				endDate = end;	
 			}	
 				else{
 			startDate = moment(start).format("DD-MM-YYYY");;
 			endDate = moment(end).format("DD-MM-YYYY");;
-				}
-					
+				}		
     }
 
 function createCalendar(startDate, endDate)
@@ -63,46 +61,33 @@ function StartCalendar() {
     cb(startDate, endDate);
 
 });
+function afterClickActions(){
+		createCalendar(startDate, endDate);
+		cb(startDate, endDate);
+		getInfo('date');
+}
 $("#yesterday").click(function () {
 		
 		startDate = moment().subtract(1, 'days').format("DD-MM-YYYY");
 		endDate = moment().format("DD-MM-YYYY");
-		// console.log(startDate);
-		// console.log(endDate);
-		createCalendar(startDate, endDate);
-		cb(startDate, endDate);
+		afterClickActions();
 });
 $("#today").click(function () {
 		
 		startDate = moment().format("DD-MM-YYYY");
 		endDate = moment().add(1,'days').format("DD-MM-YYYY");
-        createCalendar(startDate, endDate);
-		cb(startDate, endDate);	
+        afterClickActions();
 });
 $("#week").click(function () {
 		
 		startDate = moment().startOf('week').add(1,'days').format("DD-MM-YYYY");
 		endDate = moment().endOf('week').add(1,'days').format("DD-MM-YYYY");
-        createCalendar(startDate, endDate);
-		cb(startDate, endDate);	
+        afterClickActions();		
 });
 $("#month").click(function () {
 		
 		startDate = moment().startOf('month').format("DD-MM-YYYY");
 		endDate = moment().endOf('month').format("DD-MM-YYYY");
-        createCalendar(startDate, endDate);
-		cb(startDate, endDate);	
+        afterClickActions();
 });
 };
-
-
-/*
-        ranges: {
-           'Сегодня': [moment(), moment().add(1,'days')],
-           'Вчера': [moment().subtract(1, 'days'), moment()],
-           'Последние 7 дней': [moment().subtract(6, 'days'), moment()],
-		   'Неделя': [moment().startOf('week').add(1,'days'), moment().endOf('week').add(1,'days')],
-           'Последние 30 дней': [moment().subtract(29, 'days'), moment()],
-           'Месяц': [moment().startOf('month'), moment().endOf('month')]          
-        }
-*/

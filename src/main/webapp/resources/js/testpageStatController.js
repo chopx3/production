@@ -2,31 +2,26 @@ var startDate;
 var endDate;
 
 $(document).ready(function() {
-    /*setTimeout(jQuery(function(){
-        jQuery('#today').click();
-    }, 2500));
-	*/
 	var start=moment().format("DD-MM-YYYY");
 	var end=moment().add(1,'days').format("DD-MM-YYYY");
 })
 function openStat(){
 	drawInfo("stat");
 	StartCalendar();
-	jQuery('#today').click();
 	jQuery('#allCalls').click();
+	jQuery('#today').click();
 	$("#addWrapper").addClass("active").addClass("higher");
 	$("#updateWrapper").addClass("active");
 }
 function getInfo(value){
-	console.log(startDate);
-	console.log(endDate);
 	var timeStart = moment(startDate, "DD-MM-YYYY").unix()*1000;
 	var timeEnd = moment(endDate, "DD-MM-YYYY").unix()*1000;
+	if (value != 'date') {tempValue = value;$('.catButtons').each(function () { $(this).removeClass("activeButton"); }); $("[value="+tempValue+"]").addClass("activeButton");}
 	
-	$.get(statURL+value+"/total/"+timeStart+'/'+timeEnd)
+	$.get(statURL+tempValue+"/total/"+timeStart+'/'+timeEnd)
 			.done(function (data) {
 				var totalInfo = data;
-				tableFiller(totalInfo, value);
+				tableFiller(totalInfo, tempValue);
 			})
 			.fail(function () {
 					console.log("---");
@@ -42,7 +37,7 @@ function tableFiller(data, additional)
 	var id = '';
 	//console.log(data);
 	var finalForm = data;
-	//console.log(finalForm);
+	console.log(finalForm);
 	var forEmptyCalls = '';
 	var thead = '';
 	var tbot = '';

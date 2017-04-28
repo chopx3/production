@@ -5,11 +5,11 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
     <script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
+	<script src="${pageContext.request.contextPath}/resources/js/testpageCommonController.js"></script>
     <script src="${pageContext.request.contextPath}/resources/js/testpageAgentsController.js"></script>
-    <script src="${pageContext.request.contextPath}/resources/js/testpageStatController.js" type="text/javascript"charset="cp1251"></script>
+    <script src="${pageContext.request.contextPath}/resources/js/testpageStatController.js" type="text/javascript"charset="utf-8"></script>
     <script src="${pageContext.request.contextPath}/resources/js/calendar_daterange.js" type="text/javascript" charset="utf-8"></script>
-    <script src="${pageContext.request.contextPath}/resources/js/testpageTagsController.js"></script>
-    <script src="${pageContext.request.contextPath}/resources/js/testpageCommonController.js"></script>
+    <script src="${pageContext.request.contextPath}/resources/js/testpageTagsController.js"></script>    
     <link href="${pageContext.request.contextPath}/resources/css/testPage.css" rel="stylesheet">
     <script type="text/javascript" src="https://cdn.jsdelivr.net/bootstrap.daterangepicker/2/daterangepicker.js"></script>
     <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/bootstrap.daterangepicker/2/daterangepicker.css" />
@@ -43,7 +43,6 @@
 </script>
 <nav class="navbar navbar-default navbar-fixed-top">
     <div class="container-fluid">
-        <!-- Brand and toggle get grouped for better mobile display -->
         <div class="navbar-header">
             <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
                 <span class="sr-only">Toggle navigation</span>
@@ -51,7 +50,7 @@
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </button>
-            <a class="navbar-brand" href="#">Админка</a>
+            <a class="navbar-brand">Админка</a>
         </div>
 
         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
@@ -60,6 +59,7 @@
                 <li class="hl"><a href="#" onclick=fillTags("tags")>Тэги</a></li>
                 <li class="hl"><a href="#" onclick=fillTags("group")>Группы тэгов</a></li>
                 <li class="hl"><a href="#" onclick=openStat()>Статистика</a></li>
+				<li class="hl"><a href="admin/feedback" onclick=openStat()>Feedback</a></li>
             </ul>
             <form class="navbar-form navbar-left">
                 <div id=searchBar>
@@ -71,12 +71,14 @@
                     </div>
                 </div>
             </form>
+			<form class="navbar-form navbar-right">                          
+            </form>
         </div><!-- /.navbar-collapse -->
     </div><!-- /.container-fluid -->
 </nav>
 
 <div id="wrapper" class="col-lg-12">
-    <div id="agents" class="col-lg-12">
+    <div id="infoWrapper" class="col-lg-12">
         <div class="row">
             <div id="allAgentsTable" class="col-lg-8">
 
