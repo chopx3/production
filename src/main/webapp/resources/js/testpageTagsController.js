@@ -1,10 +1,5 @@
-var HostUrl = location.protocol+"//"+location.host+"/firecatcher/api/";
-var tagUrl = HostUrl+"tags/find";
-var addTagUrl = HostUrl+"tags/save";
-var updTagUrl = HostUrl+"tags/update";
-var tagGroupUrl = HostUrl+"taggroup/find";
-var addTagGroupUrl = HostUrl+"taggroup/save";
-var updTagGroupUrl = HostUrl+"taggroup/update";
+
+
 var checker = "";
 var dataArray = [];
 function fillTags(value){

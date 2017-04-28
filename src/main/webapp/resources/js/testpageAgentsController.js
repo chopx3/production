@@ -1,6 +1,4 @@
-var allAgentsUrl = location.protocol+"//"+location.host+"/firecatcher/api/agent/find";
-var addAgentUrl = location.protocol+"//"+location.host+"/firecatcher/api/agent/save";
-var updAgentUrl = location.protocol+"//"+location.host+"/firecatcher/api/agent/update";
+
 var roleUser = '[{ "id":2,"name":"ROLE_USER" }]';
 var roleAdmin = '[{ "id":1,"name":"ROLE_ADMIN" }]';
 var idNum;

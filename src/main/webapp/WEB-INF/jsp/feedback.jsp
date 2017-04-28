@@ -10,7 +10,6 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
     <script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
     <script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/downloaderJS.js"></script>
-    <script src="${pageContext.request.contextPath}/resources/js/jquery-dateFormat.min.js"></script>
     <script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/calendar_daterange.js"></script>
     <script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/tags-form-controller.js"></script>
     <link href="${pageContext.request.contextPath}/resources/css/colours.css" disabled rel="stylesheet">

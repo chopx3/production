@@ -1,6 +1,6 @@
 var startDate;
 var endDate;
-var URL = location.protocol+"//"+location.host+"/firecatcher/api/stat/find/";
+
 $(document).ready(function() {
     /*setTimeout(jQuery(function(){
         jQuery('#today').click();
@@ -23,7 +23,7 @@ function getInfo(value){
 	var timeStart = moment(startDate, "DD-MM-YYYY").unix()*1000;
 	var timeEnd = moment(endDate, "DD-MM-YYYY").unix()*1000;
 	
-	$.get(URL+value+"/total/"+timeStart+'/'+timeEnd)
+	$.get(statURL+value+"/total/"+timeStart+'/'+timeEnd)
 			.done(function (data) {
 				var totalInfo = data;
 				tableFiller(totalInfo, value);
@@ -65,7 +65,7 @@ function tableFiller(data, additional)
 		id = finalForm.columns[i].user_id;
 		outputComments += '<tr><td>'+message+'</td><td class="breakable" >'+id+'</td><td>'+count+'</td></tr>'
 	}
-		var codeForSum = "<tr><td class=sum>"+ "Total" +"</td><td class=sum>"+sum+"</td>";
+		var codeForSum = "<tr><td class=sum>"+ "Всего" +"</td><td class=sum>"+sum+"</td>";
 		document.getElementById("allAgentsTable").innerHTML = thead +codeForSum+ outputComments + tbot;
 	}
 	
@@ -78,13 +78,7 @@ function tableFiller(data, additional)
 		sum += parseInt(count);
 		outputComments += '<tr><td>'+message+'</td><td class="breakable" >'+count+'</td></tr>'
 	}
-	var codeForSum = "<tr><td class=sum>"+ "Total" +"</td><td class=sum>"+sum+"</td>";
+	var codeForSum = "<tr><td class=sum>"+ "Всего" +"</td><td class=sum>"+sum+"</td>";
 	document.getElementById("allAgentsTable").innerHTML = thead +codeForSum+ outputComments + tbot;
 	}
-	
-	
-				/*} else {
-					outputComments='�� ������ ������� ������ ��� �� ��������� ������������';
-				}*/
-				
 }

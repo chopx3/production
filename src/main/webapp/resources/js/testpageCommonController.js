@@ -1,4 +1,16 @@
+var host = "http://192.168.10.132/firecatcher/api";
+var statURL = host+"/stat/find/";
+var allAgentsUrl = host +"/agent/find";
+var addAgentUrl = host +"/agent/save";
+var updAgentUrl = host +"/agent/update";
+var tagUrl = host+"/tags/find";
+var addTagUrl = host+"/tags/save";
+var updTagUrl = host+"/tags/update";
+var tagGroupUrl = host+"/taggroup/find";
+var addTagGroupUrl = host+"/taggroup/save";
+var updTagGroupUrl = host+"/taggroup/update";
 function drawInfo(value){
+	$("#updateWrapper").removeClass("active");
 	var addInfoBody, addInfoFooter, updInfoBody, updInfoFooter, addInfoHeader, updInfoHeader;
 	if (value=="agents"){
 		addInfoHeader = '<label>Добавить агента</label>';
@@ -22,7 +34,7 @@ function drawInfo(value){
 				'</div>';
 	updInfoFooter = '<button class="btn btn-success" onclick="AgentCheck(\'upd\')">Изменить информацию</button>';		
 	}
-	if (value=="tags"||value=="group"){
+	if (value=="tags"){
 		addInfoHeader = '<label>Добавить тэг</label>';
 		updInfoHeader = '<label>Изменить информацию о тэге</label>';
 		addInfoBody = 
@@ -31,6 +43,18 @@ function drawInfo(value){
 '<div class=row><label class="updLabel">Описание</label><input type="text" class="form-control upd-text" id=addDesc>	</div>';
 		updInfoBody = 
 		'<div class=row><label class="updLabel">Тэг</label><input type="text" class="form-control upd-text" id=updShortName>	</div>'+
+		'<div class=row><label class="updLabel">Название		</label><input type="text" class="form-control upd-text" id=updTag>	</div>'+
+		'<div class=row><label class="updLabel">Описание</label><input type="text" class="form-control upd-text" id=updDesc>	</div>';
+		addInfoFooter = '<button class="btn btn-success" onclick="TagCheck(\'add\')">Добавить тэг</button>';
+		updInfoFooter = '<button class="btn btn-success" onclick="TagCheck(\'upd\')">Изменить информацию</button>';
+	}
+	if (value=="group"){
+		addInfoHeader = '<label>Добавить группу тэгов</label>';
+		updInfoHeader = '<label>Изменить информацию о группе тэгов</label>';
+		addInfoBody = 
+'<div class=row><label class="updLabel">Название		</label><input type="text" class="form-control upd-text" id=addTag>	</div>'+
+'<div class=row><label class="updLabel">Описание</label><input type="text" class="form-control upd-text" id=addDesc>	</div>';
+		updInfoBody = 
 		'<div class=row><label class="updLabel">Название		</label><input type="text" class="form-control upd-text" id=updTag>	</div>'+
 		'<div class=row><label class="updLabel">Описание</label><input type="text" class="form-control upd-text" id=updDesc>	</div>';
 		addInfoFooter = '<button class="btn btn-success" onclick="TagCheck(\'add\')">Добавить тэг</button>';

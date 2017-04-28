@@ -23,15 +23,11 @@ var getFeedbackForAgent = "http://"+httpHost+"/api/call/find/type/empty_feedback
 var getNotesUrl = 'http://' + httpHost + '/api/agent/find/id/';
 var updateNotesUrl = 'http://' + httpHost + '/api/agent/notes/update';
 var tagBuffer="";
-var comH = 0;
-var noteH= 0;
 var tagGroupUrl = 'http://' + httpHost + '/api/taggroup/find';
 var additionalTags;
+var dateFormat = 'DD.MM.YYYY HH:mm:ss';
+var comFormat = 'DD.MM.YY HH:mm';
 var RestPost = function(sendData, url) {
-
-        // console.log(url)
-        // console.log(sendData)
-
             $.ajax({
                 url: url,
                 type: "post",
@@ -59,19 +55,16 @@ $(document).ready(function() {
 $('#IDforComments').keypress(function (e) {
  // console.log("clicked");
  var key = e.which;
- if(key == 13)  // the enter key code
-  {
+ if(key == 13)   {
    getComments();
   }
 });
 $('#magic').click(function(){
-if ($('#colours').prop("disabled"))
-{
+if ($('#colours').prop("disabled")){
 	// console.log(true);
 	$('#colours').prop("disabled", false);
 }
-else
-{
+else {
 	$('#colours').prop("disabled", true);
 	// console.log(false);
 }
@@ -166,7 +159,6 @@ else
 	});
 //Кнопка "Мои звонки"
 	$('#my_calls').click(function() {
-		
 		showMyEmptyCalls();
 	});
 
@@ -177,21 +169,7 @@ else
 		addButton();
 	});
 //Кнопка "Комментарии"
-	$('#comments').click(function() {	
-		/*
-		if (comH == 0){			
-			$("#page-content-wrapper").toggleClass("Add");
-			comH = 1;
-			}	
-		else if(comH == 1){ 
-			comH = 0; 
-			$("#page-content-wrapper").toggleClass("Add");
-			}			
-		if (comH == 1 && noteH == 1){
-			noteH=0;
-			$("#page-content-wrapper").addClass("Add");
-		}
-		*/
+	$('#comments').click(function() {
 		commentOrCallHandler = "comment";
 		addButton();
 		$("#noteForm").removeClass("Add");
@@ -201,33 +179,12 @@ else
 	});
 //Кнопка "Заметки"
 	$('#notes').click(function(){
-		
-		//fillInfo("remove","Заметки", "В разразботке");
 		$("#noteForm").toggleClass("Add");
 		getNotes();
 		$("#commentForm").removeClass("Add");
 		$('#glyphNote').toggleClass('glyphicon-triangle-right').toggleClass('glyphicon-triangle-left');
 		$('#glyphCom').addClass('glyphicon-triangle-right').removeClass('glyphicon-triangle-left');
-		/*
-		if (noteH == 0){			
-		noteH = 1;
-		$("#page-content-wrapper").toggleClass("Add");
-		}
-		else if(noteH == 1){ 
-		noteH = 0; 
-		$("#page-content-wrapper").toggleClass("Add");
-		}	
-		if (comH == 1 && noteH == 1){
-			comH=0;
-			$("#page-content-wrapper").addClass("Add");			
-		}
-		*/		
 	});
-	//Кнопка "Закрыть" для формы заполнения звонка
-	/*$('#CloseSubForm').click(function() {
-		$("#SubForm").removeClass("Add");
-		$("#divAddButton0").removeClass('woop').siblings().removeClass('woop');
-	});*/
 //Кнопка "Фидбек"
 	$('#feedback').click(function() {
 		fillInfo("remove","Feedback", "");
@@ -349,7 +306,8 @@ function getComments(){
 					for (var i = 0; i < commentsInfo.length; i++) {
 						var message = commentsInfo[i].message;
 						var nametag = commentsInfo[i].agent.username;
-						var timetag = $.format.date(new Date().setTime(commentsInfo[i].postTime), 'dd.MM.yy HH:mm');
+                        var timetag = moment.unix(commentsInfo[i].postTime/1000).format(comFormat);
+
 						outputComments += '<tr><td>'+timetag +'\n'+ nametag +'</td><td class="breakable" >'+message+'</td></tr>'
 					}
 				} else {
@@ -381,7 +339,7 @@ function getCalls(){
 						for (var i = 0; i < callsInfo.length; i++) {
 							var audiotag = callsInfo[i].comId;
 							var nametag = callsInfo[i].agent.username;
-							var timetag = $.format.date(new Date().setTime(callsInfo[i].timeStart), 'dd/MM/yyyy@HH:mm:ss');
+                            var timetag = moment.unix(callsInfo[i].timeStart/1000).format(dateFormat);
 							var audioURL = '<audio src="'+oktell + audiotag + '" controls></audio><a href="'+oktell+ audiotag +'" target="_blank">' + '<\/a>';
 							outputCalls += '<div class="history" data-time="'+timetag+'" data-sign="'+nametag+'"><span class="history-info">'+ timetag +' '+nametag + '</span><br>' + audioURL + '</div>';
 						}
@@ -443,17 +401,6 @@ function clearFeedback() {
 }
 //Отправка данных из боковой формы на сервер
 function fillData(dataArray) {
-	/* Comment later , Отладка 
-	$("#JsonText").val("agentId:" + agentId+",\n"+
-		"ChainId:"+dataArray[0]+",\n"+
-		"AvitoUserId:"+dataArray[1]+",\n"+
-		"question:"+dataArray[2]+",\n"+
-		"shop_category:"+dataArray[3]+",\n"+
-		"isManager:"+dataArray[4]+",\n"+
-		"type:" + dataArray[5]+",\n"+
-		"tags:"  + dataArray[6]);
-	/* Comment later , Отладка */
-/* Uncomment later */
 	var updateCall = {
 			"agentId": agentId,
 			"chainId": dataArray[0],
@@ -463,8 +410,7 @@ function fillData(dataArray) {
 			"type": dataArray[5],
 			"isManager": dataArray[4],
 			"tags":  dataArray[6]
-    }	
-	// console.log(updateCall);
+    }
 	RestPost(updateCall, updateEmptyCalls);
 }
 function fortesting()
@@ -545,7 +491,7 @@ function  draw(emptyCallsInfo) {
 		for (var i = 0; i < emptyCallsInfo.emptyCallList.length; i++) {
 			chain = emptyCallsInfo.emptyCallList[i].chainId;
 			audiosrc = emptyCallsInfo.emptyCallList[i].comId;
-			timetag = $.format.date(new Date().setTime(emptyCallsInfo.emptyCallList[i].startTime), 'dd/MM/yyyy@HH:mm:ss');
+            timetag = moment.unix(emptyCallsInfo.emptyCallList[i].startTime/1000).format(dateFormat);
 			addButton = '<a href="#"  class="btn btn-success" id="' + chain + '" onclick=change_call(this.id,'+i+') style="float:right;"> Выбрать </a>';
 			var audioURL = '<audio id="audio'+i+'" onplay=change_call("'+chain+'",'+i+') src="' + oktell + audiosrc + '" controls></audio><a href="'+ oktell + audiosrc +'" target="_blank">' + '<\/a>';
 			outputEmptyCalls += '<div id="divAddButton' +i+'" onclick=change_call("'+chain+'",'+i+') class="history" data-time="'+timetag+'" data-sign="'+nametag+'"><span class="history-info">'+ timetag +' '+nametag +'\t\t' + addButton + '</span><br>' + audioURL + '</div>';
@@ -574,6 +520,7 @@ function drawFeedback() {
 	 .done(
 	function (data) {
 	var feedbackInfo = data;
+	sorting(feedbackInfo, 'timeStart');
 	var chainId = "";
 	var outputEmptyCalls = "";
 	// console.log(feedbackInfo);
@@ -591,7 +538,7 @@ function drawFeedback() {
 			for (var j=0;j<feedbackInfo[i].tags.length;j++){
 				tagCollector +='{\"id\":' + feedbackInfo[i].tags[j].id + '},';
 			}
-			timetag = $.format.date(new Date().setTime(feedbackInfo[i].timeStart), 'dd/MM/yyyy HH:mm:ss');
+            timetag = moment.unix(feedbackInfo[i].timeStart/1000).format(dateFormat);
 			audioURL = '<audio id="audio'+i+'" src="' + oktell + feedbackInfo[i].comId + '" onplay=change_call("'+feedbackInfo[i].chainId+'",'+i+') controls></audio><a href="'+ oktell + feedbackInfo[i].chainId +'" target="_blank">' + '</a>';
 			outputEmptyCalls += '<div id="feedbackCall' +i+'" onclick=change_call("'+feedbackInfo[i].chainId+'",'+i+') class="history" data-time="'+timetag+'" data-sign="'+feedbackInfo[i].agent.username+'" value="'+ feedbackInfo[i].type+'" name='+ tagCollector +'><span class="history-info">'+ timetag +' '+ feedbackInfo[i].agent.username + '</span><br>' + audioURL + '</div>';
 		}
@@ -630,7 +577,15 @@ function getNotes () {
 		$('#noteArea').val(noteInfo);
 		 }
 )}
+function sorting(json_object, key_to_sort_by) {
+    function sortByKey(a, b) {
+        var x = a[key_to_sort_by];
+        var y = b[key_to_sort_by];
+        return ((x > y) ? -1 : ((x < y) ? 1 : 0));
+    }
 
+    json_object.sort(sortByKey);
+}
 
 
 
