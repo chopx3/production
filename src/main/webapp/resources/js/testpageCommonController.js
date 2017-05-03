@@ -9,7 +9,10 @@ var updTagUrl = host+"/tags/update";
 var tagGroupUrl = host+"/taggroup/find";
 var addTagGroupUrl = host+"/taggroup/save";
 var updTagGroupUrl = host+"/taggroup/update";
+var changeTagGroup = host +"/tags/group";
 var tempValue;
+var tagGroupsArray = [];
+var optionsReturn = "";
 function drawInfo(value){
 	$("#updateWrapper").removeClass("active");
 	var addInfoBody, addInfoFooter, updInfoBody, updInfoFooter, addInfoHeader, updInfoHeader;
@@ -36,6 +39,7 @@ function drawInfo(value){
 	updInfoFooter = '<button class="btn btn-success" onclick="AgentCheck(\'upd\')">Изменить информацию</button>';		
 	}
 	if (value=="tags"){
+		var options = optionsReturn;
 		addInfoHeader = '<label>Добавить тэг</label>';
 		updInfoHeader = '<label>Изменить информацию о тэге</label>';
 		addInfoBody = 
@@ -45,20 +49,21 @@ function drawInfo(value){
 		updInfoBody = 
 		'<div class=row><label class="updLabel">Тэг</label><input type="text" class="form-control upd-text" id=updShortName>	</div>'+
 		'<div class=row><label class="updLabel">Название		</label><input type="text" class="form-control upd-text" id=updTag>	</div>'+
-		'<div class=row><label class="updLabel">Описание</label><input type="text" class="form-control upd-text" id=updDesc>	</div>';
+		'<div class=row><label class="updLabel">Описание</label><input type="text" class="form-control upd-text" id=updDesc>	</div>'+'<div class=row><label class="updLabel">Группа тегов</label><select class="form-control upd-text" id="exampleSelect1">'+
+options+ '</select>	</div>';
 		addInfoFooter = '<button class="btn btn-success" onclick="TagCheck(\'add\')">Добавить тэг</button>';
-		updInfoFooter = '<button class="btn btn-success" onclick="TagCheck(\'upd\')">Изменить информацию</button>';
+		updInfoFooter = '<button class="btn btn-success" onclick="TagCheck(\'upd\')">Изменить информацию</button><button class="btn btn-primary" onclick="ChangeTagGroup()">Изменить группу</button>';
 	}
 	if (value=="group"){
 		addInfoHeader = '<label>Добавить группу тэгов</label>';
-		updInfoHeader = '<label>Изменить информацию о группе тэгов</label>';
+		updInfoHeader = '<label>Изменить информацию о группе тэгов</label>'; 
 		addInfoBody = 
 '<div class=row><label class="updLabel">Название		</label><input type="text" class="form-control upd-text" id=addTag>	</div>'+
 '<div class=row><label class="updLabel">Описание</label><input type="text" class="form-control upd-text" id=addDesc>	</div>';
 		updInfoBody = 
 		'<div class=row><label class="updLabel">Название		</label><input type="text" class="form-control upd-text" id=updTag>	</div>'+
 		'<div class=row><label class="updLabel">Описание</label><input type="text" class="form-control upd-text" id=updDesc>	</div>';
-		addInfoFooter = '<button class="btn btn-success" onclick="TagCheck(\'add\')">Добавить тэг</button>';
+		addInfoFooter = '<button class="btn btn-success" onclick="TagCheck(\'add\')">Добавить группу тэгов</button>';
 		updInfoFooter = '<button class="btn btn-success" onclick="TagCheck(\'upd\')">Изменить информацию</button>';
 	}
 	if (value=="stat"){
@@ -88,11 +93,16 @@ function drawInfo(value){
 	document.getElementById("addFooter").innerHTML = addInfoFooter;
 	document.getElementById("addHeader").innerHTML = addInfoHeader;
 };
+function ChangeTagGroup(){
+		TagInfo ={
+        "id": idNum,
+        "value": $("#exampleSelect1").val()
+		};
+		URL=changeTagGroup; 
+		console.log(TagInfo)
+		RestPost(TagInfo, URL);
+}
 function updateInfo(id, nameTag, loginShort, desc){
-				console.log(id);
-				console.log(nameTag);
-				console.log(loginShort);
-				console.log(desc);
 	idNum = id;
 	$("#updName").val(nameTag);
 	$("#updLogin").val(loginShort);
@@ -102,6 +112,7 @@ function updateInfo(id, nameTag, loginShort, desc){
 	$("#updateWrapper").addClass("active");
 }
 $(document).ready(function() {
+	getTagGroups();
 	$('li.hl').click(function(){
 		$('li.hl').removeClass('highlight');
 		$(this).toggleClass('highlight');

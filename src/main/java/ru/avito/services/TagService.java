@@ -12,5 +12,6 @@ public interface TagService {
     void delete(int id);
     Tag edit(Tag tag);
     Tag findOne(int id);
+    Tag changeGroup(Tag tag);
     List<Tag> findAll();
 }

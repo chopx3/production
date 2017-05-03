@@ -2,7 +2,18 @@
 
 var checker = "";
 var dataArray = [];
+function getTagGroups(){
+			$.get(tagGroupUrl)
+				.done(function (data) {
+					var info = data;
+					for (var i = 0;i<info.length;i++){
+						tagGroupsArray[i] = info[i].name;
+						optionsReturn +='<option value='+info[i].id+'>'+info[i].name+'</option>';
+					}				
+				})				
+}
 function fillTags(value){
+		
 		checker = value;
 		var tbody ="";
 		drawInfo(checker);
@@ -25,14 +36,16 @@ function fillTags(value){
 			document.getElementById("allAgentsTable").innerHTML = thead + tbody + tbot;					
 				})
 			}
+		
+		
 		//var fullTable = thead + tbody + tbot;
 		//document.getElementById("allAgentsTable").innerHTML = fullTable;
 }
-function drawTable(info, group){
+function drawTable(info, isGroup){
 var forInfo=forHL="";	
 			for(var i=0;i<info.length;i++){
 				var id = info[i].id;
-				if(group) {var value = "";forHL="class=groupTag";}
+				if(isGroup) {var value = "group";forHL="class=groupTag";}
 				else {var value = info[i].value;forHL="";}
 				var name = info[i].name;
 				var description = info[i].description;
@@ -42,16 +55,20 @@ var forInfo=forHL="";
 					"<td>"+id+"</td>"+
 					"<td>"+value+"</td>"+
 					"<td>"+name+"</td>"+
-					"<td>"+description+"</td>"+
-					'<td><button class="btn btn-sm btn-info" onclick=\"updateInfo(\''+dataArray[0]+'\',\''+dataArray[1]+'\',\''+dataArray[2]+'\',\''+dataArray[3]+'\')\">edit</button></td>'+
-				"</tr>";
-				if (group){
+					"<td>"+description+"</td>";
+					if(isGroup||checker == 'tags') {forInfo+='<td><button class="btn btn-sm btn-info" onclick=\"updateInfo(\''+dataArray[0]+'\',\''+dataArray[1]+'\',\''+dataArray[2]+'\',\''+dataArray[3]+'\')\">edit</button></td>'+
+					"</tr>";}
+					else {forInfo +='<td></td></tr>';}
+				
+				if (isGroup){
 				var tagForDraw = info[i].tags;
 				forInfo +=drawTable(tagForDraw,false);
 				}
 			}
 return forInfo;			
 }
+
+
 function TagCheck(value){
 	var check = true;
 	var nameField = "#"+value+"Tag";
@@ -73,7 +90,7 @@ function TagCheck(value){
 		"id":idNum,
         "name": $(nameField).val(),
         "value":$(loginField).val(),
-		"description": $(descField).val()
+		"description": $(descField).val(),
 		};
 		URL = updTagUrl;
 		}

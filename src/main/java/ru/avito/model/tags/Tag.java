@@ -3,6 +3,7 @@ package ru.avito.model.tags;
 import com.fasterxml.jackson.annotation.*;
 
 import javax.persistence.*;
+import java.util.List;
 import java.util.Set;
 
 /**
@@ -32,7 +33,7 @@ public class Tag implements Comparable<Tag> {
     @JoinTable(name ="taggroup_tags", joinColumns = @JoinColumn(name = "tag_id"),
             inverseJoinColumns = @JoinColumn(name = "tagGroup_id"))
     @JsonIgnore
-    private Set<TagGroup> tagGroups;
+    private List<TagGroup> tagGroups;
 
     public Tag() {
     }
@@ -69,11 +70,11 @@ public class Tag implements Comparable<Tag> {
         this.description = description;
     }
 
-    public Set<TagGroup> getTagGroups() {
+    public List<TagGroup> getTagGroups() {
         return tagGroups;
     }
 
-    public void setTagGroups(Set<TagGroup> tagGroups) {
+    public void setTagGroups(List<TagGroup> tagGroups) {
         this.tagGroups = tagGroups;
     }
 

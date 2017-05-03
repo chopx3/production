@@ -1,28 +1,28 @@
 use firecatcher;
 
 -- Add tagsGroup group
-INSERT INTO taggroup VALUES (1, 'Main');
-INSERT INTO taggroup VALUES (2, 'Info logic model');
-INSERT INTO taggroup VALUES (3, 'Site search');
-INSERT INTO taggroup VALUES (4, 'Items');
-INSERT INTO taggroup VALUES (5, 'Site other');
+INSERT INTO taggroup VALUES (1, 'Main', 'Основная группа тэгов');
+INSERT INTO taggroup VALUES (2, 'Infologic model', 'Инфологическая модель сайта');
+INSERT INTO taggroup VALUES (3, 'Site search', 'Вопросы по поиску на сайте');
+INSERT INTO taggroup VALUES (4, 'Items','Вопросы, связанные с объявлениями');
+INSERT INTO taggroup VALUES (5, 'Site other','Другие вопросы');
 
 
 -- Add 'Main' tags
     INSERT INTO tags VALUES (1, 'Listing Fees', 'lf', 'Вопросы по платным размещениям');
-    INSERT INTO tags VALUES (2, 'Vas', 'vas', 'Вопросы по доп. услугам');
-    INSERT INTO tags VALUES (3, 'Подписка', 'subs', 'Вопросы подпискам');
-    INSERT INTO tags VALUES (4, 'Feedback', 'feedback', 'обратная связь от клиентов');
+    INSERT INTO tags VALUES (2, 'Vas', 'vas', 'Вопросы по дополнительным услугам');
+    INSERT INTO tags VALUES (3, 'Подписка', 'subs', 'Вопросы по подпискам');
+    INSERT INTO tags VALUES (4, 'Feedback', 'feedback', 'Обратная связь от клиентов');
 -- Add 'InfoLogic model' tags
     INSERT INTO tags VALUES (5, 'Добавить регион или город', 'model_geo', 'Добавить регион или город');
     INSERT INTO tags VALUES (6, 'Добавить категорию','model_cat', 'Добавить категорию');
 -- Add 'Site search' tags
     INSERT INTO tags VALUES (7, 'Фильтры', 'search_filters', 'Проблемы с фильтрами');
     INSERT INTO tags VALUES (8, 'Проблемы', 'search_problems', 'Проблемы поиска');
-    INSERT INTO tags VALUES (9, 'Избранное и сохраненные','search_favourite', 'Сохраненный поиск и изюранные');
+    INSERT INTO tags VALUES (9, 'Избранное и сохраненные','search_favourite', 'Сохраненный поиск и избранное');
 -- Add 'Items' tags
     INSERT INTO tags VALUES (10, 'Содержимое','item_inside', 'Содержание объявления');
-    INSERT INTO tags VALUES (11, 'Подача и редактирование', 'item_add', 'Добавление объявления');
+    INSERT INTO tags VALUES (11, 'Подача и редактирование', 'item_add', 'Подача или редактирование объявления');
     INSERT INTO tags VALUES (12, 'Отзывы', 'item_review', 'Добавить отзывы покупателей к объявлениям');
     INSERT INTO tags VALUES (13, 'LF VAS', 'item_lf', 'Платные услуги и разовые размещения');
 -- Add 'Site other' tags

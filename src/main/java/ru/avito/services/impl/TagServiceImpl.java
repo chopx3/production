@@ -6,6 +6,8 @@ import ru.avito.model.tags.TagGroup;
 import ru.avito.dao.repository.TagGroupRepository;
 import ru.avito.dao.repository.TagRepository;
 import ru.avito.services.TagService;
+
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -25,7 +27,7 @@ public class TagServiceImpl implements TagService {
 
     @Override
     public Tag save(Tag tag) {
-        Set<TagGroup> tagGroups = new HashSet();
+        List<TagGroup> tagGroups = new ArrayList<>();
         tagGroups.add(tagGroupRepository.findOne(1));
         tag.setTagGroups(tagGroups);
         return tagRepository.saveAndFlush(tag);
@@ -43,7 +45,15 @@ public class TagServiceImpl implements TagService {
         currentTag.setName(actualTag.getName());
         currentTag.setDescription(actualTag.getDescription());
         currentTag.setValue(actualTag.getValue());
+        return tagRepository.saveAndFlush(currentTag);
+    }
 
+    @Override
+    public Tag changeGroup(Tag actualTag){
+        Tag currentTag = tagRepository.findOne(actualTag.getId());
+        List<TagGroup> tagGroups = new ArrayList<>();
+        tagGroups.add(tagGroupRepository.findOne(Integer.valueOf(actualTag.getValue())));
+        currentTag.setTagGroups(tagGroups);
         return tagRepository.saveAndFlush(currentTag);
     }
 

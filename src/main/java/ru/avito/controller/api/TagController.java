@@ -39,6 +39,13 @@ public class TagController {
     }
 
     @ResponseStatus(HttpStatus.CREATED)
+    @RequestMapping(value ="/group", method = RequestMethod.POST)
+    public ResponseMessage changeGroup(@RequestBody Tag tag){
+        tagService.changeGroup(tag);
+        return new ResponseMessage(201,"ok");
+    }
+
+    @ResponseStatus(HttpStatus.CREATED)
     @RequestMapping(value ="/update", method = RequestMethod.POST)
     public ResponseMessage editTag(@RequestBody Tag tag){
         tagService.edit(tag);
