@@ -107,10 +107,10 @@ public class CallController {
         return callService.findByAvitoUserId(avitoUserId, aPage);
     }
 
-    @RequestMapping(value = "find/questions/{startPeriod}/{endPeriod}", method = RequestMethod.POST)
+    @RequestMapping(value = "find/questions/{ids}/{startPeriod}/{endPeriod}", method = RequestMethod.GET)
     public List<Call> findByQuestionIdAndTimeStartBetween(@PathVariable("startPeriod") Long startPeriod,
                                     @PathVariable("endPeriod") Long endPeriod,
-                                    @RequestBody List<Integer> ids){
+                                    @PathVariable Integer ids){
         return callService.findByQuestionIdAndTimeStartBetween(ids, startPeriod, endPeriod);
     }
 }

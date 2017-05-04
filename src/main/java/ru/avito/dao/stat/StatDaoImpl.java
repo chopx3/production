@@ -129,17 +129,17 @@ public class StatDaoImpl implements StatDao {
         try {
             connection = dataSource.getConnection();
             PreparedStatement p =connection.prepareStatement(
-                    "SELECT question.description AS Field, count(DISTINCT(chain_id)) As Total " +
+                    "SELECT question.id AS ID, question.description AS Field, count(DISTINCT(chain_id)) As Total " +
                             "FROM calls JOIN question ON calls.question_id = question.id " +
                             "WHERE question_id=question.id " +
                             "AND time_begin BETWEEN ? AND ? " +
                             "GROUP BY question_id " +
-                            "ORDER BY 2 DESC");
+                            "ORDER BY 3 DESC");
 
             p.setLong(1, timeStart);
             p.setLong(2, timeEnd);
             ResultSet resultSet = p.executeQuery();
-            result = convert(resultSet, "Field", "Total");
+            result = convert(resultSet, "Field", "Total", "ID");
         } catch (SQLException e) {
             System.out.println(e);
         }

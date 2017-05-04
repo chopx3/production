@@ -4,8 +4,11 @@ var endDate;
 $(document).ready(function() {
 	var start=moment().format("DD-MM-YYYY");
 	var end=moment().add(1,'days').format("DD-MM-YYYY");
+	getCats();
+	getQuestionsInfo();
 })
 function openStat(){
+	document.getElementById("secondTable").innerHTML = "";
 	drawInfo("stat");
 	StartCalendar();
 	jQuery('#allCalls').click();
@@ -67,11 +70,12 @@ function tableFiller(data, additional)
 	else {
 	thead = '<div class="row"><div class="table-scroll col-lg-8"><table id="commentTable" class="table table-striped table-hover" ><thead><tr><th class="col-lg-6">' + firstColumn + '</th><th class="col-lg-6">' + secondColumn + '</th></tr></thead><tbody>';
 	for (var i = 0; i < finalForm.columns.length; i++) {
-		
+		var questionAdd =(additional == "questions") ? "<button class='btn btn-primary btn-sm pull-right' onclick=getQuestions(\""+finalForm.columns[i].id+"\")>show</button>" : "";
 		message = finalForm.columns[i].field;
 		count = finalForm.columns[i].total;
 		sum += parseInt(count);
-		outputComments += '<tr><td>'+message+'</td><td class="breakable" >'+count+'</td></tr>'
+		
+		outputComments += '<tr><td>'+message+'</td><td class="breakable" >'+count+questionAdd+'</td></tr>'
 	}
 	var codeForSum = "<tr><td class=sum>"+ "Всего" +"</td><td class=sum>"+sum+"</td>";
 	document.getElementById("allAgentsTable").innerHTML = thead +codeForSum+ outputComments + tbot;

@@ -10,9 +10,14 @@ var tagGroupUrl = host+"/taggroup/find";
 var addTagGroupUrl = host+"/taggroup/save";
 var updTagGroupUrl = host+"/taggroup/update";
 var changeTagGroup = host +"/tags/group";
+var getQuestionsUrl = host + "/call/find/questions/";
 var tempValue;
 var tagGroupsArray = [];
 var optionsReturn = "";
+var dateFormat = 'DD.MM.YYYY HH:mm:ss';
+var getCatsUrl = host+"/category/find";
+var getQuestionsInfoUrl = host+"/question/find"
+var oktell = "http://"+host+"/oktell/calls?name=Avito_get_file_by_id_conn&attachment=1&startparam1=";
 function drawInfo(value){
 	$("#updateWrapper").removeClass("active");
 	var addInfoBody, addInfoFooter, updInfoBody, updInfoFooter, addInfoHeader, updInfoHeader;
@@ -93,15 +98,7 @@ options+ '</select>	</div>';
 	document.getElementById("addFooter").innerHTML = addInfoFooter;
 	document.getElementById("addHeader").innerHTML = addInfoHeader;
 };
-function ChangeTagGroup(){
-		TagInfo ={
-        "id": idNum,
-        "value": $("#exampleSelect1").val()
-		};
-		URL=changeTagGroup; 
-		console.log(TagInfo)
-		RestPost(TagInfo, URL);
-}
+
 function updateInfo(id, nameTag, loginShort, desc){
 	idNum = id;
 	$("#updName").val(nameTag);
@@ -117,4 +114,24 @@ $(document).ready(function() {
 		$('li.hl').removeClass('highlight');
 		$(this).toggleClass('highlight');
 	});
+	$("#searchButton").click(function(event){
+		$("tr.table-row").each(function () { $(this).removeClass('search'); });
+		$("#searchField").removeClass("error");
+		event.preventDefault();
+		try{
+		var target_top= $('#'+$("#searchField").val()).offset().top;
+		$('html, body').animate({scrollTop:target_top-50}, 'slow');		
+		$('#'+$("#searchField").val()).addClass("search");
+		}
+		catch(err){
+		$("#searchField").addClass("error");
+		}
+	});
+	$('#searchField').keypress(function (e) {
+ console.log("clicked");
+ var key = e.which;
+ if(key == 13)   {
+   jQuery('#searchButton').click();
+  }
+});
 })

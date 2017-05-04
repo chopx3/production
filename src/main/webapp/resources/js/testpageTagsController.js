@@ -51,7 +51,7 @@ var forInfo=forHL="";
 				var description = info[i].description;
 				
 				dataArray = [id, name,value , description];
-				forInfo += "<tr id=\""+value+"\" "+ " "+forHL+">"+
+				forInfo += "<tr id=\""+value+"\" "+ " "+forHL+" class='table-row'>"+
 					"<td>"+id+"</td>"+
 					"<td>"+value+"</td>"+
 					"<td>"+name+"</td>"+
@@ -125,6 +125,15 @@ function TagCheck(value){
 		console.log(TagInfo+" "+URL);
 		fillTags(checker);
 	}
+}
+function ChangeTagGroup(){
+		TagInfo ={
+        "id": idNum,
+        "value": $("#exampleSelect1").val()
+		};
+		URL=changeTagGroup; 
+		console.log(TagInfo)
+		RestPost(TagInfo, URL);
 }
 $(document).ready(function() {
 

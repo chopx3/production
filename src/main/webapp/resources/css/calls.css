@@ -1,24 +1,28 @@
 .history, #divAddButton {
 	margin: 8px 0px;
 	padding:6px;
-	background-color:lightblue;
-	border-radius: 5px;
 	font-family: 'Segoe UI', Tahoma, sans-serif;
 	font-size: 14px;
 	display:table;
+	background-color: lightblue;
+    background-clip: padding-box;
+    box-shadow: rgba(0, 0, 0, 0.172549) 0px 6px 12px;
+    list-style: none;
+    border-width: 1px;
+    border-style: solid;
+    border-color: rgba(0, 0, 0, 0.14902);
+    border-image: initial;
+    border-radius: 4px;
 }
 .history-info {
 	font-size: 14px;
 }
-div.active{
+div.woop{
 	background-color:cornflowerblue;
 	border:1px solid blue;
 }
 audio{
 	text-align: left;
 	margin: 10px auto 0 auto;
-	width: 100%;
-	width:35vw;
-	max-width: 550px;
-	min-width:320px;
+	width: 100%
 }

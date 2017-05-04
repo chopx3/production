@@ -21,7 +21,7 @@ function fillAgents(){
 				var userRole = (role == 0) ? "Undefined" : (role == 1) ? "Admin" : "User";
 				dataArray = [id, name, login, id];
 				
-				tbody += "<tr id="+name+">"+
+				tbody += "<tr id="+name+" class='table-row'>"+
 					"<td>"+id+"</td>"+
 					"<td>"+name+"</td>"+
 					"<td>"+login+"</td>"+
@@ -73,16 +73,5 @@ function AgentCheck(value){
 	}
 }
 $(document).ready(function() {
-	$("#searchButton").click(function(event){
-		event.preventDefault();
-		var target_top= $('#'+$("#searchField").val()).offset().top;
-		$('html, body').animate({scrollTop:target_top-50}, 'slow');
-	});
-	$('#searchField').keypress(function (e) {
- console.log("clicked");
- var key = e.which;
- if(key == 13)   {
-   jQuery('#searchButton').click();
-  }
-});
+	
 })

@@ -31,6 +31,9 @@ box-shadow: inset 0 0 0.5em red;
 #searchBar{
 	top:1%;
 }
+#searchField.error{
+ box-shadow: inset 0 0 0.2em red;
+}
 #updateWrapper{
 top:10%;
 display:none;
@@ -52,6 +55,10 @@ bottom:40%;
 }
 #wrapper{
 	top:50;
+}
+tr.search{
+	 box-shadow: inset 0 0 0.2em blue;
+	 border-radius:10px;
 }
 .form-body{
 	margin-bottom:10px;

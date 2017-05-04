@@ -11,6 +11,8 @@
     <script src="${pageContext.request.contextPath}/resources/js/calendar_daterange.js" type="text/javascript" charset="utf-8"></script>
     <script src="${pageContext.request.contextPath}/resources/js/testpageTagsController.js"></script>    
     <link href="${pageContext.request.contextPath}/resources/css/testPage.css" rel="stylesheet">
+	<link href="${pageContext.request.contextPath}/resources/css/calls.css" rel="stylesheet">
+	<script src="${pageContext.request.contextPath}/resources/js/testpageStatCallsDraw.js"></script>
     <script type="text/javascript" src="https://cdn.jsdelivr.net/bootstrap.daterangepicker/2/daterangepicker.js"></script>
     <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/bootstrap.daterangepicker/2/daterangepicker.css" />
 </head>
@@ -81,6 +83,9 @@
     <div id="infoWrapper" class="col-lg-12">
         <div class="row">
             <div id="allAgentsTable" class="col-lg-8">
+
+            </div>
+			<div id="secondTable" class="col-lg-8">
 
             </div>
             <div id="updateAgent" class="col-lg-4">
