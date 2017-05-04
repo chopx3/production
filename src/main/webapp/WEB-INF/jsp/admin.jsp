@@ -57,7 +57,7 @@
 
         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
             <ul class="nav navbar-nav topbar">
-                <li class="hl"><a href="#" onclick=fillAgents()>Агенты </a></li>
+                <li class="hl highlight"><a href="#" onclick=fillAgents()>Агенты </a></li>
                 <li class="hl"><a href="#" onclick=fillTags("tags")>Тэги</a></li>
                 <li class="hl"><a href="#" onclick=fillTags("group")>Группы тэгов</a></li>
                 <li class="hl"><a href="#" onclick=openStat()>Статистика</a></li>
@@ -89,7 +89,7 @@
 
             </div>
             <div id="updateAgent" class="col-lg-4">
-                <div id=updateWrapper class="uniForm col-lg-4">
+                <div id=updateWrapper class="roundPlusShadow rightForms col-lg-4">
                     <div id=updHeader>
 
                     </div>
@@ -100,7 +100,7 @@
 
                     </div>
                 </div>
-                <div id=addWrapper class="uniForm col-lg-4">
+                <div id=addWrapper class="roundPlusShadow rightForms col-lg-4">
                     <div id=addHeader>
 
                     </div>

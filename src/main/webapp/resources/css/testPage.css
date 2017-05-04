@@ -1,8 +1,7 @@
-.uniForm{
+.roundPlusShadow{
 	font-size: 13px;
     background-color: white;
     box-shadow: rgba(0, 0, 0, 0.498039) 0px 5px 15px;
-    z-index: 1080;
     background-clip: padding-box;
     text-align: center;
     border-width: 1px;
@@ -10,10 +9,13 @@
     border-color: rgba(0, 0, 0, 0.2);
     border-image: initial;
     border-radius: 10px;
-    padding: 10px;
-	padding-bottom:5px;
+    padding: 10px 0px;
+	position: absolute;
+	margin-top : 10px;
+}
+.rightForms{
 	position:fixed;
-	right:20;
+	right:5;
 }
 .Footer{
 	margin-top:10px;
@@ -35,11 +37,11 @@ box-shadow: inset 0 0 0.5em red;
  box-shadow: inset 0 0 0.2em red;
 }
 #updateWrapper{
-top:10%;
+top:50;
 display:none;
 }
 #updateWrapper.active{
-top:10%;
+top:50;
 display:block;
 }
 #addWrapper{

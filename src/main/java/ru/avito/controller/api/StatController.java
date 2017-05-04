@@ -56,7 +56,7 @@ public class StatController {
         return statService.findTotalCallsByAgent(startPeriod, endPeriod);
     }
 //todo проверить url на фронте
-    @RequestMapping(value = "find/agents/empty/total/{startPeriod}/{endPeriod}", produces = "application/json;charset=UTF-8")
+    @RequestMapping(value = "find/empty/total/{startPeriod}/{endPeriod}", produces = "application/json;charset=UTF-8")
     public String findTotalEmptyCallsByAgent(@PathVariable("startPeriod") Long startPeriod,
                                              @PathVariable("endPeriod") Long endPeriod) {
         return statService.findTotalEmptyCallsByAgent(startPeriod, endPeriod);

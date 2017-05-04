@@ -17,10 +17,10 @@ function openStat(){
 	$("#updateWrapper").addClass("active");
 }
 function getInfo(value){
+	
 	var timeStart = moment(startDate, "DD-MM-YYYY").unix()*1000;
 	var timeEnd = moment(endDate, "DD-MM-YYYY").unix()*1000;
 	if (value != 'date') {tempValue = value;$('.catButtons').each(function () { $(this).removeClass("activeButton"); }); $("[value="+tempValue+"]").addClass("activeButton");}
-	
 	$.get(statURL+tempValue+"/total/"+timeStart+'/'+timeEnd)
 			.done(function (data) {
 				var totalInfo = data;
