@@ -65,11 +65,11 @@ tr.search{
 .form-body{
 	margin-bottom:10px;
 }
-.upd-text{
+.inputTextField{
 	width:70%;
 	display: inline-block;
 }
-.updLabel{
+.rightLabel{
 	text-align:left;
 	width:20%;
 	padding:5px;

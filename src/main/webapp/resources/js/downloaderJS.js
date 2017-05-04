@@ -26,12 +26,6 @@ function getCats () {//типа юмор, Categories -> Cats, смешно, да
 		 }
 )}
 
-function smth(){
-		TagConsole();
-		calendarConsole();
-	//	console.log(catNum);
-		getCalls();
-	};
 function getCalls(){
 //	console.log(startDate + "," + endDate);
 	var timeStart = moment(startDate, "DD-MM-YYYY").unix()*1000;

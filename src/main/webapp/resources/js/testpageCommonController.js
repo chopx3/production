@@ -25,14 +25,14 @@ function drawInfo(value){
 		addInfoHeaderValue = 'Добавить агента';
 		updInfoHeaderValue = 'Изменить информацию об агенте';
 		addInfoBody = 
-	'<div class=row><label class="updLabel">username</label><input type="text" class="form-control upd-text" id=addName></div>'+
-'<div class=row><label class="updLabel">OktellLogin</label><input type="text" class="form-control upd-text" id=addLogin></div>';
-		addInfoFooterFunc = "AgentCheck(\'add\')";
+	'<div class=row><label class="rightLabel">username</label><input type="text" class="form-control inputTextField" id=addTextField1></div>'+
+'<div class=row><label class="rightLabel">OktellLogin</label><input type="text" class="form-control inputTextField" id=addTextField2></div>';
+		addInfoFooterFunc = "infoCheck(\'add\', \'agents\')";
 		updInfoBody = 
-				'<div class=row><label 	class="updLabel">username</label>	<input type="text" 	class="form-control upd-text" id=updName></div>'+
-				'<div class=row><label 	class="updLabel">OktellLogin</label>	<input type="text" 	class="form-control upd-text" id=updLogin></div>'+
-				'<div class=row><label 	class="updLabel">Роль</label>'+
-						'<div class="btn-group upd-text" role="group" aria-label="Basic example" data-toggle=buttons>'+
+				'<div class=row><label 	class="rightLabel">username</label>	<input type="text" 	class="form-control inputTextField" id=updTextField1></div>'+
+				'<div class=row><label 	class="rightLabel">OktellLogin</label>	<input type="text" 	class="form-control inputTextField" id=updTextField2></div>'+
+				'<div class=row><label 	class="rightLabel">Роль</label>'+
+						'<div class="btn-group inputTextField" role="group" aria-label="Basic example" data-toggle=buttons>'+
 							'<label class="btn btn-primary active">'+
 							'<input type="radio" name="options" id="optionUser" autocomplete="off" checked>User'+
 							'</label>'+
@@ -42,38 +42,38 @@ function drawInfo(value){
 						'</div>'+
 				'</div>';
 	
-	updInfoFooterFunc = "AgentCheck(\'upd\')";
+	updInfoFooterFunc = "infoCheck(\'upd\', \'agents\')";
 	}
 	if (value=="tags"){
 		var options = optionsReturn;
 		addInfoHeaderValue = 'Добавить тэг';
 		updInfoHeaderValue = 'Изменить информацию о тэге';
-		addInfoFooterFunc = "TagCheck(\'add\')";
+		addInfoFooterFunc = "infoCheck(\'add\', \'tags\')";
 		updInfoFooterFuncSecond = '<button class="btn btn-primary" onclick="ChangeTagGroup()">Изменить группу</button>';
-		updInfoFooterFunc = "TagCheck(\'upd\')";
+		updInfoFooterFunc = "infoCheck(\'upd\', \'tags\')";
 		addInfoBody = 
-		'<div class=row><label class="updLabel">Тэг</label><input type="text" class="form-control upd-text" id=addShortName>	</div>'		+
-		'<div class=row><label class="updLabel">Название		</label><input type="text" class="form-control upd-text" id=addTag>	</div>'+
-		'<div class=row><label class="updLabel">Описание</label><input type="text" class="form-control upd-text" id=addDesc>	</div>';
+		'<div class=row><label class="rightLabel">Тэг		</label><input type="text" class="form-control inputTextField" 	id=addTextField1>	</div>'		+
+		'<div class=row><label class="rightLabel">Название	</label><input type="text" class="form-control inputTextField" 	id=addTextField2>	</div>'+
+		'<div class=row><label class="rightLabel">Описание	</label><input type="text" class="form-control inputTextField" 	id=addTextField3>	</div>';
 		updInfoBody = 
-		'<div class=row><label class="updLabel">Тэг</label><input type="text" class="form-control upd-text" id=updShortName>	</div>'+
-		'<div class=row><label class="updLabel">Название		</label><input type="text" class="form-control upd-text" id=updTag>	</div>'+
-		'<div class=row><label class="updLabel">Описание</label><input type="text" class="form-control upd-text" id=updDesc>	</div>'+
-		'<div class=row><label class="updLabel">Группа тегов</label><select class="form-control upd-text" id="exampleSelect1">'+
+		'<div class=row><label class="rightLabel">Тэг		</label><input type="text" class="form-control inputTextField" 	id=updTextField1>	</div>'+
+		'<div class=row><label class="rightLabel">Название	</label><input type="text" class="form-control inputTextField" 	id=updTextField2>	</div>'+
+		'<div class=row><label class="rightLabel">Описание	</label><input type="text" class="form-control inputTextField" 	id=updTextField3>	</div>'+
+		'<div class=row><label class="rightLabel">Группа тегов</label><select class="form-control inputTextField" id="exampleSelect1">'+
 		options+ '</select>	</div>';
 
 	}
 	if (value=="group"){
 		addInfoHeaderValue = 'Добавить группу тэгов';
 		updInfoHeaderValue = 'Изменить информацию о группе тэгов'; 
-		addInfoFooterFunc = "TagCheck(\'add\')";		
-		updInfoFooterFunc = "TagCheck(\'upd\')";
+		addInfoFooterFunc = "infoCheck(\'add\', \'group\')";		
+		updInfoFooterFunc = "infoCheck(\'upd\', \'group\')";
 		addInfoBody = 
-		'<div class=row><label class="updLabel">Название		</label><input type="text" class="form-control upd-text" id=addTag>	</div>'+
-		'<div class=row><label class="updLabel">Описание</label><input type="text" class="form-control upd-text" id=addDesc>	</div>';
+		'<div class=row><label class="rightLabel">Название	</label><input type="text" class="form-control inputTextField" id=addTextField1>	</div>'+
+		'<div class=row><label class="rightLabel">Описание	</label><input type="text" class="form-control inputTextField" id=addTextField2>	</div>';
 		updInfoBody = 
-		'<div class=row><label class="updLabel">Название		</label><input type="text" class="form-control upd-text" id=updTag>	</div>'+
-		'<div class=row><label class="updLabel">Описание</label><input type="text" class="form-control upd-text" id=updDesc>	</div>';
+		'<div class=row><label class="rightLabel">Название	</label><input type="text" class="form-control inputTextField" id=updTextField2>	</div>'+
+		'<div class=row><label class="rightLabel">Описание	</label><input type="text" class="form-control inputTextField" id=updTextField3>	</div>';
 	}
 	if (value=="stat"){
 	updInfoBody=
@@ -86,9 +86,9 @@ function drawInfo(value){
 	'<button class="btn btn-info" id="week">Неделя</button>'+
 	'<button class="btn btn-info" id="month">Месяц</button>';
 	addInfoBody=
-	'<div class=row><label class="updLabel">Звонки</label><div class="upd-text"><button class="btn btn-primary catButtons" value="categories" onclick="getInfo(\'categories\')">Категория</button><button class="btn btn-primary catButtons" value="users" onclick="getInfo(\'users\')">Users</button><button class="btn btn-primary catButtons" value="questions" onclick="getInfo(\'questions\')">Вопросы</button></div></div>'+
-	'<div class=row><label class="updLabel">Агенты</label><div class="upd-text"><button class="btn btn-primary catButtons" value="empty" onclick="getInfo(\'empty\')" >Незаполненные</button><button class="btn btn-primary catButtons" value="agents" onclick="getInfo(\'agents\')" id="allCalls"> Всего</button></div></div>'+
-	'<div class=row><label class="updLabel">Другие</label><div class="upd-text"><button class="btn btn-primary catButtons" value="managers" onclick="getInfo(\'managers\')">Менеджер</button><button class="btn btn-primary catButtons" value="outcomings" onclick="getInfo(\'outcomings\')">Исходящие</button></div></div>';
+	'<div class=row><label class="rightLabel">Звонки</label><div class="inputTextField"><button class="btn btn-primary catButtons" value="categories" onclick="getInfo(\'categories\')">Категория</button><button class="btn btn-primary catButtons" value="users" onclick="getInfo(\'users\')">Users</button><button class="btn btn-primary catButtons" value="questions" onclick="getInfo(\'questions\')">Вопросы</button></div></div>'+
+	'<div class=row><label class="rightLabel">Агенты</label><div class="inputTextField"><button class="btn btn-primary catButtons" value="empty" onclick="getInfo(\'empty\')" >Незаполненные</button><button class="btn btn-primary catButtons" value="agents" onclick="getInfo(\'agents\')" id="allCalls"> Всего</button></div></div>'+
+	'<div class=row><label class="rightLabel">Другие</label><div class="inputTextField"><button class="btn btn-primary catButtons" value="managers" onclick="getInfo(\'managers\')">Менеджер</button><button class="btn btn-primary catButtons" value="outcomings" onclick="getInfo(\'outcomings\')">Исходящие</button></div></div>';
 	addInfoFooterFunc = updInfoFooterFunc = "";
 	addInfoHeaderValue = "Выбор категории звонка";
 	updInfoHeaderValue =  'Выберите период:';
@@ -97,21 +97,99 @@ function drawInfo(value){
 	var updInfoHeader = "<label>"+updInfoHeaderValue+"</label>";
 	var addInfoFooter = (value !="stat") ? '<button class="btn btn-success" onclick="'+addInfoFooterFunc+'">Добавить</button>' : "";
 	var updInfoFooter = (value !="stat") ? '<button class="btn btn-success" onclick="'+updInfoFooterFunc+'">Изменить информацию</button>'+updInfoFooterFuncSecond : "";
-	document.getElementById("updBody").innerHTML = updInfoBody;
-	document.getElementById("updFooter").innerHTML = updInfoFooter;
-	document.getElementById("updHeader").innerHTML = updInfoHeader;
-	document.getElementById("addBody").innerHTML = addInfoBody;
-	document.getElementById("addFooter").innerHTML = addInfoFooter;
-	document.getElementById("addHeader").innerHTML = addInfoHeader;
+	document.getElementById("updBody").innerHTML 	= updInfoBody;
+	document.getElementById("updFooter").innerHTML 	= updInfoFooter;
+	document.getElementById("updHeader").innerHTML 	= updInfoHeader;
+	document.getElementById("addBody").innerHTML 	= addInfoBody;
+	document.getElementById("addFooter").innerHTML 	= addInfoFooter;
+	document.getElementById("addHeader").innerHTML 	= addInfoHeader;
 };
-
+function infoCheck(value, type){
+	var check = true;
+	var firstField = 	"#"+value+"TextField1";
+	var secondField = 	"#"+value+"TextField2";
+	if (type != "agents") {
+	var thirdField = 	"#"+value+"TextField3";
+	if($(thirdField).val()==""){$(thirdField).addClass("box-shadow"); check = false;}	}
+	$(firstField).removeClass("box-shadow");
+	$(secondField).removeClass("box-shadow");
+	if($(firstField).val()==""){$(firstField).addClass("box-shadow");check = false;}
+	if($(secondField).val()==""){$(secondField).addClass("box-shadow"); check = false;}
+	if(check){
+		if (type == "agents"){
+		var URL;
+		var infoToServer;
+		if(value=="upd"){
+		var role = ($('#optionAdmin').is(':checked'))?roleAdmin:roleUser;
+		infoToServer ={
+		"id":idNum,
+        "username": $(firstField).val(),
+        "oktellLogin":$(secondField).val(),
+		"roles": JSON.parse(role)
+		};
+		URL = updAgentUrl;
+		}
+		else {
+		infoToServer ={
+        "username": $(firstField).val(),
+        "oktellLogin":$(secondField).val()
+		};
+		URL=addAgentUrl; 
+		}
+		console.log(infoToServer);
+		console.log(URL);
+		}
+		
+		if (type == "tags"){
+		if(value=="upd"){
+		infoToServer ={
+		"id":idNum,
+        "value": $(firstField).val(),
+        "name":$(secondField).val(),
+		"description": $(thirdField).val(),
+		};
+		URL = updTagUrl;
+		}
+		else {
+		infoToServer ={
+		"value":$(firstField).val(),
+        "name": $(secondField).val(),
+		"description": $(thirdField).val()
+		};
+		URL=addTagUrl; 
+		}			
+		}
+		if (type == "group") {
+			if(value=="upd"){
+				infoToServer ={
+						"id":idNum,
+						"name": $(secondField).val(),
+						"description": $(thirdField).val()
+						};
+		URL = updTagGroupUrl;
+			}
+			else {
+				infoToServer ={
+				"name": $(firstField).val(),
+				"value":$(secondField).val(),
+				"description": $(thirdField).val()
+				};
+				URL=addTagGroupUrl; 
+				}	
+		}
+		RestPost(infoToServer, URL);
+		fillInfo(type);
+	}
+}
+function fillInfo(type){
+	if (type == "agents") 	{fillAgents()}
+	else {fillTags(type)}
+}
 function updateInfo(id, nameTag, loginShort, desc){
 	idNum = id;
-	$("#updName").val(nameTag);
-	$("#updLogin").val(loginShort);
-	$("#updTag").val(nameTag);
-	$("#updShortName").val(loginShort);
-	$("#updDesc").val(desc);
+	$("#updTextField1").val(nameTag);
+	$("#updTextField2").val(loginShort);
+	$("#updTextField3").val(desc);
 	$("#updateWrapper").addClass("active");
 }
 $(document).ready(function() {

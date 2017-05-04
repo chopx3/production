@@ -13,7 +13,7 @@ function getTagGroups(){
 				})				
 }
 function fillTags(value){
-		
+		document.getElementById("secondTable").innerHTML = "";
 		checker = value;
 		var tbody ="";
 		drawInfo(checker);
@@ -42,7 +42,7 @@ var forInfo=forHL="";
 				var name = info[i].name;
 				var description = info[i].description;
 				
-				dataArray = [id, name,value , description];
+				dataArray = [id, value, name , description];
 				forInfo += "<tr id=\""+value+"\" "+ " "+forHL+" class='table-row'>"+
 					"<td>"+id+"</td>"+
 					"<td>"+value+"</td>"+
@@ -60,64 +60,6 @@ var forInfo=forHL="";
 return forInfo;			
 }
 
-
-function TagCheck(value){
-	var check = true;
-	var nameField = "#"+value+"Tag";
-	var loginField = "#"+value+"ShortName";
-	var descField = "#"+value+"Desc";
-	$(nameField).removeClass("box-shadow");
-	$(loginField).removeClass("box-shadow");
-	$(descField).removeClass("box-shadow");
-	if($(nameField).val()==""){$(nameField).addClass("box-shadow");check = false;}
-	if(checker=="tags"){if($(loginField).val()==""){$(loginField).addClass("box-shadow"); check = false;}}
-	if($(descField).val()==""){$(descField).addClass("box-shadow"); check = false;}
-	if(check){
-		
-		var URL;
-		var AgentInfo;
-		if(checker=="tags"){
-		if(value=="upd"){
-		TagInfo ={
-		"id":idNum,
-        "name": $(nameField).val(),
-        "value":$(loginField).val(),
-		"description": $(descField).val(),
-		};
-		URL = updTagUrl;
-		}
-		else {
-		TagInfo ={
-        "name": $(nameField).val(),
-        "value":$(loginField).val(),
-		"description": $(descField).val()
-		};
-		URL=addTagUrl; 
-		}			
-		}
-		else{
-			if(value=="upd"){
-				TagInfo ={
-						"id":idNum,
-						"name": $(nameField).val(),
-						"description": $(descField).val()
-						};
-		URL = updTagGroupUrl;
-			}
-			else {
-				TagInfo ={
-				"name": $(nameField).val(),
-				"value":$(loginField).val(),
-				"description": $(descField).val()
-				};
-				URL=addTagGroupUrl; 
-				}	
-		}
-		RestPost(TagInfo, URL);
-		console.log(TagInfo+" "+URL);
-		fillTags(checker);
-	}
-}
 function ChangeTagGroup(){
 		TagInfo ={
         "id": idNum,

@@ -1,8 +1,5 @@
 var startDate;
 var endDate;
-function calendarConsole(){
-	// console.log("Начальная дата: " + startDate + ", конечная дата: " +endDate);
-}
 
 function cb(start, end) {
 			if (start.length==10){
@@ -12,7 +9,7 @@ function cb(start, end) {
 				else{
 			startDate = moment(start).format("DD-MM-YYYY");;
 			endDate = moment(end).format("DD-MM-YYYY");;
-				}		
+				}			
     }
 
 function createCalendar(startDate, endDate)
@@ -59,12 +56,12 @@ function StartCalendar() {
 
     createCalendar(startDate, endDate);
     cb(startDate, endDate);
-
+	getInfo('date');
 });
 function afterClickActions(){
 		createCalendar(startDate, endDate);
 		cb(startDate, endDate);
-		getInfo('date');
+		getInfo('date');	
 }
 $("#yesterday").click(function () {
 		

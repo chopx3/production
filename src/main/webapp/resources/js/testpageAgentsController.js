@@ -4,6 +4,7 @@ var roleAdmin = '[{ "id":1,"name":"ROLE_ADMIN" }]';
 var idNum;
 var dataArray = [];
 function fillAgents(){
+		document.getElementById("secondTable").innerHTML = "";
 		drawInfo("agents");
 		$("#addWrapper").addClass("active").removeClass("higher");
 		$.get(allAgentsUrl)
@@ -38,40 +39,7 @@ function fillAgents(){
 			}
 		);
 }
-function AgentCheck(value){
-	var check = true;
-	var nameField = "#"+value+"Name";
-	var loginField = "#"+value+"Login";
-	$(nameField).removeClass("box-shadow");
-	$(loginField).removeClass("box-shadow");
-	if($(nameField).val()==""){$(nameField).addClass("box-shadow");check = false;}
-	if($(loginField).val()==""){$(loginField).addClass("box-shadow"); check = false;}
-	if(check){
-		var URL;
-		var AgentInfo;
-		if(value=="upd"){
-		var role = ($('#optionAdmin').is(':checked'))?roleAdmin:roleUser;
-		AgentInfo ={
-		"id":idNum,
-        "username": $(nameField).val(),
-        "oktellLogin":$(loginField).val(),
-		"roles": JSON.parse(role)
-		};
-		URL = updAgentUrl;
-		}
-		else {
-		AgentInfo ={
-        "username": $(nameField).val(),
-        "oktellLogin":$(loginField).val()
-		};
-		URL=addAgentUrl; 
-		}
-		console.log(AgentInfo);
-		console.log(URL);
-		RestPost(AgentInfo, URL);
-		fillAgents();
-	}
-}
+
 $(document).ready(function() {
 	
 })

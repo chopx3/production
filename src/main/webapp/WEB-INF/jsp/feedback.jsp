@@ -179,7 +179,7 @@ function toggle() {
                         <p>Всего тэгов: <b id="tagCounterPlace"> 0 </b> Выбранные тэги: <b id="tagNamesPlace">  </b></p>
                     </li>
                     <li class="col-lg-1 pull-right full-height">
-                        <button class="btn btn-info col-lg-12 full-height" id="start-button" title="" onclick=smth()>GO</button>
+                        <button class="btn btn-info col-lg-12 full-height" id="start-button" title="" onclick=getCalls()>GO</button>
                     </li>
                 </ul>
 

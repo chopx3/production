@@ -17,7 +17,6 @@ function openStat(){
 	$("#updateWrapper").addClass("active");
 }
 function getInfo(value){
-	
 	var timeStart = moment(startDate, "DD-MM-YYYY").unix()*1000;
 	var timeEnd = moment(endDate, "DD-MM-YYYY").unix()*1000;
 	if (value != 'date') {tempValue = value;$('.catButtons').each(function () { $(this).removeClass("activeButton"); }); $("[value="+tempValue+"]").addClass("activeButton");}
@@ -34,6 +33,7 @@ function getInfo(value){
 
 function tableFiller(data, additional)
 {
+	document.getElementById("secondTable").innerHTML = "";
 	var outputComments = '';
 	var message = '';
 	var count = '';
