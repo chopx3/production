@@ -16,7 +16,8 @@ var tagGroupsArray = [];
 var optionsReturn = "";
 var dateFormat = 'DD.MM.YYYY HH:mm:ss';
 var getCatsUrl = host+"/category/find";
-var getQuestionsInfoUrl = host+"/question/find"
+var getQuestionsInfoUrl = host+"/question/find";
+var feedbackUrl = host + "/call/find/type/";
 var oktell = "http://"+host+"/oktell/calls?name=Avito_get_file_by_id_conn&attachment=1&startparam1=";
 function drawInfo(value){
 	$("#updateWrapper").removeClass("active");
@@ -88,7 +89,8 @@ function drawInfo(value){
 	addInfoBody=
 	'<div class=row><label class="rightLabel">Звонки</label><div class="inputTextField"><button class="btn btn-primary catButtons" value="categories" onclick="getInfo(\'categories\')">Категория</button><button class="btn btn-primary catButtons" value="users" onclick="getInfo(\'users\')">Users</button><button class="btn btn-primary catButtons" value="questions" onclick="getInfo(\'questions\')">Вопросы</button></div></div>'+
 	'<div class=row><label class="rightLabel">Агенты</label><div class="inputTextField"><button class="btn btn-primary catButtons" value="empty" onclick="getInfo(\'empty\')" >Незаполненные</button><button class="btn btn-primary catButtons" value="agents" onclick="getInfo(\'agents\')" id="allCalls"> Всего</button></div></div>'+
-	'<div class=row><label class="rightLabel">Другие</label><div class="inputTextField"><button class="btn btn-primary catButtons" value="managers" onclick="getInfo(\'managers\')">Менеджер</button><button class="btn btn-primary catButtons" value="outcomings" onclick="getInfo(\'outcomings\')">Исходящие</button></div></div>';
+	'<div class=row><label class="rightLabel">Другие</label><div class="inputTextField"><button class="btn btn-primary catButtons" value="managers" onclick="getInfo(\'managers\')">Менеджер</button><button class="btn btn-primary catButtons" value="outcomings" onclick="getInfo(\'outcomings\')">Исходящие</button></div></div>'+
+	'<div class=row><label class="rightLabel">Feedback</label><div class="inputTextField"><button class="btn btn-primary catButtons" value="empty_feedback" onclick="getInfo(\'empty_feedback\')" >Незаполненные</button><button class="btn btn-primary catButtons" value="full_feedback" onclick="getInfo(\'full_feedback\')" id="allCalls"> Заполненные</button></div></div>';
 	addInfoFooterFunc = updInfoFooterFunc = "";
 	addInfoHeaderValue = "Выбор категории звонка";
 	updInfoHeaderValue =  'Выберите период:';
