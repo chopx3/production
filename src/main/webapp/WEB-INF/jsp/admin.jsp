@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=utf-8" pageEncoding="utf-8"%>
 <html>
 <head>
+	<link rel="icon" href="${pageContext.request.contextPath}/resources/img/admin.ico">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
@@ -61,25 +62,23 @@
                 <li class="hl"><a href="#" onclick=fillTags("tags")>Тэги</a></li>
                 <li class="hl"><a href="#" onclick=fillTags("group")>Группы тэгов</a></li>
                 <li class="hl"><a href="#" onclick=openStat()>Статистика</a></li>
-				<li class="hl"><a href="admin/feedback" onclick=openStat()>Feedback</a></li>
+				<li class="hl"><a href="admin/feedback">Feedback</a></li>
             </ul>
-            <form class="navbar-form navbar-left">
+            <form class="navbar-form navbar-left" onSubmit="return false;">
                 <div id=searchBar>
                     <div class="input-group">
-                        <input type="text" class="form-control" placeholder="Username or value" id=searchField>
+                        <input type="text" class="form-control" placeholder="Поиск" id=searchField>
                         <span class="input-group-btn">
 				<button class="btn btn-secondary" type="button" id=searchButton>Поиск</button>
 			  </span>
                     </div>
                 </div>
             </form>
-			<form class="navbar-form navbar-right">                          
-            </form>
         </div><!-- /.navbar-collapse -->
     </div><!-- /.container-fluid -->
 </nav>
 
-<div id="wrapper" class="col-lg-12">
+<div id="wrapper" class="col-lg-12 container-fluid">
     <div id="infoWrapper" class="col-lg-12">
         <div class="row">
             <div id="allAgentsTable" class="col-lg-8">
