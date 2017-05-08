@@ -51,19 +51,19 @@
 
          <div class="row">
             <div class="btn-group col-lg-12" data-toggle="buttons" id="catButtonGroup">
-                <label class="btn btn-primary box-shadow btn-avito-blue col-lg-3" id="label-cat-1" >
+                <label class="btn btn-primary box-shadow-cat btn-avito-blue col-lg-3" id="label-cat-1" >
                     <input type="radio" name="category" id="cat-1" autocomplete="off" value="1">Недвижимость
                 </label>
-                <label class="btn btn-primary box-shadow btn-avito-red col-lg-3" id="label-cat-2">
+                <label class="btn btn-primary box-shadow-cat btn-avito-red col-lg-3" id="label-cat-2">
                     <input type="radio" name="category" id="cat-2" autocomplete="off" value="2"> Транспорт
                 </label>
-                <label class="btn btn-primary box-shadow btn-avito-green col-lg-2" id="label-cat-3">
+                <label class="btn btn-primary box-shadow-cat btn-avito-green col-lg-2" id="label-cat-3">
                     <input type="radio" name="category" id="cat-3" autocomplete="off" value="3"> Работа
                 </label>
-                <label class="btn btn-primary box-shadow btn-avito-purple col-lg-2" id="label-cat-4">
+                <label class="btn btn-primary box-shadow-cat btn-avito-purple col-lg-2" id="label-cat-4">
                     <input type="radio" name="category" id="cat-4" autocomplete="off" value="4"> Услуги
                 </label>
-                <label class="btn btn-primary box-shadow btn-avito-gray col-lg-2" id="label-cat-5">
+                <label class="btn btn-primary box-shadow-cat btn-avito-gray col-lg-2" id="label-cat-5">
                     <input type="radio" name="category" id="cat-5" autocomplete="off" value="5"> General
                 </label>
             </div>

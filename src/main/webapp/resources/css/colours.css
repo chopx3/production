@@ -1,8 +1,8 @@
 /* Синий Авитовский цвет */
-.box-shadow{
+.box-shadow-cat{
 	border:1px solid transparent;
 }
-.box-shadow.active, .box-shadow:active{
+.box-shadow-cat.active, .box-shadow-cat:active{
 	box-shadow: inset 0 0 0.05em black, 0 0 0.1em black;
 }
 .btn-avito-blue {

@@ -102,9 +102,9 @@ else {
 	$('#sendDataButton').click(function() {
 		var catVal, IDVal, questVal;
 		$("#JsonText").val("");
-		$('#IDNum').css({ "border": ''});
-		$('#questButtonGroup').css({"border":""});
-		$('#catButtonGroup').css({"border":""});
+		$('#IDNum').removeClass("box-shadow");
+		$('#questButtonGroup').removeClass("box-shadow");
+		$('#catButtonGroup').removeClass("box-shadow");
 		//Выделение красным неправильно введенных данных
 		if (chainId=="") {
 			$('#serviceMessage').text("Выберите звонок");
@@ -113,19 +113,19 @@ else {
 				catVal = true;
 			} else 	{
 				catVal = false;
-				$('#catButtonGroup').css({"border":"1px solid red"});
+				$('#catButtonGroup').addClass("box-shadow");
 			}
 			if($('[name="question"]').is(':checked')) {
 				questVal = true;
 			} else {
 				questVal = false;
-				$('#questButtonGroup').css({"border":"1px solid red"});
+				$('#questButtonGroup').addClass("box-shadow");
 			}
 			if ($('#IDNum').val()!="" && $('#IDNum').val()!="Введите ID") {
 				IDVal=true;
 			} else {
 				IDVal=false;
-				$('#IDNum').css({ "border": '#FF0000 1px solid'});
+				$('#IDNum').addClass("box-shadow");
 				$('#IDNum').attr('placeholder','Введите ID');
 			}
 			if(questVal&&IDVal&&catVal) {
@@ -199,7 +199,7 @@ else {
 //Кнопка Сохранить на блоке Feedback
 $('#sendFeedbackButton').click(function() {
 		var commentVal, tagVal;
-		$('#feedbackComment').css({ "border": ''});
+		$('#feedbackComment').removeClass("box-shadow");
 		$('#TagLabel').css({"color":"black"});
 		$('#commentLabel').css({"color":"black"});
 		// console.log(chainId);
@@ -220,7 +220,7 @@ $('#sendFeedbackButton').click(function() {
 			} else {
 				commentVal=false;
 				$('#commentLabel').css({"color":"red"});
-				$('#feedbackComment').css({ "border": '#FF0000 1px solid'});
+				$('#feedbackComment').addClass("box-shadow");
 			}
 			if(tagVal&&commentVal) {
 				$('#serviceFeedbackMessage').text("").css({"color":"black"});
@@ -286,11 +286,11 @@ function getComments(){
 		idSaver = $('#IDforComments').val();
 		if (idNumber!="")
 		{
-			$('#IDforComments').css({ "border": ''});
+			$('#IDforComments').removeClass("box-shadow");
 		$.get(getCommentsURL+idNumber)
 			.done(function (data) {
 				document.getElementById("forComments").innerHTML = '';
-				$('#IDforComments').css({ "border": ''});
+				$('#IDforComments').removeClass("box-shadow");
 				var commentsInfo = data;
 				var outputComments = '';
 				var thead = "";
@@ -321,7 +321,7 @@ function getComments(){
 			);
 		}
 		else {
-			$('#IDforComments').css({ "border": '1px solid red'});
+			$('#IDforComments').addClass("box-shadow");
 		}
 	}
 // Функция для вывода информации по ID, звонки или комментарии.
@@ -375,7 +375,7 @@ $('#IDforInfo').keypress(function (e) {
 
 // Очистка данных в боковой форме
 function clearData() {
-	$('#IDNum').css({ "border": ''});
+	$('#IDNum').removeClass("box-shadow");
 	$('#questButtonGroup').css({"border":""});
 	$('#catButtonGroup').css({"border":""});
 	$('#serviceMessage').text("");
@@ -462,18 +462,18 @@ function postComment () {
 		{
 		
 	RestPost(comment, postCommentUrl);
-	$('#addCommentBlock').css({ "border": ''});
-	$('#IdforComments').css({ "border": ''});
+	$('#addCommentBlock').removeClass("box-shadow");
+	$('#IdforComments').removeClass("box-shadow");
 	setTimeout(function() {
 	getComments();
 	}, 800);
 	}
 	else {
-		$('#addCommentBlock').css({ "border": '1px solid red'});
+		$('#addCommentBlock').addClass("box-shadow");
 	}
 	}
 	else {
-		$('#IdforComments').css({ "border": '1px solid red'});
+		$('#IdforComments').addClass("box-shadow");
 	}
 }
 

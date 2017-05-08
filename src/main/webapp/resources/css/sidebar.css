@@ -14,6 +14,10 @@ input[type=number]::-webkit-outer-spin-button {
 {
 	margin-top:17px;
 }
+.box-shadow{
+box-shadow: inset 0 0 0.5em red;
+border-radius: 5px;
+}
 #MainForm
 {
 	top:1vh;
