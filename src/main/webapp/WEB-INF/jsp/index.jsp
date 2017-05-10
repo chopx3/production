@@ -11,6 +11,7 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 	<script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
     <script src="${pageContext.request.contextPath}/resources/js/navbar.js" charset="utf-8"></script>
+	<script src="${pageContext.request.contextPath}/resources/js/dayCallsController.js" charset="utf-8"></script>
 	<script src="${pageContext.request.contextPath}/resources/js/feedbackTags.js" charset="utf-8"></script>
     <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/resources/css/sidebar.css">
 	 <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/resources/css/tags-form.css">
@@ -27,7 +28,8 @@
 
     <div id="sidebar-wrapper">
         <ul class="sidebar-nav container-fluid">
-            <li class="hl"><a href="#" id="my_calls">Мои звонки</a></li>
+            <li class="hl"><a href="#" id="my_calls">Незаполненные</a></li>
+			<li class="hl"><a href="#" id="dayCalls">Звонки за день</a></li>
             <li class="hl"><a href="#" id="user_calls">Звонки клиента</a></li>
             <li><a href="#" id="comments">Комментарии<span class="glyphicon glyphicon-triangle-right glyph pull-right" aria-hidden="true" id="glyphCom"></span></a></li>
             <li><a href="#" id="notes">Заметки<span class="glyphicon glyphicon-triangle-right glyph pull-right" aria-hidden="true" id="glyphNote"></span> </a></li>

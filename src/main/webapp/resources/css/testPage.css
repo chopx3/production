@@ -36,6 +36,7 @@ box-shadow: inset 0 0 0.5em red;
 #searchField.error{
  box-shadow: inset 0 0 0.2em red;
 }
+
 #updateWrapper{
 top:50;
 display:none;

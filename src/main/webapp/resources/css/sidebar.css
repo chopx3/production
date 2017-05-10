@@ -15,8 +15,8 @@ input[type=number]::-webkit-outer-spin-button {
 	margin-top:17px;
 }
 .box-shadow{
-box-shadow: inset 0 0 0.5em red;
-border-radius: 5px;
+box-shadow: inset 0 0 0.2em red;
+border-radius: 10px;
 }
 #MainForm
 {
@@ -130,8 +130,13 @@ border-radius: 5px;
 }
 /* !Фидбек */
 
-
-
+.box-shadow-blue{
+	 box-shadow: inset 0 0 0.2em blue;
+	 border-radius:10px;
+}
+.addSpace{
+padding: 0 6px;
+}
 #sidebar-wrapper
 {
 	z-index: 1;
@@ -161,10 +166,7 @@ h1
 	bottom: 0px;
 	margin:auto;
 }
-#CallForm
-{
-	display:table;
-}
+
 #IDforInfo
 {
 	z-index : 0;

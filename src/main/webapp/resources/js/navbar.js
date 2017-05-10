@@ -6,24 +6,25 @@ var feedbackArray = [];
 var commentArray = [];
 var sentCall=false;
 var noteArray = [];
-var httpHost = location.host+'/firecatcher';
+var host = "http://"+location.host+"/firecatcher";
 var questNum=1;
 var catNum=1;
 var catTagNum="1";
 var feedbackStr = "";
 var agentId="";
 var tagsString ="";
-var getCommentsURL = "http://"+httpHost+'/api/comments/find/';
-var getCallsURL = "http://"+httpHost+"/api/call/find/user/";
-var updateEmptyCalls = "http://"+httpHost +"/api/call/update";
-var postCommentUrl = "http://"+httpHost+'/api/comments/save';
-var oktell = "http://"+httpHost+"/oktell/calls?name=Avito_get_file_by_id_conn&attachment=1&startparam1=";
-var feedbackUrl = "http://"+httpHost+"/api/call/feedback/save"
-var getFeedbackForAgent = "http://"+httpHost+"/api/call/find/type/empty_feedback/1/";
-var getNotesUrl = 'http://' + httpHost + '/api/agent/find/id/';
-var updateNotesUrl = 'http://' + httpHost + '/api/agent/notes/update';
+var getCommentsURL = host+'/api/comments/find/';
+var getCallsURL = host+"/api/call/find/user/";
+var updateEmptyCalls = host +"/api/call/update";
+var postCommentUrl = host+'/api/comments/save';
+var oktell = host+"/oktell/calls?name=Avito_get_file_by_id_conn&attachment=1&startparam1=";
+var feedbackUrl = host+"/api/call/feedback/save"
+var getFeedbackForAgent = host+"/api/call/find/type/empty_feedback/1/";
+var getNotesUrl = host + '/api/agent/find/id/';
+var updateNotesUrl = host + '/api/agent/notes/update';
 var tagBuffer="";
-var tagGroupUrl = 'http://' + httpHost + '/api/taggroup/find';
+var tagGroupUrl = host + '/api/taggroup/find';
+var dayCallsURL = host + '/api/call/find/agent/';
 var additionalTags;
 var dateFormat = 'DD.MM.YYYY HH:mm:ss';
 var comFormat = 'DD.MM.YY HH:mm';
@@ -161,7 +162,7 @@ else {
 	$('#my_calls').click(function() {
 		showMyEmptyCalls();
 	});
-
+	
 //Кнопка "Звонки пользователя"
 	$('#user_calls').click(function() {
 		fillInfo("add","Звонки пользователя", "");
@@ -586,7 +587,6 @@ function sorting(json_object, key_to_sort_by) {
 
     json_object.sort(sortByKey);
 }
-
 
 
 
