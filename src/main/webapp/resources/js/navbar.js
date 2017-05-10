@@ -28,6 +28,7 @@ var dayCallsURL = host + '/api/call/find/agent/';
 var additionalTags;
 var dateFormat = 'DD.MM.YYYY HH:mm:ss';
 var comFormat = 'DD.MM.YY HH:mm';
+var dayOrEmpty;
 var RestPost = function(sendData, url) {
             $.ajax({
                 url: url,
@@ -133,16 +134,23 @@ else {
 				$('#serviceMessage').text("");
 				collectTags($(this).attr("value"));
 				//console.log($('input[value="4"]').is(':checked'));
-				var isFeedback=($('#tag-feedback').is(':checked')) ?"EMPTY_FEEDBACK":"UPDATED";
+				var isFeedback=($('#tag-4').is(':checked')) ?"EMPTY_FEEDBACK":"UPDATED";
 			
 				dataArray = [chainId, $('#IDNum').val(), questNum, catNum, $("#IsManager").prop("checked"),isFeedback, JSON.parse(tagsString)];
 				// console.log(dataArray);
 				fillData(dataArray);
 				clearData();
 				sentCall=true;
-				setTimeout(function(){
+				if (dayOrEmpty == "empty"){
+					setTimeout(function(){
 					showMyEmptyCalls()
 				}, 800);
+				}
+				else {
+				setTimeout(function(){
+					$("#dayCalls").click()
+				}, 800);
+				}
 			} else {
 				$('#serviceMessage').text("Введите корректные данные");
 			}
@@ -160,6 +168,8 @@ else {
 	});
 //Кнопка "Мои звонки"
 	$('#my_calls').click(function() {
+		dayOrEmpty = "empty";
+		clearData();
 		showMyEmptyCalls();
 	});
 	
@@ -196,48 +206,6 @@ else {
 		createTagsTable();	
 	});
 //
-
-//Кнопка Сохранить на блоке Feedback
-$('#sendFeedbackButton').click(function() {
-		var commentVal, tagVal;
-		$('#feedbackComment').removeClass("box-shadow");
-		$('#TagLabel').css({"color":"black"});
-		$('#commentLabel').css({"color":"black"});
-		// console.log(chainId);
-		//Выделение красным неправильно введенных данных
-		if (chainId=="") {
-			$('#serviceFeedbackMessage').text("Выберите звонок").css({"color":"red"});
-			tagVal = false;
-			commentVal=false;
-		} else  {
-			if($('[name="feedTags"]').is(':checked')) {
-				tagVal = true;
-			} else {
-				tagVal = false;
-				$('#TagLabel').css({"color":"red"});
-			}
-			if ($('#feedbackComment').val()!="") {
-				commentVal=true;
-			} else {
-				commentVal=false;
-				$('#commentLabel').css({"color":"red"});
-				$('#feedbackComment').addClass("box-shadow");
-			}
-			if(tagVal&&commentVal) {
-				$('#serviceFeedbackMessage').text("").css({"color":"black"});
-				collectTags($(this).attr("value"));
-				postFeedback();
-				setTimeout(function(){
-					clearFeedback();
-					drawFeedback();
-				}, 800);
-				// console.log("--:");
-			} else {
-				$('#serviceFeedbackMessage').text("Введены не все данные").css({"color":"red"});
-			}
-		}
-		// console.log(commentVal + ' ' + tagVal);
-	});
 });
 
 // --- Завершение блока документ.реди
@@ -285,8 +253,7 @@ function fillInfo(callForm, headerText, MainForm) {
 function getComments(){
 		idNumber = $('#IDforComments').val();
 		idSaver = $('#IDforComments').val();
-		if (idNumber!="")
-		{
+		if (idNumber!=""){
 			$('#IDforComments').removeClass("box-shadow");
 		$.get(getCommentsURL+idNumber)
 			.done(function (data) {
@@ -587,7 +554,3 @@ function sorting(json_object, key_to_sort_by) {
 
     json_object.sort(sortByKey);
 }
-
-
-
-

@@ -63,7 +63,7 @@
                 <li class="hl"><a href="#" onclick=fillTags("tags")>Тэги</a></li>
                 <li class="hl"><a href="#" onclick=fillTags("group")>Группы тэгов</a></li>
                 <li class="hl"><a href="#" onclick=openStat()>Статистика</a></li>
-				<li class="hl"><a href="admin/feedback">Feedback</a></li>
+				<li class="hl"><a href="http://192.168.10.132/firecatcher/admin/feedback">Feedback</a></li>
             </ul>
             <form class="navbar-form navbar-left" onSubmit="return false;">
                 <div id=searchBar>

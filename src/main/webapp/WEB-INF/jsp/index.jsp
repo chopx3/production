@@ -116,17 +116,17 @@
             <div class="col-lg-12">
                 <label>Дополнительные тэги</label>
                 <div class="btn-group btn-group-justified" data-toggle="buttons">
-                    <label class="btn btn-avito-tags" name="addTags" id="label-tag-lf">
-                        <input type="checkbox" id="tag-lf" name="addTags" autocomplete="off" value="1"> Listing Fees
+                    <label class="btn btn-avito-tags" name="addTags" id="label-tag-1">
+                        <input type="checkbox" id="tag-1" name="addTags" autocomplete="off" value="1"> Listing Fees
                     </label>
-                    <label class="btn btn-avito-tags" name="addTags" id="label-tag-vas" title="Вопросы про платные услуги">
-                        <input type="checkbox" id="tag-vas" name="addTags" autocomplete="off" value="2"> Платные услуги
+                    <label class="btn btn-avito-tags" name="addTags" id="label-tag-2" title="Вопросы про платные услуги">
+                        <input type="checkbox" id="tag-2" name="addTags" autocomplete="off" value="2"> Платные услуги
                     </label>
-                    <label class="btn btn-avito-tags" name="addTags" id="label-tag-subs" title="Добавление размещений в подписку и общие вопросы про подписку">
-                        <input type="checkbox" id="tag-subs" name="addTags" autocomplete="off" value="3"> Подписка
+                    <label class="btn btn-avito-tags" name="addTags" id="label-tag-3" title="Добавление размещений в подписку и общие вопросы про подписку">
+                        <input type="checkbox" id="tag-3" name="addTags" autocomplete="off" value="3"> Подписка
                     </label>
-                    <label class="btn btn-avito-tags" name="addTags" id="label-tag-feedback" title="Пользователь передает какую-либо полезную информацию">
-                        <input type="checkbox" id="tag-feedback" name="addTags" autocomplete="off" value="4" > Feedback
+                    <label class="btn btn-avito-tags" name="addTags" id="label-tag-4" title="Пользователь передает какую-либо полезную информацию">
+                        <input type="checkbox" id="tag-4" name="addTags" autocomplete="off" value="4" > Feedback
                     </label>
                 </div>
             </div>
