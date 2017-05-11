@@ -447,6 +447,7 @@ function postComment () {
 
 // Отрисовка пустых звонков
 function  draw(emptyCallsInfo) {
+	sorting(emptyCallsInfo.emptyCallList, "startTime");
 	agentId = emptyCallsInfo.agentId;
 	var nametag = emptyCallsInfo.agentName;
 	var outputEmptyCalls = '';

@@ -137,3 +137,10 @@ audio
 .cursor-def{
 	cursor:text !important;
 }
+.box-shadow-blue{
+	 box-shadow: inset 0 0 0.3em blue;
+	 border-radius:10px;
+}
+.addSpace{
+padding: 0 6px;
+}
