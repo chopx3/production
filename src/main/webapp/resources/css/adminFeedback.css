@@ -28,9 +28,7 @@ input[type=number]::-webkit-outer-spin-button {
 	height: 85px;
 	font-size: 12px;
 }
-[type='checkbox'], [type='radio'] {
-	display: none;
-}
+
 .might-overflow {
     text-overflow: ellipsis;
     overflow : hidden;

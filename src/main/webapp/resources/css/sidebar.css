@@ -20,32 +20,6 @@ border-radius: 10px;
 	top:1vh;
 }
 
-
-/* Фидбек */
-#FeedbackForm{
-	z-index: 1;
-	position: fixed;
-	overflow-y: hidden;
-	overflow-x: hidden;
-	right:0;
-	display:none;
-	top:5px;
-}
-/* !Фидбек */
-
-
-
-#sidebar-wrapper{
-	padding-left: 0;
-	padding-right:0;
-	z-index: 1;
-	position: fixed;
-	height: 100%;
-	overflow-y: hidden;
-	background: #2c3e50;
-	opacity: 0.9;
-	display: inline-block;
-}
 #Hello h1{
 	margin:15;
 	font-family: 'Segoe UI', Tahoma, sans-serif;
@@ -60,14 +34,12 @@ h1{
 	bottom: 0px;
 	margin:auto;
 }
-
 #IDforInfo{
 	z-index : 0;
 }
-#CloseSubForm, #sendFeedback{
+#CloseSubForm{
 	float:right;
 }
-
 #SubForm{
 	z-index: 1;
 	position: fixed;
@@ -76,17 +48,11 @@ h1{
 	top:12vh;
 	display:none;
 }
-
-
-
-
-
 #page-content-wrapper{
 	width: 100%;
 	position: absolute;
 	padding: 5px;
 }
-
 [type='checkbox'], [type='radio'], #IsManagerAndNoID, #page-content-wrapper #CallForm {
 	display: none;
 }
@@ -94,16 +60,21 @@ h1{
 	display: inline-block !important;
 }
 
-
-#feedbackComment{
-	resize: none;
-	overflow: auto;
-}
 #IsManagerDiv{
 	margin:0;
 }
-
 /*  Боковое меню */
+#sidebar-wrapper{
+	padding-left: 0;
+	padding-right:0;
+	z-index: 1;
+	position: fixed;
+	height: 100%;
+	overflow-y: hidden;
+	background: #2c3e50;
+	opacity: 0.9;
+	display: inline-block;
+}
 .sidebar-nav{
 	padding: 0;
 	list-style: none;
@@ -121,11 +92,10 @@ h1{
 .sidebar-nav li a:hover{
 	background: #161616;
 }
-/* ! Боковое меню */
+
 .highlight, .highlight_stay{
 	background: #262626;
 }
-
 /* Tags Colour */
 .btn-avito-tags {
 	color: #333;

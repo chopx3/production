@@ -1,7 +1,6 @@
 ﻿var lengthOfTagGroup = "";
 var outputTags="";
-function createTagsTable()
-{
+function createTagsTable(){
 	$.get(tagGroupUrl)
 			.done(
 				function (data) {
@@ -19,7 +18,7 @@ function createTagsTable()
 	
 	var columnFinal = "";
 	for (var columns = 0; columns<tagGroups;columns++){
-		if (finalForm[columns].name!="Main"){
+		if (finalForm[columns].name!="Main"&&finalForm[columns].tags.length>0){
 		var columnsHead = '<div class="container-column">'+	
 				'<div class="container-column-group">'	+				
 					'<ul class="group-list">'+
