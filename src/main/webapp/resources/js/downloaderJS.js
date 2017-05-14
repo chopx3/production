@@ -69,11 +69,11 @@ function getCalls(){
 								
 							if((catNum==6||catNum==feedbackInfo[i].shopCategoryId-1)&&tagCheck){	
 							timetag = moment(feedbackInfo[i].timeStart).format(dateFormat);
-							audioURL = '<audio id="audio'+i+'" src="' + oktell + feedbackInfo[i].comId + '" controls></audio><a href="'+ oktell + feedbackInfo[i].chainId +'" target="_blank">' + '</a>';
+							audioURL = '<audio class="audio-call" id="audio'+i+'" src="' + oktell + feedbackInfo[i].comId + '" controls></audio><a href="'+ oktell + feedbackInfo[i].chainId +'" target="_blank">' + '</a>';
 							userID = feedbackInfo[i].avitoUserId;
 							Tags = "<div class='tags col-lg-3'><label class='might-overflow'>" + tagCollector + "</label></div>";
 							Comment = "<div id='comment"+ i +"' class='col-lg-4 comments'> <textarea class='form-control cursor-def' id='noteArea' disabled>"+ feedbackInfo[i].comments +"</textarea> </div> ";
-							Call += '<div id="feedbackCall' +i+'" class="history col-lg-5" data-time="'+timetag+'" data-sign="'+feedbackInfo[i].agent.username+'" value="'+ tagCollector +'"><span class="history-info">'+ timetag +' '+ feedbackInfo[i].agent.username +  '</span><span class="pull-right box-shadow-blue addSpace" >'+ Categories[(feedbackInfo[i].shopCategoryId-1)] +'</span><span class="pull-right box-shadow-blue addSpace">ID:<a href="https://adm.avito.ru/users/user/info/'+userID+'" target=_blank>'+userID+'</a></span><br>' + audioURL + '</div>'+Comment + Tags;
+							Call += '<div id="feedbackCall' +i+'" class="call col-lg-5" data-time="'+timetag+'" data-sign="'+feedbackInfo[i].agent.username+'" value="'+ tagCollector +'"><span>'+ timetag +' '+ feedbackInfo[i].agent.username +  '</span><span class="pull-right box-shadow-blue addSpace" >'+ Categories[(feedbackInfo[i].shopCategoryId-1)] +'</span><span class="pull-right box-shadow-blue addSpace">ID:<a href="https://adm.avito.ru/users/user/info/'+userID+'" target=_blank>'+userID+'</a></span><br>' + audioURL + '</div>'+Comment + Tags;
 							}
 								else {i++;}							
 						}

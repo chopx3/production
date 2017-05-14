@@ -4,11 +4,11 @@ var Categories = [];
 var Questions = [];
 var fullCallInfo;
 $(document).ready(function() {
+	getQuestionsInfo();
+	getCats();
 	$('#dayCalls').click(function() {
 			dayOrEmpty="day";
 			clearData();
-			getQuestionsInfo();
-			getCats();
 			fillInfo("remove","Звонки за сегодня", "");
 			drawDayCalls();
 			$("#SubForm").addClass("Add");
@@ -38,8 +38,8 @@ function getCats () {//типа юмор, Categories -> Cats, смешно, да
 		 }
 )}
 function drawDayCalls(){
-	 var timeStart = moment(moment().format("DD-MM-YYYY"), "DD-MM-YYYY").unix()*1000;
-	var timeEnd = moment(moment().add(1,'days').format("DD-MM-YYYY"), "DD-MM-YYYY").unix()*1000; 
+	var timeStart = moment(moment().subtract(51,'days').format("DD-MM-YYYY"), "DD-MM-YYYY").unix()*1000;
+	var timeEnd = moment(moment().subtract(50,'days').format("DD-MM-YYYY"), "DD-MM-YYYY").unix()*1000; 
 	
 	$.get(dayCallsURL+"/"+timeStart+"/"+timeEnd)
 			.done(function (data) {
@@ -82,8 +82,8 @@ function drawDayCalls(){
 			//<span class="pull-right">'+ userID +'</span><span class="pull-right">'+ Questions[questionID-1] +'</span><span class="pull-right">'+ Categories[catID-1] +'</span>
             timetag = moment.unix(data[i].timeStart/1000).format(dateFormat);
 			fullCallInfo = [agentId, nametag, userID, chain, data[i].manager, questionID, catID, data[i].type, i, tagArray];
-			var audioURL = '<audio id="audio'+i+'" onplay=setInfoToCallForm('+JSON.stringify(fullCallInfo)+') src="' + oktell + audiosrc + '" controls></audio><a href="'+ oktell + audiosrc +'" target="_blank">' + '<\/a>';
-			dayCalls += '<div id="divAddButton' +i+'" onclick=setInfoToCallForm('+JSON.stringify(fullCallInfo)+') class="history" data-time="'+timetag+'" data-sign="'+nametag+'"><span class="history-info">'+ timetag +'\t\t</span>'+ additionalInfo+'<br>' + audioURL + '</div>';
+			var audioURL = '<audio class="audio-call" id="audio'+i+'" onplay=setInfoToCallForm('+JSON.stringify(fullCallInfo)+') src="' + oktell + audiosrc + '" controls></audio><a href="'+ oktell + audiosrc +'" target="_blank">' + '<\/a>';
+			dayCalls += '<div id="divAddButton' +i+'" onclick=setInfoToCallForm('+JSON.stringify(fullCallInfo)+') class="call col-lg-12" data-time="'+timetag+'" data-sign="'+nametag+'"><span>'+ timetag +'\t\t</span>'+ additionalInfo+'<br>' + audioURL + '</div>';
 		}
 		document.getElementById("MainForm").innerHTML = dayCalls;
 		console.log(fullCallInfo);
@@ -100,8 +100,8 @@ function setInfoToCallForm(fullCallInfo){
 	var idd = '#divAddButton'+fullCallInfo[8];
 	var feedId = '#feedbackCall'+fullCallInfo[8];
 	tagBuffer = $(feedId).attr("value");
-	$(idd).addClass('woop').siblings().removeClass('woop');
-	$(feedId).addClass('woop').siblings().removeClass('woop'); // ИСПРАВИТЬ
+	$(idd).addClass('active').siblings().removeClass('active');
+	$(feedId).addClass('active').siblings().removeClass('active'); // ИСПРАВИТЬ
 	if ((fullCallInfo[3]!=chainId)&&(chainId!=""))	{
 		clearData();
 	}

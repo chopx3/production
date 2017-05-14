@@ -19,87 +19,7 @@ border-radius: 10px;
 #MainForm{
 	top:1vh;
 }
-.breakable{
-	word-break: break-all;
-	word-wrap: break-word;
-}
-#addCommentBlock{
-	overflow: auto;
-	resize:none;
-}
 
-.table-scroll{
-	height: 65vh;
-	overflow: auto;
-	margin: 0 0 20px;
-	max-width: 750px;
-}
-/* Заметки */
-#noteForm{
-	z-index: 1;
-	position: fixed;
-	overflow-y: hidden;
-	overflow-x: hidden;
-	top:1vh;	
-	width: 0vw;
-	background : white;
-	visibility : hidden;
-	left: calc(15vw + 10px);
-	transition:all 0s;
-	padding-left: 20px;
-	padding-right: 12px;
-}
-#noteForm.Add{
-	overflow-y: hidden;
-	overflow-x: hidden;
-	visibility : visible;
-	width: 30vw;
-	height: 99vh;
-	background : #f8f8f8;
-	border: solid 1px #f0f0f0;
-	border-radius : 5px;
-	z-index : 1;
-	transition:all 0.5s;
-}
-#noteArea{
-	margin-top:1vh;
-	margin-bottom:5vh;
-	width: 98%;
-	resize:none;
-	overflow:auto;
-	height: 88vh;
-	opacity:1 !important; 
-}
-/* !Заметки */
-
-/* Комментарии */
-#commentForm{
-	z-index: 1;
-	position: fixed;
-	overflow-y: hidden;
-	top:1vh;
-	background : white;
-	height: 99vh;	
-	width: 0vw;
-	visibility : hidden;
-	left: calc(15vw + 10px);
-	transition:all 0s;
-	padding-left: 20px;
-	padding-right: 20px;
-}
-#commentForm.Add{
-	visibility : visible;
-	width: 30vw;
-	overflow-y: hidden; 
-	overflow-x: hidden; 
-	background : #f8f8f8;
-	border: solid 1px #f0f0f0;
-	border-radius : 5px;
-	z-index : 1;
-	transition:all 0.5s;
-	padding: -5px;
-}
-/* !Комментарии */
 
 /* Фидбек */
 #FeedbackForm{
@@ -109,26 +29,17 @@ border-radius: 10px;
 	overflow-x: hidden;
 	right:0;
 	display:none;
-	width:44vw;
 	top:5px;
-}
-#FeedbackForm.Add{
-	display: inline-block;
 }
 /* !Фидбек */
 
-.box-shadow-blue{
-	 box-shadow: inset 0 0 0.3em blue;
-	 border-radius:10px;
-}
-.addSpace{
-padding: 0 6px;
-}
+
+
 #sidebar-wrapper{
+	padding-left: 0;
+	padding-right:0;
 	z-index: 1;
 	position: fixed;
-	min-width: 165px;
-	width: 15vw;
 	height: 100%;
 	overflow-y: hidden;
 	background: #2c3e50;
@@ -164,49 +75,23 @@ h1{
 	right:1%;
 	top:12vh;
 	display:none;
-	width:40vw;
-}
-.history, #divAddButton {
-	margin: 8px 0px;
-	padding:6px;
-	background-color:lightblue;
-	border-radius: 5px;
-	font-family: 'Segoe UI', Tahoma, sans-serif;
-	font-size: 14px;
-	display:table;
-
 }
 
-[type='checkbox'] {
-	display: none;
-}
-[type='radio'] {
-	display: none;
-}
 
-.history-info {
-	font-size: 14px;
-}
+
+
+
 #page-content-wrapper{
 	width: 100%;
 	position: absolute;
 	padding: 5px;
-	padding-left:14vw;
 }
-#page-content-wrapper.Add{
-	padding-left: calc(43vw);
-}
-#page-content-wrapper #CallForm{
+
+[type='checkbox'], [type='radio'], #IsManagerAndNoID, #page-content-wrapper #CallForm {
 	display: none;
 }
-#page-content-wrapper #CallForm.inactive{
-	display: inline;
-}
-div.woop{
-	box-shadow:rgba(0, 0, 0, 0.5) 0 5px 7px, inset 0 0 0.5em blue;	
-}
-#SubForm.Add{
-	display: inline-block;
+.Add{
+	display: inline-block !important;
 }
 
 
@@ -214,7 +99,9 @@ div.woop{
 	resize: none;
 	overflow: auto;
 }
-
+#IsManagerDiv{
+	margin:0;
+}
 
 /*  Боковое меню */
 .sidebar-nav{
@@ -238,14 +125,7 @@ div.woop{
 .highlight, .highlight_stay{
 	background: #262626;
 }
-audio{
-	text-align: left;
-	margin: 10px auto 0 auto;
-	width: 100%;
-	width:35vw;
-	max-width: 550px;
-	min-width:320px;
-}
+
 /* Tags Colour */
 .btn-avito-tags {
 	color: #333;

@@ -1,0 +1,83 @@
+/* Форма заметок невидимая, основные параметры */
+#noteForm{
+	z-index: 1;
+	left: 10px;
+	position: fixed;
+	overflow-y: hidden;
+	overflow-x: hidden;		
+	background : white;
+	visibility : hidden;
+	padding-top:4px;
+	padding-left: 20px;
+	padding-right: 12px;
+	opacity: 0.5;
+}
+/* Форма заметок видимая*/
+#noteForm.On{
+	overflow-y: hidden;
+	overflow-x: hidden;
+	visibility : visible;
+	height: 100vh;
+	background : #eee;
+	border: solid 1px #f0f0f0;
+	border-radius : 5px;
+	z-index : 1;
+	opacity : 1;
+	transition:all linear 0.3s;
+}
+/* Поле добавления заметок */
+#noteArea{
+	margin-bottom:5vh;
+	width: 98%;
+	resize:none;
+	overflow:auto;
+	height: 90vh;
+	opacity:1 !important; 
+}
+/* Форма комментов невидимая, основные параметры */
+#commentForm{
+	z-index: 1;
+	position: fixed;
+	overflow-y: hidden;
+	left: 10px;
+	background : white;
+	height: 100vh;	
+	visibility : hidden;
+	padding-top:4px;
+	padding-left: 20px;
+	padding-right: 20px;
+	opacity: 0.5;
+}
+/* Форма комментов видимая*/
+#commentForm.On{
+	visibility : visible;
+	overflow-y: hidden; 
+	overflow-x: hidden; 
+	background : #eee;
+	border: solid 1px #f0f0f0;
+	border-radius : 5px;
+	z-index : 1;
+	opacity : 1;
+	transition:all linear 0.3s;
+}
+/* Поле добавления комментария */
+#addCommentBlock{
+	overflow: auto;
+	resize:none;
+}
+/* Отображение таблицы комментариев */
+.table-scroll{ 
+	height: 65vh;
+	overflow: auto;
+	margin: 0 0 20px;
+	max-width: 750px;
+}
+/* Перенос слов на следующую строку в комментах */
+.breakable{
+	word-break: break-all;
+	word-wrap: break-word;
+}
+/* Pixel Perfect отступы для фраз Комментари и Заметки */
+#commentForm h1, #noteForm h1{
+	margin-left:3px;
+}

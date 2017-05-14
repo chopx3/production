@@ -71,7 +71,9 @@ else {
 	// console.log(false);
 }
 });
-
+$('#openQuestionLabel').click(function(){
+	$('#IDNum').val(100); 
+});
 //Вопрос
 	$('input[name="question"]').change(function(e){
 		questNum = $(this).attr("value");
@@ -85,6 +87,13 @@ else {
 	$('#noteArea').change(function(e){
 		// console.log($('#noteArea').val());
 		updateNotes();
+	});
+	$('#IsManagerDiv').click(function(){
+		if (!$("#IsManager").prop("checked")){
+			console.log("wop");
+		$('#IsManagerAndNoID').addClass("Add");
+		}
+		else {$('#IsManagerAndNoID').removeClass("Add");console.log("bop"); $('#IDNum').val(""); }
 	});
 //Кнопка "Частник"
 	$("#2299").click(function() {
@@ -183,16 +192,16 @@ else {
 	$('#comments').click(function() {
 		commentOrCallHandler = "comment";
 		addButton();
-		$("#noteForm").removeClass("Add");
-		$("#commentForm").toggleClass("Add");
+		$("#noteForm").removeClass("On");
+		$("#commentForm").toggleClass("On");
 		$('#glyphCom').toggleClass('glyphicon-triangle-right').toggleClass('glyphicon-triangle-left');	
 		$('#glyphNote').addClass('glyphicon-triangle-right').removeClass('glyphicon-triangle-left');
 	});
 //Кнопка "Заметки"
 	$('#notes').click(function(){
-		$("#noteForm").toggleClass("Add");
+		$("#noteForm").toggleClass("On");
 		getNotes();
-		$("#commentForm").removeClass("Add");
+		$("#commentForm").removeClass("On");
 		$('#glyphNote').toggleClass('glyphicon-triangle-right').toggleClass('glyphicon-triangle-left');
 		$('#glyphCom').addClass('glyphicon-triangle-right').removeClass('glyphicon-triangle-left');
 	});
@@ -213,7 +222,7 @@ else {
 // --- Функции
 //Функция, отправляющая запрос по ws, получает данные JSON и отдает их на отрисовку draw()
 function showMyEmptyCalls() {
-
+	
 	sendWebSocketMessage("getMyEmptyCalls");
 
 	if(sentCall) {
@@ -236,12 +245,11 @@ function showMyEmptyCalls() {
 //Стандартная отрисовка после нажатия на кнопку бокового меню, для удобства читабельности. Форма звонка(вкл\выкл), текст заголовка страницы, текст основного меню
 function fillInfo(callForm, headerText, MainForm) {
 	$("#SubForm").removeClass("Add");
-	//$("#noteForm").removeClass("Add");
 	$("#FeedbackForm").removeClass("Add");
 	if(callForm==="add") {
-		$("#CallForm").addClass("inactive");
+		$("#CallForm").addClass("Add");
 	} else {
-		$("#CallForm").removeClass("inactive");
+		$("#CallForm").removeClass("Add");
 	}
 
 	$("#HeaderText").text(headerText);
@@ -304,12 +312,22 @@ function getCalls(){
 					var callsInfo = data;
 					document.getElementById("MainForm").innerHTML = '';
 					if (callsInfo.length != 0&&idNumber!='') {
+						var audioURL, userID, questionID, catID, additionalInfo;
 						for (var i = 0; i < callsInfo.length; i++) {
+							additionalInfo = "";
+							if (data[i].out == true) { additionalInfo += "<span class='pull-right box-shadow-blue addSpace'><a title='Исходящий звонок'>Исх</a></span>";}
+							if (data[i].manager == true) { additionalInfo += "<span class='pull-right box-shadow-blue addSpace'><a title='Менеджер'>М</a></span>";}
+								userID = data[i].avitoUserId; questionID = data[i].questionId; catID = data[i].shopCategoryId;
+								if (userID == -1) { additionalInfo = "<span class='pull-right box-shadow addSpace'>"+Questions[questionID-1]+"</span>";}
+								else {additionalInfo += "<span class='pull-right box-shadow-blue addSpace'>"+Questions[questionID-1]+"</span><span class='pull-right box-shadow-blue addSpace'>  "+Categories[catID-1]+"</span><span class='pull-right box-shadow-blue addSpace'>ID:<a href='https://adm.avito.ru/users/user/info/"+userID+"' target=_blank>"+userID+"</a></span>"}
+							
+							if (data[i].type == "FULL_FEEDBACK") { additionalInfo+= "<span class='pull-right box-shadow-blue addSpace'><a title='Заполненный звонок с тэгом feedback'>F</a></span>"}
+							if (data[i].type == "EMPTY_FEEDBACK") { additionalInfo+= "<span class='pull-right box-shadow addSpace'><a title='Незаполненный звонок с тэгом feedback'>F</a></span>"}
 							var audiotag = callsInfo[i].comId;
 							var nametag = callsInfo[i].agent.username;
                             var timetag = moment.unix(callsInfo[i].timeStart/1000).format(dateFormat);
-							var audioURL = '<audio src="'+oktell + audiotag + '" controls></audio><a href="'+oktell+ audiotag +'" target="_blank">' + '<\/a>';
-							outputCalls += '<div class="history" data-time="'+timetag+'" data-sign="'+nametag+'"><span class="history-info">'+ timetag +' '+nametag + '</span><br>' + audioURL + '</div>';
+							audioURL = '<audio class="audio-call" src="'+oktell + audiotag + '" controls></audio><a href="'+oktell+ audiotag +'" target="_blank">' + '<\/a>';
+							outputCalls += '<div class="call col-lg-12" data-time="'+timetag+'" data-sign="'+nametag+'"><span>'+ timetag +' '+nametag + '</span>'+additionalInfo+'<br>' + audioURL + '</div>';
 						}
 					} else {
 						outputCalls ='На данной учетной записи еще не было звонков';
@@ -356,7 +374,6 @@ function clearData() {
 	$('#IDNum').val("");
 
 	if ($("#IsManager").prop("checked")) {
-		$("#IsManager").click();
 		$("#IsManager").prop("checked", false);
 		$("#IsManager").click();
 	}
@@ -390,8 +407,8 @@ function change_call(chain, i) {
 	var idd = '#divAddButton'+i;
 	var feedId = '#feedbackCall'+i;
 	tagBuffer = $(feedId).attr("value");
-	$(idd).addClass('woop').siblings().removeClass('woop');
-	$(feedId).addClass('woop').siblings().removeClass('woop'); // ИСПРАВИТЬ
+	$(idd).addClass('active').siblings().removeClass('active');
+	$(feedId).addClass('active').siblings().removeClass('active'); // ИСПРАВИТЬ
 	if ((chain!=chainId)&&(chainId!=""))
 	{
 		clearData();
@@ -456,14 +473,15 @@ function  draw(emptyCallsInfo) {
 		document.getElementById("MainForm").innerHTML = "Все звонки заполнены";
 	}
 	else {
+		dayOrEmpty = "empty";
 		var audioURL,addButton,audiosrc,chain;
 		for (var i = 0; i < emptyCallsInfo.emptyCallList.length; i++) {
 			chain = emptyCallsInfo.emptyCallList[i].chainId;
 			audiosrc = emptyCallsInfo.emptyCallList[i].comId;
             timetag = moment.unix(emptyCallsInfo.emptyCallList[i].startTime/1000).format(dateFormat);
-			addButton = '<a href="#"  class="btn btn-success" id="' + chain + '" onclick=change_call(this.id,'+i+') style="float:right;"> Выбрать </a>';
-			var audioURL = '<audio id="audio'+i+'" onplay=change_call("'+chain+'",'+i+') src="' + oktell + audiosrc + '" controls></audio><a href="'+ oktell + audiosrc +'" target="_blank">' + '<\/a>';
-			outputEmptyCalls += '<div id="divAddButton' +i+'" onclick=change_call("'+chain+'",'+i+') class="history" data-time="'+timetag+'" data-sign="'+nametag+'"><span class="history-info">'+ timetag +' '+nametag +'\t\t' + addButton + '</span><br>' + audioURL + '</div>';
+			addButton = '<a href="#"  class="btn btn-success pull-right" id="' + chain + '" onclick=change_call(this.id,'+i+') "> Выбрать </a>';
+			var audioURL = '<audio id="audio'+i+'" onplay=change_call("'+chain+'",'+i+') src="' + oktell + audiosrc + '" class="audio-call" controls></audio><a href="'+ oktell + audiosrc +'" target="_blank">' + '<\/a>';
+			outputEmptyCalls += '<div id="divAddButton' +i+'" onclick=change_call("'+chain+'",'+i+') class="call col-lg-12" data-time="'+timetag+'" data-sign="'+nametag+'"><span>'+ timetag +' '+nametag +'\t\t' + addButton + '</span><br>' + audioURL + '</div>';
 		}
 		document.getElementById("MainForm").innerHTML = outputEmptyCalls;
 	}
@@ -508,8 +526,8 @@ function drawFeedback() {
 				tagCollector +='{\"id\":' + feedbackInfo[i].tags[j].id + '},';
 			}
             timetag = moment.unix(feedbackInfo[i].timeStart/1000).format(dateFormat);
-			audioURL = '<audio id="audio'+i+'" src="' + oktell + feedbackInfo[i].comId + '" onplay=change_call("'+feedbackInfo[i].chainId+'",'+i+') controls></audio><a href="'+ oktell + feedbackInfo[i].chainId +'" target="_blank">' + '</a>';
-			outputEmptyCalls += '<div id="feedbackCall' +i+'" onclick=change_call("'+feedbackInfo[i].chainId+'",'+i+') class="history" data-time="'+timetag+'" data-sign="'+feedbackInfo[i].agent.username+'" value="'+ feedbackInfo[i].type+'" name='+ tagCollector +'><span class="history-info">'+ timetag +' '+ feedbackInfo[i].agent.username + '</span><br>' + audioURL + '</div>';
+			audioURL = '<audio class="audio-call" id="audio'+i+'" src="' + oktell + feedbackInfo[i].comId + '" onplay=change_call("'+feedbackInfo[i].chainId+'",'+i+') controls></audio><a href="'+ oktell + feedbackInfo[i].chainId +'" target="_blank">' + '</a>';
+			outputEmptyCalls += '<div id="feedbackCall' +i+'" onclick=change_call("'+feedbackInfo[i].chainId+'",'+i+') class="call col-lg-12" data-time="'+timetag+'" data-sign="'+feedbackInfo[i].agent.username+'" value="'+ feedbackInfo[i].type+'" name='+ tagCollector +'><span>'+ timetag +' '+ feedbackInfo[i].agent.username + '</span><br>' + audioURL + '</div>';
 		}
 		document.getElementById("MainForm").innerHTML = outputEmptyCalls;		
 	}

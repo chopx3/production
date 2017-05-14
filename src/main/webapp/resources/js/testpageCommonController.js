@@ -18,7 +18,7 @@ var optionsReturn = "";
 var dateFormat = 'DD.MM.YYYY HH:mm:ss';
 var getQuestionsInfoUrl = host+"/question/find";
 var feedbackUrl = host + "/call/find/type/";
-var oktell = "http://"+host+"/oktell/calls?name=Avito_get_file_by_id_conn&attachment=1&startparam1=";
+var oktell = "http://"+location.host+"/firecatcher/oktell/calls?name=Avito_get_file_by_id_conn&attachment=1&startparam1=";
 function drawInfo(value){
 	$("#updateWrapper").removeClass("active");
 	var addInfoBody = addInfoFooterFunc=updInfoBody=updInfoFooterFunc=addInfoHeaderValue=updInfoHeaderValue=updInfoFooterFuncSecond= "";

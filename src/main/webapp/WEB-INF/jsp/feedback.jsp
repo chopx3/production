@@ -2,8 +2,9 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>fireCatcher</title>
+    <title>Feedback</title>
     <meta charset ="utf-8">
+	<link rel="icon" href="${pageContext.request.contextPath}/resources/img/feedback.ico">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
@@ -12,9 +13,10 @@
     <script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/downloaderJS.js"></script>
     <script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/calendar_daterange.js"></script>
     <script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/tags-form-controller.js"></script>
-    <link href="${pageContext.request.contextPath}/resources/css/colours.css" disabled rel="stylesheet">
-    <link href="${pageContext.request.contextPath}/resources/css/sidebarFeedback.css" rel="stylesheet">
-    <link href="${pageContext.request.contextPath}/resources/css/tags-form-fix.css" rel="stylesheet">
+    <link href="${pageContext.request.contextPath}/resources/css/adminFeedback.css" rel="stylesheet">
+	<link href="${pageContext.request.contextPath}/resources/css/calls.css" rel="stylesheet">
+    <link href="${pageContext.request.contextPath}/resources/css/feedback-tags-main.css" rel="stylesheet">
+	<link href="${pageContext.request.contextPath}/resources/css/feedback-tags-admin.css" rel="stylesheet">
     <script type="text/javascript" src="https://cdn.jsdelivr.net/bootstrap.daterangepicker/2/daterangepicker.js"></script>
     <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/bootstrap.daterangepicker/2/daterangepicker.css" />
 	<link href="https://gitcdn.github.io/bootstrap-toggle/2.2.2/css/bootstrap-toggle.min.css" rel="stylesheet">

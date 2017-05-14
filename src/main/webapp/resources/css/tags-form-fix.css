@@ -47,7 +47,7 @@ div.container-column-group ul.group-list {
 .group-list {
     z-index: 1;
     color: black;
-    width: 250px;
+    width: 260px;
     height: 100%;
     font-size: 14px;
     text-align: left;
@@ -90,8 +90,7 @@ li {
     font-weight: 700;
     margin-bottom: 0px;
 }
-.group-header
-{
+.group-header{
 	margin-left:5px;
 }
 .group-list-checkbox + label span {
@@ -113,8 +112,7 @@ li {
     top: 7px;
     border-radius: 3px;
 }
-label.blueOne::before
-{
+label.blueOne::before{
 	background-color:lightblue;
 }
 .tag-form .tag-form-footer {

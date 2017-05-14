@@ -1,0 +1,63 @@
+/* Главная форма. Отличие между двумя файлами - в главном направлении, вбок или вниз. flex-direction: column - вправо. А также что именно флекситься */
+.tag-form {
+    font-size: 13px;
+    background-color: white;
+    z-index: 1;
+    background-clip: padding-box;
+    text-align: center;
+	border-radius:5px;
+    padding: 10px;
+	overflow-x:auto;
+}
+/* Хэдер формы */
+.tag-form-header {
+    text-align: left;
+    margin-bottom: 10px;
+    font-weight: bold;
+	padding-left:10px;
+	font-size:1.2em;
+    color: black;
+}
+/* Сам контейнер, именно в нем и флексятся колонки */
+.tag-form-container {
+    display: flex;
+    justify-content: left;
+	flex-wrap:wrap;
+	flex-direction: column;
+	height: 72vh;
+	border-radius:10px;
+}
+/* Убран отступ у первого блока, красоты ради */
+.container-column:first-child {
+    margin-left: 0px;
+}
+/* Флексятся уже элементы колонки */
+.container-column {
+    display: flex;
+    justify-content: left;
+  	margin-left: 10px;
+	flex-wrap:nowrap;
+}
+/* Главная обертка фидбека */
+#FeedbackForm{
+	z-index: 1;
+	position: fixed;
+	overflow-y: hidden;
+	overflow-x: hidden;
+	right:0;
+	display:none;
+	top:5px;
+}
+/* Сервис сообщение при отправке/ошибке */
+#serviceFeedbackMessage{
+	padding-left:20px;
+}
+/* Обертка для комментариев */
+#commentBox{
+	padding: 5px 20px;
+}
+/* Комментарии, textarea */
+#feedbackComment{
+	resize: none;
+	overflow: auto;
+}
