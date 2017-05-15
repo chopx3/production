@@ -38,8 +38,8 @@ function getCats () {//типа юмор, Categories -> Cats, смешно, да
 		 }
 )}
 function drawDayCalls(){
-	var timeStart = moment(moment().subtract(51,'days').format("DD-MM-YYYY"), "DD-MM-YYYY").unix()*1000;
-	var timeEnd = moment(moment().subtract(50,'days').format("DD-MM-YYYY"), "DD-MM-YYYY").unix()*1000; 
+	var timeStart = moment(moment().format("DD-MM-YYYY"), "DD-MM-YYYY").unix()*1000;
+	var timeEnd = moment(moment().add(1,'days').format("DD-MM-YYYY"), "DD-MM-YYYY").unix()*1000; 
 	
 	$.get(dayCallsURL+"/"+timeStart+"/"+timeEnd)
 			.done(function (data) {
@@ -70,7 +70,7 @@ function drawDayCalls(){
 				sorting(data[i].tags, "id")
 				var count = 0;
 			for (var j = 0; j < data[i].tags.length; j++) {
-				if (data[i].tags[j].id < 5){ tagArray[count] = data[i].tags[j].id; count++;}				
+				 tagArray[count] = data[i].tags[j].id; count++;				
 			}
 			console.log(tagArray);
 			}
@@ -96,15 +96,13 @@ function drawDayCalls(){
 			})
 }
 function setInfoToCallForm(fullCallInfo){
+	clearData();
 	var allTags = fullCallInfo[9];
 	var idd = '#divAddButton'+fullCallInfo[8];
 	var feedId = '#feedbackCall'+fullCallInfo[8];
 	tagBuffer = $(feedId).attr("value");
 	$(idd).addClass('active').siblings().removeClass('active');
-	$(feedId).addClass('active').siblings().removeClass('active'); // ИСПРАВИТЬ
-	if ((fullCallInfo[3]!=chainId)&&(chainId!=""))	{
-		clearData();
-	}
+	$(feedId).addClass('active').siblings().removeClass('active'); // ИСПРАВИТЬ	
 	chainId = fullCallInfo[3];
 	additionalTags =$(feedId).attr("name");
 	 console.log(chainId);
@@ -117,10 +115,12 @@ function setInfoToCallForm(fullCallInfo){
 	if (fullCallInfo[4]) {
 
 		$("#IsManager").prop("checked", true);
-		$("#IsManager").click();
+		$("#IsManager").bootstrapToggle('on');
 	}
 	if (allTags.length > 0) {
 		for (var i = 0; i< allTags.length; i++)	{
+			if (allTags[i]==unhappy) {$("#IsHappyToggler").prop("checked", true);
+										$("#IsHappyToggler").bootstrapToggle('on');}
 			$('#label-tag-'+allTags[i]).addClass("active");  
 			$("#tag-"+allTags[i]).prop('checked', true); 
 		}

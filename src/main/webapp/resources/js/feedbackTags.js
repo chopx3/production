@@ -18,7 +18,7 @@ function createTagsTable(){
 	
 	var columnFinal = "";
 	for (var columns = 0; columns<tagGroups;columns++){
-		if (finalForm[columns].name!="Main"&&finalForm[columns].tags.length>0){
+		if (finalForm[columns].name!="Main"&&finalForm[columns].tags.length>0&&finalForm[columns].name!="User satisfaction"&&finalForm[columns].name!="Unfiltered"){
 		var columnsHead = '<div class="container-column">'+	
 				'<div class="container-column-group">'	+				
 					'<ul class="group-list">'+

@@ -28,7 +28,7 @@ public class TagServiceImpl implements TagService {
     @Override
     public Tag save(Tag tag) {
         List<TagGroup> tagGroups = new ArrayList<>();
-        tagGroups.add(tagGroupRepository.findOne(1));
+        tagGroups.add(tagGroupRepository.findOne(0));
         tag.setTagGroups(tagGroups);
         return tagRepository.saveAndFlush(tag);
     }

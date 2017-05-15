@@ -24,11 +24,14 @@ var getNotesUrl = host + '/api/agent/find/id/';
 var updateNotesUrl = host + '/api/agent/notes/update';
 var tagBuffer="";
 var tagGroupUrl = host + '/api/taggroup/find';
+var tagUrl = host + '/api/tags/find';
 var dayCallsURL = host + '/api/call/find/agent/';
 var additionalTags;
 var dateFormat = 'DD.MM.YYYY HH:mm:ss';
 var comFormat = 'DD.MM.YY HH:mm';
 var dayOrEmpty;
+var isHappy = true;
+var happy = unhappy = 0;
 var RestPost = function(sendData, url) {
             $.ajax({
                 url: url,
@@ -49,6 +52,7 @@ var RestPost = function(sendData, url) {
 
 
 $(document).ready(function() {
+	drawAdditionalTags();
 	var commentsInfo = null;
 	var callsInfo = null;
 	var emptyCallsInfo = null;
@@ -372,10 +376,14 @@ function clearData() {
 	$('label[name=addTags]').each(function () { $(this).removeClass('active'); });
 	$('input:checkbox[name=addTags]').each(function () { $(this).prop('checked', false); });
 	$('#IDNum').val("");
-
+	
 	if ($("#IsManager").prop("checked")) {
 		$("#IsManager").prop("checked", false);
-		$("#IsManager").click();
+		$("#IsManager").bootstrapToggle('off');
+	}
+	if ($("#IsHappyToggler").prop("checked")){
+		$("#IsHappyToggler").prop("checked", false);
+		$("#IsHappyToggler").bootstrapToggle('off');
 	}
 }
 function clearFeedback() {
@@ -431,7 +439,8 @@ function collectTags (feedOrCall)
 			tagsString +="{\"id\":" +$(this).attr("value") +"},";
 		}
 	});
-	tagsString= "[" + tagsString.substring(0, tagsString.length - 1) + "]";
+	var happyCheck = ($("#IsHappyToggler").prop("checked")) ? "{\"id\":" + happy +"}" : "{\"id\":" + unhappy +"}";
+	tagsString= "[" + tagsString + happyCheck + "]";
 	//console.log(tagsString+ $("#feedbackComment").val());
 }
 //Comments
@@ -572,4 +581,32 @@ function sorting(json_object, key_to_sort_by) {
     }
 
     json_object.sort(sortByKey);
+}
+function drawAdditionalTags(){
+	$.get(tagGroupUrl)
+	.done(function (data) {
+		var ourID = outputTags = "";
+
+		for (var i = 0; i<data.length;i++){
+			if 	(data[i].name == "Main") {ourID=data[i].id;}
+			if  (data[i].name == "User satisfaction") { happy = data[i].tags[0].id; unhappy = data[i].tags[1].id;}
+		}
+		var iterations = Math.ceil(data[ourID].tags.length/4);
+		var length = data[ourID].tags.length;
+		var nextLine = 0;
+				for (var i = 0; i<iterations;i++){
+					if(length>=(i+1)*4) {nextLine=4;}
+					else {nextLine = length%4;}
+					
+					for (j=0;j<nextLine;j++){
+						var id = data[ourID].tags[i*4+j].id;
+						outputTags+=	'<label class="btn btn-avito-tags col-lg-'+12/nextLine+'" name="addTags" id="label-tag-'+id+'">'+
+										'<input type="checkbox" id="tag-'+id+'" name="addTags" autocomplete="off" value="'+id+'">'+data[ourID].tags[i*4+j].name +
+										'</label>';
+					}
+				}
+				document.getElementById("additionalTagsDiv").innerHTML = outputTags;
+				console.log(happy);
+				console.log(unhappy);
+			})
 }

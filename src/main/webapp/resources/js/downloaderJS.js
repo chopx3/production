@@ -104,6 +104,7 @@ function createTagsTable(){
 		if (finalForm[columns].name!="Main"&&finalForm[columns].tags.length>0){
 			if (columns%2) {oddColumns= '<div class="container-column">'; oddDiv = '';}
 			else {oddColumns = "";oddDiv = "</div>";}
+			if (columns%2&&columns==tagGroups-1) {oddColumns= '<div class="container-column" id=last-column>'; oddDiv = '</div>';$('#last-column').css({"display":"block"});}
 			
 		var columnsHead = oddColumns +
 				'<div class="container-column-group">'	+				
@@ -125,7 +126,7 @@ function createTagsTable(){
 		columnFinal += columnsArray[columns];
 		activeColumns++;
 		}
-		$('.tag-form').css({ "left": -(activeColumns/2)*7.5+"vw"});
+		$('.tag-form').css({ "left": -(activeColumns)*4+"vw"});
 	}
 	var coreButtons = 			'<div class="tag-form-footer">'+
                                 '<button class="btn btn-danger btn-avito-red" id="tags-clear-button" onclick=clearButton() title="">Сброс</button>'+

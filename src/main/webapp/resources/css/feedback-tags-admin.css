@@ -39,6 +39,5 @@
 }
 /* Флексятся уже элементы колонки */
 .container-column-group {
-    display: flex;
     flex-grow: 1;
 }

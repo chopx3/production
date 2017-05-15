@@ -19,6 +19,7 @@ function toggle() {
 	console.log($("#toggle-trigger").prop("checked"));
   }	
 function clickOnLabel(id){
+		outputTags="";
 		$("#label-checkbox-"+id).toggleClass("blueOne");
 		var forcheck = "#" + $(this).attr("for");
 		$(forcheck).prop('checked', true);
@@ -46,26 +47,13 @@ $('#tagNamesPlace').text(outputTags);
 }
 function TagActiveChecker(){ //Переписать
 tagsMap = new Map();
-
+outputTags = "";
 tagCounter = 0;
 $('label[name=info-label]').each(function () { if($(this).hasClass('blueOne')){
 	outputTags += $("#"+$(this).attr("for")).attr("value") + " ";
 	tagCounter++;
 	tagsMap.set($(this).attr("value"), $("#"+$(this).attr("for")).attr("value"));
 }})
-/*
-for (i=5;i<AllTags+5;i++){
-	var tagId = '#label-checkbox-' + i;
-	if($(tagId).hasClass('blueOne'))	{
-		
-		outputTags += $('#tags-checkbox-'+i).attr("value") + " ";
-		tagCounter++;
-		activeTags[i]=1;
-	}
-	else{activeTags[i]=0;}
-}
-
-*/
 console.log(tagsMap);
 TagWatcher();
 }

@@ -109,33 +109,25 @@
         </div>
         <div class="row">
 					 <div class="col-md-3" id="IsManagerDiv">                          
-                    <input type="checkbox" data-toggle="toggle" id="IsManager" data-on="Менеджер" data-off="Клиент" data-offstyle="info avito-blue toggler" data-onstyle="danger avito-red toggler" data-width="130">                                
+                    <input type="checkbox" data-toggle="toggle" id="IsManager" data-on="Менеджер" data-off="Клиент" data-offstyle="info btn-avito-blue toggler" data-onstyle="danger btn-avito-red toggler" data-width="130">                                
 					</div>
 			        <div class="col-md-3 col-md-offset-1 btn-group" data-toggle="buttons" id="IsManagerAndNoID">    
                     <label class="btn btn-primary " id="openQuestionLabel">
                     <input type="checkbox" name="question" id="openQuestion" autocomplete="off" value="8"> Общий вопрос
 					</label>          
 					</div>
+					<div class="col-md-3 col-md-offset-1 btn-group pull-right" data-toggle="buttons" id="isUserHappy">    
+                    <input type="checkbox" data-toggle="toggle" id="IsHappyToggler" data-on="Unhappy<i class='glyphicon glyphicon-fire pull-right' style='margin-top:3px'></i>" data-off="Happy <i class='glyphicon glyphicon-heart pull-right' style='margin-top:3px'></i>" data-offstyle="success btn-avito-green toggler" data-onstyle="danger btn-avito-red toggler" data-width="130">   
+					</div>
         </div>
 
         <div class="row">
-            <div class="col-md-12">
-                <label>Дополнительные тэги</label>
-                <div class="btn-group btn-group-justified" data-toggle="buttons">
-                    <label class="btn btn-avito-tags" name="addTags" id="label-tag-1">
-                        <input type="checkbox" id="tag-1" name="addTags" autocomplete="off" value="1"> Listing Fees
-                    </label>
-                    <label class="btn btn-avito-tags" name="addTags" id="label-tag-2" title="Вопросы про платные услуги">
-                        <input type="checkbox" id="tag-2" name="addTags" autocomplete="off" value="2"> Платные услуги
-                    </label>
-                    <label class="btn btn-avito-tags" name="addTags" id="label-tag-3" title="Добавление размещений в подписку и общие вопросы про подписку">
-                        <input type="checkbox" id="tag-3" name="addTags" autocomplete="off" value="3"> Подписка
-                    </label>
-                    <label class="btn btn-avito-tags" name="addTags" id="label-tag-4" title="Пользователь передает какую-либо полезную информацию">
-                        <input type="checkbox" id="tag-4" name="addTags" autocomplete="off" value="4" > Feedback
-                    </label>
+            
+                <label class=col-lg-12>Дополнительные тэги</label>
+                <div class="btn-group col-lg-12" data-toggle="buttons" id=additionalTagsDiv>
+                    
                 </div>
-            </div>
+            
         </div>
 		<div class="form-group">
             <label for="comment" id="serviceMessage"></label>

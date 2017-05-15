@@ -173,8 +173,7 @@ function infoCheck(value, type){
 			else {
 				infoToServer ={
 				"name": $(firstField).val(),
-				"value":$(secondField).val(),
-				"description": $(thirdField).val()
+				"description": $(secondField).val()
 				};
 				URL=addTagGroupUrl; 
 				}	
