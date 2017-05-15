@@ -101,10 +101,10 @@ function createTagsTable(){
 	var columnFinal = oddColumns = oddDiv = "";
 	var activeColumns = 0;
 	for (var columns = 0; columns<tagGroups;columns++){
-		if (finalForm[columns].name!="Main"&&finalForm[columns].tags.length>0){
-			if (columns%2) {oddColumns= '<div class="container-column">'; oddDiv = '';}
+		if (finalForm[columns].name!="Main"&&finalForm[columns].tags.length>0&&finalForm[columns].name!="Unfiltered"){
+			if (!(activeColumns%2)) {oddColumns= '<div class="container-column">'; oddDiv = '';}
 			else {oddColumns = "";oddDiv = "</div>";}
-			if (columns%2&&columns==tagGroups-1) {oddColumns= '<div class="container-column" id=last-column>'; oddDiv = '</div>';$('#last-column').css({"display":"block"});}
+			if (!(activeColumns%2)&&columns==tagGroups-1) {oddColumns= '<div class="container-column" id=last-column>'; oddDiv = '</div>';$('#last-column').css({"display":"block"});}
 			
 		var columnsHead = oddColumns +
 				'<div class="container-column-group">'	+				
