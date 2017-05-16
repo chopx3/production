@@ -39,7 +39,7 @@ function getQuestions(value){
 							var nametag = callsInfo[i].agent.username;
                             var timetag = moment.unix(callsInfo[i].timeStart/1000).format(dateFormat);
 							var audioURL = '<audio class="audio-call" src="'+oktell + audiotag + '" controls></audio><a href="'+oktell+ audiotag +'" target="_blank">' + '<\/a>';
-							outputCalls += '<div class="call col-lg-9" data-time="'+timetag+'" data-sign="'+nametag+'"><span>'+ timetag +' '+nametag + '</span><span class="pull-right box-shadow-blue addSpace">'+ Questions[(callsInfo[i].questionId-1)] +'</span><span class="pull-right box-shadow-blue addSpace">'+ Categories[(callsInfo[i].shopCategoryId-1)] +'</span><span class="pull-right box-shadow-blue addSpace" >ID:<a href="https://adm.avito.ru/users/user/info/'+callsInfo[i].avitoUserId+'" target=_blank>'+ callsInfo[i].avitoUserId +'</a></span><br>' + audioURL + '</div>';
+							outputCalls += '<div class="call col-lg-9" data-time="'+timetag+'" data-sign="'+nametag+'"><span>'+ timetag +' '+nametag + '</span><span class="pull-right box-shadow-blue addSpace">'+ Questions[(callsInfo[i].questionId-1)] +'</span><span class="pull-right box-shadow-blue addSpace">'+ Categories[(callsInfo[i].shopCategoryId-1)] +'</span><span class="pull-right box-shadow-blue addSpace" >ID:'+admAvito+callsInfo[i].avitoUserId+'" target=_blank>'+ callsInfo[i].avitoUserId +'</a></span><br>' + audioURL + '</div>';
 						}
 					} else {
 						outputCalls ='На данной учетной записи еще не было звонков';

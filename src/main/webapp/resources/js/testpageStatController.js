@@ -57,7 +57,7 @@ function tableFiller(data, additional) {
 			count = finalForm.columns[i].total;
 			sum += parseInt(count);
 			id = finalForm.columns[i].user_id;
-			outputComments += '<tr><td>'+message+'</td><td class="breakable" >'+id+'</td><td>'+count+'</td></tr>'
+			outputComments += '<tr><td>'+message+'</td><td class="breakable" >'+admAvito+id+'" target=_blank>'+id+'</td><td>'+count+'</td></tr>'
 															}
 							}
 		else {
