@@ -366,8 +366,8 @@ $('#IDforInfo').keypress(function (e) {
 // Очистка данных в боковой форме
 function clearData() {
 	$('#IDNum').removeClass("box-shadow");
-	$('#questButtonGroup').css({"border":""});
-	$('#catButtonGroup').css({"border":""});
+	$('#questButtonGroup').removeClass("box-shadow");
+	$('#catButtonGroup').removeClass("box-shadow");
 	$('#serviceMessage').text("");
 	$('#label-cat-1').removeClass('active').siblings().removeClass('active');
 	$('input:radio[name=category]').each(function () { $(this).prop('checked', false); });
@@ -376,7 +376,7 @@ function clearData() {
 	$('label[name=addTags]').each(function () { $(this).removeClass('active'); });
 	$('input:checkbox[name=addTags]').each(function () { $(this).prop('checked', false); });
 	$('#IDNum').val("");
-	
+	$('#IsManagerAndNoID').removeClass("Add");
 	if ($("#IsManager").prop("checked")) {
 		$("#IsManager").prop("checked", false);
 		$("#IsManager").bootstrapToggle('off');
@@ -439,7 +439,7 @@ function collectTags (feedOrCall)
 			tagsString +="{\"id\":" +$(this).attr("value") +"},";
 		}
 	});
-	var happyCheck = ($("#IsHappyToggler").prop("checked")) ? "{\"id\":" + happy +"}" : "{\"id\":" + unhappy +"}";
+	var happyCheck = ($("#IsHappyToggler").prop("checked")) ? "{\"id\":" + unhappy +"}" : "{\"id\":" + happy +"}";
 	tagsString= "[" + tagsString + happyCheck + "]";
 	//console.log(tagsString+ $("#feedbackComment").val());
 }

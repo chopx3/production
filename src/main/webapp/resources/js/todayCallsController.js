@@ -116,6 +116,7 @@ function setInfoToCallForm(fullCallInfo){
 
 		$("#IsManager").prop("checked", true);
 		$("#IsManager").bootstrapToggle('on');
+		$('#IsManagerAndNoID').addClass("Add");
 	}
 	if (allTags.length > 0) {
 		for (var i = 0; i< allTags.length; i++)	{
