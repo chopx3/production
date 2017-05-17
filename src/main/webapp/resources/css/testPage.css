@@ -1,3 +1,4 @@
+/* "Закрепленные" блоки добавления и обновления информации */
 .roundPlusShadow{
 	font-size: 13px;
     background-color: white;
@@ -10,75 +11,88 @@
     border-image: initial;
     border-radius: 10px;
     padding: 10px 0px;
-	position: absolute;
+	position: fixed;
 	margin-top : 10px;
-}
-.rightForms{
-	position:fixed;
 	right:5;
-}
+} 
+/* Отступ сверху для кнопок в футере */
 .Footer{
 	margin-top:10px;
-}
+} 
+ /* Активная в статистике кнопка, выделение */
 .activeButton, .activeButton.active, .activeButton:active, .activeButton:focus, .activeButton:hover{
 	background-color:#3e91d8;
-}
+} 
+ /* Внутренняя тень для выделения неправильно введенных данных */
 .box-shadow{
 box-shadow: inset 0 0 0.5em red;
-}
+} 
+ /* Увеличение шрифта в группах тэгов для информации о группе */
 .groupTag{
 	font-size:1.1em;
 	font-weight:bold;
-}
+} 
+ /* Небольшой отступ сверху для поля поиска */
 #searchBar{
 	top:1%;
-}
+} 
+ /* Внутренняя меньшая тень для выделения неправильно введенных данных */
 #searchField.error{
  box-shadow: inset 0 0 0.2em red;
-}
-
+} 
+ /* Поле для обновления данных, отступ в 50 единиц сверху, "отключена" */
 #updateWrapper{
 top:50;
 display:none;
-}
+} 
+ /* "Включена", показывается на странице */
 #updateWrapper.active{
-top:50;
 display:block;
-}
+} 
+ /* Поле для добавления данных, не показывается, отступ в 10% снизу страницы */
 #addWrapper{
 bottom:10%;
 display:none;
-}
+} 
+ /* Показывается, отступ также в 10% */
 #addWrapper.active{
 display:block;
-}
+} 
+ /* Используется в статистике, поле "прыгает" вверх на 30% от низа страницы */
 #addWrapper.higher{
 display:block;
 bottom:40%;
-}
+} 
+ /* Главная обертка для всей информации ниже навигационной панели, отступ сверху */
 #wrapper{
 	top:50;
-}
+} 
+ /* Выделенная, найденная через поиск строка, округление+синяя подсветка */
 tr.search{
 	 box-shadow: inset 0 0 0.2em blue;
 	 border-radius:10px;
-}
+} 
+ /* Отступ для "тела" закрепленных форм */
 .form-body{
 	margin-bottom:10px;
-}
+} 
+ /* Поля для ввода данных, ширина и отображение в одну строку с подписями */
 .inputTextField{
 	width:70%;
 	display: inline-block;
-}
-.rightLabel{
+} 
+ /* Подписи для полей, ширина, ориентация текста + внутренний отступ */
+.leftLabel{
 	text-align:left;
 	width:20%;
 	padding:5px;
-}
+} 
+ /* Выделение фразы "Всего: количество" */
 .sum{
 	font-style: italic;
 	font-weight: bold;
-}
+} 
+ /* Выделение активной\выбранной вкладки в навигационной панели */
 .navbar-default .navbar-nav>li>a:hover, .navbar-default .navbar-nav>li>a:focus, .navbar-default .navbar-nav>li>a:active, .navbar-default .navbar-nav>li>a.active, .highlight{
 	background-color: #CCC;
-}
+} 

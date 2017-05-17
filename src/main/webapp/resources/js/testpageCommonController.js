@@ -27,13 +27,13 @@ function drawInfo(value){
 		addInfoHeaderValue = 'Добавить агента';
 		updInfoHeaderValue = 'Изменить информацию об агенте';
 		addInfoBody = 
-	'<div class=row><label class="rightLabel">username</label><input type="text" class="form-control inputTextField" id=addTextField1></div>'+
-'<div class=row><label class="rightLabel">OktellLogin</label><input type="text" class="form-control inputTextField" id=addTextField2></div>';
+	'<div class=row><label class="leftLabel">username</label><input type="text" class="form-control inputTextField" id=addTextField1></div>'+
+'<div class=row><label class="leftLabel">OktellLogin</label><input type="text" class="form-control inputTextField" id=addTextField2></div>';
 		addInfoFooterFunc = "infoCheck(\'add\', \'agents\')";
 		updInfoBody = 
-				'<div class=row><label 	class="rightLabel">username</label>	<input type="text" 	class="form-control inputTextField" id=updTextField1></div>'+
-				'<div class=row><label 	class="rightLabel">OktellLogin</label>	<input type="text" 	class="form-control inputTextField" id=updTextField2></div>'+
-				'<div class=row><label 	class="rightLabel">Роль</label>'+
+				'<div class=row><label 	class="leftLabel">username</label>	<input type="text" 	class="form-control inputTextField" id=updTextField1></div>'+
+				'<div class=row><label 	class="leftLabel">OktellLogin</label>	<input type="text" 	class="form-control inputTextField" id=updTextField2></div>'+
+				'<div class=row><label 	class="leftLabel">Роль</label>'+
 						'<div class="btn-group inputTextField" role="group" aria-label="Basic example" data-toggle=buttons>'+
 							'<label class="btn btn-primary active">'+
 							'<input type="radio" name="options" id="optionUser" autocomplete="off" checked>User'+
@@ -42,8 +42,7 @@ function drawInfo(value){
 							'<input type="radio" name="options" id="optionAdmin" autocomplete="off"> Admin'+
 							'</label>'+
 						'</div>'+
-				'</div>';
-	
+				'</div>';	
 	updInfoFooterFunc = "infoCheck(\'upd\', \'agents\')";
 	}
 	if (value=="tags"){
@@ -54,15 +53,14 @@ function drawInfo(value){
 		updInfoFooterFuncSecond = '<button class="btn btn-primary" onclick="ChangeTagGroup()">Изменить группу</button>';
 		updInfoFooterFunc = "infoCheck(\'upd\', \'tags\')";
 		addInfoBody = 
-		'<div class=row><label class="rightLabel">Тэг		</label><input type="text" class="form-control inputTextField" 	id=addTextField1>	</div>'		+
-		'<div class=row><label class="rightLabel">Название	</label><input type="text" class="form-control inputTextField" 	id=addTextField2>	</div>'+
-		'<div class=row><label class="rightLabel">Описание	</label><input type="text" class="form-control inputTextField" 	id=addTextField3>	</div>';
+		'<div class=row><label class="leftLabel">Тэг		</label><input type="text" class="form-control inputTextField" 	id=addTextField1>	</div>'+
+		'<div class=row><label class="leftLabel">Название	</label><input type="text" class="form-control inputTextField" 	id=addTextField2>	</div>'+
+		'<div class=row><label class="leftLabel">Описание	</label><input type="text" class="form-control inputTextField" 	id=addTextField3>	</div>';
 		updInfoBody = 
-		'<div class=row><label class="rightLabel">Тэг		</label><input type="text" class="form-control inputTextField" 	id=updTextField1>	</div>'+
-		'<div class=row><label class="rightLabel">Название	</label><input type="text" class="form-control inputTextField" 	id=updTextField2>	</div>'+
-		'<div class=row><label class="rightLabel">Описание	</label><input type="text" class="form-control inputTextField" 	id=updTextField3>	</div>'+
-		'<div class=row><label class="rightLabel">Группа тегов</label><select class="form-control inputTextField" id="exampleSelect1">'+
-		options+ '</select>	</div>';
+		'<div class=row><label class="leftLabel">Тэг		</label><input type="text" class="form-control inputTextField" 	id=updTextField1>	</div>'+
+		'<div class=row><label class="leftLabel">Название	</label><input type="text" class="form-control inputTextField" 	id=updTextField2>	</div>'+
+		'<div class=row><label class="leftLabel">Описание	</label><input type="text" class="form-control inputTextField" 	id=updTextField3>	</div>'+
+		'<div class=row><label class="leftLabel">Группа тегов</label><select class="form-control inputTextField" id="exampleSelect1">'+options+ '</select>	</div>';
 
 	}
 	if (value=="group"){
@@ -71,11 +69,11 @@ function drawInfo(value){
 		addInfoFooterFunc = "infoCheck(\'add\', \'group\')";		
 		updInfoFooterFunc = "infoCheck(\'upd\', \'group\')";
 		addInfoBody = 
-		'<div class=row><label class="rightLabel">Название	</label><input type="text" class="form-control inputTextField" id=addTextField1>	</div>'+
-		'<div class=row><label class="rightLabel">Описание	</label><input type="text" class="form-control inputTextField" id=addTextField2>	</div>';
+		'<div class=row><label class="leftLabel">Название	</label><input type="text" class="form-control inputTextField" id=addTextField1>	</div>'+
+		'<div class=row><label class="leftLabel">Описание	</label><input type="text" class="form-control inputTextField" id=addTextField2>	</div>';
 		updInfoBody = 
-		'<div class=row><label class="rightLabel">Название	</label><input type="text" class="form-control inputTextField" id=updTextField2>	</div>'+
-		'<div class=row><label class="rightLabel">Описание	</label><input type="text" class="form-control inputTextField" id=updTextField3>	</div>';
+		'<div class=row><label class="leftLabel">Название	</label><input type="text" class="form-control inputTextField" id=updTextField2>	</div>'+
+		'<div class=row><label class="leftLabel">Описание	</label><input type="text" class="form-control inputTextField" id=updTextField3>	</div>';
 	}
 	if (value=="stat"){
 	updInfoBody=
@@ -88,10 +86,10 @@ function drawInfo(value){
 	'<button class="btn btn-info" id="week">Неделя</button>'+
 	'<button class="btn btn-info" id="month">Месяц</button>';
 	addInfoBody=
-	'<div class=row><label class="rightLabel">Звонки</label><div class="inputTextField"><button class="btn btn-primary catButtons" value="categories" onclick="getInfo(\'categories\')">Категория</button><button class="btn btn-primary catButtons" value="users" onclick="getInfo(\'users\')">Users</button><button class="btn btn-primary catButtons" value="questions" onclick="getInfo(\'questions\')">Вопросы</button></div></div>'+
-	'<div class=row><label class="rightLabel">Агенты</label><div class="inputTextField"><button class="btn btn-primary catButtons" value="empty" onclick="getInfo(\'empty\')" >Незаполненные</button><button class="btn btn-primary catButtons" value="agents" onclick="getInfo(\'agents\')" id="allCalls"> Всего</button></div></div>'+
-	'<div class=row><label class="rightLabel">Другие</label><div class="inputTextField"><button class="btn btn-primary catButtons" value="managers" onclick="getInfo(\'managers\')">Менеджер</button><button class="btn btn-primary catButtons" value="outcomings" onclick="getInfo(\'outcomings\')">Исходящие</button></div></div>'+
-	'<div class=row><label class="rightLabel">Feedback</label><div class="inputTextField"><button class="btn btn-primary catButtons" value="empty_feedback" onclick="getInfo(\'empty_feedback\')" >Незаполненные</button><button class="btn btn-primary catButtons" value="full_feedback" onclick="getInfo(\'full_feedback\')" id="allCalls"> Заполненные</button></div></div>';
+	'<div class=row><label class="leftLabel">Звонки</label><div class="inputTextField"><button class="btn btn-primary catButtons" value="categories" onclick="getInfo(\'categories\')">Категория</button><button class="btn btn-primary catButtons" value="users" onclick="getInfo(\'users\')">Users</button><button class="btn btn-primary catButtons" value="questions" onclick="getInfo(\'questions\')">Вопросы</button></div></div>'+
+	'<div class=row><label class="leftLabel">Агенты</label><div class="inputTextField"><button class="btn btn-primary catButtons" value="empty" onclick="getInfo(\'empty\')" >Незаполненные</button><button class="btn btn-primary catButtons" value="agents" onclick="getInfo(\'agents\')" id="allCalls"> Всего</button></div></div>'+
+	'<div class=row><label class="leftLabel">Другие</label><div class="inputTextField"><button class="btn btn-primary catButtons" value="managers" onclick="getInfo(\'managers\')">Менеджер</button><button class="btn btn-primary catButtons" value="outcomings" onclick="getInfo(\'outcomings\')">Исходящие</button></div></div>'+
+	'<div class=row><label class="leftLabel">Feedback</label><div class="inputTextField"><button class="btn btn-primary catButtons" value="empty_feedback" onclick="getInfo(\'empty_feedback\')" >Незаполненные</button><button class="btn btn-primary catButtons" value="full_feedback" onclick="getInfo(\'full_feedback\')" id="allCalls"> Заполненные</button></div></div>';
 	addInfoFooterFunc = updInfoFooterFunc = "";
 	addInfoHeaderValue = "Выбор категории звонка";
 	updInfoHeaderValue =  'Выберите период:';
@@ -215,10 +213,10 @@ $(document).ready(function() {
 		}
 	});
 	$('#searchField').keypress(function (e) {
- console.log("clicked");
- var key = e.which;
- if(key == 13)   {
-   jQuery('#searchButton').click();
+	 console.log("clicked");
+	 var key = e.which;
+	 if(key == 13)   {
+	   jQuery('#searchButton').click();
   }
 });
 })

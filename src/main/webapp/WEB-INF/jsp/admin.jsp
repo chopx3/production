@@ -89,7 +89,7 @@
 
             </div>
             <div id="updateAgent" class="col-lg-4">
-                <div id=updateWrapper class="roundPlusShadow rightForms col-lg-4">
+                <div id=updateWrapper class="roundPlusShadow col-lg-4">
                     <div id=updHeader>
 
                     </div>
@@ -100,7 +100,7 @@
 
                     </div>
                 </div>
-                <div id=addWrapper class="roundPlusShadow rightForms col-lg-4">
+                <div id=addWrapper class="roundPlusShadow col-lg-4">
                     <div id=addHeader>
 
                     </div>

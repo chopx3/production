@@ -1,5 +1,3 @@
-
-
 var checker = "";
 var dataArray = [];
 function getTagGroups(){
@@ -20,7 +18,7 @@ function fillTags(value){
 		var tempUrl = tagUrl;
 		var tempBoolean = false;
 		$("#addWrapper").addClass("active").removeClass("higher");
-		var thead = '<div class="table-scroll col-lg-12"><table id="commentTable" class="table table-striped table-hover" ><thead><tr><th class="col-lg-1">id</th><th class="col-lg-2">value</th><th class=col-lg-3>name</th><th class="col-lg-5">description</th><th class="col-lg-1">edit</th></tr></thead><tbody>';
+		var thead = '<div class="table-scroll col-lg-12"><table id="commentTable" class="table table-striped table-hover" ><thead><tr><th class="col-lg-1">ID</th><th class="col-lg-2">Тэг</th><th class=col-lg-3>Название</th><th class="col-lg-5">Описание</th><th class="col-lg-1">edit</th></tr></thead><tbody>';
 		var tbot = '</tbody></table></div>';
 			if (checker=="group"){
 				tempUrl = tagGroupUrl;
@@ -51,7 +49,6 @@ var forInfo=forHL="";
 					if(isGroup||checker == 'tags') {forInfo+='<td><button class="btn btn-sm btn-info" onclick=\"updateInfo(\''+dataArray[0]+'\',\''+dataArray[1]+'\',\''+dataArray[2]+'\',\''+dataArray[3]+'\')\">edit</button></td>'+
 					"</tr>";}
 					else {forInfo +='<td></td></tr>';}
-				
 				if (isGroup){
 				var tagForDraw = info[i].tags;
 				forInfo +=drawTable(tagForDraw,false);
@@ -59,7 +56,6 @@ var forInfo=forHL="";
 			}
 return forInfo;			
 }
-
 function ChangeTagGroup(){
 		TagInfo ={
         "id": idNum,
