@@ -96,15 +96,16 @@ function createTagsTable(){
 						'<div class="tag-form-container">';
 	var coreFooter = '</div>';
 	var tagGroups = finalForm.length;
-	var columnsArray = [finalForm.length];
+	var columnsArray = [];
 	
 	var columnFinal = oddColumns = oddDiv = "";
 	var activeColumns = 0;
 	for (var columns = 0; columns<tagGroups;columns++){
 		if (finalForm[columns].name!="Main"&&finalForm[columns].tags.length>0&&finalForm[columns].name!="Unfiltered"){
-			if (!(activeColumns%2)) {oddColumns= '<div class="container-column">'; oddDiv = '';}
+			activeColumns++;
+			if ((activeColumns%2)) {oddColumns= '<div class="container-column">'; oddDiv = '';}
 			else {oddColumns = "";oddDiv = "</div>";}
-			if (!(activeColumns%2)&&columns==tagGroups-1) {oddColumns= '<div class="container-column" id=last-column>'; oddDiv = '</div>';$('#last-column').css({"display":"block"});}
+			if ((activeColumns%2)&&columns==tagGroups-1) {oddColumns= '<div class="container-column" id=last-column>'; oddDiv = '</div>';$('#last-column').css({"display":"block"});}else {coreFooter+='</div>';}
 			
 		var columnsHead = oddColumns +
 				'<div class="container-column-group">'	+				
@@ -117,18 +118,18 @@ function createTagsTable(){
 			var value = finalForm[columns].tags[colTags].value;
 			var id = finalForm[columns].tags[colTags].id;
 			var name = finalForm[columns].tags[colTags].name;
-			if (finalForm[columns].name!="Main") {columnsBody+='<li class="group-list-item">'+
+			columnsBody+='<li class="group-list-item">'+
 					'<input type="checkbox" id="tags-checkbox-'+id+'" value="'+value+'" class="group-list-checkbox">' +
-					'<label for="tags-checkbox-'+id+ '" id="label-checkbox-'+id + '" class="tag-label" name="info-label" value="'+id+'" title="'+ finalForm[columns].tags[colTags].description+ '" onclick=clickOnLabel('+id+')><span>'+name+'</span></label></li>';}
+					'<label for="tags-checkbox-'+id+ '" id="label-checkbox-'+id + '" class="tag-label" name="info-label" value="'+id+'" title="'+ finalForm[columns].tags[colTags].description+ '" onclick=clickOnLabel('+id+')><span>'+name+'</span></label></li>';
 		}
 		var columnsTail = '</ul></div>'+oddDiv;
 		columnsArray[columns] = columnsHead + columnsBody + columnsTail;
 		columnFinal += columnsArray[columns];
-		activeColumns++;
-		}
-		$('.tag-form').css({ "left": -(activeColumns)*4+"vw"});
+		
+		}		
 	}
-	var coreButtons = 			'<div class="tag-form-footer">'+
+	$('.tag-form').css({ "left": -(activeColumns)*4+"vw"});
+	coreButtons = 			'<div class="tag-form-footer">'+
                                 '<button class="btn btn-danger btn-avito-red" id="tags-clear-button" onclick=clearButton() title="">Сброс</button>'+
                                 '<button class="btn btn-info" id="tags-all-button" onclick=checkAllButton() title="">Все</button>'+
 								'<label onclick="toggle()"><input id="toggle-trigger" type="checkbox" data-toggle="toggle" data-on="Все" data-off="Один из"data-width="85"></label>'+						

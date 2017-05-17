@@ -1,4 +1,7 @@
 /* */
+#isUserHappy{
+	margin-right:20px;
+}
 #HeaderText{
 	font-size: 25px;
 }
@@ -39,6 +42,7 @@ h1{
 }
 #CloseSubForm{
 	float:right;
+	margin-right:5px;
 }
 #SubForm{
 	z-index: 1;

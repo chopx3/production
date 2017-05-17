@@ -106,9 +106,13 @@ function setInfoToCallForm(fullCallInfo){
 	chainId = fullCallInfo[3];
 	additionalTags =$(feedId).attr("name");
 	 console.log(chainId);
-	if (fullCallInfo[7] != "EMPTY" && fullCallInfo[2] > 0) { 
+	 questNum = fullCallInfo[5];
+	 catNum = fullCallInfo[6];
+	if (fullCallInfo[7] != "EMPTY" && fullCallInfo[2] > 0) {
+	
 	$('#label-quest-'+fullCallInfo[5]).addClass("active");  
-	$("#quest-"+fullCallInfo[5]).prop('checked', true); 
+	$("#quest-"+fullCallInfo[5]).prop('checked', true);
+	
 	$('#label-cat-'+fullCallInfo[6]).addClass("active");  
 	$("#cat-"+fullCallInfo[6]).prop('checked', true); 
 	$("#IDNum").val(fullCallInfo[2]); 

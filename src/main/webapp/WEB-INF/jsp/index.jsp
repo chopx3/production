@@ -47,7 +47,7 @@
             <div class="form-group col-md-6 text-center">
                 <input type="number" class="form-control" id="IDNum" placeholder="ID учетной записи">
             </div>
-            <div id="CloseSubForm" class="btn-group col-md-6" data-toggle="buttons">
+            <div id="CloseSubForm" class="btn-group col-md-5" data-toggle="buttons">
                 <button type="button" id="2299" class="btn btn-danger btn-avito-red-2 pull-right"><span class="glyphicon glyphicon-remove" ></span>   Частник</button>
             </div>
         </div>
@@ -116,7 +116,7 @@
                     <input type="checkbox" name="question" id="openQuestion" autocomplete="off" value="8"> Общий вопрос
 					</label>          
 					</div>
-					<div class="col-md-3 col-md-offset-1 btn-group pull-right" data-toggle="buttons" id="isUserHappy">    
+					<div class="btn-group pull-right" data-toggle="buttons" id="isUserHappy">    
                     <input type="checkbox" data-toggle="toggle" id="IsHappyToggler" data-on="Unhappy<i class='glyphicon glyphicon-fire pull-right' style='margin-top:3px'></i>" data-off="Happy <i class='glyphicon glyphicon-heart pull-right' style='margin-top:3px'></i>" data-offstyle="success btn-avito-green toggler" data-onstyle="danger btn-avito-red toggler" data-width="130">   
 					</div>
         </div>

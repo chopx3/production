@@ -147,7 +147,7 @@ $('#openQuestionLabel').click(function(){
 				$('#serviceMessage').text("");
 				collectTags($(this).attr("value"));
 				//console.log($('input[value="4"]').is(':checked'));
-				var isFeedback=($('#tag-4').is(':checked')) ?"EMPTY_FEEDBACK":"UPDATED";
+				var isFeedback=($('#tag-4').is(':checked')||$("#IsHappyToggler").prop("checked")) ?"EMPTY_FEEDBACK":"UPDATED";
 			
 				dataArray = [chainId, $('#IDNum').val(), questNum, catNum, $("#IsManager").prop("checked"),isFeedback, JSON.parse(tagsString)];
 				// console.log(dataArray);
