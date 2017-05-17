@@ -19,41 +19,48 @@ input[type=number]::-webkit-outer-spin-button {
 	word-break: break-all;
 	word-wrap: break-word;
 }
-.comments, .tags, .history{
+/* отступы для комментариев и тэгов */
+.comments, .tags{
 	margin: 5px 0px;
 }
 #noteArea{
 	resize:none;
 	overflow:auto;
-	height: 85px;
+	height: 78px;
 	font-size: 12px;
+	margin-top:3px;
 }
-
+/* Класс для длинных комментариев. Сокращает все, что длиннее одной строки */
 .might-overflow {
     text-overflow: ellipsis;
     overflow : hidden;
     white-space: nowrap;
 	font-weight:400;
 }
-
+/* Класс для длинных комментариев. При наведении мышкой показывает полный текст */
 .might-overflow:hover {
     text-overflow: clip;
     white-space: normal;
     word-break: break-all;
 	font-weight:400;
 }
+/* Выровнять текст по центру для надписей */
 .li-centered {
 	text-align:center;
 }
+/* */
 .same-height{
 	height:4vh;
 }
+/* */
 .full-height{
 	height:calc(12vh);
 }
+/* */
 .add-height{
 	height:calc(12vh + 2px);
 }
+/* убрать запрещающую иконку, при наведении на комментарий, добавить стандартную для выделения */
 .cursor-def{
 	cursor:text !important;
 }

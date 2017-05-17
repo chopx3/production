@@ -10,9 +10,9 @@ div.container-column-group ul.group-list {
 .group-list {
     z-index: 1;
     color: black;
-    width: 260px;
+    width: 250px;
     height: 100%;
-    font-size: 14px;
+    font-size: 13px;
     text-align: left;
     background-color: rgb(255, 255, 255);
     background-clip: padding-box;

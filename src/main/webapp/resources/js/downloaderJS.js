@@ -57,7 +57,7 @@ function getCalls(){
 							userID = feedbackInfo[i].avitoUserId;
 							Tags = "<div class='tags col-lg-3'><label class='might-overflow'>" + tagCollector + "</label></div>";
 							Comment = "<div id='comment"+ i +"' class='col-lg-4 comments'> <textarea class='form-control cursor-def' id='noteArea' disabled>"+ feedbackInfo[i].comments +"</textarea> </div> ";
-							Call += '<div id="feedbackCall' +i+'" class="call col-lg-5" data-time="'+timetag+'" data-sign="'+feedbackInfo[i].agent.username+'" value="'+ tagCollector +'"><span>'+ timetag +' '+ feedbackInfo[i].agent.username +  '</span><span class="pull-right box-shadow-blue addSpace" >'+ Categories[(feedbackInfo[i].shopCategoryId-1)] +'</span><span class="pull-right box-shadow-blue addSpace">ID:<a href="https://adm.avito.ru/users/user/info/'+userID+'" target=_blank>'+userID+'</a></span><br>' + audioURL + '</div>'+Comment + Tags;
+							Call += '<div class="row"><div id="feedbackCall' +i+'" class="call col-lg-5" data-time="'+timetag+'" data-sign="'+feedbackInfo[i].agent.username+'" value="'+ tagCollector +'"><span>'+ timetag +' '+ feedbackInfo[i].agent.username +  '</span><span class="pull-right box-shadow-blue addSpace" >'+ Categories[(feedbackInfo[i].shopCategoryId-1)] +'</span><span class="pull-right box-shadow-blue addSpace">ID:<a href="https://adm.avito.ru/users/user/info/'+userID+'" target=_blank>'+userID+'</a></span><br>' + audioURL + '</div>'+Comment + Tags+'</div>';
 							}
 								else {i++;}							
 						}
