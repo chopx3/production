@@ -20,9 +20,9 @@ function getInfo(value){
 	var timeStart = moment(startDate, "DD-MM-YYYY").unix()*1000;
 	var timeEnd = moment(endDate, "DD-MM-YYYY").unix()*1000;
 	if (value != 'date') {tempValue = value;$('.catButtons').each(function () { $(this).removeClass("activeButton"); }); $("[value="+tempValue+"]").addClass("activeButton");}
-	var getUrl = (value != "full_feedback" && value != "empty_feedback") ? statURL+tempValue+"/total/" : feedbackUrl + tempValue+"/";
+	var getURL = (value != "full_feedback" && value != "empty_feedback") ? statURL+tempValue+"/total/" : callTypeURL + tempValue+"/";
 	
-	$.get(getUrl+timeStart+"/"+timeEnd)
+	$.get(getURL+timeStart+"/"+timeEnd)
 			.done(function (data) {
 				var totalInfo = data;
 				tableFiller(totalInfo, tempValue);

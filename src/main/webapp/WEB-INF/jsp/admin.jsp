@@ -8,6 +8,7 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
     <script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
 	<script src="${pageContext.request.contextPath}/resources/js/testpageCommonController.js"></script>
+	<script src="${pageContext.request.contextPath}/resources/js/allURLs.js"></script>
     <script src="${pageContext.request.contextPath}/resources/js/testpageAgentsController.js"></script>
     <script src="${pageContext.request.contextPath}/resources/js/testpageStatController.js" type="text/javascript"charset="utf-8"></script>
     <script src="${pageContext.request.contextPath}/resources/js/calendar_daterange.js" type="text/javascript" charset="utf-8"></script>
@@ -70,8 +71,8 @@
                     <div class="input-group">
                         <input type="text" class="form-control" placeholder="Поиск" id=searchField>
                         <span class="input-group-btn">
-				<button class="btn btn-secondary" type="button" id=searchButton>Поиск</button>
-			  </span>
+						<button class="btn btn-secondary" type="button" id=searchButton>Поиск</button>
+						</span>
                     </div>
                 </div>
             </form>

@@ -1,5 +1,3 @@
-var getQuestionsInfoUrl = host+"/api/question/find";
-var getCatsUrl = host+"/api/category/find";
 var Categories = [];
 var Questions = [];
 var fullCallInfo;
@@ -15,7 +13,7 @@ $(document).ready(function() {
 		});
 })
 function getQuestionsInfo () {
-	$.get(getQuestionsInfoUrl)
+	$.get(getQuestionsInfoURL)
 	 .done(
 	 function (data) {
 		// console.log(data);
@@ -27,7 +25,7 @@ function getQuestionsInfo () {
 		 }
 )}
 function getCats () {//типа юмор, Categories -> Cats, смешно, да?
-	$.get(getCatsUrl)
+	$.get(getCatsURL)
 	 .done(
 	 function (data) {
 		 var Info = data;

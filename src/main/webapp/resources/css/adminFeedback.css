@@ -1,20 +1,21 @@
+/* */
 #page-content-wrapper{
-	width: 100%;
-	position: absolute;
+	position: relative;
 	padding: 5px;
-	padding-left:3vw;
-	top:12vh;
+	padding-left:1vw;
 }
-input[type=number]::-webkit-inner-spin-button,
-input[type=number]::-webkit-outer-spin-button {
+/* */
+input[type=number]::-webkit-inner-spin-button, input[type=number]::-webkit-outer-spin-button {
 	-webkit-appearance: none;
 	-moz-appearance: none;
 	appearance: none;
 	margin: 0;
 }
+/* */
 #MainForm{
-	top:0vh;
+	margin-top:-5vh;
 }
+/* */
 .breakable{
 	word-break: break-all;
 	word-wrap: break-word;

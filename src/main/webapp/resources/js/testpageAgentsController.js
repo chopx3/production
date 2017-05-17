@@ -7,7 +7,7 @@ function fillAgents(){
 		document.getElementById("secondTable").innerHTML = "";
 		drawInfo("agents");
 		$("#addWrapper").addClass("active").removeClass("higher");
-		$.get(allAgentsUrl)
+		$.get(allAgentsURL)
 		.done(function (data) {
 			var info = data;
 			var tbody ="";

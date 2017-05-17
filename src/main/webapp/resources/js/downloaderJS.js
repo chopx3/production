@@ -1,14 +1,7 @@
-var catNum = 6;
-var host = "http://"+location.host+'/firecatcher';
-var Call = "";
-var Comment = "";
-var Tags = "";
+var catNum = 6; // дефолтное значение для категории, 6=все категориии
+var Call = Comment = Tags = "";
 var Categories = [];
-var getCatsUrl = host+"/api/category/find";
-var oktell = host+"/oktell/calls?name=Avito_get_file_by_id_conn&attachment=1&startparam1=";
-var getFeedbackForAgent = host+"/api/call/find/type/full_feedback/";
-var dateFormat = 'DD.MM.YYYY HH:mm:ss';
-var tagGroupUrl = host + '/api/taggroup/find';
+var dateFormat = 'DD.MM.YYYY HH:mm:ss'; // стандартный формат звонков
 $(document).ready(function() {
 	getCats();
 	$('input[name="category"]').change(function(e){
@@ -17,7 +10,7 @@ $(document).ready(function() {
 	createTagsTable();
 });
 function getCats () {//типа юмор, Categories -> Cats, смешно, да?
-	$.get(getCatsUrl)
+	$.get(getCatsURL)
 	 .done(
 	 function (data) {
 		// console.log(data);
@@ -32,7 +25,7 @@ function getCalls(){
 //	console.log(startDate + "," + endDate);
 	var timeStart = moment(startDate, "DD-MM-YYYY").unix()*1000;
 	var timeEnd = moment(endDate, "DD-MM-YYYY").unix()*1000;
-		$.get(getFeedbackForAgent+timeStart+"/"+timeEnd+"/")
+		$.get(fullURL+timeStart+"/"+timeEnd+"/")
 			.done(
 				function (data) {
 					Call ='';
@@ -83,7 +76,7 @@ function createTagsTable(){
 					tagCounter = 0;
 					outputTags="";
 					TagActiveChecker();
-	$.get(tagGroupUrl)
+	$.get(tagGroupURL)
 			.done(
 				function (data) {
 					

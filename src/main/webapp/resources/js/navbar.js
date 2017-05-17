@@ -6,26 +6,13 @@ var feedbackArray = [];
 var commentArray = [];
 var sentCall=false;
 var noteArray = [];
-var host = "http://"+location.host+"/firecatcher";
 var questNum=1;
 var catNum=1;
 var catTagNum="1";
 var feedbackStr = "";
 var agentId="";
 var tagsString ="";
-var getCommentsURL = host+'/api/comments/find/';
-var getCallsURL = host+"/api/call/find/user/";
-var updateEmptyCalls = host +"/api/call/update";
-var postCommentUrl = host+'/api/comments/save';
-var oktell = host+"/oktell/calls?name=Avito_get_file_by_id_conn&attachment=1&startparam1=";
-var feedbackUrl = host+"/api/call/feedback/save"
-var getFeedbackForAgent = host+"/api/call/find/type/empty_feedback/1/";
-var getNotesUrl = host + '/api/agent/find/id/';
-var updateNotesUrl = host + '/api/agent/notes/update';
 var tagBuffer="";
-var tagGroupUrl = host + '/api/taggroup/find';
-var tagUrl = host + '/api/tags/find';
-var dayCallsURL = host + '/api/call/find/agent/';
 var additionalTags;
 var dateFormat = 'DD.MM.YYYY HH:mm:ss';
 var comFormat = 'DD.MM.YY HH:mm';
@@ -455,7 +442,7 @@ function postComment () {
 		if ($('#addCommentBlock').val()!= "")
 		{
 		
-	RestPost(comment, postCommentUrl);
+	RestPost(comment, postCommentURL);
 	$('#addCommentBlock').removeClass("box-shadow");
 	$('#IdforComments').removeClass("box-shadow");
 	setTimeout(function() {
@@ -512,7 +499,7 @@ function stopAll(e){
 function drawFeedback() {
 	var timeNow = moment().unix()*1000;
 	// console.log(timeNow);
-	$.get(getFeedbackForAgent+timeNow+"/")
+	$.get(emptyURL+timeNow+"/")
 	 .done(
 	function (data) {
 	var feedbackInfo = data;
@@ -555,17 +542,17 @@ function postFeedback () {
 		"type": "FULL_FEEDBACK"
         }
 		// console.log(updateFeedbackCall);
-	RestPost(updateFeedbackCall, feedbackUrl);
+	RestPost(updateFeedbackCall, feedbackSaveURL);
 }
 function updateNotes() {
 	var updateAgentNotes = {
         "id":agentId,
         "notes": $('#noteArea').val()
         }
-	RestPost(updateAgentNotes, updateNotesUrl);
+	RestPost(updateAgentNotes, updateNotesURL);
 } 
 function getNotes () {
-	$.get(getNotesUrl+agentId)
+	$.get(getNotesURL+agentId)
 	 .done(
 	 function (data) {
 		 // console.log(data);
@@ -583,7 +570,7 @@ function sorting(json_object, key_to_sort_by) {
     json_object.sort(sortByKey);
 }
 function drawAdditionalTags(){
-	$.get(tagGroupUrl)
+	$.get(tagGroupURL)
 	.done(function (data) {
 		var ourID = outputTags = "";
 

@@ -10,6 +10,7 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
     <script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
+	<script src="${pageContext.request.contextPath}/resources/js/allURLs.js"></script>
     <script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/downloaderJS.js"></script>
     <script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/calendar_daterange.js"></script>
     <script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/tags-form-controller.js"></script>
@@ -23,25 +24,18 @@
     <script src="https://gitcdn.github.io/bootstrap-toggle/2.2.2/js/bootstrap-toggle.min.js"></script>
 </head>
 <body>
-<script>
-
-</script>
 <script type="text/javascript">
     $(function() {
-
         StartCalendar();
 		jQuery('#today').click();
     });
 </script>
-<div id="wrapper">
+<div id="wrapper" class=col-lg-12>
     <nav class="navbar navbar-default add-height" >
         <div class="container-fluid">
-
             <div>
-                <ul class="nav navbar-nav add-height">
-					
-                    <li class="col-lg-3 li-centered">
-						
+                <ul class="nav navbar-nav add-height">					
+                    <li class="col-lg-3 li-centered">					
                         <p class="same-height"><a href="/firecatcher/admin"><span class="glyphicon glyphicon-stats pull-left" style="font-size:30px;"></span></a>Категория вопроса</p>
                         <p><div class="row">
                         <div class="btn-group btn-group-justified col-lg-3" data-toggle="buttons" id="catButtonGroup">
@@ -86,21 +80,17 @@
                         <button class="btn btn-info col-lg-12 full-height" id="start-button" title="" onclick=getCalls()>GO</button>
                     </li>
                 </ul>
-
             </div>
-
         </div>
     </nav>﻿
-    <div id="page-content-wrapper">
-        <div class="container-fluid">
-            <div class="col-lg-12">
-                <div class="row">
-                    <p id="MainForm" class="col-lg-12">
-                    </p>
-                </div>
-            </div>
-        </div>
-    </div>
+</div>
+<div id="page-content-wrapper" class="col-lg-12">
+	<div class="container-fluid ">
+			<div class="row">
+				<p id="MainForm" class="col-lg-12">
+				</p>
+			</div>
+	</div>
 </div>
 </body>
 

@@ -1,7 +1,7 @@
 var Categories = [];
 var Questions = [];
 function getQuestionsInfo () {
-	$.get(getQuestionsInfoUrl)
+	$.get(getQuestionsInfoURL)
 	 .done(function (data) {
 		 var Info = data;
 		for (var i=0;i<Info.length;i++){
@@ -10,7 +10,7 @@ function getQuestionsInfo () {
 		}}
 )}
 function getCats () {//типа юмор, Categories -> Cats, смешно, да?
-	$.get(getCatsUrl)
+	$.get(getCatsURL)
 	 .done(function (data) {
 		 var Info = data;
 		for (var i=0;i<Info.length;i++){
@@ -21,7 +21,7 @@ function getCats () {//типа юмор, Categories -> Cats, смешно, да
 function getQuestions(value){
 		var timeStart = moment(startDate, "DD-MM-YYYY").unix()*1000;
 		var timeEnd = moment(endDate, "DD-MM-YYYY").unix()*1000;
-		$.get(getQuestionsUrl +value+"/" + timeStart+"/" + timeEnd)
+		$.get(getQuestionsURL +value+"/" + timeStart+"/" + timeEnd)
 			.done(function (data) {
 					document.getElementById("secondTable").innerHTML = "";
 					outputCalls ='';

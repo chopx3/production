@@ -1,24 +1,7 @@
-var host = "http://"+location.host+"/firecatcher/api";
-var statURL = host+"/stat/find/";
-var allAgentsUrl = host +"/agent/find";
-var addAgentUrl = host +"/agent/save";
-var updAgentUrl = host +"/agent/update";
-var tagUrl = host+"/tags/find";
-var addTagUrl = host+"/tags/save";
-var updTagUrl = host+"/tags/update";
-var tagGroupUrl = host+"/taggroup/find";
-var addTagGroupUrl = host+"/taggroup/save";
-var updTagGroupUrl = host+"/taggroup/update";
-var changeTagGroup = host +"/tags/group";
-var getQuestionsUrl = host + "/call/find/questions/";
-var getCatsUrl = host+"/category/find";
 var tempValue;
 var tagGroupsArray = [];
 var optionsReturn = "";
 var dateFormat = 'DD.MM.YYYY HH:mm:ss';
-var getQuestionsInfoUrl = host+"/question/find";
-var feedbackUrl = host + "/call/find/type/";
-var oktell = "http://"+location.host+"/firecatcher/oktell/calls?name=Avito_get_file_by_id_conn&attachment=1&startparam1=";
 var admAvito = '<a href="https://adm.avito.ru/users/user/info/';
 function drawInfo(value){
 	$("#updateWrapper").removeClass("active");
@@ -128,14 +111,14 @@ function infoCheck(value, type){
         "oktellLogin":$(secondField).val(),
 		"roles": JSON.parse(role)
 		};
-		URL = updAgentUrl;
+		URL = updAgentURL;
 		}
 		else {
 		infoToServer ={
         "username": $(firstField).val(),
         "oktellLogin":$(secondField).val()
 		};
-		URL=addAgentUrl; 
+		URL=addAgentURL; 
 		}
 		console.log(infoToServer);
 		console.log(URL);
@@ -149,7 +132,7 @@ function infoCheck(value, type){
         "name":$(secondField).val(),
 		"description": $(thirdField).val(),
 		};
-		URL = updTagUrl;
+		URL = updTagURL;
 		}
 		else {
 		infoToServer ={
@@ -157,7 +140,7 @@ function infoCheck(value, type){
         "name": $(secondField).val(),
 		"description": $(thirdField).val()
 		};
-		URL=addTagUrl; 
+		URL=addTagURL; 
 		}			
 		}
 		if (type == "group") {
@@ -167,14 +150,14 @@ function infoCheck(value, type){
 						"name": $(secondField).val(),
 						"description": $(thirdField).val()
 						};
-		URL = updTagGroupUrl;
+		URL = updTagGroupURL;
 			}
 			else {
 				infoToServer ={
 				"name": $(firstField).val(),
 				"description": $(secondField).val()
 				};
-				URL=addTagGroupUrl; 
+				URL=addTagGroupURL; 
 				}	
 		}
 		RestPost(infoToServer, URL);

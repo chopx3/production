@@ -1,7 +1,7 @@
 ﻿var lengthOfTagGroup = "";
 var outputTags="";
 function createTagsTable(){
-	$.get(tagGroupUrl)
+	$.get(tagGroupURL)
 			.done(
 				function (data) {
 	var finalForm = data;

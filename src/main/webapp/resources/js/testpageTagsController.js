@@ -1,7 +1,7 @@
 var checker = "";
 var dataArray = [];
 function getTagGroups(){
-			$.get(tagGroupUrl)
+			$.get(tagGroupURL)
 				.done(function (data) {
 					var info = data;
 					for (var i = 0;i<info.length;i++){
@@ -15,16 +15,16 @@ function fillTags(value){
 		checker = value;
 		var tbody ="";
 		drawInfo(checker);
-		var tempUrl = tagUrl;
+		var tempURL = tagURL;
 		var tempBoolean = false;
 		$("#addWrapper").addClass("active").removeClass("higher");
 		var thead = '<div class="table-scroll col-lg-12"><table id="commentTable" class="table table-striped table-hover" ><thead><tr><th class="col-lg-1">ID</th><th class="col-lg-2">Тэг</th><th class=col-lg-3>Название</th><th class="col-lg-5">Описание</th><th class="col-lg-1">edit</th></tr></thead><tbody>';
 		var tbot = '</tbody></table></div>';
 			if (checker=="group"){
-				tempUrl = tagGroupUrl;
+				tempURL = tagGroupURL;
 				tempBoolean = true;
 			}
-				$.get(tempUrl)
+				$.get(tempURL)
 				.done(function (data) {
 					var info = data;
 					tbody = drawTable(info, tempBoolean);
@@ -61,7 +61,7 @@ function ChangeTagGroup(){
         "id": idNum,
         "value": $("#exampleSelect1").val()
 		};
-		URL=changeTagGroup; 
+		var URL=changeTagGroup; 
 		console.log(TagInfo)
 		RestPost(TagInfo, URL);
 }
