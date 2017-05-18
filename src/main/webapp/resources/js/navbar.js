@@ -499,7 +499,7 @@ function stopAll(e){
 function drawFeedback() {
 	var timeNow = moment().unix()*1000;
 	// console.log(timeNow);
-	$.get(emptyURL+timeNow+"/")
+	$.get(emptyFeedbackURL+timeNow+"/")
 	 .done(
 	function (data) {
 	var feedbackInfo = data;
@@ -546,7 +546,7 @@ function postFeedback () {
 }
 function updateNotes() {
 	var updateAgentNotes = {
-        "id":agentId,
+        "id": agentId,
         "notes": $('#noteArea').val()
         }
 	RestPost(updateAgentNotes, updateNotesURL);

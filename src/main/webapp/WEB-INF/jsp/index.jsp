@@ -13,7 +13,7 @@
 	<script src="${pageContext.request.contextPath}/resources/js/allURLs.js"></script>
     <script src="${pageContext.request.contextPath}/resources/js/navbar.js" charset="utf-8"></script>
 	<script src="${pageContext.request.contextPath}/resources/js/todayCallsController.js" charset="utf-8"></script>
-	<script src="${pageContext.request.contextPath}/resources/js/feedbackTags.js" charset="utf-8"></script>
+	<script src="${pageContext.request.contextPath}/resources/js/fireFeedback.js" charset="utf-8"></script>
 	<script src="${pageContext.request.contextPath}/resources/js/webSocket.js"></script>
     <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/sidebar.css">
 	<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/NotesAndComments.css">
