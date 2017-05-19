@@ -32,9 +32,9 @@ function drawDayCalls(){ // функция отрисовки звонков
 	var timeEnd = moment(moment().add(1,'days').format("DD-MM-YYYY"), "DD-MM-YYYY").unix()*1000; // время для запроса 
 	$.get(dayCallsURL+"/"+timeStart+"/"+timeEnd).done(function (data) { // запрос к базе
 	sorting(data, 'timeStart'); // сортировка
-	var nametag = agentId = dayCalls = "";	
+	var nametag = dayCalls = "";	
 	if(data.length==0){ document.getElementById("MainForm").innerHTML = "Сегодня еще не было звонков"; } // если не пусто
-	else {	agentId = data[0].agent.id; // рисуй
+	else {	 // рисуй
 			var audioURL, audiosrc, chain, com, userID, questionID, catID, additionalInfo;
 			for (var i = 0; i < data.length; i++) { // основной цикл
 			additionalInfo = "";
@@ -65,7 +65,7 @@ function drawDayCalls(){ // функция отрисовки звонков
 		document.getElementById("MainForm").innerHTML = dayCalls;
 	}
 	$("audio").each(function(){ //Функция по остановке всех остальных аудио-файлов
-		$(this).bind("play",stopAll);
+		$(this).bind("play",stopAll).bind("click",stopAll);
 	});
 			})
 }

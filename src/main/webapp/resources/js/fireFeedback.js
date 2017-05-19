@@ -65,7 +65,7 @@ if (chainId=="") {$('#serviceFeedbackMessage').text("Выберите звоно
 			if (lengthOfTagGroup<1) {isCorrect = false;
 					$('div.tag-form').addClass("box-shadow");} // если тэгов нет активных - подсветка и фолс
 			if ($('#feedbackComment').val()=="") {isCorrect=false;
-					$('#feedbackComment')addClass("box-shadow");}  // если комментария нет - подсветка и фолс
+					$('#feedbackComment').addClass("box-shadow");}  // если комментария нет - подсветка и фолс
 			if (isCorrect) {	$('#serviceFeedbackMessage').text("").css({"color":"black"}); // если все норм
 										postFeedback(); // отправка фидбека
 										setTimeout(function(){ 
@@ -104,9 +104,11 @@ function drawFeedback() { // отрисовка Feedbackа
 				for (var j=0;j<feedbackInfo[i].tags.length;j++){
 					tagCollector +='{\"id\":' + feedbackInfo[i].tags[j].id + '},'; //сбор этих тэгов
 				}
+				var userID = feedbackInfo[i].avitoUserId; questionID = feedbackInfo[i].questionId; catID = feedbackInfo[i].shopCategoryId
 				timetag = moment.unix(feedbackInfo[i].timeStart/1000).format(dateFormat); 
 				audioURL = '<audio class="audio-call" id="audio'+i+'" src="' + oktell + feedbackInfo[i].comId + '" onplay=change_call("'+feedbackInfo[i].chainId+'",'+i+') controls></audio><a href="'+ oktell + feedbackInfo[i].chainId +'" target="_blank">' + '</a>';
-				feedbackEmptyCalls += '<div id="feedbackCall' +i+'" onclick=change_call("'+feedbackInfo[i].chainId+'",'+i+') class="call col-lg-12 feedback-call" data-time="'+timetag+'" data-sign="'+feedbackInfo[i].agent.username+'" value="'+ feedbackInfo[i].type+'" name='+ tagCollector +'><span>'+ timetag +' '+ feedbackInfo[i].agent.username + '</span><br>' + audioURL + '</div>'; // собственно пустые звонки, собирающиеся в цикле
+				feedbackEmptyCalls += '<div id="feedbackCall' +i+'" onclick=change_call("'+feedbackInfo[i].chainId+'",'+i+') class="call col-lg-12 feedback-call" data-time="'+timetag+'" data-sign="'+feedbackInfo[i].agent.username+'" value="'+ feedbackInfo[i].type+'" name='+ tagCollector +'><span>'+ timetag +' '+ feedbackInfo[i].agent.username + '</span>'+
+				"<span class='pull-right box-shadow-blue addSpace'>"+Questions[questionID-1]+"</span><span class='pull-right box-shadow-blue addSpace'>  "+Categories[catID-1]+"</span><span class='pull-right box-shadow-blue addSpace'>ID:<a href='https://adm.avito.ru/users/user/info/"+userID+"' target=_blank>"+userID+"</a></span><br>" + audioURL + "</div>"; // собственно пустые звонки, собирающиеся в цикле
 		}
 		document.getElementById("MainForm").innerHTML = feedbackEmptyCalls;		
 	}
