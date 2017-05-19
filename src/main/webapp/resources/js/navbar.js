@@ -373,12 +373,7 @@ function clearData() {
 		$("#IsHappyToggler").bootstrapToggle('off');
 	}
 }
-function clearFeedback() {
-	$('input:checkbox[class=group-list-checkbox]').each(function () { $(this).prop('checked', false); });
-	$('label[name=info-label]').removeClass('blueOne');
-	$('#feedbackComment').val("");
-	$('#serviceFeedbackMessage').text("").css({"color":"black"});
-}
+
 //Отправка данных из боковой формы на сервер
 function fillData(dataArray) {
 	var updateCall = {
@@ -496,54 +491,8 @@ function stopAll(e){
 		}
 	});
 }
-function drawFeedback() {
-	var timeNow = moment().unix()*1000;
-	// console.log(timeNow);
-	$.get(emptyFeedbackURL+timeNow+"/")
-	 .done(
-	function (data) {
-	var feedbackInfo = data;
-	sorting(feedbackInfo, 'timeStart');
-	var chainId = "";
-	var outputEmptyCalls = "";
-	// console.log(feedbackInfo);
-	if(feedbackInfo.length==0) 	{
-		document.getElementById("MainForm").innerHTML = "Все звонки заполнены";
-		
-	}
-	else { 
-		var callInfo = [];
-		var timetag,audioURL;
-		
-		//var com_id, chain_id, user_id, timestamp, tags, comment, agent, shop_category, question;
-		for (var i = 0; i < feedbackInfo.length; i++) {
-			var tagCollector ="";
-			for (var j=0;j<feedbackInfo[i].tags.length;j++){
-				tagCollector +='{\"id\":' + feedbackInfo[i].tags[j].id + '},';
-			}
-            timetag = moment.unix(feedbackInfo[i].timeStart/1000).format(dateFormat);
-			audioURL = '<audio class="audio-call" id="audio'+i+'" src="' + oktell + feedbackInfo[i].comId + '" onplay=change_call("'+feedbackInfo[i].chainId+'",'+i+') controls></audio><a href="'+ oktell + feedbackInfo[i].chainId +'" target="_blank">' + '</a>';
-			outputEmptyCalls += '<div id="feedbackCall' +i+'" onclick=change_call("'+feedbackInfo[i].chainId+'",'+i+') class="call col-lg-12" data-time="'+timetag+'" data-sign="'+feedbackInfo[i].agent.username+'" value="'+ feedbackInfo[i].type+'" name='+ tagCollector +'><span>'+ timetag +' '+ feedbackInfo[i].agent.username + '</span><br>' + audioURL + '</div>';
-		}
-		document.getElementById("MainForm").innerHTML = outputEmptyCalls;		
-	}
-	$("audio").each(function(){
-		$(this).bind("play",stopAll);
-	});
-	$("#feedbackCall0").bind("click",stopAll).siblings().bind("click",stopAll);
-}
-)}
-function postFeedback () {
-	var updateFeedbackCall = {
-		"agentId": agentId,
-		"chainId" : chainId,
-        "comments":$('#feedbackComment').val(),
-        "tags": JSON.parse(outputTags),
-		"type": "FULL_FEEDBACK"
-        }
-		// console.log(updateFeedbackCall);
-	RestPost(updateFeedbackCall, feedbackSaveURL);
-}
+
+
 function updateNotes() {
 	var updateAgentNotes = {
         "id": agentId,
