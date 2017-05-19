@@ -86,8 +86,33 @@ function postFeedback () { // Отправить  фидбек
 	RestPost(updateFeedbackCall, feedbackSaveURL);
 }
 function clearFeedback() { // Очистка фидбека
-	$('input:checkbox[class=group-list-checkbox]').each(function () { $(this).prop('checked', false); });
-	$('label[name=info-label]').removeClass('blueOne');
-	$('#feedbackComment').val("");
-	$('#serviceFeedbackMessage').text("").css({"color":"black"});
+	$('input:checkbox[class=group-list-checkbox]').each(function () { $(this).prop('checked', false); }); // снять чек со всех подписей
+	$('label[name=info-label]').removeClass('blueOne'); // убрать класс
+	$('#feedbackComment').val(""); // обнулить комментарий
+	$('#serviceFeedbackMessage').text("").css({"color":"black"}); // черный цвет сервис-сообщения
 }
+function drawFeedback() { // отрисовка Feedbackа
+	var timeNow = moment().unix()*1000; 
+	$.get(emptyFeedbackURL+timeNow+"/").done( function (data) { // вывод незаполненного к этому моменту фидбека
+	var feedbackInfo = data;
+	sorting(feedbackInfo, 'timeStart'); // сортировка, последние сверху
+	var chainId = feedbackEmptyCalls = ""; // очистка чейнайди и выходного сообщения
+	if(feedbackInfo.length==0) 	{document.getElementById("MainForm").innerHTML = "Все звонки заполнены";} // пусто
+	else { 	var callInfo = []; var timetag,audioURL; 
+			for (var i = 0; i < feedbackInfo.length; i++) { //цикл отрисовки пустых звонков
+				var tagCollector =""; // переменная для тэгов, которые уже стоят в звонке
+				for (var j=0;j<feedbackInfo[i].tags.length;j++){
+					tagCollector +='{\"id\":' + feedbackInfo[i].tags[j].id + '},'; //сбор этих тэгов
+				}
+				timetag = moment.unix(feedbackInfo[i].timeStart/1000).format(dateFormat); 
+				audioURL = '<audio class="audio-call" id="audio'+i+'" src="' + oktell + feedbackInfo[i].comId + '" onplay=change_call("'+feedbackInfo[i].chainId+'",'+i+') controls></audio><a href="'+ oktell + feedbackInfo[i].chainId +'" target="_blank">' + '</a>';
+				feedbackEmptyCalls += '<div id="feedbackCall' +i+'" onclick=change_call("'+feedbackInfo[i].chainId+'",'+i+') class="call col-lg-12 feedback-call" data-time="'+timetag+'" data-sign="'+feedbackInfo[i].agent.username+'" value="'+ feedbackInfo[i].type+'" name='+ tagCollector +'><span>'+ timetag +' '+ feedbackInfo[i].agent.username + '</span><br>' + audioURL + '</div>'; // собственно пустые звонки, собирающиеся в цикле
+		}
+		document.getElementById("MainForm").innerHTML = feedbackEmptyCalls;		
+	}
+	$("audio").each(function(){
+		$(this).bind("play",stopAll).bind("click",stopAll);
+	});
+	//$(".feedback-call").bind("click",stopAll);
+}
+)}

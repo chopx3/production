@@ -1,22 +1,18 @@
-var tempValue;
-var tagGroupsArray = [];
-var optionsReturn = "";
-var dateFormat = 'DD.MM.YYYY HH:mm:ss';
+var idNum;
 var admAvito = '<a href="https://adm.avito.ru/users/user/info/';
-function drawInfo(value){
-	$("#updateWrapper").removeClass("active");
-	var addInfoBody = addInfoFooterFunc=updInfoBody=updInfoFooterFunc=addInfoHeaderValue=updInfoHeaderValue=updInfoFooterFuncSecond= "";
-	if (value=="agents"){
+function drawInfo(value){ // функция звполнения групп кнопок
+	$("#updateWrapper").removeClass("active"); // скрыть обновление информации
+	var addInfoBody = addInfoFooterFunc = updInfoBody = updInfoFooterFunc = addInfoHeaderValue = updInfoHeaderValue = updInfoFooterFuncSecond = ""; // обнуление 
+	switch(value) {//заполнение информации, всего 6 полей. Шапка, тело и низ, для обновления и добавления инфы.
+		case "agents":   //если значение = агент.
 		addInfoHeaderValue = 'Добавить агента';
 		updInfoHeaderValue = 'Изменить информацию об агенте';
-		addInfoBody = 
-	'<div class=row><label class="leftLabel">username</label><input type="text" class="form-control inputTextField" id=addTextField1></div>'+
-'<div class=row><label class="leftLabel">OktellLogin</label><input type="text" class="form-control inputTextField" id=addTextField2></div>';
+		addInfoBody = 	'<div class=row><label class="leftLabel">username</label><input type="text" class="form-control inputTextField" id=addTextField1></div>'+
+						'<div class=row><label class="leftLabel">OktellLogin</label><input type="text" class="form-control inputTextField" id=addTextField2></div>';
 		addInfoFooterFunc = "infoCheck(\'add\', \'agents\')";
-		updInfoBody = 
-				'<div class=row><label 	class="leftLabel">username</label>	<input type="text" 	class="form-control inputTextField" id=updTextField1></div>'+
-				'<div class=row><label 	class="leftLabel">OktellLogin</label>	<input type="text" 	class="form-control inputTextField" id=updTextField2></div>'+
-				'<div class=row><label 	class="leftLabel">Роль</label>'+
+		updInfoBody = 	'<div class=row><label 	class="leftLabel">username</label>	<input type="text" 	class="form-control inputTextField" id=updTextField1></div>'+
+						'<div class=row><label 	class="leftLabel">OktellLogin</label>	<input type="text" 	class="form-control inputTextField" id=updTextField2></div>'+
+						'<div class=row><label 	class="leftLabel">Роль</label>'+
 						'<div class="btn-group inputTextField" role="group" aria-label="Basic example" data-toggle=buttons>'+
 							'<label class="btn btn-primary active">'+
 							'<input type="radio" name="options" id="optionUser" autocomplete="off" checked>User'+
@@ -27,148 +23,137 @@ function drawInfo(value){
 						'</div>'+
 				'</div>';	
 	updInfoFooterFunc = "infoCheck(\'upd\', \'agents\')";
-	}
-	if (value=="tags"){
+	break;
+	case "tags" : //если значение = тэг.
 		var options = optionsReturn;
 		addInfoHeaderValue = 'Добавить тэг';
 		updInfoHeaderValue = 'Изменить информацию о тэге';
 		addInfoFooterFunc = "infoCheck(\'add\', \'tags\')";
 		updInfoFooterFuncSecond = '<button class="btn btn-primary" onclick="ChangeTagGroup()">Изменить группу</button>';
 		updInfoFooterFunc = "infoCheck(\'upd\', \'tags\')";
-		addInfoBody = 
-		'<div class=row><label class="leftLabel">Тэг		</label><input type="text" class="form-control inputTextField" 	id=addTextField1>	</div>'+
-		'<div class=row><label class="leftLabel">Название	</label><input type="text" class="form-control inputTextField" 	id=addTextField2>	</div>'+
-		'<div class=row><label class="leftLabel">Описание	</label><input type="text" class="form-control inputTextField" 	id=addTextField3>	</div>';
-		updInfoBody = 
-		'<div class=row><label class="leftLabel">Тэг		</label><input type="text" class="form-control inputTextField" 	id=updTextField1>	</div>'+
-		'<div class=row><label class="leftLabel">Название	</label><input type="text" class="form-control inputTextField" 	id=updTextField2>	</div>'+
-		'<div class=row><label class="leftLabel">Описание	</label><input type="text" class="form-control inputTextField" 	id=updTextField3>	</div>'+
-		'<div class=row><label class="leftLabel">Группа тегов</label><select class="form-control inputTextField" id="exampleSelect1">'+options+ '</select>	</div>';
-
-	}
-	if (value=="group"){
+		addInfoBody = 	'<div class=row><label class="leftLabel">Тэг		</label><input type="text" class="form-control inputTextField" 	id=addTextField1>	</div>'+
+						'<div class=row><label class="leftLabel">Название	</label><input type="text" class="form-control inputTextField" 	id=addTextField2>	</div>'+
+						'<div class=row><label class="leftLabel">Описание	</label><input type="text" class="form-control inputTextField" 	id=addTextField3>	</div>';
+		updInfoBody = 	'<div class=row><label class="leftLabel">Тэг		</label><input type="text" class="form-control inputTextField" 	id=updTextField1>	</div>'+
+						'<div class=row><label class="leftLabel">Название	</label><input type="text" class="form-control inputTextField" 	id=updTextField2>	</div>'+
+						'<div class=row><label class="leftLabel">Описание	</label><input type="text" class="form-control inputTextField" 	id=updTextField3>	</div>'+
+						'<div class=row><label class="leftLabel">Группа тегов</label><select class="form-control inputTextField" id="exampleSelect1">'+options+ '</select>	</div>';
+	break;
+	case "group":  //если значение = тэггруппа.
 		addInfoHeaderValue = 'Добавить группу тэгов';
 		updInfoHeaderValue = 'Изменить информацию о группе тэгов'; 
 		addInfoFooterFunc = "infoCheck(\'add\', \'group\')";		
 		updInfoFooterFunc = "infoCheck(\'upd\', \'group\')";
-		addInfoBody = 
-		'<div class=row><label class="leftLabel">Название	</label><input type="text" class="form-control inputTextField" id=addTextField1>	</div>'+
-		'<div class=row><label class="leftLabel">Описание	</label><input type="text" class="form-control inputTextField" id=addTextField2>	</div>';
-		updInfoBody = 
-		'<div class=row><label class="leftLabel">Название	</label><input type="text" class="form-control inputTextField" id=updTextField2>	</div>'+
-		'<div class=row><label class="leftLabel">Описание	</label><input type="text" class="form-control inputTextField" id=updTextField3>	</div>';
-	}
-	if (value=="stat"){
-	updInfoBody=
-	'<form action="" method="get">'+
+		addInfoBody = 	'<div class=row><label class="leftLabel">Название	</label><input type="text" class="form-control inputTextField" id=addTextField1>	</div>'+
+						'<div class=row><label class="leftLabel">Описание	</label><input type="text" class="form-control inputTextField" id=addTextField2>	</div>';
+		updInfoBody = 	'<div class=row><label class="leftLabel">Название	</label><input type="text" class="form-control inputTextField" id=updTextField2>	</div>'+
+						'<div class=row><label class="leftLabel">Описание	</label><input type="text" class="form-control inputTextField" id=updTextField3>	</div>';
+	break;
+	case "stat":  //если значение = статистика.
+	updInfoBody= '<form action="" method="get">'+
 	'<input type="text" name="daterange" value="01-01-2015 - 01-31-2015" />'+
-	'</p>'+
 	'</form>'+
 	'<button class="btn btn-info" id="yesterday" >Вчера</button>'+
 	'<button class="btn btn-info" id="today">Сегодня</button>'+
 	'<button class="btn btn-info" id="week">Неделя</button>'+
 	'<button class="btn btn-info" id="month">Месяц</button>';
-	addInfoBody=
-	'<div class=row><label class="leftLabel">Звонки</label><div class="inputTextField"><button class="btn btn-primary catButtons" value="categories" onclick="getInfo(\'categories\')">Категория</button><button class="btn btn-primary catButtons" value="users" onclick="getInfo(\'users\')">Users</button><button class="btn btn-primary catButtons" value="questions" onclick="getInfo(\'questions\')">Вопросы</button></div></div>'+
+	addInfoBody= 	'<div class=row><label class="leftLabel">Звонки</label><div class="inputTextField"><button class="btn btn-primary catButtons" value="categories" onclick="getInfo(\'categories\')">Категория</button><button class="btn btn-primary catButtons" value="users" onclick="getInfo(\'users\')">Users</button><button class="btn btn-primary catButtons" value="questions" onclick="getInfo(\'questions\')">Вопросы</button></div></div>'+
 	'<div class=row><label class="leftLabel">Агенты</label><div class="inputTextField"><button class="btn btn-primary catButtons" value="empty" onclick="getInfo(\'empty\')" >Незаполненные</button><button class="btn btn-primary catButtons" value="agents" onclick="getInfo(\'agents\')" id="allCalls"> Всего</button></div></div>'+
 	'<div class=row><label class="leftLabel">Другие</label><div class="inputTextField"><button class="btn btn-primary catButtons" value="managers" onclick="getInfo(\'managers\')">Менеджер</button><button class="btn btn-primary catButtons" value="outcomings" onclick="getInfo(\'outcomings\')">Исходящие</button></div></div>'+
 	'<div class=row><label class="leftLabel">Feedback</label><div class="inputTextField"><button class="btn btn-primary catButtons" value="empty_feedback" onclick="getInfo(\'empty_feedback\')" >Незаполненные</button><button class="btn btn-primary catButtons" value="full_feedback" onclick="getInfo(\'full_feedback\')" id="allCalls"> Заполненные</button></div></div>';
 	addInfoFooterFunc = updInfoFooterFunc = "";
 	addInfoHeaderValue = "Выбор категории звонка";
 	updInfoHeaderValue =  'Выберите период:';
+	break;
 	}
-	var addInfoHeader = "<label>"+addInfoHeaderValue+"</label>";
-	var updInfoHeader = "<label>"+updInfoHeaderValue+"</label>";
-	var addInfoFooter = (value !="stat") ? '<button class="btn btn-success" onclick="'+addInfoFooterFunc+'">Добавить</button>' : "";
-	var updInfoFooter = (value !="stat") ? '<button class="btn btn-success" onclick="'+updInfoFooterFunc+'">Изменить информацию</button>'+updInfoFooterFuncSecond : "";
+	var addInfoHeader = "<label>"+addInfoHeaderValue+"</label>"; // добавление инфы в хедеры
+	var updInfoHeader = "<label>"+updInfoHeaderValue+"</label>"; // добавление инфы в хедеры
+	var addInfoFooter = (value !="stat") ? '<button class="btn btn-success" onclick="'+addInfoFooterFunc+'">Добавить</button>' : ""; // и в футер
+	var updInfoFooter = (value !="stat") ? '<button class="btn btn-success" onclick="'+updInfoFooterFunc+'">Изменить информацию</button>'+updInfoFooterFuncSecond : ""; // и в футер
 	document.getElementById("updBody").innerHTML 	= updInfoBody;
 	document.getElementById("updFooter").innerHTML 	= updInfoFooter;
 	document.getElementById("updHeader").innerHTML 	= updInfoHeader;
 	document.getElementById("addBody").innerHTML 	= addInfoBody;
 	document.getElementById("addFooter").innerHTML 	= addInfoFooter;
-	document.getElementById("addHeader").innerHTML 	= addInfoHeader;
+	document.getElementById("addHeader").innerHTML 	= addInfoHeader; // заполнение
 };
-function infoCheck(value, type){
+function infoCheck(value, type){ // проверка информации и отправление данных, value = add или upd, type= agent, stat, tag, group
 	var check = true;
 	var firstField = 	"#"+value+"TextField1";
-	var secondField = 	"#"+value+"TextField2";
-	if (type != "agents") {
+	var secondField = 	"#"+value+"TextField2";// присвоение значений. По умолчанию - данные верны, пока не доказно обратное.
+	if (type != "agents") { // в тэгах и группе есть третье значение, объявление и проверка
 	var thirdField = 	"#"+value+"TextField3";
-	if($(thirdField).val()==""){$(thirdField).addClass("box-shadow"); check = false;}	}
+	if($(thirdField).val()==""){$(thirdField).addClass("box-shadow"); check = false;}}
 	$(firstField).removeClass("box-shadow");
 	$(secondField).removeClass("box-shadow");
 	if($(firstField).val()==""){$(firstField).addClass("box-shadow");check = false;}
-	if($(secondField).val()==""){$(secondField).addClass("box-shadow"); check = false;}
-	if(check){
-		if (type == "agents"){
-		var URL;
-		var infoToServer;
-		if(value=="upd"){
-		var role = ($('#optionAdmin').is(':checked'))?roleAdmin:roleUser;
-		infoToServer ={
-		"id":idNum,
-        "username": $(firstField).val(),
-        "oktellLogin":$(secondField).val(),
-		"roles": JSON.parse(role)
-		};
-		URL = updAgentURL;
-		}
-		else {
-		infoToServer ={
-        "username": $(firstField).val(),
-        "oktellLogin":$(secondField).val()
-		};
-		URL=addAgentURL; 
-		}
-		console.log(infoToServer);
-		console.log(URL);
-		}
-		
-		if (type == "tags"){
-		if(value=="upd"){
-		infoToServer ={
-		"id":idNum,
-        "value": $(firstField).val(),
-        "name":$(secondField).val(),
-		"description": $(thirdField).val(),
-		};
-		URL = updTagURL;
-		}
-		else {
-		infoToServer ={
-		"value":$(firstField).val(),
-        "name": $(secondField).val(),
-		"description": $(thirdField).val()
-		};
-		URL=addTagURL; 
-		}			
-		}
-		if (type == "group") {
-			if(value=="upd"){
-				infoToServer ={
+	if($(secondField).val()==""){$(secondField).addClass("box-shadow"); check = false;} // проверка значений
+	if(check){	var URL, infoToServer;	
+		switch(value){ // сначала проверяется добавление это или обновление данных
+		case 'add': 
+					switch(type){ // а потом - каких именно данных
+					case 'agents':
+					infoToServer ={
+					"username": $(firstField).val(),
+					"oktellLogin":$(secondField).val()
+					};
+					URL=addAgentURL; 
+					break;
+					case 'tags':
+					infoToServer ={
+					"value":$(firstField).val(),
+					"name": $(secondField).val(),
+					"description": $(thirdField).val()
+					};
+					URL=addTagURL;
+					break;
+					case 'group':
+					infoToServer ={
+					"name": $(firstField).val(),
+					"description": $(secondField).val()
+					};
+					URL=addTagGroupURL; 
+					break;}
+		break;
+		case 'upd':
+					switch(type){
+					case 'agents':
+					var role = ($('#optionAdmin').is(':checked'))?roleAdmin:roleUser;
+					infoToServer ={
+					"id":idNum,
+					"username": $(firstField).val(),
+					"oktellLogin":$(secondField).val(),
+					"roles": JSON.parse(role)
+					};
+					URL = updAgentURL;
+					break;
+					case 'tags':
+					infoToServer ={
+					"id":idNum,
+					"value": $(firstField).val(),
+					"name":$(secondField).val(),
+					"description": $(thirdField).val(),
+					};
+					URL = updTagURL;
+					break;
+					case 'group':
+					infoToServer ={
 						"id":idNum,
 						"name": $(secondField).val(),
 						"description": $(thirdField).val()
 						};
-		URL = updTagGroupURL;
-			}
-			else {
-				infoToServer ={
-				"name": $(firstField).val(),
-				"description": $(secondField).val()
-				};
-				URL=addTagGroupURL; 
-				}	
-		}
-		RestPost(infoToServer, URL);
-		fillInfo(type);
+					URL = updTagGroupURL;
+					break;}
+		break;}	
+		RestPost(infoToServer, URL); // запрос на сервер
+		fillInfo(type); // обновление нужной страницы
 	}
 }
 function fillInfo(type){
 	if (type == "agents") 	{fillAgents()}
 	else {fillTags(type)}
 }
-function updateInfo(id, nameTag, loginShort, desc){
+function updateInfo(id, nameTag, loginShort, desc){ // добавление данных в поле обновления
 	idNum = id;
 	$("#updTextField1").val(nameTag);
 	$("#updTextField2").val(loginShort);
@@ -176,30 +161,24 @@ function updateInfo(id, nameTag, loginShort, desc){
 	$("#updateWrapper").addClass("active");
 }
 $(document).ready(function() {
-	fillAgents();
-	getTagGroups();
-	$('li.hl').click(function(){
+	fillAgents(); // стандартная страница при переходе в админку
+	getTagGroups(); // для отображения групп в смене группы
+	$('li.hl').click(function(){ // подсветка активного пункта навигации
 		$('li.hl').removeClass('highlight');
 		$(this).toggleClass('highlight');
 	});
-	$("#searchButton").click(function(event){
-		$("tr.table-row").each(function () { $(this).removeClass('search'); });
-		$("#searchField").removeClass("error");
-		event.preventDefault();
-		try{
-		var target_top= $('#'+$("#searchField").val()).offset().top;
-		$('html, body').animate({scrollTop:target_top-50}, 'slow');		
-		$('#'+$("#searchField").val()).addClass("search");
+	$("#searchButton").click(function(event){ // поиск
+		$("tr.table-row").each(function () { $(this).removeClass('search'); }); // очистить строки
+		$("#searchField").removeClass("error"); // обнулить класс у строки поиска
+		event.preventDefault(); 
+		try{ 	var target_top= $('#'+$("#searchField").val()).offset().top; // поиск смещения относительно поля
+				$('html, body').animate({scrollTop:target_top-50}, 'slow');	 // модная анимация пролета к этой строке	
+				$('#'+$("#searchField").val()).addClass("search"); // выделение строки
 		}
-		catch(err){
-		$("#searchField").addClass("error");
-		}
+		catch(err){ $("#searchField").addClass("error"); } // ошибка
 	});
-	$('#searchField').keypress(function (e) {
-	 console.log("clicked");
-	 var key = e.which;
-	 if(key == 13)   {
-	   jQuery('#searchButton').click();
-  }
+	$('#searchField').keypress(function (e) { // обработки нажатия энтер
+	 var key = e.which; 
+	 if(key == 13)   {jQuery('#searchButton').click(); }
 });
 })
