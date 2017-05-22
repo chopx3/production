@@ -114,7 +114,7 @@
 					</div>
 			        <div class="col-md-3 col-md-offset-1 btn-group" data-toggle="buttons" id="IsManagerAndNoID">    
                     <label class="btn btn-primary " id="openQuestionLabel">
-                    <input type="checkbox" name="question" id="openQuestion" autocomplete="off" value="8"> Общий вопрос
+                    <input type="checkbox" name="question" id="openQuestion" autocomplete="off" value="8"> Без ID
 					</label>          
 					</div>
 					<div class="btn-group pull-right" data-toggle="buttons" id="isUserHappy">    
@@ -125,7 +125,7 @@
         <div class="row">
             
                 <label class=col-lg-12>Дополнительные тэги</label>
-                <div class="btn-group col-lg-12" data-toggle="buttons" id=additionalTagsDiv>
+                <div id=additionalTagsDiv>
                     
                 </div>
             

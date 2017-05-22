@@ -358,20 +358,27 @@ function drawAdditionalTags(){ // отрисовка дополнительны�
 		var nextLine = 0;
 				for (var i = 0; i<iterations;i++){ // цикл для строк
 					if (length>=(i+1)*4) {nextLine=4;} // если количество тэгов больше чем цикл итерации*4 - рисуй полную строку из 4 элементов
-					else {nextLine = length%4;} // если меньше - все что осталось			
+					else {nextLine = length%4;} // если меньше - все что осталось
+					outputTags += (nextLine>2) ?'<div class="btn-group col-lg-12" data-toggle="buttons" id=addTags-'+i+'>':"";
 					for (j=0;j<nextLine;j++){ // цикл для тэгов
 						var id = data[ourID].tags[i*4+j].id; // для сокращения
-						if (nextLine == 1){ outputTags+=	'<label class="btn btn-avito-tags col-lg-offset-4 col-lg-4" name="addTags" id="label-tag-'+id+'">'+
+						if (nextLine < 3) switch(nextLine) {
+						case 1:  // если один тэг, отступ, чтоб красиво
+						outputTags +='<div class="btn-group col-lg-8 col-lg-offset-4" data-toggle="buttons" id=addTags-'+i+'>';	
+						outputTags+='<label class="btn btn-avito-tags col-lg-6" name="addTags" id="label-tag-'+id+'">'+
+									'<input type="checkbox" id="tag-'+id+'" name="addTags" autocomplete="off" value="'+id+'">'+data[ourID].tags[i*4+j].name +'</label>';
+						break;
+						case 2: // если два тэга, отступ, чтоб красиво
+						if(j==0) {outputTags+='<div class="btn-group col-lg-8 col-lg-offset-2" data-toggle="buttons" id=addTags-'+i+'>';}
+						outputTags+='<label class="btn btn-avito-tags col-lg-6" name="addTags" id="label-tag-'+id+'">'+
+									'<input type="checkbox" id="tag-'+id+'" name="addTags" autocomplete="off" value="'+id+'">'+data[ourID].tags[i*4+j].name +'</label>';
+						break;
+						}
+						else {outputTags+=	'<label class="btn btn-avito-tags col-lg-'+12/nextLine+'" name="addTags" id="label-tag-'+id+'">'+
 											'<input type="checkbox" id="tag-'+id+'" name="addTags" autocomplete="off" value="'+id+'">'+data[ourID].tags[i*4+j].name +'</label>';
-						} // если один тэг, отступ, чтоб красиво
-						else if (nextLine == 2){var tune = (j==0) ? "col-lg-offset-2 col-lg-4" : "col-lg-4";
-							outputTags+=	'<label class="btn btn-avito-tags '+tune+'" name="addTags" id="label-tag-'+id+'">'+
-											'<input type="checkbox" id="tag-'+id+'" name="addTags" autocomplete="off" value="'+id+'">'+data[ourID].tags[i*4+j].name +'</label>';
-								} // если два тэга, отступ, чтоб красиво
-						else { outputTags+=	'<label class="btn btn-avito-tags col-lg-'+12/nextLine+'" name="addTags" id="label-tag-'+id+'">'+
-											'<input type="checkbox" id="tag-'+id+'" name="addTags" autocomplete="off" value="'+id+'">'+data[ourID].tags[i*4+j].name +'</label>'; 
 						}
 					}
+					outputTags +='</div>';
 				}
 				document.getElementById("additionalTagsDiv").innerHTML = outputTags;
 			})
