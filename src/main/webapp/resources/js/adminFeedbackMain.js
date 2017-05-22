@@ -1,8 +1,6 @@
 // Основной js файл для админ\фидбека, отвечает за отрисовку звонков и тэгов
 var catNum = 6; // дефолтное значение для категории, 6=все категории
 var Call = Comment = Tags = ""; 
-var Categories = []; // массив для категорий
-var dateFormat = 'DD.MM.YYYY HH:mm:ss'; // стандартный формат звонков
 $(document).ready(function() {
 	getCats();
 	$('input[name="category"]').change(function(e){
@@ -10,13 +8,6 @@ $(document).ready(function() {
 	});
 	createTagsTable();
 });
-function getCats () {// Получить в массив список всех категорий из базы
-	$.get(getCatsURL)
-	 .done( function (data) {
-		 var catInfo = data;
-		for (var i=0;i<catInfo.length;i++){
-			Categories[i]=catInfo[i].description;
-		}	}	)	};
 function getCalls(){ // Получить список всех звонков и вывести их в поле, после проверки условий
 	var timeStart = moment(startDate, "DD-MM-YYYY").unix()*1000;
 	var timeEnd = moment(endDate, "DD-MM-YYYY").unix()*1000;
@@ -52,14 +43,6 @@ function getCalls(){ // Получить список всех звонков и
 					console.log("---");
 				});
 }
-function sorting(json_object, key_to_sort_by) { // функция сортировки в обратном порядке
-    function sortByKey(a, b) {
-        var x = a[key_to_sort_by];
-        var y = b[key_to_sort_by];
-        return ((x > y) ? -1 : ((x < y) ? 1 : 0));
-    }
-    json_object.sort(sortByKey);
-}	
 function createTagsTable(){ // отрисовка блока с выбором тэгов
 	tagCounter = 0; // количество
 	outputTags=""; //текст

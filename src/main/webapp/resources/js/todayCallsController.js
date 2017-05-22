@@ -1,4 +1,3 @@
-var Categories = Questions = [];
 var fullCallInfo;
 $(document).ready(function() { // получить вопросы и категории с базы
 	getQuestionsInfo();
@@ -11,22 +10,6 @@ $(document).ready(function() { // получить вопросы и катег�
 			$("#SubForm").addClass("Add");
 		});
 })
-function getQuestionsInfo () { // вопросы
-	$.get(getQuestionsInfoURL).done( function (data) {
-		var Info = data;
-		for (var i=0;i<Info.length;i++){
-			var desc = Info[i].description;
-			Questions[i]=(desc.length>=18)? desc.substr(0,16)+"..": desc;
-		} }
-)}
-function getCats () {//категории
-	$.get(getCatsURL).done(function (data) {
-		var Info = data;
-		for (var i=0;i<Info.length;i++){
-			var desc = Info[i].description;
-			Categories[i]=(desc.length>=20)? desc.substr(0,20)+"...": desc;
-		} }
-)}
 function drawDayCalls(){ // функция отрисовки звонков
 	var timeStart = moment(moment().format("DD-MM-YYYY"), "DD-MM-YYYY").unix()*1000;
 	var timeEnd = moment(moment().add(1,'days').format("DD-MM-YYYY"), "DD-MM-YYYY").unix()*1000; // время для запроса 
@@ -34,19 +17,9 @@ function drawDayCalls(){ // функция отрисовки звонков
 	sorting(data, 'timeStart'); // сортировка
 	var nametag = dayCalls = "";	
 	if(data.length==0){ document.getElementById("MainForm").innerHTML = "Сегодня еще не было звонков"; } // если не пусто
-	else {	 // рисуй
-			var audioURL, audiosrc, chain, com, userID, questionID, catID, additionalInfo;
+	else {	var audioURL, audiosrc, chain, additionalInfo; // рисуй
 			for (var i = 0; i < data.length; i++) { // основной цикл
-			additionalInfo = "";
-			if (data[i].out == true) { additionalInfo += "<span class='pull-right box-shadow-blue addSpace'><a title='Исходящий звонок'>Исх</a></span>";} // исходящий
-			if (data[i].manager == true) { additionalInfo += "<span class='pull-right box-shadow-blue addSpace'><a title='Менеджер'>М</a></span>";} // Менеджер
-			if (data[i].type == "EMPTY") { additionalInfo += "<span class='pull-right box-shadow addSpace'>Не заполнен</span>";} // пустой
-			else { 	userID = data[i].avitoUserId; questionID = data[i].questionId; catID = data[i].shopCategoryId; //заполненный звонок
-					if (userID == -1) { additionalInfo = "<span class='pull-right box-shadow addSpace'>"+Questions[questionID-1]+"</span>";} // как частник
-					else {additionalInfo += "<span class='pull-right box-shadow-blue addSpace'>"+Questions[questionID-1]+"</span><span class='pull-right box-shadow-blue addSpace'>  "+Categories[catID-1]+"</span><span class='pull-right box-shadow-blue addSpace'>ID:<a href='https://adm.avito.ru/users/user/info/"+userID+"' target=_blank>"+userID+"</a></span>"} // не как частник, основной блок добавления дополнительной информации
-			}
-			if (data[i].type == "FULL_FEEDBACK") { additionalInfo+= "<span class='pull-right box-shadow-blue addSpace'><a title='Заполненный звонок с тэгом feedback'>F</a></span>"}
-			if (data[i].type == "EMPTY_FEEDBACK") { additionalInfo+= "<span class='pull-right box-shadow addSpace'><a title='Незаполненный звонок с тэгом feedback'>F</a></span>"}
+			additionalInfo = collectAdditionalInfo(data[i]);		
 			var tagArray = [];
 			if (data[i].tags.length > 0) { // если есть тэги
 				sorting(data[i].tags, "id");
@@ -55,10 +28,9 @@ function drawDayCalls(){ // функция отрисовки звонков
 			}			
 			nametag = data[i].agent.username;//
 			chain = data[i].chainId;//
-			com = data[i].comId;//
 			audiosrc = data[i].comId; //
             timetag = moment.unix(data[i].timeStart/1000).format(dateFormat);//
-			fullCallInfo = [agentId, nametag, userID, chain, data[i].manager, questionID, catID, data[i].type, i, tagArray]; // заполнение переменных, сохранение в массив
+			fullCallInfo = [agentId, nametag, data[i].avitoUserId, chain, data[i].manager, data[i].questionId, data[i].shopCategoryId, data[i].type, i, tagArray]; // заполнение переменных, сохранение в массив
 			var audioURL = '<audio class="audio-call" id="audio'+i+'" onplay=setInfoToCallForm('+JSON.stringify(fullCallInfo)+') src="' + oktell + audiosrc + '" controls></audio><a href="'+ oktell + audiosrc +'" target="_blank">' + '<\/a>'; // аудио тэг
 			dayCalls += '<div id="divAddButton' +i+'" onclick=setInfoToCallForm('+JSON.stringify(fullCallInfo)+') class="call col-lg-12" data-time="'+timetag+'" data-sign="'+nametag+'"><span>'+ timetag +'\t\t</span>'+ additionalInfo+'<br>' + audioURL + '</div>'; // основное заполнение звонка - звонок+аудио+доп инфа
 		}
@@ -73,8 +45,7 @@ function setInfoToCallForm(fullCallInfo){ // функция выставлени
 	clearData(); // очистка
 	var allTags = fullCallInfo[9]; // ---
 	var idd = '#divAddButton'+fullCallInfo[8]; // ---
-	var feedId = '#feedbackCall'+fullCallInfo[8];   // ---
-	tagBuffer = $(feedId).attr("value");//заполнение инфы 
+	var feedId = '#feedbackCall'+fullCallInfo[8];   //заполнение инфы 
 	$(idd).addClass('active').siblings().removeClass('active'); // ---
 	$(feedId).addClass('active').siblings().removeClass('active'); // подсветка
 	chainId = fullCallInfo[3]; // ---
