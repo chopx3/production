@@ -27,3 +27,7 @@ padding: 0 6px;
 	 box-shadow: inset 0 0 0.3em blue;
 	 border-radius:10px;
 }
+/* Убрать отступ у звонков, которые выводятся в ряд */
+.no-margin-top{
+	margin-top: 0px;
+}

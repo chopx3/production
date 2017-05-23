@@ -35,7 +35,7 @@ function getWebsocketMessage(callback){
                 online();
                 websocket.send("ping");
                 break;
-            case "Exist empty calls": showMyEmptyCalls();
+            case "Exist empty calls": $('#my_calls').click();
                 break;
             case "pong":
                 online();

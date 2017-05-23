@@ -30,6 +30,7 @@ var changeTagGroup = 		host + "tags/group"; // изменить группу в 
 var Categories = [];
 var Questions = [];
 var dateFormat = 'DD.MM.YYYY HH:mm:ss';
+var iJump;
 // Общие функции
 function sorting(json_object, key_to_sort_by) {
     function sortByKey(a, b) {
@@ -55,6 +56,20 @@ function getCats() {// получить массив категорий
 			Categories[i]=(desc.length>=20)? desc.substr(0,18)+"...": desc;
 		}}
 )}
+function collectMultipleCalls(data, i, type){ // функция отрисовки нескольких звонков
+	var result="";
+	for (var j = i; j< data.length; j++){
+		if (j+1<=data.length-1){
+			var check = (type == "short") ? true : (data[j].agent.username == data[j+1].agent.username);
+			if (data[j].chainId == data[j+1].chainId && check){
+			var tempAudio = data[j+1].comId;
+			result += '<audio class="audio-call no-margin-top" src="'+oktell + tempAudio + '" controls></audio><a href="'+oktell+ tempAudio +'" target="_blank"></a>';
+			iJump++;
+		} else break;
+	}
+	else break;}
+return result;	
+}
 $(document).ready(function() {
 	getQuestionsInfo();
 	getCats();

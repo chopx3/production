@@ -1,5 +1,5 @@
 var outputTags = "";
-var tagCounter=0;
+var tagCounter=tagSum=0;
 var tagsMap;
 $(document).ready(function() {
 TagActiveChecker(); // Проверка тэгов на запуске
@@ -28,14 +28,21 @@ function clearButton(){ // кнопка очистить, тоже самое, �
 	TagActiveChecker();
 }
 function TagActiveChecker(){ // проверка активных тэгов
+allbutton=1;
 tagsMap = new Map(); // мэп для хранения данных
 outputTags = ""; // обнуление инфы
 tagCounter = 0; // обнуление инфы
-$('label[name=info-label]').each(function () { if($(this).hasClass('blueOne')){ // в цикле проходятся все тэги и лейблы, если есть класс Blue
+tagSum = 0;
+$('label[name=info-label]').each(function () { tagSum++;
+	if($(this).hasClass('blueOne')){ // в цикле проходятся все тэги и лейблы, если есть класс Blue
 	outputTags += $("#"+$(this).attr("for")).attr("value") + " "; // название тэга
 	tagCounter++; // + в количество тэгов
 	tagsMap.set($(this).attr("value"), $("#"+$(this).attr("for")).attr("value")); // внесение в мэп информации ключ:значение, id:название
-}})
+}
+})
 $('#tagCounterPlace').text(tagCounter); //вывод информации о количестве тэгов
-$('#tagNamesPlace').text(outputTags); // и о их названиях
+console.log(tagCounter);
+console.log(tagSum);
+if (tagSum==tagCounter) 	{$('#tagNamesPlace').text("Выбраны все тэги"); }
+else 			{$('#tagNamesPlace').text(outputTags); }// и о их названиях
 }
