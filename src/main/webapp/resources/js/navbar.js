@@ -201,7 +201,7 @@ function getCalls(){ // Функция для вывода информации 
 					iJump = 0;
 					var nextCall = collectMultipleCalls(data, i, "");
 					audioURL = '<audio class="audio-call" src="'+oktell + audiotag + '" controls></audio><a href="'+oktell+ audiotag +'" target="_blank">' + '<\/a>'; 
-					outputCalls += '<div class="call col-lg-12" data-time="'+timetag+'" data-sign="'+nametag+'"><span>'+ timetag +' '+nametag + '</span>'+additionalInfo+'<br>' + audioURL + nextCall + '</div>'; // основная часть формирования звонка
+					outputCalls += '<div class="call col-lg-12" data-time="'+timetag+'" data-sign="'+nametag+'"><span>'+ timetag +' '+nametag + '</span>'+additionalInfo+'<br>'+ nextCall + audioURL  + '</div>'; // основная часть формирования звонка
 					i+=iJump;
 				}
 			}
@@ -326,7 +326,7 @@ function  draw(data) { // отрисовка пустых звонков
 			var nextCall = collectMultipleCalls(data.emptyCallList, i, "short");
 			addButton = '<a href="#"  class="btn btn-success pull-right" id="' + chain + '" onclick=change_call(this.id,'+i+') "> Выбрать </a>'; // кнопка выбрать
 			var audioURL = '<audio id="audio'+i+'" onplay=change_call("'+chain+'",'+i+') src="' + oktell + audiosrc + '" class="audio-call" controls></audio><a href="'+ oktell + audiosrc +'" target="_blank">' + '<\/a>'; // аудио-тэг
-			outputEmptyCalls += '<div id="divAddButton' +i+'" onclick=change_call("'+chain+'",'+i+') class="call col-lg-12" data-time="'+timetag+'" data-sign="'+nametag+'"><span>'+ timetag +' '+nametag +'\t\t' + addButton + '</span><br>' + audioURL + nextCall + '</div>'; // основное заполнение
+			outputEmptyCalls += '<div id="divAddButton' +i+'" onclick=change_call("'+chain+'",'+i+') class="call col-lg-12" data-time="'+timetag+'" data-sign="'+nametag+'"><span>'+ timetag +' '+nametag +'\t\t' + addButton + '</span><br>' + nextCall + audioURL  + '</div>'; // основное заполнение
 			i+=iJump;
 		}
 		document.getElementById("MainForm").innerHTML = outputEmptyCalls;

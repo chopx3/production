@@ -61,13 +61,13 @@ function collectMultipleCalls(data, i, type){ // функция отрисовк
 	for (var j = i; j< data.length; j++){
 		if (j+1<=data.length-1){
 			var check = (type == "short") ? true : (data[j].agent.username == data[j+1].agent.username);
-			if (data[j].chainId == data[j+1].chainId && check){
-			var tempAudio = data[j+1].comId;
-			result += '<audio class="audio-call no-margin-top" src="'+oktell + tempAudio + '" controls></audio><a href="'+oktell+ tempAudio +'" target="_blank"></a>';
-			iJump++;
-		} else break;
+			if (data[j].chainId == data[j+1].chainId && check){ iJump++; } else break;
 	}
 	else break;}
+	for (var j =i+iJump; j>i; j--){
+			var tempAudio = data[j].comId;
+			result += '<audio class="audio-call no-margin-top" src="'+oktell + tempAudio + '" controls></audio><a href="'+oktell+ tempAudio +'" target="_blank"></a>';
+	}
 return result;	
 }
 $(document).ready(function() {

@@ -35,7 +35,7 @@ function drawDayCalls(){ // функция отрисовки звонков
 			iJump = 0;
 			var nextCall = collectMultipleCalls(data, i, "");
 			var audioURL = '<audio class="audio-call" id="audio'+i+'" onplay=setInfoToCallForm('+JSON.stringify(fullCallInfo)+') src="' + oktell + audiosrc + '" controls></audio><a href="'+ oktell + audiosrc +'" target="_blank">' + '<\/a>'; // аудио тэг
-			dayCalls += '<div id="divAddButton' +i+'" onclick=setInfoToCallForm('+JSON.stringify(fullCallInfo)+') class="call col-lg-12" data-time="'+timetag+'" data-sign="'+nametag+'"><span>'+ timetag +'\t\t</span>'+ additionalInfo+'<br>' + audioURL + nextCall + '</div>'; // основное заполнение звонка - звонок+аудио+доп инфа
+			dayCalls += '<div id="divAddButton' +i+'" onclick=setInfoToCallForm('+JSON.stringify(fullCallInfo)+') class="call col-lg-12" data-time="'+timetag+'" data-sign="'+nametag+'"><span>'+ timetag +'\t\t</span>'+ additionalInfo+'<br>' + nextCall + audioURL  + '</div>'; // основное заполнение звонка - звонок+аудио+доп инфа
 			i+=iJump;
 		}
 		document.getElementById("MainForm").innerHTML = dayCalls;

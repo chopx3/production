@@ -1,7 +1,7 @@
 package ru.avito.services;
 
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
-import org.springframework.data.repository.query.Param;
 import ru.avito.model.calls.*;
 import ru.avito.model.tags.Tag;
 
