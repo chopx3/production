@@ -31,7 +31,7 @@ function drawDayCalls(){ // функция отрисовки звонков
 			chain = data[i].chainId;//
 			audiosrc = data[i].comId; //
             timetag = moment.unix(data[i].timeStart/1000).format(dateFormat);//
-			fullCallInfo = [agentId, nametag, data[i].avitoUserId, chain, data[i].manager, data[i].questionId, data[i].shopCategoryId, data[i].type, i, tagArray]; // заполнение переменных, сохранение в массив
+			fullCallInfo = [agentId, nametag, data[i].avitoUserId, chain, data[i].manager, data[i].questionId, data[i].shopCategoryId, data[i].type, i, tagArray, data[i].comments]; // заполнение переменных, сохранение в массив
 			iJump = 0;
 			var nextCall = collectMultipleCalls(data, i, "");
 			var margin = (nextCall == "") ? "" : "no-margin-top";
@@ -58,11 +58,12 @@ function setInfoToCallForm(fullCallInfo){ // функция выставлени
 	questNum = fullCallInfo[5]; // ---
 	catNum = fullCallInfo[6]; //заполнение инфы 
 	if (fullCallInfo[7] != "EMPTY" && fullCallInfo[2] > 0) { // если не пустой звонок и не частник
-	$('#label-quest-'+fullCallInfo[5]).addClass("active");   // ---
-	$("#quest-"+fullCallInfo[5]).prop('checked', true);	 // ---
-	$('#label-cat-'+fullCallInfo[6]).addClass("active");   // ---
-	$("#cat-"+fullCallInfo[6]).prop('checked', true);  // ---
-	$("#IDNum").val(fullCallInfo[2]); // установи кнопки и ID в эти значения
+	$('#label-quest-'+fullCallInfo[5]).addClass("active");  // установи кнопки, комментарии и ID в эти значения
+	$("#quest-"+fullCallInfo[5]).prop('checked', true);	 // установи кнопки, комментарии и ID в эти значения
+	$('#label-cat-'+fullCallInfo[6]).addClass("active");   // установи кнопки, комментарии и ID в эти значения
+	$("#cat-"+fullCallInfo[6]).prop('checked', true); // установи кнопки, комментарии и ID в эти значения
+	$("#callComments").val(fullCallInfo[10]); // установи кнопки, комментарии и ID в эти значения
+	$("#IDNum").val(fullCallInfo[2]); // установи кнопки, комментарии и ID в эти значения
 	if (fullCallInfo[4]) { // если менеджер - переключатель на менеджера
 		$("#IsManager").prop("checked", true);
 		$("#IsManager").bootstrapToggle('on');

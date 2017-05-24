@@ -122,24 +122,22 @@
 					</div>
         </div>
 
-        <div class="row">
-            
+        <div class="row">          
                 <label class=col-lg-12>Дополнительные тэги</label>
-                <div id=additionalTagsDiv>
-                    
+                <div id=additionalTagsDiv>              
                 </div>
-            
         </div>
-		<div class="form-group">
-            <label for="comment" id="serviceMessage"></label>
-			
-        </div>
-		<div class="row">
+		<div class="row" id=sendAndServiceRow>
             <div class="col-md-12">
+			<label for="comment" id="serviceMessage"></label>
 			<button type="button" id="sendDataButton" class="btn btn-success btn-avito-green-2 pull-right col-md-3" value="addTags">Отправить</button>
 			</div>
 		</div>
-		
+		<div class="row">
+            <div class="col-md-12">
+			<textarea class="form-control" rows=5 id=callComments placeholder="Поле для комментария (необязательное)"></textarea>
+			</div>
+		</div>
     </div>
 
     <div id="FeedbackForm" class="form-group container-fluid col-md-5">

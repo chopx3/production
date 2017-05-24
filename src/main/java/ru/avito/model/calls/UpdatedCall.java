@@ -25,6 +25,8 @@ public class UpdatedCall {
 
     private Boolean isManager;
 
+    private String comments;
+
     private String type;
 
     private Set<Tag> tags;
@@ -100,6 +102,10 @@ public class UpdatedCall {
         return tags;
     }
 
+    public String getComments() {return comments; }
+
+    public void setComments(String comments) {this.comments = comments;}
+
     public void setTags(Set<Tag> tags) {
         this.tags = tags;
     }
@@ -114,9 +120,12 @@ public class UpdatedCall {
                 ", agentId=" + agentId +
                 ", avitoUserId=" + avitoUserId +
                 ", isManager=" + isManager +
+                ", comments='" + comments + '\'' +
                 ", type='" + type + '\'' +
                 ", tags=" + tags +
                 '}';
     }
+
+
 }
 

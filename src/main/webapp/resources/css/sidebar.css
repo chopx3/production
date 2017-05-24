@@ -1,4 +1,38 @@
 @charset "utf-8";
+/* Класс для длинных комментариев. Сокращает все, что длиннее одной строки */
+.might-overflow {
+    text-overflow: ellipsis;
+    overflow : hidden;
+    white-space: nowrap;
+	font-weight:400;
+	margin-top: 10px;
+}
+/* Класс для длинных комментариев. При наведении мышкой показывает полный текст */
+.might-overflow:hover {
+    text-overflow: clip;
+    white-space: normal;
+    word-break: break-all;
+	font-weight:400;
+}
+.commentBox{ 
+	margin-top:8px;
+	margin-left: 10px;
+	resize: none;
+	overflow:auto;
+	cursor: text !important;
+	width: calc(33% - 10px) !important;
+}
+#serviceMessage{
+ margin-top:5px;
+} 
+#sendAndServiceRow{
+	margin-top:10px;
+}
+#callComments{
+	margin-top: 10px;
+	resize:none;
+	overflow:auto;
+}
 /* Переключатель "радости" */
 #isUserHappy{
 	margin-right:20px;

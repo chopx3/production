@@ -112,8 +112,9 @@ function drawFeedback() { // отрисовка Feedbackа
 				iJump = 0;
 				var nextCall = collectMultipleCalls(feedbackInfo, i, "");
 				var margin = (nextCall == "") ? "" : "no-margin-top";
-				audioURL = '<audio class="audio-call '+margin+'" id="audio'+i+'" src="' + oktell + feedbackInfo[i].comId + '" onplay=change_call("'+feedbackInfo[i].chainId+'",'+i+') controls></audio><a href="'+ oktell + feedbackInfo[i].chainId +'" target="_blank">' + '</a>';
-				feedbackEmptyCalls += '<div id="feedbackCall' +i+'" onclick=change_call("'+feedbackInfo[i].chainId+'",'+i+') class="call col-lg-12 feedback-call" data-time="'+timetag+'" data-sign="'+feedbackInfo[i].agent.username+'" value="'+ feedbackInfo[i].type+'" name='+ tagCollector +'><span>'+ timetag +' '+ feedbackInfo[i].agent.username + '</span>'+additionalInfo+'<br>' + nextCall + audioURL  + '</div>'; // собственно пустые звонки, собирающиеся в цикле
+				CallInfo = [feedbackInfo[i].chainId, feedbackInfo[i].comments, i, true];
+				audioURL = '<audio class="audio-call '+margin+'" id="audio'+i+'" src="' + oktell + feedbackInfo[i].comId + '" onplay=change_call('+JSON.stringify(CallInfo)+') controls></audio><a href="'+ oktell + feedbackInfo[i].chainId +'" target="_blank">' + '</a>';
+				feedbackEmptyCalls += '<div id="feedbackCall' +i+'" onclick=change_call('+JSON.stringify(CallInfo)+') class="call col-lg-12 feedback-call" data-time="'+timetag+'" data-sign="'+feedbackInfo[i].agent.username+'" value="'+ feedbackInfo[i].type+'" name='+ tagCollector +'><span>'+ timetag +' '+ feedbackInfo[i].agent.username + '</span>'+additionalInfo+'<br>' + nextCall + audioURL  + '</div>'; // собственно пустые звонки, собирающиеся в цикле
 				i+=iJump;
 		}
 		document.getElementById("MainForm").innerHTML = feedbackEmptyCalls;		

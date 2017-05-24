@@ -79,6 +79,7 @@ public class CallServiceImpl implements CallService {
             currentCall.setManager(updatedCall.getIsManager());
             currentCall.setType(updatedCall.getType());
             currentCall.setTags(updatedCall.getTags());
+            currentCall.setComments(updatedCall.getComments());
             callRepository.save(currentCall);
         }
         return 1;//TODO шляпа
