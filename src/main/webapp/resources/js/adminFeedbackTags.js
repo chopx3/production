@@ -28,7 +28,6 @@ function clearButton(){ // кнопка очистить, тоже самое, �
 	TagActiveChecker();
 }
 function TagActiveChecker(){ // проверка активных тэгов
-allbutton=1;
 tagsMap = new Map(); // мэп для хранения данных
 outputTags = ""; // обнуление инфы
 tagCounter = 0; // обнуление инфы
@@ -41,8 +40,6 @@ $('label[name=info-label]').each(function () { tagSum++;
 }
 })
 $('#tagCounterPlace').text(tagCounter); //вывод информации о количестве тэгов
-console.log(tagCounter);
-console.log(tagSum);
-if (tagSum==tagCounter) 	{$('#tagNamesPlace').text("Выбраны все тэги"); }
+if (tagSum==tagCounter&&tagSum>0) 	{$('#tagNamesPlace').text("Выбраны все тэги"); } // проверка, чтобы максимальное количество тэгов и выбранных совпадало и было больше 0
 else 			{$('#tagNamesPlace').text(outputTags); }// и о их названиях
 }

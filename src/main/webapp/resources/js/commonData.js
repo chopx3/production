@@ -1,6 +1,6 @@
 // Общие URL
 var host = "http://"+location.host + "/firecatcher/api/"; // Основной хост URL
-var oktell = "http://"+location.host + "firecatcher/oktell/calls?name=Avito_get_file_by_id_conn&attachment=1&startparam1="; // Октелл
+var oktell = "http://"+location.host + "/firecatcher/oktell/calls?name=Avito_get_file_by_id_conn&attachment=1&startparam1="; // Октелл
 var allAgentsURL = 			host + "agent/find"; // Поиск всех агентов в базе
 var addAgentURL = 			host + "agent/save"; // Добавление нового агента в базу
 var updAgentURL = 			host + "agent/update"; // Обновление информации об агенте
@@ -14,6 +14,7 @@ var dayCallsURL = 			host + "call/find/agent/"; // звонки за сегод�
 var updateEmptyCalls = 		host + "call/update"; // обновить информацию в звонке
 var feedbackSaveURL = 		host + "call/feedback/save"; // обновить информацию о фидбеке
 var fullFeedbackURL = 		host + "call/find/type/full_feedback/"; // // URL для заполненных фидбеков
+var updatedForFeedbackURL = host + "call/find/type/updated/"; // // URL для обновленных звонков с тэгами
 var getCatsURL = 			host + "category/find"; // // URL для категорий
 var getCommentsURL = 		host + "comments/find/"; // URL для комментариев по учетке
 var postCommentURL = 		host + "comments/save"; //  сохранение комментария
@@ -65,8 +66,9 @@ function collectMultipleCalls(data, i, type){ // функция отрисовк
 	}
 	else break;}
 	for (var j =i+iJump; j>i; j--){
+			var margin = (j!= i+iJump) ? "no-margin-top" : "";
 			var tempAudio = data[j].comId;
-			result += '<audio class="audio-call no-margin-top" src="'+oktell + tempAudio + '" controls></audio><a href="'+oktell+ tempAudio +'" target="_blank"></a>';
+			result += '<audio class="audio-call '+margin+'" src="'+oktell + tempAudio + '" controls></audio><a href="'+oktell+ tempAudio +'" target="_blank"></a>';
 	}
 return result;	
 }

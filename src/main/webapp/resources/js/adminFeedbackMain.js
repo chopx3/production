@@ -11,7 +11,8 @@ $(document).ready(function() {
 function getCalls(){ // Получить список всех звонков и вывести их в поле, после проверки условий
 	var timeStart = moment(startDate, "DD-MM-YYYY").unix()*1000;
 	var timeEnd = moment(endDate, "DD-MM-YYYY").unix()*1000;
-		$.get(fullFeedbackURL+timeStart+"/"+timeEnd+"/") // Получение полного списка
+	var URL = ($("#toggle-trigger").prop("checked"))? updatedForFeedbackURL : fullFeedbackURL;
+		$.get(URL+timeStart+"/"+timeEnd+"/") // Получение полного списка
 			.done( function (data) {
 					Call ='';
 					document.getElementById("MainForm").innerHTML = ''; // очистка основной формы
@@ -59,7 +60,7 @@ function createTagsTable(){ // отрисовка блока с выбором �
 	var columnFinal = oddColumns = oddDiv = ""; // итоговый текст, нечетные колонки, нечетный див
 	var activeColumns = 0; // группы тэгов, подходящие под условия
 	for (var columns = 0; columns<tagGroups;columns++){ // цикл, пробегается по всем группам тэгов
-		if (finalForm[columns].name!="Main"&&finalForm[columns].tags.length>0&&finalForm[columns].name!="Unfiltered"){ // не выводит группу Мэйн, пустые группы и Unfiltered
+		if (finalForm[columns].tags.length>0&&finalForm[columns].name!="Unfiltered"){ // не выводит группу Мэйн, пустые группы и Unfiltered
 			activeColumns++;
 			if ((activeColumns%2)) {oddColumns= '<div class="container-column">'; oddDiv = '';} // если группа 1,3,5 ... То открывает столбец
 			else {oddColumns = "";oddDiv = "</div>";}// 2,4,6 - закрывает столбец
@@ -89,7 +90,7 @@ function createTagsTable(){ // отрисовка блока с выбором �
 	coreButtons = 		'<div class="tag-form-footer">'+ // блок с кнопками внизу
                         '<button class="btn btn-danger btn-avito-red" id="tags-clear-button" onclick=clearButton() title="">Сброс</button>'+
                         '<button class="btn btn-info" id="tags-all-button" onclick=checkAllButton() title="">Все</button>'+
-						'<label onclick="toggle()"><input id="toggle-trigger" type="checkbox" data-toggle="toggle" data-on="Все" data-off="Один из"data-width="85"></label></div>';
+						'<label onclick="toggle()"><input id="toggle-trigger" type="checkbox" data-toggle="toggle" data-on="Updated" data-off="Full-feedback"data-width="120"></label></div>';
 	document.getElementById("Feedback").innerHTML = coreHeader+columnFinal+coreFooter+coreButtons; //вывели в блок
 	toggle();toggle(); // дважды покликали, знаю тупо, но работает только так, грусть
 				})	

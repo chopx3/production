@@ -20,7 +20,7 @@ function drawDayCalls(){ // функция отрисовки звонков
 	if(data.length==0){ document.getElementById("MainForm").innerHTML = "Сегодня еще не было звонков"; } // если не пусто
 	else {	var audioURL, audiosrc, chain, additionalInfo; // рисуй
 			for (var i = 0; i < data.length; i++) { // основной цикл
-			additionalInfo = collectAdditionalInfo(data[i]);		
+			additionalInfo = collectAdditionalInfo(data[i], "today");		
 			var tagArray = [];
 			if (data[i].tags.length > 0) { // если есть тэги
 				sorting(data[i].tags, "id");
@@ -34,7 +34,8 @@ function drawDayCalls(){ // функция отрисовки звонков
 			fullCallInfo = [agentId, nametag, data[i].avitoUserId, chain, data[i].manager, data[i].questionId, data[i].shopCategoryId, data[i].type, i, tagArray]; // заполнение переменных, сохранение в массив
 			iJump = 0;
 			var nextCall = collectMultipleCalls(data, i, "");
-			var audioURL = '<audio class="audio-call" id="audio'+i+'" onplay=setInfoToCallForm('+JSON.stringify(fullCallInfo)+') src="' + oktell + audiosrc + '" controls></audio><a href="'+ oktell + audiosrc +'" target="_blank">' + '<\/a>'; // аудио тэг
+			var margin = (nextCall == "") ? "" : "no-margin-top";
+			var audioURL = '<audio class="audio-call '+margin+'" id="audio'+i+'" onplay=setInfoToCallForm('+JSON.stringify(fullCallInfo)+') src="' + oktell + audiosrc + '" controls></audio><a href="'+ oktell + audiosrc +'" target="_blank">' + '<\/a>'; // аудио тэг
 			dayCalls += '<div id="divAddButton' +i+'" onclick=setInfoToCallForm('+JSON.stringify(fullCallInfo)+') class="call col-lg-12" data-time="'+timetag+'" data-sign="'+nametag+'"><span>'+ timetag +'\t\t</span>'+ additionalInfo+'<br>' + nextCall + audioURL  + '</div>'; // основное заполнение звонка - звонок+аудио+доп инфа
 			i+=iJump;
 		}

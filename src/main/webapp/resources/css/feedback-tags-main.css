@@ -1,3 +1,4 @@
+@charset "utf-8";
 div.container-column-group ul.group-list {
     display: flex;
     justify-content: space-between;

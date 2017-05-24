@@ -200,8 +200,9 @@ function getCalls(){ // Функция для вывода информации 
 					var timetag = moment.unix(data[i].timeStart/1000).format(dateFormat); // заполнение переменных
 					iJump = 0;
 					var nextCall = collectMultipleCalls(data, i, "");
-					audioURL = '<audio class="audio-call" src="'+oktell + audiotag + '" controls></audio><a href="'+oktell+ audiotag +'" target="_blank">' + '<\/a>'; 
-					outputCalls += '<div class="call col-lg-12" data-time="'+timetag+'" data-sign="'+nametag+'"><span>'+ timetag +' '+nametag + '</span>'+additionalInfo+'<br>'+ nextCall + audioURL  + '</div>'; // основная часть формирования звонка
+					var margin = (nextCall == "") ? "" : "no-margin-top";
+					audioURL = '<audio class="audio-call '+margin+'" src="'+oktell + audiotag + '" controls></audio><a href="'+oktell+ audiotag +'" target="_blank">' + '<\/a>'; 
+					outputCalls += '<div class="call col-lg-12" data-time="'+timetag+'" data-sign="'+nametag+'"><span>'+ timetag +' '+nametag + '</span>'+additionalInfo+'<br>' + nextCall + audioURL  + '</div>'; // основная часть формирования звонка
 					i+=iJump;
 				}
 			}
@@ -211,6 +212,8 @@ function getCalls(){ // Функция для вывода информации 
 }
 function collectAdditionalInfo(data, type){ // сбор дополнительной информации
 	var additionalInfo = "";
+	if (data.type == "EMPTY"){additionalInfo+="<span class='pull-right box-shadow addSpace'><a title='Информация еще не заполнена'>Не заполнен</a></span>";}
+	else {
 	var userID = data.avitoUserId; 
 	var questionID = data.questionId;
 	var catID = data.shopCategoryId; // переменные. Названия говорят сами за себя
@@ -222,6 +225,7 @@ function collectAdditionalInfo(data, type){ // сбор дополнительн
 	else {
 	if (data.type == "FULL_FEEDBACK") { additionalInfo+= "<span class='pull-right box-shadow-blue addSpace'><a title='Заполненный звонок с тэгом feedback'>F</a></span>"} // заполненный фидбек
 	if (data.type == "EMPTY_FEEDBACK") { additionalInfo+= "<span class='pull-right box-shadow addSpace'><a title='Незаполненный звонок с тэгом feedback'>F</a></span>"}} // пустой
+	}
 	return additionalInfo;
 }
 
@@ -324,8 +328,9 @@ function  draw(data) { // отрисовка пустых звонков
             timetag = moment.unix(data.emptyCallList[i].startTime/1000).format(dateFormat); // определение переменных
 			iJump = 0;
 			var nextCall = collectMultipleCalls(data.emptyCallList, i, "short");
+			var margin = (nextCall == "") ? "" : "no-margin-top";
 			addButton = '<a href="#"  class="btn btn-success pull-right" id="' + chain + '" onclick=change_call(this.id,'+i+') "> Выбрать </a>'; // кнопка выбрать
-			var audioURL = '<audio id="audio'+i+'" onplay=change_call("'+chain+'",'+i+') src="' + oktell + audiosrc + '" class="audio-call" controls></audio><a href="'+ oktell + audiosrc +'" target="_blank">' + '<\/a>'; // аудио-тэг
+			var audioURL = '<audio id="audio'+i+'" onplay=change_call("'+chain+'",'+i+') src="' + oktell + audiosrc + '" class="audio-call '+margin+'" controls></audio><a href="'+ oktell + audiosrc +'" target="_blank">' + '<\/a>'; // аудио-тэг
 			outputEmptyCalls += '<div id="divAddButton' +i+'" onclick=change_call("'+chain+'",'+i+') class="call col-lg-12" data-time="'+timetag+'" data-sign="'+nametag+'"><span>'+ timetag +' '+nametag +'\t\t' + addButton + '</span><br>' + nextCall + audioURL  + '</div>'; // основное заполнение
 			i+=iJump;
 		}

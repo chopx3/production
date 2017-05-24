@@ -1,10 +1,13 @@
-/* */
+@charset "utf-8";
+/* Переключатель "радости" */
 #isUserHappy{
 	margin-right:20px;
 }
-#HeaderText{
+/* Размер шрифта названий разделов в основной форме(не боковое меню)*/
+#HeaderText, h1{
 	font-size: 25px;
 }
+/* Убрать стрелки вниз\вверх у полей ввода номера ID */
 input[type=number]::-webkit-inner-spin-button,
 input[type=number]::-webkit-outer-spin-button {
 	-webkit-appearance: none;
@@ -12,38 +15,43 @@ input[type=number]::-webkit-outer-spin-button {
 	appearance: none;
 	margin: 0;
 }
+/* Отступ для стрелок в боковом меню */
 .glyph{
 	margin-top:17px;
 }
+/* Подсветка неправильно введенных данных, частника и незаполненного фидбека */
 .box-shadow{
 box-shadow: inset 0 0 0.3em red;
 border-radius: 10px;
 }
+/* Отступ сверху для основной формы */
 #MainForm{
 	top:1vh;
 }
+/* Шрифт для приветствия */
 
 #Hello h1{
 	margin:15;
 	font-family: 'Segoe UI', Tahoma, sans-serif;
 	font-size: 48px;
 }
-h1{
-	font-size:25px;
-}
+/* Online\offline статус */
 #websocketStatus{
 	color:green;
 	position: fixed;
 	bottom: 0px;
 	margin:auto;
 }
+/* Понижение приоритета элемента для корректного отображения комментариев и заметок */
 #IDforInfo{
 	z-index : 0;
 }
+/* Не используется */
 #CloseSubForm{
 	float:right;
 	margin-right:5px;
 }
+/* Боковая форма заполнения звонка */
 #SubForm{
 	z-index: 1;
 	position: fixed;
@@ -52,22 +60,27 @@ h1{
 	top:12vh;
 	display:none;
 }
+/* Основная обертка информации */
 #page-content-wrapper{
 	width: 100%;
 	position: absolute;
 	padding: 5px;
 }
+/* Стандартное значение для скрытия части кнопок и кружков в кнопках */
 [type='checkbox'], [type='radio'], #IsManagerAndNoID, #page-content-wrapper #CallForm {
 	display: none;
 }
+/* включение скрытых кнопок */
 .Add{
 	display: inline-block !important;
 }
+/* отступ для "Менеджер\клиент" */
 
 #IsManagerDiv{
 	margin:0;
 }
-/*  Боковое меню */
+/* */
+/* Основные настройки боковой обертки меню */
 #sidebar-wrapper{
 	padding-left: 0;
 	padding-right:0;
@@ -79,70 +92,84 @@ h1{
 	opacity: 0.9;
 	display: inline-block;
 }
+/* убрать отображение точек */
 .sidebar-nav{
 	padding: 0;
 	list-style: none;
 }
+/* увеличить растоянние между кнопками */
 .sidebar-nav li{
 	text-indent: 30px;
 	line-height: 50px;
 }
+/* цвет текста бокового меню */
 
 .sidebar-nav li a{
 	display: block;
 	text-decoration: none;
 	color: #ddd;
 }
+/* цвет при наведении на кнопку */
 .sidebar-nav li a:hover{
 	background: #161616;
 }
+/* цвет активного элемента бокового меню */
 
 .highlight, .highlight_stay{
 	background: #262626;
 }
+/* Цвета тэгов дополнительных, основные */
 /* Tags Colour */
 .btn-avito-tags {
 	color: #333;
 	background-color: #ddd;
 	border:#333 solid 1px;
 }
+/* Цвета тэгов дополнительных, активных */
 .btn-avito-tags:active, .btn-avito-tags.active {
 	background: #999;
 	box-shadow: none;
 	border:#333 solid 1px;
 }
+/* Цвета тэгов дополнительных, в фокусе или при наведении */
 .btn-avito-tags:hover, .btn-avito-tags:focus, .btn-avito-tags:active:focus, .btn-avito-tags:focus:hover .btn-avito-tags:active, .btn-avito-tags:active:hover, .btn-avito-tags.active:hover, .open > .dropdown-toggle.btn-avito-tags {
 	background: #aaa;
 	border:#333 solid 1px;
 	color: #ffffff !important;
 }
+/* Тоже самое для красного авитовского цвета */
 /* Красный Авитовский цвет */
 .btn-avito-red-2 {
 	color: #fff;
 	background-color: #ff6163;
 	border : 1px solid #ff6163;
 }
+/* */
 .btn-avito-red-2:active, .btn-avito-red-2.active {
 	background: #DC143C;
 	box-shadow: none;
 	border : 1px solid #DC143C;
 }
+/* */
 .btn-avito-red-2:hover, .btn-avito-red-2:focus, .btn-avito-red-2:active:focus, .btn-avito-red-2:focus:hover .btn-avito-red-2:active, .btn-avito-red-2:active:hover, .btn-avito-red-2.active:hover, .open > .dropdown-toggle.btn-avito-red-2 {
 	background: #DC143C;
 	color: #fff !important;
 	border : 1px solid #DC143C;
 }
+/* и зеленого */
 /* Зеленый Авитовский цвет */
 .btn-avito-green-2 {
 	color: #fff;
 	background-color: #97cf26;
 	border : 1px solid #97cf26;
 }
+/* */
 .btn-avito-green-2:active, .btn-avito-green-2.active {
 	background: #008000;
 	box-shadow: none;
 	border : 1px solid #008000;
 }
+/* */
 .btn-avito-green-2:hover, .btn-avito-green-2:focus, .btn-avito-green-2:active:focus, .btn-avito-green-2:focus:hover .btn-avito-green-2:active, .btn-avito-green-2:active:hover, .btn-avito-green-2.active:hover, .open > .dropdown-toggle.btn-avito-green-2 {
 	background: #008000;
 	color: #fff !important;
