@@ -183,7 +183,7 @@ function getComments(){ // отрисовка комментариев
 						var nametag = data[i].agent.username;
 						var timetag = moment.unix(data[i].postTime/1000).format(comFormat);
 						var elem = document.getElementById("div-table-content-"+i);
-						var isLongEnough = (message.length > 180) ? "longMessage" : "" ;
+						var isLongEnough = (message.length > 140) ? "longMessage" : "" ;
 						outputComments += '<tr class="table-row"><td>'+timetag +'\n'+ nametag +'</td><td class="breakable"><div class="table-content '+isLongEnough+'" onclick=changeHeight('+i+') id="div-table-content-'+i+'">'+message+'</div></td></tr>';
 					} // отрисовка комментариев
 				} 
@@ -193,13 +193,13 @@ function getComments(){ // отрисовка комментариев
 		}
 		else { $('#IDforComments').addClass("box-shadow"); }
 }
-function changeHeight(i){
+function changeHeight(i){ // изменить высоту, если переполнено
 	var elem = document.getElementById("div-table-content-"+i);
 	var scrollHeight = elem.scrollHeight;
 	var maxHeight = elem.style.maxHeight;
 	maxHeight = maxHeight.substring(0, maxHeight.length-2);
-	if (maxHeight > 80) {elem.style.maxHeight = 80 + 'px';elem.style.color = "blue"}
-	else if (scrollHeight>80) {elem.style.maxHeight = scrollHeight + 'px';elem.style.color = "black"}
+	if (maxHeight > 60) {elem.style.maxHeight = 60 + 'px';elem.style.color = "blue"}
+	else if (scrollHeight>60) {elem.style.maxHeight = scrollHeight + 'px';elem.style.color = "black"}
 }
 function getCalls(){ // Функция для вывода информации по ID пользователя
 	idNumber = idSaver = $('#IDforInfo').val();
@@ -217,7 +217,6 @@ function getCalls(){ // Функция для вывода информации 
 					var nextCall = collectMultipleCalls(data, i, ""); // 
 					var margin = (nextCall == "") ? "" : "no-margin-top"; // отступы при нескольких звонках, сложная схема
 					var commentBox = (data[i].comments == null || data[i].comments == "") ? "" : "<textarea rows=4 class='form-control commentBox col-lg-4' disabled>"+data[i].comments+"</textarea>"; // если есть комментарии - выводи их в поле справа
-					console.log(data[i].tags);
 					var tagLabel = (data[i].tags.length == 0) ? "" : "<div class='tags col-lg-2'><label class='might-overflow'>" + collectTagForGetCalls(data[i].tags) + "</label></div>"; 
 					audioURL = '<audio class="audio-call '+margin+'" src="'+oktell + audiotag + '" controls></audio><a href="'+oktell+ audiotag +'" target="_blank">' + '<\/a>'; 
 					outputCalls += '<div class="row col-lg-12"><div class="call col-lg-6" data-time="'+timetag+'" data-sign="'+nametag+'"><span>'+ timetag +' '+nametag + '</span>'+additionalInfo+'<br>' + nextCall + audioURL  + '</div>'+commentBox+tagLabel+'</div>'; // основная часть формирования звонка
@@ -228,7 +227,7 @@ function getCalls(){ // Функция для вывода информации 
 			document.getElementById("MainForm").innerHTML = outputCalls; 
 				})
 }
-function collectTagForGetCalls(data){
+function collectTagForGetCalls(data){ // сбор тэгов для отрисовки в звонках пользователя
 	var tags = "";
 	for (var i=0;i<data.length;i++){ // цикл для сборки тэгов
 	tags +=data[i].value + ' '; // сборка тэгов

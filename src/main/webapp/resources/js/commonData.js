@@ -31,7 +31,7 @@ var changeTagGroup = 		host + "tags/group"; // изменить группу в 
 var Categories = [];
 var Questions = [];
 var dateFormat = 'DD.MM.YYYY HH:mm:ss';
-var iJump;
+var iJump; // для объединения звонков, прыжок на это количество в цикле
 // Общие функции
 function sorting(json_object, key_to_sort_by) {
     function sortByKey(a, b) {

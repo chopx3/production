@@ -79,7 +79,7 @@
 	word-wrap: break-word;
 }
 .table-content{
-	max-height:80px;
+	max-height:60px;
 	overflow: hidden;
 	text-overflow: ellipsis;
 }

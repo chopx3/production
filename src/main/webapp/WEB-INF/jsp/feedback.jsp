@@ -73,7 +73,7 @@
                         <div class="dropdown-menu tag-form" id="Feedback">
 						</div>
                     </li>
-                    <li class="col-lg-4 li-centered">
+                    <li class="col-lg-4 li-centered" id="tagInfo">
                         <p>Всего тэгов: <b id="tagCounterPlace"> 0 </b> Выбранные тэги: <b id="tagNamesPlace">  </b></p>
                     </li>
                     <li class="col-lg-1 pull-right full-height">
