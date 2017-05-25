@@ -182,7 +182,9 @@ function getComments(){ // отрисовка комментариев
 						var message = data[i].message;
 						var nametag = data[i].agent.username;
 						var timetag = moment.unix(data[i].postTime/1000).format(comFormat);
-						outputComments += '<tr><td>'+timetag +'\n'+ nametag +'</td><td class="breakable" >'+message+'</td></tr>'
+						var elem = document.getElementById("div-table-content-"+i);
+						var isLongEnough = (message.length > 180) ? "longMessage" : "" ;
+						outputComments += '<tr class="table-row"><td>'+timetag +'\n'+ nametag +'</td><td class="breakable"><div class="table-content '+isLongEnough+'" onclick=changeHeight('+i+') id="div-table-content-'+i+'">'+message+'</div></td></tr>';
 					} // отрисовка комментариев
 				} 
 				else { outputComments='На данной учетной записи еще не оставляли комментариев'; } // если комментариев нет
@@ -190,7 +192,15 @@ function getComments(){ // отрисовка комментариев
 			})
 		}
 		else { $('#IDforComments').addClass("box-shadow"); }
-	}
+}
+function changeHeight(i){
+	var elem = document.getElementById("div-table-content-"+i);
+	var scrollHeight = elem.scrollHeight;
+	var maxHeight = elem.style.maxHeight;
+	maxHeight = maxHeight.substring(0, maxHeight.length-2);
+	if (maxHeight > 80) {elem.style.maxHeight = 80 + 'px';elem.style.color = "blue"}
+	else if (scrollHeight>80) {elem.style.maxHeight = scrollHeight + 'px';elem.style.color = "black"}
+}
 function getCalls(){ // Функция для вывода информации по ID пользователя
 	idNumber = idSaver = $('#IDforInfo').val();
 		$.get(getCallsURL + idNumber+"/0").done(function (data) { // запрос

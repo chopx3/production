@@ -78,6 +78,11 @@
 	word-break: break-all;
 	word-wrap: break-word;
 }
+.table-content{
+	max-height:80px;
+	overflow: hidden;
+	text-overflow: ellipsis;
+}
 /* Pixel Perfect отступы для фраз Комментари и Заметки */
 #commentForm h1, #noteForm h1{
 	margin-left:3px;
