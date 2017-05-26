@@ -31,12 +31,12 @@ function drawDayCalls(){ // функция отрисовки звонков
 			chain = data[i].chainId;//
 			audiosrc = data[i].comId; //
             timetag = moment.unix(data[i].timeStart/1000).format(dateFormat);//
-			fullCallInfo = [agentId, nametag, data[i].avitoUserId, chain, data[i].manager, data[i].questionId, data[i].shopCategoryId, data[i].type, i, tagArray, data[i].comments]; // заполнение переменных, сохранение в массив
+			fullCallInfo = [agentId, nametag, data[i].avitoUserId, chain, data[i].manager, data[i].questionId, data[i].shopCategoryId, data[i].type, i, tagArray]; // заполнение переменных, сохранение в массив
 			iJump = 0;
 			var nextCall = collectMultipleCalls(data, i, "");
 			var margin = (nextCall == "") ? "" : "no-margin-top";
 			var audioURL = '<audio class="audio-call '+margin+'" id="audio'+i+'" onplay=setInfoToCallForm('+JSON.stringify(fullCallInfo)+') src="' + oktell + audiosrc + '" controls></audio><a href="'+ oktell + audiosrc +'" target="_blank">' + '<\/a>'; // аудио тэг
-			dayCalls += '<div id="divAddButton' +i+'" onclick=setInfoToCallForm('+JSON.stringify(fullCallInfo)+') class="call col-lg-12" data-time="'+timetag+'" data-sign="'+nametag+'"><span>'+ timetag +'\t\t</span>'+ additionalInfo+'<br>' + nextCall + audioURL  + '</div>'; // основное заполнение звонка - звонок+аудио+доп инфа
+			dayCalls += '<div id="divAddButton' +i+'" onclick=setInfoToCallForm('+JSON.stringify(fullCallInfo)+') class="call col-lg-12" data-time="'+timetag+'" data-sign="'+nametag+'"><span>'+ timetag +'\t\t</span><span style="display:none" id=commentHide'+i+'>'+data[i].comments+'</span>'+ additionalInfo+'<br>' + nextCall + audioURL  + '</div>'; // основное заполнение звонка - звонок+аудио+доп инфа
 			i+=iJump;
 		}
 		document.getElementById("MainForm").innerHTML = dayCalls;
@@ -62,7 +62,8 @@ function setInfoToCallForm(fullCallInfo){ // функция выставлени
 	$("#quest-"+fullCallInfo[5]).prop('checked', true);	 // установи кнопки, комментарии и ID в эти значения
 	$('#label-cat-'+fullCallInfo[6]).addClass("active");   // установи кнопки, комментарии и ID в эти значения
 	$("#cat-"+fullCallInfo[6]).prop('checked', true); // установи кнопки, комментарии и ID в эти значения
-	$("#callComments").val(fullCallInfo[10]); // установи кнопки, комментарии и ID в эти значения
+	var comments = ($("#commentHide"+fullCallInfo[8]).text()=="null") ? "" : $("#commentHide"+fullCallInfo[8]).text();
+	$("#callComments").val(comments); // установи кнопки, комментарии и ID в эти значения
 	$("#IDNum").val(fullCallInfo[2]); // установи кнопки, комментарии и ID в эти значения
 	if (fullCallInfo[4]) { // если менеджер - переключатель на менеджера
 		$("#IsManager").prop("checked", true);
