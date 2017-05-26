@@ -77,7 +77,12 @@ li {
     border-radius: 3px;
 }
 label.blueOne::before{
-	background-color:lightblue;
+	content: "✓";
+    text-shadow: rgba(0, 0, 0, 0.2) 1px 1px 1px;
+    font-size: 25px;
+    color: rgb(0, 136, 204);
+    text-align: center;
+    line-height: 15px;
 }
 .tag-form .tag-form-footer {
     text-align: center;

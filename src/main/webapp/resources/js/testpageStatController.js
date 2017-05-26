@@ -49,21 +49,10 @@ function getInfo(value){ // получение статистики
 				sum += parseInt(count);			// счетчик суммы
 				outputComments += '<tr><td>'+message+'</td><td class="breakable" >'+count+questionAdd+'</td></tr>';} // финальное, формирующееся в цикле, сообщение 
 				codeForSum = "<tr><td class=sum>"+ "Всего" +"</td><td class=sum>"+sum+"</td>"; // сумма
-				} else{ outputComments = '<tr><td>'+tempValue+'</td><td class="breakable" >'+getUniqueFeedback(data)+'</td></tr>'; }	// если фидбек		
+				} else{ outputComments = '<tr><td>'+tempValue+'</td><td class="breakable" >'+getUniqueData(data)+'</td></tr>'; }	// если фидбек		
 		}			
 	document.getElementById("allAgentsTable").innerHTML = thead +codeForSum+ outputComments + tbot;	// финальный код
 			})
-}
-function getUniqueFeedback(data) { // подсчет уникальных звонков в фидбеке
-    var variables = {};
-    var param = "chainId";
-	var count = 0;
-    $.each(data, function(){ 
-        if (!variables[this[param]]){
-            variables[this[param]] = [];    
-       count++;}
-    });
-    return count;
 }
 function getQuestions(value){ // добавить звонки по нажатию на show в статистике(вопросы)
 		var timeStart = moment(startDate, "DD-MM-YYYY").unix()*1000;

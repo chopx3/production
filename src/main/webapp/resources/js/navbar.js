@@ -20,8 +20,22 @@ var RestPost = function(sendData, url) { // стандартная функци�
                 error: function (message) { alert(message) }
             });
     };
+
 $(document).ready(function() { // основной блок
-	
+	window.setInterval(function(){
+	sendWebSocketMessage("getMyEmptyCalls");
+  getWebsocketMessage(function(data){ 	if (getUniqueData(data.emptyCallList)>0) {	$("#emptyCallsBadge").text(getUniqueData(data.emptyCallList));
+																					$("#emptyCallsBadge").addClass("Add");
+																					$("#favicon").attr("href","./resources/img/favicon2.ico");}
+										else {$("#emptyCallsBadge").removeClass("Add");
+										$("#favicon").attr("href","./resources/img/favicon.ico");}  });
+  
+  $.get(emptyFeedbackURL+moment().unix()*1000 +"/").done( function (data) {
+		if (getUniqueData(data)>0) {	$("#emptyFeedbackBadge").text(getUniqueData(data));
+										$("#emptyFeedbackBadge").addClass("Add");}
+		else $("#emptyFeedbackBadge").removeClass("Add")});
+}, 5000);
+
 	drawAdditionalTags(); // отрисовка дополнительных тэгов звонка
 	var commentsInfo = callsInfo = emptyCallsInfo = null;
 	var outputCalls;

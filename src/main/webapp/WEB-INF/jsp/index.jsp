@@ -3,7 +3,7 @@
 <html>
 <head>
     <title>fireCatcher</title>
-    <link rel="icon" href="${pageContext.request.contextPath}/resources/img/favicon.ico">
+    <link id=favicon rel="icon" href="${pageContext.request.contextPath}/resources/img/favicon.ico">
     <meta http-equiv="content-type" content="text/html; charset=cp1251">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
@@ -31,12 +31,12 @@
 
     <div id="sidebar-wrapper" class="col-md-2">
         <ul class="sidebar-nav container-fluid">
-            <li class="hl"><a href="#" id="my_calls">Незаполненные</a></li>
+            <li class="hl"><a href="#" id="my_calls">Незаполненные<span class="badge mybadge" id=emptyCallsBadge>0</span></a></li>
 			<li class="hl"><a href="#" id="dayCalls">Звонки за день</a></li>
             <li class="hl"><a href="#" id="user_calls">Звонки клиента</a></li>
             <li><a href="#" id="comments">Комментарии<span class="glyphicon glyphicon-triangle-right glyph pull-right" aria-hidden="true" id="glyphCom"></span></a></li>
             <li><a href="#" id="notes">Заметки<span class="glyphicon glyphicon-triangle-right glyph pull-right" aria-hidden="true" id="glyphNote"></span> </a></li>
-            <li class="hl"><a href="#" id="feedback">Feedback</a></li>
+            <li class="hl"><a href="#" id="feedback">Feedback<span class="badge mybadge" id=emptyFeedbackBadge>0</span></a></li>
 			<li><a href="#" id="magic">Magic</a></li>
             <li><a href="${pageContext.request.contextPath}/j_spring_security_logout" id="logout">Выйти</a></li>
             <label id="websocketStatus">Статус </label>

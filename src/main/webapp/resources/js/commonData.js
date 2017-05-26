@@ -72,6 +72,17 @@ function collectMultipleCalls(data, i, type){ // функция отрисовк
 	}
 return result;	
 }
+function getUniqueData(data) { // подсчет уникальных звонков в фидбеке
+    var variables = {};
+    var param = "chainId";
+	var count = 0;
+    $.each(data, function(){ 
+        if (!variables[this[param]]){
+            variables[this[param]] = [];    
+       count++;}
+    });
+    return count;
+}
 $(document).ready(function() {
 	getQuestionsInfo();
 	getCats();
