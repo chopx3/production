@@ -1,0 +1,12 @@
+.progress{
+margin-bottom: 0px;
+}
+.noBottomBorderLine{
+	border-top: 0px !important;
+}
+.centered{
+	text-align: center;
+}
+#dashboardTableReactTime{
+	font-size:	30px;
+}

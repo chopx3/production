@@ -17,16 +17,12 @@
 	<link href="${pageContext.request.contextPath}/resources/css/calls.css" rel="stylesheet">
     <script type="text/javascript" src="https://cdn.jsdelivr.net/bootstrap.daterangepicker/2/daterangepicker.js"></script>
     <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/bootstrap.daterangepicker/2/daterangepicker.css" />
+	<script src="${pageContext.request.contextPath}/resources/js/dashboard.js"></script>
+	<link href="${pageContext.request.contextPath}/resources/css/dashboard.css" rel="stylesheet">
 </head>
 <body>
 <script>
-
-
     var RestPost = function(sendData, url) {
-
-        console.log(url)
-        console.log(sendData)
-
         $.ajax({
             url: url,
             type: "post",
@@ -43,7 +39,6 @@
             }
         });
     }
-
 </script>
 <nav class="navbar navbar-default navbar-fixed-top">
     <div class="container-fluid">
@@ -56,7 +51,6 @@
             </button>
             <a class="navbar-brand">Админка</a>
         </div>
-
         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
             <ul class="nav navbar-nav topbar">
                 <li class="hl highlight"><a href="#" onclick=fillAgents()>Агенты </a></li>
@@ -64,6 +58,7 @@
                 <li class="hl"><a href="#" onclick=fillTags("group")>Группы тэгов</a></li>
                 <li class="hl"><a href="#" onclick=openStat()>Статистика</a></li>
 				<li class="hl"><a href="http://192.168.10.132/firecatcher/admin/feedback">Feedback</a></li>
+				<li class="hl"><a href="#" onclick=getDashboardData()>Test</a></li>
             </ul>
             <form class="navbar-form navbar-left" onSubmit="return false;">
                 <div id=searchBar>
@@ -78,41 +73,31 @@
         </div><!-- /.navbar-collapse -->
     </div><!-- /.container-fluid -->
 </nav>
-
 <div id="wrapper" class="col-lg-12 container-fluid">
     <div id="infoWrapper" class="col-lg-12">
         <div class="row">
             <div id="allAgentsTable" class="col-lg-8">
-
             </div>
 			<div id="secondTable" class="col-lg-8">
-
             </div>
             <div id="updateAgent" class="col-lg-4">
                 <div id=updateWrapper class="roundPlusShadow col-lg-4">
                     <div id=updHeader>
-
                     </div>
                     <div id=updBody class="form-group form-body">
-
                     </div>
                     <div class=Footer id=updFooter>
-
                     </div>
                 </div>
                 <div id=addWrapper class="roundPlusShadow col-lg-4">
                     <div id=addHeader>
-
                     </div>
                     <div id=addBody class="form-group form-body">
-
                     </div>
                     <div class=Footer id=addFooter>
-
                     </div>
                 </div>
             </div>
-
         </div>
     </div>
 </div>

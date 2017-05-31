@@ -41,6 +41,7 @@ function sorting(json_object, key_to_sort_by) {
     }
     json_object.sort(sortByKey);
 }
+
 function getQuestionsInfo() { // получить массив вопросов
 	$.get(getQuestionsInfoURL).done(function (data) {
 		var Info = data;
