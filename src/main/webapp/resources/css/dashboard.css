@@ -1,5 +1,15 @@
 .progress{
-margin-bottom: 0px;
+	margin-bottom: 0px;
+	height:30px;
+	margin-top: 7px;
+}
+.count{
+	display: block;
+	font-size:	25px;
+	margin-top: 5px;
+}
+.bold{
+	font-weight: bold;
 }
 .noBottomBorderLine{
 	border-top: 0px !important;
@@ -7,6 +17,6 @@ margin-bottom: 0px;
 .centered{
 	text-align: center;
 }
-#dashboardTableReactTime{
+#dashboardTableReactTime, #dashboardTableSatisfaction{
 	font-size:	30px;
 }
