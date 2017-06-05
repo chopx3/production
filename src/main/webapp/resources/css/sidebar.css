@@ -1,4 +1,9 @@
 @charset "utf-8";
+.activeDay{
+	text-decoration: underline;
+	font-size: 1.05 em;
+	color: blue;
+}
 .mybadge{
 	margin-left: 20px;
 	text-indent: 0;

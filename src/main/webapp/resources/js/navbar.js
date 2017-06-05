@@ -176,7 +176,7 @@ function fillInfo(callForm, headerText, MainForm) {
 	$("#FeedbackForm").removeClass("Add");
 	if (callForm==="add") { $("#CallForm").addClass("Add"); } 
 	else { $("#CallForm").removeClass("Add"); }
-	$("#HeaderText").text(headerText);
+	document.getElementById("HeaderText").innerHTML = headerText;
 	document.getElementById("MainForm").innerHTML = MainForm;
 	document.getElementById("Hello").innerHTML = '';
 }
@@ -372,7 +372,7 @@ function  draw(data) { // отрисовка пустых звонков
 	if (data.emptyCallList.length==0){document.getElementById("MainForm").innerHTML = "Все звонки заполнены";} // если пусто - заглушка
 	else { // иначе отрисовка звонков
 		dayOrEmpty = "empty"; // для обновления страницы в дальнейшем
-		var audioURL,addButton,audiosrc,chain; // переменные
+		var audioURL,audiosrc,chain; // переменные
 		for (var i = 0; i < data.emptyCallList.length; i++) { // основной цикл заполнения инфы
 			chain = data.emptyCallList[i].chainId;
 			audiosrc = data.emptyCallList[i].comId;
@@ -381,9 +381,8 @@ function  draw(data) { // отрисовка пустых звонков
 			var nextCall = collectMultipleCalls(data.emptyCallList, i, "short");
 			var margin = (nextCall == "") ? "" : "no-margin-top";
 			CallInfo = [chain, i, false];
-			addButton = '<a href="#"  class="btn btn-success pull-right" id="' + chain + '" onclick=change_call('+JSON.stringify(CallInfo)+') "> Выбрать </a>'; // кнопка выбрать
 			var audioURL = '<audio id="audio'+i+'" onplay=change_call('+JSON.stringify(CallInfo)+') src="' + oktell + audiosrc + '" class="audio-call '+margin+'" controls></audio><a href="'+ oktell + audiosrc +'" target="_blank">' + '<\/a>'; // аудио-тэг
-			outputEmptyCalls += '<div id="divAddButton' +i+'" onclick=change_call('+JSON.stringify(CallInfo)+') class="call col-lg-12" data-time="'+timetag+'" data-sign="'+nametag+'"><span>'+ timetag +' '+nametag +'\t\t' + addButton + '</span><br>' + nextCall + audioURL  + '</div>'; // основное заполнение
+			outputEmptyCalls += '<div id="divAddButton' +i+'" onclick=change_call('+JSON.stringify(CallInfo)+') class="call col-lg-12" data-time="'+timetag+'" data-sign="'+nametag+'"><span>'+ timetag +' '+nametag +'</span><br>' + nextCall + audioURL  + '</div>'; // основное заполнение
 			i+=iJump;
 		}
 		document.getElementById("MainForm").innerHTML = outputEmptyCalls;

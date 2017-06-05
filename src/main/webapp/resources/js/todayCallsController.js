@@ -1,4 +1,5 @@
 var fullCallInfo;
+var drawDate = 1; // стандартное значение выбранного дня, умолчание - сегодня
 $(document).ready(function() { // получить вопросы и категории с базы
 	getQuestionsInfo();
 	getCats();
@@ -6,18 +7,25 @@ $(document).ready(function() { // получить вопросы и катег�
 			dayOrEmpty="day";
 			clearData();
 			drawAdditionalTags();
-			fillInfo("remove","Звонки за сегодня", "");
-			drawDayCalls();
+			fillInfo("remove","Звонки за <a href=# onclick=changeDate(1) id=todayLink name='ourLink'>сегодня</a>, <a href=# onclick=changeDate(0) id=yesterdayLink name='ourLink'>вчера</a>", ""); // отрисовать заголовок с ссылками на день
+			changeDate(drawDate); // поменять дату и отрисовать день
 			$("#SubForm").addClass("Add");
 		});
 })
-function drawDayCalls(){ // функция отрисовки звонков
-	var timeStart = moment(moment().format("DD-MM-YYYY"), "DD-MM-YYYY").unix()*1000;
-	var timeEnd = moment(moment().add(1,'days').format("DD-MM-YYYY"), "DD-MM-YYYY").unix()*1000; // время для запроса 
+function changeDate(date){ // функция смены дня, активирует выбранный день и сохраняет данную переменную + меняет класс
+	$("[name='ourLink']").removeClass("activeDay"); // очистить обе кнопки от всех классов
+	if (date) { $("#todayLink").addClass("activeDay");} // проверка, вчера или сегодня
+	else {$("#yesterdayLink").addClass("activeDay");}
+	drawDate = date;
+	drawDayCalls(drawDate);
+}
+function drawDayCalls(date){ // функция отрисовки звонков
+	var timeStart = (date) ? moment(moment().format("DD-MM-YYYY"), "DD-MM-YYYY").unix()*1000 : moment(moment().subtract(1,'days').format("DD-MM-YYYY"), "DD-MM-YYYY").unix()*1000;
+	var timeEnd = 	(date) ? moment(moment().add(1,'days').format("DD-MM-YYYY"), "DD-MM-YYYY").unix()*1000 : moment(moment().format("DD-MM-YYYY"), "DD-MM-YYYY").unix()*1000; // время для запроса, выбирает сегодня либо вчера, в зависимости от кнопки. date = true - сегодня, иначе - вчера. Надо бы переписать
 	$.get(dayCallsURL+"/"+timeStart+"/"+timeEnd).done(function (data) { // запрос к базе
 	sorting(data, 'timeStart'); // сортировка
 	var nametag = dayCalls = "";	
-	if(data.length==0){ document.getElementById("MainForm").innerHTML = "Сегодня еще не было звонков"; } // если не пусто
+	if(data.length==0){ document.getElementById("MainForm").innerHTML = "Звонки еще не поступали"; } // если не пусто
 	else {	var audioURL, audiosrc, chain, additionalInfo; // рисуй
 			for (var i = 0; i < data.length; i++) { // основной цикл
 			additionalInfo = collectAdditionalInfo(data[i], "today");		
