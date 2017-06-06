@@ -50,7 +50,7 @@
                 <input type="number" class="form-control" id="IDNum" placeholder="ID учетной записи">
             </div>
             <div id="CloseSubForm" class="btn-group col-md-5" data-toggle="buttons">
-                <button type="button" id="2299" class="btn btn-danger btn-avito-red-2 pull-right"><span class="glyphicon glyphicon-remove" ></span>   Частник</button>
+                <button type="button" id="private" class="btn btn-danger btn-avito-red-2 pull-right">Частник   <span class="glyphicon glyphicon-remove pull-right" ></span></button>
             </div>
         </div>
         <label>Категория учетной записи</label>

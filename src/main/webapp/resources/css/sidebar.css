@@ -1,16 +1,9 @@
 @charset "utf-8";
-.myLabel{
-	color: white !important;
-	font-size: 14px;
-	font-weight: 400;
-	border-radius:10px;
-	margin: 0 2px;
+#private{
+	width:125px;
 }
-.myLabel>a{
-color: white;
-}
-.myLabel>a:link, .myLabel>a:visited{
-	color:#00FFFF
+#private>span{
+	margin-top:2px;
 }
 #paginationUL{
 	margin-top:0 !important;

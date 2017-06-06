@@ -25,7 +25,7 @@ function drawDayCalls(date){ // функция отрисовки звонков
 	$.get(dayCallsURL+"/"+timeStart+"/"+timeEnd).done(function (data) { // запрос к базе
 	sorting(data, 'timeStart'); // сортировка
 	var nametag = dayCalls = "";	
-	if(data.length==0){ document.getElementById("MainForm").innerHTML = "Звонки еще не поступали"; } // если не пусто
+	if(data.length==0){ document.getElementById("MainForm").innerHTML = "Звонки не обнаружены :("; } // если не пусто
 	else {	var audioURL, audiosrc, chain, additionalInfo; // рисуй
 			for (var i = 0; i < data.length; i++) { // основной цикл
 			additionalInfo = collectAdditionalInfo(data[i], "today");		

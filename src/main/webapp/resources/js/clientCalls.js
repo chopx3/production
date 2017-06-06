@@ -15,7 +15,7 @@ function getCalls(){ // Функция для вывода информации 
 			if (data.length != 0 && idNumber != '') { // если есть звонки и ID не пробел	
 				drawClientCalls(1); // отрисовать первую страницу при первом нажатии
 			}
-			else {outputCalls ='На данной учетной записи еще не было звонков';} // звонков нет
+			else {document.getElementById("MainForm").innerHTML ='Звонки не обнаружены :(';} // звонков нет
 				})
 }
 function drawClientCalls(pageNumber){ // отрисовка собственно звонков
