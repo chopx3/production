@@ -67,7 +67,7 @@ $(document).ready(function() { // основной блок
 		else 	{$('#IsManagerAndNoID').removeClass("Add");
 				 $('#IDNum').val("");}
 	});
-	$("#2299").click(function() { //Кнопка "Частник"
+	$("#private").click(function() { //Кнопка "Частник"
 		if (chainId=="") { $('#serviceMessage').text("Выберите звонок"); } // если не выбран звонок - сервис-сообщение
 		else { 	var comment = ($('#callComments').val()!="") ? $('#callComments').val() : "";
 				dataArray = [chainId, -1, 9, 6, false, "UPDATED", JSON.parse("[]"), comment]; // стандартные данные на отправку, [чейн, -1, частник, частник, не менеджер, обновлен]
