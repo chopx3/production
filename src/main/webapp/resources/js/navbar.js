@@ -222,19 +222,19 @@ return tags;
 }
 function collectAdditionalInfo(data, type){ // сбор дополнительной информации
 	var additionalInfo = "";
-	if (data.type == "EMPTY"){additionalInfo+="<span class='pull-right box-shadow addSpace'><a title='Информация еще не заполнена'>Не заполнен</a></span>";}
+	if (data.type == "EMPTY"){additionalInfo+="<span class='pull-right myLabel label btn-avito-red-2'><a title='Информация еще не заполнена'>Не заполнен</a></span>";}
 	else {
 	var userID = data.avitoUserId; 
 	var questionID = data.questionId;
 	var catID = data.shopCategoryId; // переменные. Названия говорят сами за себя
-	if (data.out == true) { additionalInfo += "<span class='pull-right box-shadow-blue addSpace'><a title='Исходящий звонок'>Исх</a></span>";} // если исходяшка
-	if (data.manager == true) { additionalInfo += "<span class='pull-right box-shadow-blue addSpace'><a title='Менеджер'>М</a></span>";} // если менеджер
-	if (userID == -1) { additionalInfo = "<span class='pull-right box-shadow addSpace'>"+Questions[questionID-1]+"</span>";} // частник
-	else {additionalInfo += "<span class='pull-right box-shadow-blue addSpace'>"+Questions[questionID-1]+"</span><span class='pull-right box-shadow-blue addSpace'>  "+Categories[catID-1]+"</span><span class='pull-right box-shadow-blue addSpace'>ID:<a href='https://adm.avito.ru/users/user/info/"+userID+"' target=_blank>"+userID+"</a></span>"} // обычный звонок				
+	if (data.out == true) { additionalInfo += "<span class='pull-right myLabel label label-primary'><a title='Исходящий звонок'>Исх</a></span>";} // если исходяшка
+	if (data.manager == true) { additionalInfo += "<span class='pull-right myLabel label label-primary'><a title='Менеджер'>М</a></span>";} // если менеджер
+	if (userID == -1) { additionalInfo = "<span class='pull-right myLabel label btn-avito-red-2'>"+Questions[questionID-1]+"</span>";} // частник
+	else {additionalInfo += "<span class='pull-right myLabel label label-primary'>"+Questions[questionID-1]+"</span><span class='pull-right myLabel label label-primary'>  "+Categories[catID-1]+"</span><span class='pull-right myLabel label label-primary'>ID:<a href='https://adm.avito.ru/users/user/info/"+userID+"' target=_blank>"+userID+"</a></span>"} // обычный звонок				
 	if (type == "feedback") {}
 	else {
-	if (data.type == "FULL_FEEDBACK") { additionalInfo+= "<span class='pull-right box-shadow-blue addSpace'><a title='Заполненный звонок с тэгом feedback'>F</a></span>"} // заполненный фидбек
-	if (data.type == "EMPTY_FEEDBACK") { additionalInfo+= "<span class='pull-right box-shadow addSpace'><a title='Незаполненный звонок с тэгом feedback'>F</a></span>"}} // пустой
+	if (data.type == "FULL_FEEDBACK") { additionalInfo+= "<span class='pull-right myLabel label label-primary'><a title='Заполненный звонок с тэгом feedback'>F</a></span>"} // заполненный фидбек
+	if (data.type == "EMPTY_FEEDBACK") { additionalInfo+= "<span class='pull-right myLabel label btn-avito-red-2'><a title='Незаполненный звонок с тэгом feedback'>F</a></span>"}} // пустой
 	}
 	return additionalInfo;
 }

@@ -1,4 +1,17 @@
 @charset "utf-8";
+.myLabel{
+	color: white !important;
+	font-size: 14px;
+	font-weight: 400;
+	border-radius:10px;
+	margin: 0 2px;
+}
+.myLabel>a{
+color: white;
+}
+.myLabel>a:link, .myLabel>a:visited{
+	color:#00FFFF
+}
 #paginationUL{
 	margin-top:0 !important;
 	margin-bottom:10px !important;
