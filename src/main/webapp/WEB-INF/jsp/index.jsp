@@ -15,6 +15,7 @@
 	<script src="${pageContext.request.contextPath}/resources/js/todayCallsController.js" charset="utf-8"></script>
 	<script src="${pageContext.request.contextPath}/resources/js/fireFeedback.js" charset="utf-8"></script>
 	<script src="${pageContext.request.contextPath}/resources/js/webSocket.js"></script>
+	<script src="${pageContext.request.contextPath}/resources/js/clientCalls.js"></script>
     <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/sidebar.css">
 	<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/NotesAndComments.css">
 	<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/feedback-tags-main.css">
@@ -31,9 +32,9 @@
 
     <div id="sidebar-wrapper" class="col-md-2">
         <ul class="sidebar-nav container-fluid">
-            <li class="hl"><a href="#" id="my_calls">Незаполненные<span class="badge mybadge" id=emptyCallsBadge>0</span></a></li>
+            <li class="hl"><a href="#" id="emptyCalls">Незаполненные<span class="badge mybadge" id=emptyCallsBadge>0</span></a></li>
 			<li class="hl"><a href="#" id="dayCalls">Звонки за день</a></li>
-            <li class="hl"><a href="#" id="user_calls">Звонки клиента</a></li>
+            <li class="hl"><a href="#" id="clientCalls">Звонки клиента</a></li>
             <li><a href="#" id="comments">Комментарии<span class="glyphicon glyphicon-triangle-right glyph pull-right" aria-hidden="true" id="glyphCom"></span></a></li>
             <li><a href="#" id="notes">Заметки<span class="glyphicon glyphicon-triangle-right glyph pull-right" aria-hidden="true" id="glyphNote"></span> </a></li>
             <li class="hl"><a href="#" id="feedback">Feedback<span class="badge mybadge" id=emptyFeedbackBadge>0</span></a></li>
@@ -186,7 +187,7 @@
 			</div>
 <script>
     setTimeout(jQuery(function(){
-        jQuery('#my_calls').click();
+        jQuery('#emptyCalls').click();
     }, 2500));
 
 </script>

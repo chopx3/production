@@ -69,7 +69,6 @@ if (chainId=="") {$('#serviceFeedbackMessage').text("Выберите звоно
 			if (isCorrect) {	$('#serviceFeedbackMessage').text("").css({"color":"black"}); // если все норм
 										postFeedback(); // отправка фидбека
 										setTimeout(function(){ 
-											clearFeedback();
 											drawFeedback();
 										}, 800); //сброс данных, отрисовка заново
 			} 
@@ -92,6 +91,7 @@ function clearFeedback() { // Очистка фидбека
 	$('#serviceFeedbackMessage').text("").css({"color":"black"}); // черный цвет сервис-сообщения
 }
 function drawFeedback() { // отрисовка Feedbackа
+	clearFeedback();
 	var timeNow = moment().unix()*1000; 
 	$.get(emptyFeedbackURL+timeNow+"/").done( function (data) { // вывод незаполненного к этому моменту фидбека
 	var feedbackInfo = data;

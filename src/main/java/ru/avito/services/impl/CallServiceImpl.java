@@ -4,7 +4,6 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
-import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -18,11 +17,8 @@ import ru.avito.services.AgentService;
 import ru.avito.services.CallService;
 
 import java.io.IOException;
-import java.time.LocalDate;
-import java.time.ZoneId;
 import java.util.HashSet;
 import java.util.List;
-import java.util.concurrent.ConcurrentHashMap;
 
 /**
  * Created by Dmitriy on 26.02.2017.
@@ -125,6 +121,10 @@ public class CallServiceImpl implements CallService {
 
     public List<Call> findByAvitoUserId(Long avitoUserId, PageRequest aPage) {
         return callRepository.findByAvitoUserId(avitoUserId, aPage);
+    }
+
+    public List<Call> findAllByAvitoUserId(Long avitoUserId) {
+        return callRepository.findAllByAvitoUserId(avitoUserId);
     }
 
     public List<Call> findByQuestionIdAndTimeStartBetween(Integer ids, Long timeStart, Long timeEnd){

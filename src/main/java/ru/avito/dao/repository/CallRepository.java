@@ -3,7 +3,6 @@ package ru.avito.dao.repository;
 
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import ru.avito.model.calls.Call;
@@ -15,7 +14,7 @@ import java.util.List;
  */
 public interface CallRepository extends JpaRepository<Call,Integer>{ //TODO реализовать репозиторий
 
-
+    List<Call> findAllByAvitoUserId(Long agentId);
     List<Call> findByAgentIdAndTimeStartBetween(Integer agentId, Long timeStart, Long timeEnd);
 
     List<Call> findByTimeStartBetweenAndAgentIdAndType(Long timeStart, Long timeEnd, Integer agentId, String typeCall);

@@ -75,7 +75,7 @@ $(document).ready(function() { // основной блок
 				sentCall = true; // звонок отправлен
 				clearData(); // очистка
 				if (dayOrEmpty == "empty") // если отправка произошла из окна незаполненные
-					{setTimeout(function(){$('#my_calls').click()}, 800);} // обнови
+					{setTimeout(function(){$('#emptyCalls').click()}, 800);} // обнови
 				else{setTimeout(function(){$("#dayCalls").click()}, 800);} // иначе - звонки за день
 		}
 	});
@@ -109,7 +109,7 @@ $(document).ready(function() { // основной блок
 				fillData(dataArray); // отправка
 				sentCall=true; // звонок отправлен
 				if (dayOrEmpty == "empty") // если отправка произошла из окна незаполненные
-					{setTimeout(function(){$('#my_calls').click()}, 800);} // обнови
+					{setTimeout(function(){$('#emptyCalls').click()}, 800);} // обнови
 				else{setTimeout(function(){$("#dayCalls").click()}, 800);} // иначе - звонки за день
 			} 	
 			else{$('#serviceMessage').text("Введите корректные данные");} // данные некорректны
@@ -122,16 +122,11 @@ $(document).ready(function() { // основной блок
 	$("#Adder").click(function() { //Переключение класса "Добавить звонок"
 		$("#SubForm").toggleClass("Add");
 	});
-	$('#my_calls').click(function() { //Кнопка "Мои звонки"
+	$('#emptyCalls').click(function() { //Кнопка "Мои звонки"
 		drawAdditionalTags();
 		dayOrEmpty = "empty"; // установка переменной для обновления страницы при отправке звонка
 		clearData(); // очистка данных
 		showMyEmptyCalls(); // отображение пустых звонков
-	});
-	$('#user_calls').click(function() { //Кнопка "Звонки пользователя"
-		fillInfo("add","Звонки пользователя", ""); // заполнение инфы
-		addButton(); // отображение кнопки
-		$("#MainForm").removeClass("col-md-6").addClass("col-md-12");
 	});
 	$('#comments').click(function() { //Кнопка "Комментарии". Выключение заметок, переключение комментариев, тоже самое с треугольниками.
 		addButton();
@@ -218,33 +213,6 @@ function changeHeight(i){ // изменить высоту, если переп�
 	if (maxHeight > 60) {elem.style.maxHeight = 60 + 'px';elem.style.color = "blue"}
 	else if (scrollHeight>60) {elem.style.maxHeight = scrollHeight + 'px';elem.style.color = "black"}
 }
-function getCalls(){ // Функция для вывода информации по ID пользователя
-	idNumber = idSaver = $('#IDforInfo').val();
-		$.get(getCallsURL + idNumber+"/0").done(function (data) { // запрос
-			outputCalls ='';
-			document.getElementById("MainForm").innerHTML = '';
-			if (data.length != 0 && idNumber != '') { // если есть звонки и ID не пробел
-				var audioURL, additionalInfo;
-				for (var i = 0; i < data.length; i++) { //цикл отрисовки звонков
-					additionalInfo = collectAdditionalInfo(data[i], "full"); // сбор дополнительной информации			
-					var audiotag = data[i].comId;
-					var nametag = data[i].agent.username;
-					var yourCall = (agentName == nametag) ? "yourCall" : "";
-					var timetag = moment.unix(data[i].timeStart/1000).format(dateFormat); // заполнение переменных
-					iJump = 0; // прыжок, если есть звонки с тем же ID, обнуление переменной
-					var nextCall = collectMultipleCalls(data, i, ""); // 
-					var margin = (nextCall == "") ? "" : "no-margin-top"; // отступы при нескольких звонках, сложная схема
-					var commentBox = (data[i].comments == null || data[i].comments == "") ? "" : "<textarea rows=4 class='form-control commentBox col-lg-4' disabled>"+data[i].comments+"</textarea>"; // если есть комментарии - выводи их в поле справа
-					var tagLabel = (data[i].tags.length == 0) ? "" : "<div class='tags col-lg-2'><label class='might-overflow'>" + collectTagForGetCalls(data[i].tags) + "</label></div>"; 
-					audioURL = '<audio class="audio-call '+margin+'" src="'+oktell + audiotag + '" controls></audio><a href="'+oktell+ audiotag +'" target="_blank">' + '<\/a>'; 
-					outputCalls += '<div class="row col-lg-12"><div class="call col-lg-6 '+yourCall+'" data-time="'+timetag+'" data-sign="'+nametag+'"><span>'+ timetag +' '+nametag + '</span>'+additionalInfo+'<br>' + nextCall + audioURL  + '</div>'+commentBox+tagLabel+'</div>'; // основная часть формирования звонка
-					i+=iJump; //прыжок, если есть звонки с тем же ID
-				}
-			}
-			else {outputCalls ='На данной учетной записи еще не было звонков';} // звонков нет
-			document.getElementById("MainForm").innerHTML = outputCalls; 
-				})
-}
 function collectTagForGetCalls(data){ // сбор тэгов для отрисовки в звонках пользователя
 	var tags = "";
 	for (var i=0;i<data.length;i++){ // цикл для сборки тэгов
@@ -269,21 +237,6 @@ function collectAdditionalInfo(data, type){ // сбор дополнительн
 	if (data.type == "EMPTY_FEEDBACK") { additionalInfo+= "<span class='pull-right box-shadow addSpace'><a title='Незаполненный звонок с тэгом feedback'>F</a></span>"}} // пустой
 	}
 	return additionalInfo;
-}
-
-function addButton() { // Отрисовка кнопки для вывода звонков
-	document.getElementById("CallForm").innerHTML =	'<div class="row">'
-			+ '<div class="col-lg-8">'
-			+ '<div class="input-group goButton">'
-				+ '<input type="number" class="form-control" id="IDforInfo" placeholder="ID учетной записи" autofocus>'
-				+ '<span class="input-group-addon btn btn-success" id="IDSubmit" onclick=getCalls()>GO</span>'
-			+ '</div>'
-			+ '</div>'
-		+ '</div>'; 
-$('#IDforInfo').keypress(function (e) { // ловить нажатие энтера
- var key = e.which;
- if (key == 13) {getCalls();}
-});
 }
 function clearData() { // Очистка данных в боковой форме
 	$('#IDNum').removeClass("box-shadow");
@@ -333,9 +286,8 @@ function change_call(CallInfo) { // Добавление стиля выбран
 	if ((CallInfo[0]!=chainId)&&(chainId!="")) { clearData(); } // если изменился звонок - очистить
 	chainId = CallInfo[0];
 	additionalTags =$(feedId).attr("name");
-	$("#feedbackComment").val("");
-	var comments = ($("#feedback-com"+CallInfo[1]).text()=="null") ? "" : $("#feedback-com"+CallInfo[1]).text();
-	if (CallInfo[2]) {$("#feedbackComment").val(comments);}
+	var comments = (!($("#feedback-com"+CallInfo[1]).text()=="null" || $("#feedback-com"+CallInfo[1]).text()== "" ));
+	if (comments) {$("#feedbackComment").val($("#feedback-com"+CallInfo[1]).text());}
 }
 function collectTags (feedOrCall){ // Проверка тегов, от фидбека или обычного звонка
 	var choice = feedOrCall; 

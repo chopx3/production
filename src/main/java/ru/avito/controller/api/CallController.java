@@ -3,7 +3,6 @@ package ru.avito.controller.api;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
@@ -51,7 +50,7 @@ public class CallController {
     @Autowired
     CallRepository callRepository;
 
-    @RequestMapping(value = "find/agent/{startPeriod}/{endPeriod}")//TODO сделать (проверить URL на фронте)
+    @RequestMapping(value = "find/agent/{startPeriod}/{endPeriod}")
     public List<Call> findByAgentIdAndTimeStartBetween(HttpSession session,
                                              @PathVariable("startPeriod") Long startPeriod,
                                              @PathVariable("endPeriod")Long endPeriod){
@@ -106,6 +105,11 @@ public class CallController {
     public List<Call> findByAvitoUserId(@PathVariable("avitoUserId") Long avitoUserId, @PathVariable("page") Integer page){
         PageRequest aPage = new PageRequest(page, 50, Sort.Direction.DESC, "timeStart");
         return callService.findByAvitoUserId(avitoUserId, aPage);
+    }
+
+    @RequestMapping(value = "find/user/{avitoUserId}/all", method = RequestMethod.GET) //TODO сделать красиво пагинацию
+    public List<Call> findAllByAvitoUserId(@PathVariable("avitoUserId") Long avitoUserId){
+        return callService.findAllByAvitoUserId(avitoUserId);
     }
 
     @RequestMapping(value = "find/questions/{ids}/{startPeriod}/{endPeriod}", method = RequestMethod.GET)
