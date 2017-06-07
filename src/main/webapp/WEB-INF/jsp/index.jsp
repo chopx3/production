@@ -7,6 +7,7 @@
     <meta http-equiv="content-type" content="text/html; charset=cp1251">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 	<script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
@@ -32,14 +33,14 @@
 
     <div id="sidebar-wrapper" class="col-md-2">
         <ul class="sidebar-nav container-fluid">
-            <li class="hl"><a href="#" id="emptyCalls">Незаполненные<span class="badge mybadge" id=emptyCallsBadge>0</span></a></li>
-			<li class="hl"><a href="#" id="dayCalls">Звонки за день</a></li>
-            <li class="hl"><a href="#" id="clientCalls">Звонки клиента</a></li>
-            <li><a href="#" id="comments">Комментарии<span class="glyphicon glyphicon-triangle-right glyph pull-right" aria-hidden="true" id="glyphCom"></span></a></li>
-            <li><a href="#" id="notes">Заметки<span class="glyphicon glyphicon-triangle-right glyph pull-right" aria-hidden="true" id="glyphNote"></span> </a></li>
-            <li class="hl"><a href="#" id="feedback">Feedback<span class="badge mybadge" id=emptyFeedbackBadge>0</span></a></li>
-			<li><a href="#" id="magic">Magic</a></li>
-            <li><a href="${pageContext.request.contextPath}/j_spring_security_logout" id="logout">Выйти</a></li>
+            <li class="hl"><a href="#" id="emptyCalls"><i class ="fa fa-phone menuIcons fa-fw"></i><span>Незаполненные</span><span class="badge mybadge" id=emptyCallsBadge>0</span></a></li>
+			<li class="hl"><a href="#" id="dayCalls"><i class ="fa  fa-headphones fa-fw menuIcons"></i><span>Звонки за день</span></a></li>
+            <li class="hl"><a href="#" id="clientCalls"><i class ="fa fa-address-book menuIcons fa-fw"></i><span>Звонки клиента</span></a></li>
+            <li><a href="#" id="comments"><i class ="fa fa-commenting menuIcons fa-fw"></i><span>Комментарии</span><span class="glyphicon glyphicon-triangle-right glyph pull-right" aria-hidden="true" id="glyphCom"></span></a></li>
+            <li><a href="#" id="notes"><i class ="fa fa-pencil-square-o menuIcons fa-fw"></i><span>Заметки</span><span class="glyphicon glyphicon-triangle-right glyph pull-right" aria-hidden="true" id="glyphNote"></span> </a></li>
+            <li class="hl"><a href="#" id="feedback"><i class ="fa  fa-sticky-note-o menuIcons fa-fw"></i><span>Feedback</span><span class="badge mybadge" id=emptyFeedbackBadge>0</span></a></li>
+			<li><a href="#" id="magic"><i class ="fa fa-magic menuIcons fa-fw"></i><span>Magic</span></a></li>
+            <li><a href="${pageContext.request.contextPath}/j_spring_security_logout" id="logout"><i class ="fa  fa-times-circle menuIcons fa-fw"></i><span>Выйти</span></a></li>
             <label id="websocketStatus">Статус </label>
         </ul>
     </div>
@@ -165,6 +166,7 @@
 			<div id="noteForm" class="form-group col-md-4 col-md-offset-2">
 				<div class="row">
 					<h1>Заметки</h1>
+					
 				</div>
 				<div class="row">
 					<textarea class="form-control" id="noteArea"></textarea>

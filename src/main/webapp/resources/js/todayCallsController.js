@@ -10,6 +10,7 @@ $(document).ready(function() { // получить вопросы и катег�
 			fillInfo("remove","Звонки за <a href=# onclick=changeDate(1) id=todayLink name='ourLink'>сегодня</a>, <a href=# onclick=changeDate(0) id=yesterdayLink name='ourLink'>вчера</a>", ""); // отрисовать заголовок с ссылками на день
 			changeDate(drawDate); // поменять дату и отрисовать день
 			$("#SubForm").addClass("Add");
+			drawBadges();
 		});
 })
 function changeDate(date){ // функция смены дня, активирует выбранный день и сохраняет данную переменную + меняет класс

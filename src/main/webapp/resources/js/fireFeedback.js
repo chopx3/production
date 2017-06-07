@@ -68,9 +68,7 @@ if (chainId=="") {$('#serviceFeedbackMessage').text("Выберите звоно
 					$('#feedbackComment').addClass("box-shadow");}  // если комментария нет - подсветка и фолс
 			if (isCorrect) {	$('#serviceFeedbackMessage').text("").css({"color":"black"}); // если все норм
 										postFeedback(); // отправка фидбека
-										setTimeout(function(){ 
-											drawFeedback();
-										}, 800); //сброс данных, отрисовка заново
+										setTimeout(function(){ drawBadges(); drawFeedback()}, 800); //сброс данных, отрисовка заново
 			} 
 			else {$('#serviceFeedbackMessage').text("Введены не все данные").css({"color":"red"});} // если фолс - данное сообщение
 		}

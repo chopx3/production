@@ -22,20 +22,7 @@ var RestPost = function(sendData, url) { // стандартная функци�
     };
 
 $(document).ready(function() { // основной блок
-	window.setInterval(function(){
-	sendWebSocketMessage("getMyEmptyCalls");
-  getWebsocketMessage(function(data){ 	if (getUniqueData(data.emptyCallList)>0) {	$("#emptyCallsBadge").text(getUniqueData(data.emptyCallList));
-																					$("#emptyCallsBadge").addClass("Add");
-																					$("#favicon").attr("href","./resources/img/favicon2.ico");}
-										else {$("#emptyCallsBadge").removeClass("Add");
-										$("#favicon").attr("href","./resources/img/favicon.ico");}  });
-  
-  $.get(emptyFeedbackURL+moment().unix()*1000 +"/").done( function (data) {
-		if (getUniqueData(data)>0) {	$("#emptyFeedbackBadge").text(getUniqueData(data));
-										$("#emptyFeedbackBadge").addClass("Add");}
-		else $("#emptyFeedbackBadge").removeClass("Add")});
-}, 5000);
-
+	drawBadges();
 	drawAdditionalTags(); // отрисовка дополнительных тэгов звонка
 	var commentsInfo = callsInfo = emptyCallsInfo = null;
 	var outputCalls;
@@ -75,8 +62,8 @@ $(document).ready(function() { // основной блок
 				sentCall = true; // звонок отправлен
 				clearData(); // очистка
 				if (dayOrEmpty == "empty") // если отправка произошла из окна незаполненные
-					{setTimeout(function(){$('#emptyCalls').click()}, 800);} // обнови
-				else{setTimeout(function(){$("#dayCalls").click()}, 800);} // иначе - звонки за день
+					{setTimeout(function(){$('#emptyCalls').click(); }, 800)} // обнови
+				else{setTimeout(function(){$("#dayCalls").click(); }, 800)} // иначе - звонки за день
 		}
 	});
 	$('#sendDataButton').click(function() { //Кнопка "Отправить"
@@ -109,8 +96,8 @@ $(document).ready(function() { // основной блок
 				fillData(dataArray); // отправка
 				sentCall=true; // звонок отправлен
 				if (dayOrEmpty == "empty") // если отправка произошла из окна незаполненные
-					{setTimeout(function(){$('#emptyCalls').click()}, 800);} // обнови
-				else{setTimeout(function(){$("#dayCalls").click()}, 800);} // иначе - звонки за день
+					{setTimeout(function(){$('#emptyCalls').click(); }, 800);} // обнови
+				else{setTimeout(function(){$("#dayCalls").click(); }, 800);} // иначе - звонки за день
 			} 	
 			else{$('#serviceMessage').text("Введите корректные данные");} // данные некорректны
 		}
@@ -342,6 +329,7 @@ function  draw(data) { // отрисовка пустых звонков
 	$("audio").each(function(){ //Функция по остановке всех остальных аудио-файлов
 		$(this).bind("play",stopAll).bind("click",stopAll);
 	});
+	drawBadges();
 }
 function stopAll(e){ //Функция по остановке всех остальных аудио-файлов, stackoverflow спс
 	var currentElementId=$(e.currentTarget).attr("id");
@@ -397,4 +385,17 @@ function drawAdditionalTags(){ // отрисовка дополнительны�
 				}
 				document.getElementById("additionalTagsDiv").innerHTML = outputTags;
 			})
+}
+function drawBadges(){
+	sendWebSocketMessage("getMyEmptyCalls");
+	getWebsocketMessage(function(data){ 	if (getUniqueData(data.emptyCallList)>0) {	$("#emptyCallsBadge").text(getUniqueData(data.emptyCallList));
+																					$("#emptyCallsBadge").addClass("Add");
+																					$("#favicon").attr("href","./resources/img/favicon2.ico");}
+										else {$("#emptyCallsBadge").removeClass("Add");
+										$("#favicon").attr("href","./resources/img/favicon.ico");}  }); 
+	$.get(emptyFeedbackURL+moment().unix()*1000 +"/").done( function (data) {
+		if (getUniqueData(data)>0) {	$("#emptyFeedbackBadge").text(getUniqueData(data));
+										$("#emptyFeedbackBadge").addClass("Add");}
+		else $("#emptyFeedbackBadge").removeClass("Add")});
+		console.log("here");
 }

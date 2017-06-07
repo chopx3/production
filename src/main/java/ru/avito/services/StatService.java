@@ -18,4 +18,6 @@ public interface StatService {
      String findTotalCallsByAgent(Long timeStart, Long timeEnd);
 
      String findTotalEmptyCallsByAgent(Long timeStart, Long timeEnd);
+
+
 }

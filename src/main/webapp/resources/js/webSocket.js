@@ -36,9 +36,9 @@ function getWebsocketMessage(callback){
                 websocket.send("ping");
                 break;
             case "Exist empty calls": 
-			drawAdditionalTags();
 			dayOrEmpty = "empty";
 			showMyEmptyCalls();
+			
                 break;
             case "pong":
                 online();

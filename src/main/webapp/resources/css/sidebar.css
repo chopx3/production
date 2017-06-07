@@ -1,4 +1,11 @@
 @charset "utf-8";
+.menuIcons{
+	font-size:18px;
+	margin-left:-25px;
+	padding-right:5px;
+	margin-top:15px;
+	float: left;
+}
 #private{
 	width:125px;
 }
@@ -170,6 +177,7 @@ border-radius: 10px;
 	display: block;
 	text-decoration: none;
 	color: #ddd;
+
 }
 /* цвет при наведении на кнопку */
 .sidebar-nav li a:hover{
