@@ -62,5 +62,9 @@ public class StatController {
         return statService.findTotalEmptyCallsByAgent(startPeriod, endPeriod);
     }
 
-
+    @RequestMapping(value = "find/fullstat/total/{startPeriod}/{endPeriod}", produces = "application/json;charset=UTF-8")
+    public String findFullAndEmptyCallsByAgent(@PathVariable("startPeriod") Long startPeriod,
+                                             @PathVariable("endPeriod") Long endPeriod) {
+        return statService.findFullAndEmptyCallsByAgent(startPeriod, endPeriod);
+    }
 }

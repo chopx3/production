@@ -53,8 +53,8 @@ function drawTable(info, isGroup){ // рекурсивная функция от
 return forInfo;
 }
 function ChangeTagGroup(){ // изменить группу тэгов, костыльный способ, через левую переменную
-		TagInfo ={	"id": idNum,
-					"value": $("#exampleSelect1").val()};
+		TagInfo ={	"id": 		idNum,
+					"value": 	$("#exampleSelect1").val()};
 		var URL=changeTagGroup; 
 		RestPost(TagInfo, URL);
 }

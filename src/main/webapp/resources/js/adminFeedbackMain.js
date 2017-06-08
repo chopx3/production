@@ -26,7 +26,7 @@ function getCalls(){ // Получить список всех звонков и
 							for (var j=0;j<feedbackInfo[i].tags.length;j++){ // цикл для сборки тэгов и проверки подходящих
 								tagCollector +=feedbackInfo[i].tags[j].value + ' '; // сборка тэгов
 								if (tagsMap.has(feedbackInfo[i].tags[j].id.toString())) {tagCheck=true;}// проверка, есть ли этот тэг в мапе, приведение к стрингу, если есть - тру
-								}								
+								}
 							if( (catNum==6||catNum==feedbackInfo[i].shopCategoryId-1) && tagCheck ){ // если подходит категория или выбраны все категории и тэг есть в мапе	
 							timetag = moment(feedbackInfo[i].timeStart).format(dateFormat); // дата, стандартный вид
 							iJump = 0;
@@ -44,28 +44,23 @@ function getCalls(){ // Получить список всех звонков и
 					}
 					document.getElementById("MainForm").innerHTML = Call; // вся собранная информация в главную форму
 				})
-			.fail(
-				function () {
-					console.log("---");
-				});
 }
 function createTagsTable(){ // отрисовка блока с выбором тэгов
 	tagCounter = 0; // количество
 	outputTags=""; //текст
 	TagActiveChecker(); 
-	$.get(tagGroupURL).done( function (data) {//Построение списка					
-	var finalForm = data;
+	$.get(tagGroupURL).done( function (data) {//Построение списка
 	var coreHeader = 		'<div class="tag-form-header">'+
 							'<span>Тэги по категориям</span>'+
 							'</div>'+
 						'<div class="tag-form-container">'; // данные, в "шапке" блока
 	var coreFooter = '</div>'; // закрытие блока tag-form-container
-	var tagGroups = finalForm.length; // количество групп тэгов
+	var tagGroups = data.length; // количество групп тэгов
 	var columnsArray = [];
 	var columnFinal = oddColumns = oddDiv = ""; // итоговый текст, нечетные колонки, нечетный див
 	var activeColumns = 0; // группы тэгов, подходящие под условия
 	for (var columns = 0; columns<tagGroups;columns++){ // цикл, пробегается по всем группам тэгов
-		if (finalForm[columns].tags.length>0&&finalForm[columns].name!="Unfiltered"){ // не выводит группу Мэйн, пустые группы и Unfiltered
+		if (data[columns].tags.length>0&&data[columns].name!="Unfiltered"){ // не выводит группу Мэйн, пустые группы и Unfiltered
 			activeColumns++;
 			if ((activeColumns%2)) {oddColumns= '<div class="container-column">'; oddDiv = '';} // если группа 1,3,5 ... То открывает столбец
 			else {oddColumns = "";oddDiv = "</div>";}// 2,4,6 - закрывает столбец
@@ -76,15 +71,15 @@ function createTagsTable(){ // отрисовка блока с выбором �
 				'<div class="container-column-group">'	+				
 					'<ul class="group-list">'+
 						'<label class="group-header">'+
-						finalForm[columns].name + '</label>';	// построение группы тэгов, шапка блока	
+						data[columns].name + '</label>';	// построение группы тэгов, шапка блока	
 		var columnsBody = ""; // обнуление тела
-		for (var colTags = 0; colTags<finalForm[columns].tags.length;colTags++){ // цикл "накачки" тела, пробегается по всем тэгам, берет значение, номер и название
-			var value = finalForm[columns].tags[colTags].value;
-			var id = finalForm[columns].tags[colTags].id;
-			var name = finalForm[columns].tags[colTags].name;
+		for (var colTags = 0; colTags<data[columns].tags.length;colTags++){ // цикл "накачки" тела, пробегается по всем тэгам, берет значение, номер и название
+			var value = data[columns].tags[colTags].value;
+			var id = data[columns].tags[colTags].id;
+			var name = data[columns].tags[colTags].name;
 			columnsBody+='<li class="group-list-item">'+
 					'<input type="checkbox" id="tags-checkbox-'+id+'" value="'+value+'" class="group-list-checkbox">' +
-					'<label for="tags-checkbox-'+id+ '" id="label-checkbox-'+id + '" class="tag-label" name="info-label" value="'+id+'" title="'+ finalForm[columns].tags[colTags].description+ '" onclick=clickOnLabel('+id+')><span>'+name+'</span></label></li>';
+					'<label for="tags-checkbox-'+id+ '" id="label-checkbox-'+id + '" class="tag-label" name="info-label" value="'+id+'" title="'+ data[columns].tags[colTags].description+ '" onclick=clickOnLabel('+id+')><span>'+name+'</span></label></li>';
 		}
 		var columnsTail = '</ul></div>'+oddDiv; // строит конец блока, завершает список, завершает столбец, если он четный
 		columnsArray[columns] = columnsHead + columnsBody + columnsTail; // заносит в массив получившийся блок

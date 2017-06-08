@@ -20,10 +20,7 @@ var RestPost = function(sendData, url) { // стандартная функци�
                 error: function (message) { alert(message) }
             });
     };
-
 $(document).ready(function() { // основной блок
-	drawBadges();
-	drawAdditionalTags(); // отрисовка дополнительных тэгов звонка
 	var commentsInfo = callsInfo = emptyCallsInfo = null;
 	var outputCalls;
 	var isManager=false;
@@ -51,8 +48,7 @@ $(document).ready(function() { // основной блок
 	$('#IsManagerDiv').click(function(){ // проверка, нажата ли кнопка менеджер, если да - появляется кнопка Без ID, если нажата повторна - скрывается и обнуляется ID
 		if (!$("#IsManager").prop("checked"))
 				{$('#IsManagerAndNoID').addClass("Add");}
-		else 	{$('#IsManagerAndNoID').removeClass("Add");
-				 $('#IDNum').val("");}
+		else 	{$('#IsManagerAndNoID').removeClass("Add");}
 	});
 	$("#private").click(function() { //Кнопка "Частник"
 		if (chainId=="") { $('#serviceMessage').text("Выберите звонок"); } // если не выбран звонок - сервис-сообщение
@@ -150,6 +146,7 @@ function showMyEmptyCalls() { //Функция, отправляющая зап�
 	fillInfo("remove","Мои звонки", "");
 	getWebsocketMessage(function(emptyCallsInfo){ draw(emptyCallsInfo); });
 	$("#SubForm").addClass("Add");
+	console.log("showMyEmptyCalls");
 }
 //Стандартная отрисовка после нажатия на кнопку бокового меню, для удобства читабельности. Форма звонка(вкл\выкл), текст заголовка страницы, текст основного меню
 function fillInfo(callForm, headerText, MainForm) {
@@ -264,7 +261,7 @@ function fillData(dataArray) { //Отправка данных из боково
 	RestPost(updateCall, updateEmptyCalls);
 }
 function change_call(CallInfo) { // Добавление стиля выбранного звонка
-	console.log(CallInfo);
+	//console.log(CallInfo);
 	var idd = '#divAddButton'+CallInfo[1]; // id + div, для сброса стилей
 	var feedId = '#feedbackCall'+CallInfo[1]; // id + feedback, для сброса стилей
 	tagBuffer = $(feedId).attr("value"); // сохранить сюда тэги
@@ -305,7 +302,7 @@ function  draw(data) { // отрисовка пустых звонков
 	sorting(data.emptyCallList, "startTime"); // сортировка в обратном порядке
 	agentId = data.agentId;
 	agentName = data.agentName;
-	console.log(data); 
+	console.log("draw"); 
 	var nametag = data.agentName; // заполнение данных
 	var outputEmptyCalls = '';
 	if (data.emptyCallList.length==0){document.getElementById("MainForm").innerHTML = "Все звонки заполнены";} // если пусто - заглушка
@@ -350,6 +347,7 @@ function getNotes() { // получение заметок
 	$.get(getNotesURL+agentId).done(function (data) {$('#noteArea').val(data.notes);}
 )}
 function drawAdditionalTags(){ // отрисовка дополнительных тэгов
+	console.log("drawAdditionalTags");
 	$.get(tagGroupURL).done(function (data) { // запрос
 		var ourID = outputTags = "";
 		for (var i = 0; i<data.length;i++){ // цикл для нахождения тэгов un|happy и основной группы
@@ -365,20 +363,22 @@ function drawAdditionalTags(){ // отрисовка дополнительны�
 					outputTags += (nextLine>2) ?'<div class="btn-group col-lg-12" data-toggle="buttons" id=addTags-'+i+'>':"";
 					for (j=0;j<nextLine;j++){ // цикл для тэгов
 						var id = data[ourID].tags[i*4+j].id; // для сокращения
+						var name = data[ourID].tags[i*4+j].name;
+						var desc = data[ourID].tags[i*4+j].description;
 						if (nextLine < 3) switch(nextLine) {
 						case 1:  // если один тэг, отступ, чтоб красиво
 						outputTags +='<div class="btn-group col-lg-8 col-lg-offset-4" data-toggle="buttons" id=addTags-'+i+'>';	
-						outputTags+='<label class="btn btn-avito-tags col-lg-6" name="addTags" id="label-tag-'+id+'">'+
-									'<input type="checkbox" id="tag-'+id+'" name="addTags" autocomplete="off" value="'+id+'">'+data[ourID].tags[i*4+j].name +'</label>';
+						outputTags+='<label class="btn btn-avito-tags col-lg-6" name="addTags" id="label-tag-'+id+'" title="'+desc+'">'+
+									'<input type="checkbox" id="tag-'+id+'" name="addTags" autocomplete="off" value="'+id+'">'+ name +'</label>';
 						break;
 						case 2: // если два тэга, отступ, чтоб красиво
 						if(j==0) {outputTags+='<div class="btn-group col-lg-8 col-lg-offset-2" data-toggle="buttons" id=addTags-'+i+'>';}
-						outputTags+='<label class="btn btn-avito-tags col-lg-6" name="addTags" id="label-tag-'+id+'">'+
-									'<input type="checkbox" id="tag-'+id+'" name="addTags" autocomplete="off" value="'+id+'">'+data[ourID].tags[i*4+j].name +'</label>';
+						outputTags+='<label class="btn btn-avito-tags col-lg-6" name="addTags" id="label-tag-'+id+'" title="'+desc+'">'+
+									'<input type="checkbox" id="tag-'+id+'" name="addTags" autocomplete="off" value="'+id+'">'+name +'</label>';
 						break;
 						}
-						else {outputTags+=	'<label class="btn btn-avito-tags col-lg-'+12/nextLine+'" name="addTags" id="label-tag-'+id+'">'+
-											'<input type="checkbox" id="tag-'+id+'" name="addTags" autocomplete="off" value="'+id+'">'+data[ourID].tags[i*4+j].name +'</label>';
+						else {outputTags+=	'<label class="btn btn-avito-tags col-lg-'+12/nextLine+'" name="addTags" id="label-tag-'+id+'" title="'+desc+'">'+
+											'<input type="checkbox" id="tag-'+id+'" name="addTags" autocomplete="off" value="'+id+'">'+name +'</label>';
 						}
 					}
 					outputTags +='</div>';
@@ -397,5 +397,5 @@ function drawBadges(){
 		if (getUniqueData(data)>0) {	$("#emptyFeedbackBadge").text(getUniqueData(data));
 										$("#emptyFeedbackBadge").addClass("Add");}
 		else $("#emptyFeedbackBadge").removeClass("Add")});
-		console.log("here");
+		console.log("drawBadges");
 }

@@ -138,10 +138,10 @@ function infoCheck(value, type){ // проверка информации и о�
 					break;
 					case 'group':
 					infoToServer ={
-						"id":idNum,
-						"name": $(secondField).val(),
-						"description": $(thirdField).val()
-						};
+					"id":idNum,
+					"name": $(secondField).val(),
+					"description": $(thirdField).val()
+					};
 					URL = updTagGroupURL;
 					break;}
 		break;}	
@@ -149,7 +149,7 @@ function infoCheck(value, type){ // проверка информации и о�
 		fillInfo(type); // обновление нужной страницы
 	}
 }
-function fillInfo(type){
+function fillInfo(type){ // обновление нужной страницы
 	if (type == "agents") 	{fillAgents()}
 	else {fillTags(type)}
 }
@@ -168,7 +168,7 @@ $(document).ready(function() {
 		$(this).toggleClass('highlight');
 	});
 	$("#searchButton").click(function(event){ // поиск
-		$("tr.table-row").each(function () { $(this).removeClass('search'); }); // очистить строки
+		$("tr.table-row").each(function () { $(this).removeClass('search'); }); // очистить строки вывода от подсветки
 		$("#searchField").removeClass("error"); // обнулить класс у строки поиска
 		event.preventDefault(); 
 		try{ 	var target_top= $('#'+$("#searchField").val()).offset().top; // поиск смещения относительно поля

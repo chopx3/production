@@ -1,6 +1,6 @@
 var startDate;  
 var endDate;
-// функция для установки переменных startDate. endDate для передачи в функции статистики, звонков итд. Проверка на вид передаваемой даты, конвертация в цифровой вид (11.11.2011)
+// функция для установки переменных startDate и endDate для передачи в функции статистики, звонков итд. Проверка на вид передаваемой даты, конвертация в цифровой вид (11.11.2011)
 function cb(start, end) {
 			if (start.length==10){
 				startDate = start;
@@ -60,23 +60,23 @@ function afterClickActions(){
 		createCalendar(startDate, endDate);
 		cb(startDate, endDate);
 		getInfo('date');	
-} // Кнопка Вчера
-$("#yesterday").click(function () {
+} 
+$("#yesterday").click(function () { 	// Кнопка Вчера
 		startDate = moment().subtract(1, 'days').format("DD-MM-YYYY");
 		endDate = moment().format("DD-MM-YYYY");
 		afterClickActions();
-}); // Кнопка Сегодня
-$("#today").click(function () {	
+}); 
+$("#today").click(function () {	 		// Кнопка Сегодня
 		startDate = moment().format("DD-MM-YYYY");
 		endDate = moment().add(1,'days').format("DD-MM-YYYY");
         afterClickActions();
-}); //Кнопка Неделя
-$("#week").click(function () {
+}); 
+$("#week").click(function () {			//Кнопка Неделя
 		startDate = moment().startOf('week').add(1,'days').format("DD-MM-YYYY");
 		endDate = moment().endOf('week').add(1,'days').format("DD-MM-YYYY");
         afterClickActions();		
-}); // Кнопка месяц
-$("#month").click(function () {
+}); 
+$("#month").click(function () {			// Кнопка месяц
 		startDate = moment().startOf('month').format("DD-MM-YYYY");
 		endDate = moment().endOf('month').format("DD-MM-YYYY");
         afterClickActions();

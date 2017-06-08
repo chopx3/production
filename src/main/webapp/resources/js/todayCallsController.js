@@ -1,16 +1,14 @@
 var fullCallInfo;
 var drawDate = 1; // стандартное значение выбранного дня, умолчание - сегодня
 $(document).ready(function() { // получить вопросы и категории с базы
-	getQuestionsInfo();
-	getCats();
 	$('#dayCalls').click(function() { // при нажатии - выбрать звонки за день, очистить инфу, поменять заголовок, отрисовать данные
 			dayOrEmpty="day";
 			clearData();
 			drawAdditionalTags();
 			fillInfo("remove","Звонки за <a href=# onclick=changeDate(1) id=todayLink name='ourLink'>сегодня</a>, <a href=# onclick=changeDate(0) id=yesterdayLink name='ourLink'>вчера</a>", ""); // отрисовать заголовок с ссылками на день
 			changeDate(drawDate); // поменять дату и отрисовать день
-			$("#SubForm").addClass("Add");
-			drawBadges();
+			$("#SubForm").addClass("Add"); // включить боковую форму
+			drawBadges(); // отрисовать незаполненные звонки, нужно ли
 		});
 })
 function changeDate(date){ // функция смены дня, активирует выбранный день и сохраняет данную переменную + меняет класс

@@ -1,0 +1,45 @@
+@charset "utf-8";
+/* Кнопка частник */
+#private{
+	width:125px;
+}
+/* Отступ для крестика в частнике */
+#private>span{
+	margin-top:2px;
+}
+/* Сервисное сообщение */
+#serviceMessage{
+ margin-top:5px;
+} 
+/* Вся строка с сервисным сообщением и кнопкой отправить */
+#sendAndServiceRow{
+	margin-top:10px;
+}
+/* Комментарии к звонку */
+#callComments{
+	margin-top: 10px;
+	resize:none;
+	overflow:auto;
+}
+/* Переключатель "радости" */
+#isUserHappy{
+	margin-right:20px;
+}
+/* Боковая форма заполнения звонка */
+#SubForm{
+	z-index: 1;
+	position: fixed;
+	overflow-y: hidden;
+	right:1%;
+	top:12vh;
+	display:none;
+}
+/* отступ для "Менеджер\клиент" */
+#IsManagerDiv{
+	margin:0;
+}
+/* Кнопка частник, вся форма */
+#CloseSubForm{
+	float:right;
+	margin-right:5px;
+}

@@ -38,22 +38,25 @@ function getWebsocketMessage(callback){
             case "Exist empty calls": 
 			dayOrEmpty = "empty";
 			showMyEmptyCalls();
-			
+			console.log("getWebsocketMessage");
                 break;
             case "pong":
                 online();
                 break;
             default:
                 callback(JSON.parse(webSocketMessage.data));
+				console.log("getWebsocketMessage empty");
                 break;
         }
     }
 }
 function online() {
-		$("#websocketStatus").text("Online");
+		document.getElementById("websocketStatus").innerHTML = '<i class ="fa fa-power-off fa-fw"></i>' + "Online";
+		document.getElementById("websocketStatus").style.fontSize = "16px";
             console.log("ok")
 		}
 function setWebSocketStatus(status) {
-    document.getElementById("websocketStatus").innerHTML = status;
+    document.getElementById("websocketStatus").innerHTML = '<i class ="fa fa-power-off fa-fw"></i>' + status;
     document.getElementById("websocketStatus").style.color = "red";
+	document.getElementById("websocketStatus").style.fontSize = "20px";
 }

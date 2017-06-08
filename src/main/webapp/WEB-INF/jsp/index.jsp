@@ -18,6 +18,7 @@
 	<script src="${pageContext.request.contextPath}/resources/js/webSocket.js"></script>
 	<script src="${pageContext.request.contextPath}/resources/js/clientCalls.js"></script>
     <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/sidebar.css">
+	<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/callform.css">
 	<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/NotesAndComments.css">
 	<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/feedback-tags-main.css">
 	<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/feedback-tags-firecatcher.css">
@@ -37,11 +38,11 @@
 			<li class="hl"><a href="#" id="dayCalls"><i class ="fa  fa-headphones fa-fw menuIcons"></i><span>Звонки за день</span></a></li>
             <li class="hl"><a href="#" id="clientCalls"><i class ="fa fa-address-book menuIcons fa-fw"></i><span>Звонки клиента</span></a></li>
             <li><a href="#" id="comments"><i class ="fa fa-commenting menuIcons fa-fw"></i><span>Комментарии</span><span class="glyphicon glyphicon-triangle-right glyph pull-right" aria-hidden="true" id="glyphCom"></span></a></li>
-            <li><a href="#" id="notes"><i class ="fa fa-pencil-square-o menuIcons fa-fw"></i><span>Заметки</span><span class="glyphicon glyphicon-triangle-right glyph pull-right" aria-hidden="true" id="glyphNote"></span> </a></li>
-            <li class="hl"><a href="#" id="feedback"><i class ="fa  fa-sticky-note-o menuIcons fa-fw"></i><span>Feedback</span><span class="badge mybadge" id=emptyFeedbackBadge>0</span></a></li>
+            <li><a href="#" id="notes"><i class ="fa fa-sticky-note menuIcons fa-fw"></i><span>Заметки</span><span class="glyphicon glyphicon-triangle-right glyph pull-right" aria-hidden="true" id="glyphNote"></span> </a></li>
+            <li class="hl"><a href="#" id="feedback"><i class ="fa fa-pencil menuIcons fa-fw"></i><span>Feedback</span><span class="badge mybadge" id=emptyFeedbackBadge>0</span></a></li>
 			<li><a href="#" id="magic"><i class ="fa fa-magic menuIcons fa-fw"></i><span>Magic</span></a></li>
             <li><a href="${pageContext.request.contextPath}/j_spring_security_logout" id="logout"><i class ="fa  fa-times-circle menuIcons fa-fw"></i><span>Выйти</span></a></li>
-            <label id="websocketStatus">Статус </label>
+            <label id="websocketStatus">Cтатус </label>
         </ul>
     </div>
 	

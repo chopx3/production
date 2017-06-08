@@ -28,12 +28,12 @@ var addTagURL = 			host + "tags/save"; // добавить тэг
 var updTagURL = 			host + "tags/update"; // обновить тэг
 var changeTagGroup = 		host + "tags/group"; // изменить группу в тэге
 // Общие переменные
-var Categories = [];
-var Questions = [];
-var dateFormat = 'DD.MM.YYYY HH:mm:ss';
+var Categories = []; // массив для категорий
+var Questions = []; // и для вопросов. На звонки
+var dateFormat = 'DD.MM.YYYY HH:mm:ss'; // формат даты 
 var iJump; // для объединения звонков, прыжок на это количество в цикле
 // Общие функции
-function sorting(json_object, key_to_sort_by) {
+function sorting(json_object, key_to_sort_by) { // функция сортировки json'а со звонками в обратном порядке. stackoverflow. Сортирует по ключу.
     function sortByKey(a, b) {
         var x = a[key_to_sort_by];
         var y = b[key_to_sort_by];
@@ -41,8 +41,7 @@ function sorting(json_object, key_to_sort_by) {
     }
     json_object.sort(sortByKey);
 }
-
-function getQuestionsInfo() { // получить массив вопросов
+function getQuestionsInfo() { // получить массив вопросов, если длина больше 20 - обрезать
 	$.get(getQuestionsInfoURL).done(function (data) {
 		var Info = data;
 		for (var i=0;i<Info.length;i++){
@@ -50,7 +49,7 @@ function getQuestionsInfo() { // получить массив вопросов
 			Questions[i]=(desc.length>=20)? desc.substr(0,18)+"...": desc;
 		}}
 )}
-function getCats() {// получить массив категорий
+function getCats() {// получить массив категорий, если длина больше 20 - обрезать
 	$.get(getCatsURL).done(function (data) {
 		var Info = data;
 		for (var i=0;i<Info.length;i++){
@@ -58,22 +57,22 @@ function getCats() {// получить массив категорий
 			Categories[i]=(desc.length>=20)? desc.substr(0,18)+"...": desc;
 		}}
 )}
-function collectMultipleCalls(data, i, type){ // функция отрисовки нескольких звонков
+function collectMultipleCalls(data, i, type){ // функция отрисовки нескольких звонков, проверяет до конца списка, пока не находит звонок, chainId которого не совпадает -> break
 	var result="";
-	for (var j = i; j< data.length; j++){
-		if (j+1<=data.length-1){
-			var check = (type == "short") ? true : (data[j].agent.username == data[j+1].agent.username);
-			if (data[j].chainId == data[j+1].chainId && check){ iJump++; } else break;
-	}
-	else break;}
-	for (var j =i+iJump; j>i; j--){
-			var margin = (j!= i+iJump) ? "no-margin-top" : "";
-			var tempAudio = data[j].comId;
-			result += '<audio class="audio-call '+margin+'" src="'+oktell + tempAudio + '" controls></audio><a href="'+oktell+ tempAudio +'" target="_blank"></a>';
+	for (var j = i; j< data.length; j++){ // пробежка по массиву от элемента до конца массива
+		if (j+1<=data.length-1){ // проверка, не конец ли это массива, чтобы без переполнения
+			var isItSameAgent = (type == "short") ? true : (data[j].agent.username == data[j+1].agent.username);// проверка тот же этот агент или нет, на случай большого количества
+			if (data[j].chainId == data[j+1].chainId && isItSameAgent){ iJump++; } else break;					// звонков с одной учетной записи и переводов. Если да - +в прыжок
+	}																											// если нет - break из цикла
+	else break;} // если дальше ничего нет - break
+	for (var j =i+iJump; j>i; j--){ // а потом идет в обратную сторону и добавляет звонки в звонок в хронологическом порядке
+			var margin = (j!= i+iJump) ? "no-margin-top" : ""; // магия для отступа в звонках. У первого звонка только срабатывает, чтобы не было отступа
+			var tempAudio = data[j].comId; // наверное, так удобней, но чот не уверен
+			result += '<audio class="audio-call '+margin+'" src="'+oktell + tempAudio + '" controls></audio><a href="'+oktell+ tempAudio +'" target="_blank"></a>'; // финальный вывод
 	}
 return result;	
 }
-function getUniqueData(data) { // подсчет уникальных звонков в фидбеке
+function getUniqueData(data) { // подсчет уникальных звонков в фидбеке, stackoverflow продакшн.
     var variables = {};
     var param = "chainId";
 	var count = 0;
@@ -84,7 +83,7 @@ function getUniqueData(data) { // подсчет уникальных звонк
     });
     return count;
 }
-$(document).ready(function() {
+$(document).ready(function() { // загрузка информации о вопросах и о категориях для отображения на звонках
 	getQuestionsInfo();
 	getCats();
 })

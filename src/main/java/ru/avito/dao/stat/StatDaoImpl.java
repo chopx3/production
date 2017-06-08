@@ -254,7 +254,48 @@ public class StatDaoImpl implements StatDao {
         return result;
     }
 
+    @Override
+    public String findFullAndEmptyCallsByAgent(Long timeStart, Long timeEnd) {
+        Connection connection = null;
+        String result = null;
+        try {
+            connection = dataSource.getConnection();
+            PreparedStatement p =connection.prepareStatement(
+                    "select t1.Field, t1.Total, coalesce(t2.Total, 0) as EMPTY " +
+                            "from (SELECT users.oktell_login AS 'Field', count(DISTINCT(chain_id)) AS Total " +
+                            "FROM calls JOIN users ON calls.user_id = users.id " +
+                            "AND time_begin BETWEEN ? AND ? " +
+                            "GROUP BY user_id " +
+                            "ORDER BY 2 DESC) as t1 " +
+                            "left join \n" +
+                            "(SELECT users.oktell_login AS 'Field', count(DISTINCT(chain_id)) AS Total " +
+                            "FROM calls JOIN users ON calls.user_id = users.id " +
+                            "WHERE type =\"EMPTY\" " +
+                            "AND time_begin BETWEEN ? AND ? " +
+                            "GROUP BY user_id " +
+                            "ORDER BY 2 DESC) as t2 " +
+                            "on t1.Field = t2.Field;");
 
+            p.setLong(1, timeStart);
+            p.setLong(2, timeEnd);
+            p.setLong(3, timeStart);
+            p.setLong(4, timeEnd);
+            ResultSet resultSet = p.executeQuery();
+            result = convert(resultSet, "Field", "Total", "Empty");
+        } catch (SQLException e) {
+            System.out.println(e);
+        }
+        finally {
+            try {
+                if (connection != null) {
+                    connection.close();
+                }
+            } catch (SQLException e) {
+                System.out.println(e);
+            }
+        }
+        return result;
+    }
 
 
     private String convert(ResultSet rs, String... columnsName) {

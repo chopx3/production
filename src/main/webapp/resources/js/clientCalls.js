@@ -28,18 +28,18 @@ function drawClientCalls(pageNumber){ // отрисовка собственно
 	}
 	var isFirstPage = (pageNumber == 1) ? "class=disabled" : "onclick=drawClientCalls("+(pageNumber-1)+")"; // проверка - первая ли это страница
 	var isLastPage = (pageNumber == numberOfPages ) ? "class=disabled" : "onclick=drawClientCalls("+(pageNumber+1)+")"; // или последняя
-	pageLineStart = '<div class=row>				'+
-	'<div class=col-lg-12>'+
+	pageLineStart = '<div class=row>						'+
+	'<div class=col-lg-12>									'+
 	'<nav aria-label="Page navigation">						'+
 	'	<ul class="pagination" id=paginationUL>				'+
 	'		<li>											'+
-	'		  <a href="#" aria-label="Previous" '+isFirstPage+'>'+
+	'		  <a href="#" '+isFirstPage+'>					'+
 	'			<span aria-hidden="true">&laquo;</span>		'+
 	'		  </a>											'+
 	'		</li>'; // стартовая часть линии
 	pageLineEnd = 
 	'		<li>											'+
-	'		  <a href="#" aria-label="Next" '+isLastPage+'>	'+
+	'		  <a href="#" '+isLastPage+'>					'+
 	'			<span aria-hidden="true">&raquo;</span>		'+
 	'		  </a>											'+
 	'		</li>											'+
@@ -63,7 +63,7 @@ function drawClientCalls(pageNumber){ // отрисовка собственно
 					outputCalls += '<div class="row col-lg-12"><div class="call col-lg-6 '+yourCall+'" data-time="'+timetag+'" data-sign="'+nametag+'"><span>'+ timetag +' '+nametag + '</span>'+additionalInfo+'<br>' + nextCall + audioURL  + '</div>'+commentBox+tagLabel+'</div>'; // основная часть формирования звонка
 					i+=iJump; //прыжок, если есть звонки с тем же ID
 				}
-	document.getElementById("MainForm").innerHTML =pageLineStart + pageBody + pageLineEnd + outputCalls; // финальный результат, линия + звонки
+	document.getElementById("MainForm").innerHTML =pageLineStart + pageBody + pageLineEnd + outputCalls; // финальный результат, линия пагинации + звонки
 }
 function addButton() { // Отрисовка кнопки для вывода звонков
 	document.getElementById("CallForm").innerHTML =	'<div class="row">'

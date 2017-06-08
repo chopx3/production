@@ -1,4 +1,5 @@
 @charset "utf-8";
+/* Боковые иконки в меню */
 .menuIcons{
 	font-size:18px;
 	margin-left:-25px;
@@ -6,21 +7,18 @@
 	margin-top:15px;
 	float: left;
 }
-#private{
-	width:125px;
-}
-#private>span{
-	margin-top:2px;
-}
+/* Линия пагинации */
 #paginationUL{
 	margin-top:0 !important;
 	margin-bottom:10px !important;
 }
+/* Активный день в Звонки за день */
 .activeDay{
 	text-decoration: underline;
 	font-size: 1.05 em;
 	color: blue;
 }
+/* Бейдж для отображения количества звонков */
 .mybadge{
 	margin-left: 20px;
 	text-indent: 0;
@@ -31,6 +29,7 @@
 	color: #333;
 	display:none;
 }
+/* подсветка длинных комментариев по клиенту */
 .longMessage{
 	color:blue;
 }
@@ -49,6 +48,7 @@
     word-break: break-all;
 	font-weight:400;
 }
+/* бокс для комментариев */
 .commentBox{ 
 	margin-top:8px;
 	margin-left: 10px;
@@ -57,21 +57,7 @@
 	cursor: text !important;
 	width: calc(33% - 10px) !important;
 }
-#serviceMessage{
- margin-top:5px;
-} 
-#sendAndServiceRow{
-	margin-top:10px;
-}
-#callComments{
-	margin-top: 10px;
-	resize:none;
-	overflow:auto;
-}
-/* Переключатель "радости" */
-#isUserHappy{
-	margin-right:20px;
-}
+
 /* Размер шрифта названий разделов в основной форме(не боковое меню)*/
 #HeaderText, h1{
 	font-size: 25px;
@@ -98,7 +84,6 @@ border-radius: 10px;
 	top:1vh;
 }
 /* Шрифт для приветствия */
-
 #Hello h1{
 	margin:15;
 	font-family: 'Segoe UI', Tahoma, sans-serif;
@@ -115,20 +100,7 @@ border-radius: 10px;
 #IDforInfo{
 	z-index : 0;
 }
-/* Не используется */
-#CloseSubForm{
-	float:right;
-	margin-right:5px;
-}
-/* Боковая форма заполнения звонка */
-#SubForm{
-	z-index: 1;
-	position: fixed;
-	overflow-y: hidden;
-	right:1%;
-	top:12vh;
-	display:none;
-}
+
 /* Основная обертка информации */
 #page-content-wrapper{
 	width: 100%;
@@ -143,12 +115,6 @@ border-radius: 10px;
 .Add{
 	display: inline-block !important;
 }
-/* отступ для "Менеджер\клиент" */
-
-#IsManagerDiv{
-	margin:0;
-}
-/* */
 /* Основные настройки боковой обертки меню */
 #sidebar-wrapper{
 	padding-left: 0;
@@ -166,25 +132,22 @@ border-radius: 10px;
 	padding: 0;
 	list-style: none;
 }
-/* увеличить растоянние между кнопками */
+/* увеличить растояние между кнопками */
 .sidebar-nav li{
-	text-indent: 30px;
+	text-indent: 40px;
 	line-height: 50px;
 }
 /* цвет текста бокового меню */
-
 .sidebar-nav li a{
 	display: block;
 	text-decoration: none;
 	color: #ddd;
-
 }
 /* цвет при наведении на кнопку */
 .sidebar-nav li a:hover{
 	background: #161616;
 }
 /* цвет активного элемента бокового меню */
-
 .highlight, .highlight_stay{
 	background: #262626;
 }
@@ -212,19 +175,16 @@ border-radius: 10px;
 .btn-avito-red-2 {
 	color: #fff;
 	background-color: #ff6163;
-	border : 1px solid #ff6163;
 }
 /* */
 .btn-avito-red-2:active, .btn-avito-red-2.active {
 	background: #DC143C;
 	box-shadow: none;
-	border : 1px solid #DC143C;
 }
 /* */
 .btn-avito-red-2:hover, .btn-avito-red-2:focus, .btn-avito-red-2:active:focus, .btn-avito-red-2:focus:hover .btn-avito-red-2:active, .btn-avito-red-2:active:hover, .btn-avito-red-2.active:hover, .open > .dropdown-toggle.btn-avito-red-2 {
 	background: #DC143C;
 	color: #fff !important;
-	border : 1px solid #DC143C;
 }
 /* и зеленого */
 /* Зеленый Авитовский цвет */
