@@ -303,6 +303,7 @@ function  draw(data) { // отрисовка пустых звонков
 	agentId = data.agentId;
 	agentName = data.agentName;
 	console.log("draw"); 
+	
 	var nametag = data.agentName; // заполнение данных
 	var outputEmptyCalls = '';
 	if (data.emptyCallList.length==0){document.getElementById("MainForm").innerHTML = "Все звонки заполнены";} // если пусто - заглушка
@@ -314,9 +315,10 @@ function  draw(data) { // отрисовка пустых звонков
 			audiosrc = data.emptyCallList[i].comId;
             timetag = moment.unix(data.emptyCallList[i].startTime/1000).format(dateFormat); // определение переменных
 			iJump = 0;
-			var nextCall = collectMultipleCalls(data.emptyCallList, i, "short");
-			var margin = (nextCall == "") ? "" : "no-margin-top";
 			CallInfo = [chain, i, false];
+			console.log(data.emptyCallList); 
+			var nextCall = collectMultipleCalls(data.emptyCallList, i, CallInfo);
+			var margin = (nextCall == "") ? "" : "no-margin-top";
 			var audioURL = '<audio id="audio'+i+'" onplay=change_call('+JSON.stringify(CallInfo)+') src="' + oktell + audiosrc + '" class="audio-call '+margin+'" controls></audio><a href="'+ oktell + audiosrc +'" target="_blank">' + '<\/a>'; // аудио-тэг
 			outputEmptyCalls += '<div id="divAddButton' +i+'" onclick=change_call('+JSON.stringify(CallInfo)+') class="call col-lg-12" data-time="'+timetag+'" data-sign="'+nametag+'"><span>'+ timetag +' '+nametag +'</span><br>' + nextCall + audioURL  + '</div>'; // основное заполнение
 			i+=iJump;
