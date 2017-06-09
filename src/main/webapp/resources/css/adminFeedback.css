@@ -1,25 +1,13 @@
 @charset "utf-8";
-/* */
+/* Основная обертка */
 #page-content-wrapper{
 	position: relative;
 	padding: 5px;
 	padding-left:1vw;
 }
-/* */
-input[type=number]::-webkit-inner-spin-button, input[type=number]::-webkit-outer-spin-button {
-	-webkit-appearance: none;
-	-moz-appearance: none;
-	appearance: none;
-	margin: 0;
-}
-/* */
+/* Основное рабочее поле */
 #MainForm{
 	margin-top:-5vh;
-}
-/* */
-.breakable{
-	word-break: break-all;
-	word-wrap: break-word;
 }
 /* отступы для комментариев и тэгов */
 .comments, .tags{
@@ -51,15 +39,15 @@ input[type=number]::-webkit-inner-spin-button, input[type=number]::-webkit-outer
 .li-centered {
 	text-align:center;
 }
-/* */
+/* Сложные махинации с высотой */
 .same-height{
 	height:4vh;
 }
-/* */
+/* Сложные махинации с высотой */
 .full-height{
 	height:calc(12vh);
 }
-/* */
+/* Сложные махинации с высотой */
 .add-height{
 	height:calc(12vh + 2px);
 }
@@ -67,6 +55,7 @@ input[type=number]::-webkit-inner-spin-button, input[type=number]::-webkit-outer
 .cursor-def{
 	cursor:text !important;
 }
+/* Инфа о тэгах */
 #tagInfo{
 	max-height: 80px;
 	overflow: hidden;

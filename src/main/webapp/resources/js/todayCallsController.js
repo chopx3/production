@@ -40,7 +40,7 @@ function drawDayCalls(date){ // функция отрисовки звонков
             timetag = moment.unix(data[i].timeStart/1000).format(dateFormat);//
 			fullCallInfo = [agentId, nametag, data[i].avitoUserId, chain, data[i].manager, data[i].questionId, data[i].shopCategoryId, data[i].type, i, tagArray]; // заполнение переменных, сохранение в массив
 			iJump = 0;
-			var nextCall = collectMultipleCalls(data, i, "");
+			var nextCall = collectMultipleCalls(data, i, fullCallInfo);
 			var margin = (nextCall == "") ? "" : "no-margin-top";
 			var audioURL = '<audio class="audio-call '+margin+'" id="audio'+i+'" onplay=setInfoToCallForm('+JSON.stringify(fullCallInfo)+') src="' + oktell + audiosrc + '" controls></audio><a href="'+ oktell + audiosrc +'" target="_blank">' + '<\/a>'; // аудио тэг
 			dayCalls += '<div id="divAddButton' +i+'" onclick=setInfoToCallForm('+JSON.stringify(fullCallInfo)+') class="call col-lg-12" data-time="'+timetag+'" data-sign="'+nametag+'"><span>'+ timetag +'\t\t</span><span style="display:none" id=commentHide'+i+'>'+data[i].comments+'</span>'+ additionalInfo+'<br>' + nextCall + audioURL  + '</div>'; // основное заполнение звонка - звонок+аудио+доп инфа
@@ -64,7 +64,7 @@ function setInfoToCallForm(fullCallInfo){ // функция выставлени
 	additionalTags =$(feedId).attr("name"); // ---
 	questNum = fullCallInfo[5]; // ---
 	catNum = fullCallInfo[6]; //заполнение инфы 
-	if (fullCallInfo[7] != "EMPTY" && fullCallInfo[2] > 0) { // если не пустой звонок и не частник
+	if (fullCallInfo[7] != "EMPTY") { // если не пустой звонок и не частник
 	$('#label-quest-'+fullCallInfo[5]).addClass("active");  // установи кнопки, комментарии и ID в эти значения
 	$("#quest-"+fullCallInfo[5]).prop('checked', true);	 // установи кнопки, комментарии и ID в эти значения
 	$('#label-cat-'+fullCallInfo[6]).addClass("active");   // установи кнопки, комментарии и ID в эти значения
@@ -85,5 +85,9 @@ function setInfoToCallForm(fullCallInfo){ // функция выставлени
 			$("#tag-"+allTags[i]).prop('checked', true); // установка дополнительных тэгов в активное положение 
 		}
 	}
+	}
+	if (fullCallInfo[2] == -1){
+		$('#private').addClass("focus");
+		console.log("private");
 	}
 }

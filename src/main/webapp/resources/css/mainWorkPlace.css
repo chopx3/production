@@ -1,0 +1,46 @@
+/* Линия пагинации */
+#paginationUL{
+	margin-top:0 !important;
+	margin-bottom:10px !important;
+}
+/* Активный день в Звонки за день */
+.activeDay{
+	text-decoration: underline;
+	font-size: 1.05 em;
+	color: blue;
+}
+/* Размер шрифта названий разделов в основной форме(не боковое меню)*/
+#HeaderText, h1{
+	font-size: 25px;
+}
+/* Убрать стрелки вниз\вверх у полей ввода номера ID */
+input[type=number]::-webkit-inner-spin-button,
+input[type=number]::-webkit-outer-spin-button {
+	-webkit-appearance: none;
+	-moz-appearance: none;
+	appearance: none;
+	margin: 0;
+}
+/* Подсветка неправильно введенных данных*/
+.box-shadow{
+box-shadow: inset 0 0 0.3em red;
+border-radius: 10px;
+}
+/* Отступ сверху для основной формы */
+#MainForm{
+	top:1vh;
+}
+/* Шрифт для приветствия */
+#Hello h1{
+	margin:15;
+	font-family: 'Segoe UI', Tahoma, sans-serif;
+	font-size: 48px;
+}
+/* Стандартное значение для скрытия части кнопок и кружков в кнопках */
+[type='checkbox'], [type='radio'], #IsManagerAndNoID, #page-content-wrapper #CallForm {
+	display: none;
+}
+/* включение скрытых кнопок */
+.Add{
+	display: inline-block !important;
+}

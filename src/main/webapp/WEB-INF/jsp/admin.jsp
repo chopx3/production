@@ -17,8 +17,6 @@
 	<link href="${pageContext.request.contextPath}/resources/css/calls.css" rel="stylesheet">
     <script type="text/javascript" src="https://cdn.jsdelivr.net/bootstrap.daterangepicker/2/daterangepicker.js"></script>
     <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/bootstrap.daterangepicker/2/daterangepicker.css" />
-	<script src="${pageContext.request.contextPath}/resources/js/dashboard.js"></script>
-	<link href="${pageContext.request.contextPath}/resources/css/dashboard.css" rel="stylesheet">
 </head>
 <body>
 <script>

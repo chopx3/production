@@ -23,6 +23,8 @@
 	<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/feedback-tags-main.css">
 	<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/feedback-tags-firecatcher.css">
 	<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/calls.css">
+	<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/standartAdditionalColours.css">
+	<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/mainWorkPlace.css">
     <link rel="stylesheet" href="https://gitcdn.github.io/bootstrap-toggle/2.2.2/css/bootstrap-toggle.min.css" >
     <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/colours.css" id="colours" disabled=disabled/>
     <script src="https://gitcdn.github.io/bootstrap-toggle/2.2.2/js/bootstrap-toggle.min.js"></script>

@@ -1,119 +1,9 @@
 @charset "utf-8";
-/* Боковые иконки в меню */
-.menuIcons{
-	font-size:18px;
-	margin-left:-25px;
-	padding-right:5px;
-	margin-top:15px;
-	float: left;
-}
-/* Линия пагинации */
-#paginationUL{
-	margin-top:0 !important;
-	margin-bottom:10px !important;
-}
-/* Активный день в Звонки за день */
-.activeDay{
-	text-decoration: underline;
-	font-size: 1.05 em;
-	color: blue;
-}
-/* Бейдж для отображения количества звонков */
-.mybadge{
-	margin-left: 20px;
-	text-indent: 0;
-	float:right;
-	margin-top:16px;
-	margin-right:10px;
-	background-color: #ddd;
-	color: #333;
-	display:none;
-}
-/* подсветка длинных комментариев по клиенту */
-.longMessage{
-	color:blue;
-}
-/* Класс для длинных комментариев. Сокращает все, что длиннее одной строки */
-.might-overflow {
-    text-overflow: ellipsis;
-    overflow : hidden;
-    white-space: nowrap;
-	font-weight:400;
-	margin-top: 10px;
-}
-/* Класс для длинных комментариев. При наведении мышкой показывает полный текст */
-.might-overflow:hover {
-    text-overflow: clip;
-    white-space: normal;
-    word-break: break-all;
-	font-weight:400;
-}
-/* бокс для комментариев */
-.commentBox{ 
-	margin-top:8px;
-	margin-left: 10px;
-	resize: none;
-	overflow:auto;
-	cursor: text !important;
-	width: calc(33% - 10px) !important;
-}
-
-/* Размер шрифта названий разделов в основной форме(не боковое меню)*/
-#HeaderText, h1{
-	font-size: 25px;
-}
-/* Убрать стрелки вниз\вверх у полей ввода номера ID */
-input[type=number]::-webkit-inner-spin-button,
-input[type=number]::-webkit-outer-spin-button {
-	-webkit-appearance: none;
-	-moz-appearance: none;
-	appearance: none;
-	margin: 0;
-}
-/* Отступ для стрелок в боковом меню */
-.glyph{
-	margin-top:17px;
-}
-/* Подсветка неправильно введенных данных, частника и незаполненного фидбека */
-.box-shadow{
-box-shadow: inset 0 0 0.3em red;
-border-radius: 10px;
-}
-/* Отступ сверху для основной формы */
-#MainForm{
-	top:1vh;
-}
-/* Шрифт для приветствия */
-#Hello h1{
-	margin:15;
-	font-family: 'Segoe UI', Tahoma, sans-serif;
-	font-size: 48px;
-}
-/* Online\offline статус */
-#websocketStatus{
-	color:green;
-	position: fixed;
-	bottom: 0px;
-	margin:auto;
-}
-/* Понижение приоритета элемента для корректного отображения комментариев и заметок */
-#IDforInfo{
-	z-index : 0;
-}
-
 /* Основная обертка информации */
 #page-content-wrapper{
 	width: 100%;
 	position: absolute;
 	padding: 5px;
-}
-/* Стандартное значение для скрытия части кнопок и кружков в кнопках */
-[type='checkbox'], [type='radio'], #IsManagerAndNoID, #page-content-wrapper #CallForm {
-	display: none;
-}
-/* включение скрытых кнопок */
-.Add{
-	display: inline-block !important;
 }
 /* Основные настройки боковой обертки меню */
 #sidebar-wrapper{
@@ -127,12 +17,12 @@ border-radius: 10px;
 	opacity: 0.9;
 	display: inline-block;
 }
-/* убрать отображение точек */
+/* убрать отображение точек в меню */
 .sidebar-nav{
 	padding: 0;
 	list-style: none;
 }
-/* увеличить растояние между кнопками */
+/* увеличить растояние между кнопками в меню */
 .sidebar-nav li{
 	text-indent: 40px;
 	line-height: 50px;
@@ -151,57 +41,33 @@ border-radius: 10px;
 .highlight, .highlight_stay{
 	background: #262626;
 }
-/* Цвета тэгов дополнительных, основные */
-/* Tags Colour */
-.btn-avito-tags {
-	color: #333;
+/* Боковые иконки в меню */
+.menuIcons{
+	font-size:18px;
+	margin-left:-25px;
+	padding-right:5px;
+	margin-top:15px;
+	float: left;
+}
+/* Бейдж для отображения количества звонков */
+.mybadge{
+	margin-left: 20px;
+	text-indent: 0;
+	float:right;
+	margin-top:16px;
+	margin-right:10px;
 	background-color: #ddd;
-	border:#333 solid 1px;
+	color: #333;
+	display:none;
 }
-/* Цвета тэгов дополнительных, активных */
-.btn-avito-tags:active, .btn-avito-tags.active {
-	background: #999;
-	box-shadow: none;
-	border:#333 solid 1px;
+/* Отступ для стрелок в боковом меню */
+.glyph{
+	margin-top:17px;
 }
-/* Цвета тэгов дополнительных, в фокусе или при наведении */
-.btn-avito-tags:hover, .btn-avito-tags:focus, .btn-avito-tags:active:focus, .btn-avito-tags:focus:hover .btn-avito-tags:active, .btn-avito-tags:active:hover, .btn-avito-tags.active:hover, .open > .dropdown-toggle.btn-avito-tags {
-	background: #aaa;
-	border:#333 solid 1px;
-	color: #ffffff !important;
-}
-/* Тоже самое для красного авитовского цвета */
-/* Красный Авитовский цвет */
-.btn-avito-red-2 {
-	color: #fff;
-	background-color: #ff6163;
-}
-/* */
-.btn-avito-red-2:active, .btn-avito-red-2.active {
-	background: #DC143C;
-	box-shadow: none;
-}
-/* */
-.btn-avito-red-2:hover, .btn-avito-red-2:focus, .btn-avito-red-2:active:focus, .btn-avito-red-2:focus:hover .btn-avito-red-2:active, .btn-avito-red-2:active:hover, .btn-avito-red-2.active:hover, .open > .dropdown-toggle.btn-avito-red-2 {
-	background: #DC143C;
-	color: #fff !important;
-}
-/* и зеленого */
-/* Зеленый Авитовский цвет */
-.btn-avito-green-2 {
-	color: #fff;
-	background-color: #97cf26;
-	border : 1px solid #97cf26;
-}
-/* */
-.btn-avito-green-2:active, .btn-avito-green-2.active {
-	background: #008000;
-	box-shadow: none;
-	border : 1px solid #008000;
-}
-/* */
-.btn-avito-green-2:hover, .btn-avito-green-2:focus, .btn-avito-green-2:active:focus, .btn-avito-green-2:focus:hover .btn-avito-green-2:active, .btn-avito-green-2:active:hover, .btn-avito-green-2.active:hover, .open > .dropdown-toggle.btn-avito-green-2 {
-	background: #008000;
-	color: #fff !important;
-	border : 1px solid #008000;
+/* Online\offline статус */
+#websocketStatus{
+	color:green;
+	position: fixed;
+	bottom: 0px;
+	margin:auto;
 }

@@ -78,12 +78,21 @@
 	word-break: break-all;
 	word-wrap: break-word;
 }
+/* высота элементов таблицы в комментах, скрывает длинные комменты */
 .table-content{
 	max-height:60px;
 	overflow: hidden;
 	text-overflow: ellipsis;
 }
-/* Pixel Perfect отступы для фраз Комментари и Заметки */
+/* Pixel Perfect отступы для фраз Комментарии и Заметки */
 #commentForm h1, #noteForm h1{
 	margin-left:3px;
+}
+/* подсветка длинных комментариев по клиенту */
+.longMessage{
+	color:blue;
+}
+/* Понижение приоритета элемента для корректного отображения комментариев и заметок */
+#IDforInfo{
+	z-index : 0;
 }

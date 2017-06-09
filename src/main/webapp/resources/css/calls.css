@@ -42,3 +42,27 @@ color: white;
 .myLabel>a:link, .myLabel>a:visited{
 	color:lightblue;
 }
+/* Класс для длинных комментариев в Звонки пользователя. Сокращает все, что длиннее одной строки */
+.might-overflow {
+    text-overflow: ellipsis;
+    overflow : hidden;
+    white-space: nowrap;
+	font-weight:400;
+	margin-top: 10px;
+}
+/* Класс для длинных комментариев в Звонки пользователя. При наведении мышкой показывает полный текст */
+.might-overflow:hover {
+    text-overflow: clip;
+    white-space: normal;
+    word-break: break-all;
+	font-weight:400;
+}
+/* бокс для комментариев в Звонки пользователя */
+.commentBox{ 
+	margin-top:8px;
+	margin-left: 10px;
+	resize: none;
+	overflow:auto;
+	cursor: text !important;
+	width: calc(33% - 10px) !important;
+}

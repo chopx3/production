@@ -59,7 +59,7 @@ function getCats() {// получить массив категорий, есл�
 )}
 function collectMultipleCalls(data, i, additionalInfo){ // функция отрисовки нескольких звонков, проверяет до конца списка, пока не находит звонок, chainId которого не совпадает -> break
 	var result="";
-	var onPlayChangeCall = (additionalInfo != "") ? ' onplay=change_call('+JSON.stringify(additionalInfo)+') ' : "";
+	var onPlayChangeCall = (additionalInfo.length == 3) ? ' onplay=change_call('+JSON.stringify(additionalInfo)+') ' : (additionalInfo.length == 10) ? ' onplay=setInfoToCallForm('+JSON.stringify(fullCallInfo)+') ' : "";
 	for (var j = i; j< data.length; j++){ // пробежка по массиву от элемента до конца массива
 		if (j+1<=data.length-1){ // проверка, не конец ли это массива, чтобы без переполнения
 			if (additionalInfo == "") {var isItSameAgent = (data[j].agent.username == data[j+1].agent.username);}

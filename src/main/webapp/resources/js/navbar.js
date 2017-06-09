@@ -223,6 +223,7 @@ function collectAdditionalInfo(data, type){ // сбор дополнительн
 	return additionalInfo;
 }
 function clearData() { // Очистка данных в боковой форме
+	$('#private').removeClass("focus");
 	$('#IDNum').removeClass("box-shadow");
 	$('#questButtonGroup').removeClass("box-shadow");
 	$('#catButtonGroup').removeClass("box-shadow");
@@ -270,6 +271,7 @@ function change_call(CallInfo) { // Добавление стиля выбран
 	if ((CallInfo[0]!=chainId)&&(chainId!="")) { clearData(); } // если изменился звонок - очистить
 	chainId = CallInfo[0];
 	additionalTags =$(feedId).attr("name");
+	$("#IDNum").focus();
 	var comments = (!($("#feedback-com"+CallInfo[1]).text()=="null" || $("#feedback-com"+CallInfo[1]).text()== "" ));
 	if (comments) {$("#feedbackComment").val($("#feedback-com"+CallInfo[1]).text());}
 }
