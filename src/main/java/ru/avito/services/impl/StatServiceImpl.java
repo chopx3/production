@@ -51,4 +51,9 @@ public class StatServiceImpl implements StatService {
     public String findFullAndEmptyCallsByAgent(Long timeStart, Long timeEnd) {
         return statDao.findFullAndEmptyCallsByAgent(timeStart, timeEnd);
     }
+    @Override
+    public String findFullAndEmptyFeedbackByAgent(Long timeStart, Long timeEnd) {
+        return statDao.findFullAndEmptyFeedbackByAgent(timeStart, timeEnd);
+    }
+
 }
