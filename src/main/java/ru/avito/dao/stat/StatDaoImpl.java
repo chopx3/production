@@ -60,17 +60,17 @@ public class StatDaoImpl implements StatDao {
         try {
             connection = dataSource.getConnection();
             PreparedStatement p =connection.prepareStatement(
-                    "SELECT shop_category.description AS Field, calls.avito_link AS User_ID, count(DISTINCT(calls.chain_id)) AS Total "+
+                    "SELECT shop_category.description AS Field, count(DISTINCT(calls.chain_id)) AS Total, calls.avito_link AS Additional "+
                     "FROM calls JOIN shop_category ON calls.shop_category_id = shop_category.id "+
                     "WHERE shop_category_id = shop_category.id "+
                     "AND time_begin BETWEEN ? AND ? "+
                     "GROUP BY avito_link "+
-                    "ORDER BY 3 DESC");
+                    "ORDER BY 2 DESC");
 
             p.setLong(1, timeStart);
             p.setLong(2, timeEnd);
             ResultSet resultSet = p.executeQuery();
-            result = convert(resultSet, "Field","User_ID", "Total");
+            result = convert(resultSet, "Field", "Total" ,"Additional");
         } catch (SQLException e) {
             System.out.println(e);
         }
@@ -129,17 +129,17 @@ public class StatDaoImpl implements StatDao {
         try {
             connection = dataSource.getConnection();
             PreparedStatement p =connection.prepareStatement(
-                    "SELECT question.id AS ID, question.description AS Field, count(DISTINCT(chain_id)) As Total " +
+                    "SELECT question.id AS Field, count(DISTINCT(chain_id)) As Total " +
                             "FROM calls JOIN question ON calls.question_id = question.id " +
                             "WHERE question_id=question.id " +
                             "AND time_begin BETWEEN ? AND ? " +
                             "GROUP BY question_id " +
-                            "ORDER BY 3 DESC");
+                            "ORDER BY 2 DESC");
 
             p.setLong(1, timeStart);
             p.setLong(2, timeEnd);
             ResultSet resultSet = p.executeQuery();
-            result = convert(resultSet, "Field", "Total", "ID");
+            result = convert(resultSet, "Field", "Total");
         } catch (SQLException e) {
             System.out.println(e);
         }
@@ -261,13 +261,13 @@ public class StatDaoImpl implements StatDao {
         try {
             connection = dataSource.getConnection();
             PreparedStatement p =connection.prepareStatement(
-                    "select t1.Field, t1.Total, coalesce(t2.Total, 0) as EMPTY " +
+                    "select t1.Field, t1.Total, coalesce(t2.Total, 0) as Additional " +
                             "from (SELECT users.oktell_login AS 'Field', count(DISTINCT(chain_id)) AS Total " +
                             "FROM calls JOIN users ON calls.user_id = users.id " +
                             "AND time_begin BETWEEN ? AND ? " +
                             "GROUP BY user_id " +
                             "ORDER BY 2 DESC) as t1 " +
-                            "left join \n" +
+                            "left join" +
                             "(SELECT users.oktell_login AS 'Field', count(DISTINCT(chain_id)) AS Total " +
                             "FROM calls JOIN users ON calls.user_id = users.id " +
                             "WHERE type =\"EMPTY\" " +
@@ -281,7 +281,7 @@ public class StatDaoImpl implements StatDao {
             p.setLong(3, timeStart);
             p.setLong(4, timeEnd);
             ResultSet resultSet = p.executeQuery();
-            result = convert(resultSet, "Field", "Total", "Empty");
+            result = convert(resultSet, "Field", "Total", "Additional");
         } catch (SQLException e) {
             System.out.println(e);
         }
@@ -304,20 +304,20 @@ public class StatDaoImpl implements StatDao {
         try {
             connection = dataSource.getConnection();
             PreparedStatement p =connection.prepareStatement(
-                    "select t1.Field as Agent, t1.Total, coalesce(t2.Total, 0) AS EMPTY"+
-                    "from (SELECT users.oktell_login AS 'Field', count(DISTINCT(chain_id)) AS Total                  "+
-                    "FROM calls JOIN users ON calls.user_id = users.id                                               "+
-                    "WHERE type =\"FULL_FEEDBACK\"                                                                     "+
-                    "AND time_begin BETWEEN ? AND ?                                                                  "+
-                    "GROUP BY user_id                                                                                "+
-                    "ORDER BY 2 DESC) as t1                                                                          "+
-                    "left join                                                                                       "+
-                    "(SELECT users.oktell_login AS 'Field', count(DISTINCT(chain_id)) AS Total                       "+
-                    "FROM calls JOIN users ON calls.user_id = users.id                                               "+
-                    "WHERE type =\"EMPTY_FEEDBACK\"                                                                    "+
-                    "AND time_begin BETWEEN ? AND ?                                                                  "+
-                    "GROUP BY user_id                                                                                "+
-                    "ORDER BY 2 DESC) as t2                                                                          "+
+                    "select t1.Field, t1.Total, coalesce(t2.Total, 0) AS Additional "+
+                    "FROM (SELECT users.oktell_login AS 'Field', count(DISTINCT(chain_id)) AS Total "+
+                    "FROM calls JOIN users ON calls.user_id = users.id "+
+                    " WHERE type =\"FULL_FEEDBACK\" "+
+                    " AND time_begin BETWEEN ? AND ?  "+
+                    " GROUP BY user_id "+
+                    "ORDER BY 2 DESC) as t1 "+
+                    "left join "+
+                    "(SELECT users.oktell_login AS 'Field', count(DISTINCT(chain_id)) AS Total "+
+                    "FROM calls JOIN users ON calls.user_id = users.id "+
+                    "WHERE type =\"EMPTY_FEEDBACK\" "+
+                    "AND time_begin BETWEEN ? AND ? "+
+                    " GROUP BY user_id "+
+                    "ORDER BY 2 DESC) as t2 "+
                     "on t1.Field = t2.Field;");
 
             p.setLong(1, timeStart);
@@ -325,7 +325,7 @@ public class StatDaoImpl implements StatDao {
             p.setLong(3, timeStart);
             p.setLong(4, timeEnd);
             ResultSet resultSet = p.executeQuery();
-            result = convert(resultSet, "Field", "Total", "Empty");
+            result = convert(resultSet, "Field", "Total", "Additional");
         } catch (SQLException e) {
             System.out.println(e);
         }

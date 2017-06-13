@@ -1,5 +1,4 @@
 var idNum;
-var admAvito = '<a href="https://adm.avito.ru/users/user/info/';
 function drawInfo(value){ // функция звполнения групп кнопок
 	$("#updateWrapper").removeClass("active"); // скрыть обновление информации
 	var addInfoBody = addInfoFooterFunc = updInfoBody = updInfoFooterFunc = addInfoHeaderValue = updInfoHeaderValue = updInfoFooterFuncSecond = ""; // обнуление 
@@ -58,9 +57,8 @@ function drawInfo(value){ // функция звполнения групп кн
 	'<button class="btn btn-info" id="week">Неделя</button>'+
 	'<button class="btn btn-info" id="month">Месяц</button>';
 	addInfoBody= 	'<div class=row><label class="leftLabel">Звонки</label><div class="inputTextField"><button class="btn btn-primary catButtons" value="categories" onclick="getInfo(\'categories\')">Категория</button><button class="btn btn-primary catButtons" value="users" onclick="getInfo(\'users\')">Users</button><button class="btn btn-primary catButtons" value="questions" onclick="getInfo(\'questions\')">Вопросы</button></div></div>'+
-	'<div class=row><label class="leftLabel">Агенты</label><div class="inputTextField"><button class="btn btn-primary catButtons" value="empty" onclick="getInfo(\'empty\')" >Незаполненные</button><button class="btn btn-primary catButtons" value="agents" onclick="getInfo(\'agents\')" id="allCalls"> Всего</button></div></div>'+
-	'<div class=row><label class="leftLabel">Другие</label><div class="inputTextField"><button class="btn btn-primary catButtons" value="managers" onclick="getInfo(\'managers\')">Менеджер</button><button class="btn btn-primary catButtons" value="outcomings" onclick="getInfo(\'outcomings\')">Исходящие</button></div></div>'+
-	'<div class=row><label class="leftLabel">Feedback</label><div class="inputTextField"><button class="btn btn-primary catButtons" value="empty_feedback" onclick="getInfo(\'empty_feedback\')" >Незаполненные</button><button class="btn btn-primary catButtons" value="full_feedback" onclick="getInfo(\'full_feedback\')" id="allCalls"> Заполненные</button></div></div>';
+	'<div class=row><label class="leftLabel">Агенты</label><div class="inputTextField"><button class="btn btn-primary catButtons" value="empty" onclick="getInfo(\'empty\')" >Незаполненные</button><button class="btn btn-primary catButtons" value="agents" onclick="getInfo(\'agents\')" id="allCalls"> Заполненные </button><button class="btn btn-primary catButtons" value="fullstat" onclick="getInfo(\'fullstat\')"> Вместе </button></div></div>'+
+	'<div class=row><label class="leftLabel">Другие</label><div class="inputTextField"><button class="btn btn-primary catButtons" value="managers" onclick="getInfo(\'managers\')">Менеджер</button><button class="btn btn-primary catButtons" value="outcomings" onclick="getInfo(\'outcomings\')">Исходящие</button><button class="btn btn-primary catButtons" value="feedback" onclick="getInfo(\'feedback\')" >Feedback</button></div></div>';
 	addInfoFooterFunc = updInfoFooterFunc = "";
 	addInfoHeaderValue = "Выбор категории звонка";
 	updInfoHeaderValue =  'Выберите период:';
