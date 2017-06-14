@@ -1,16 +1,66 @@
 var startDate;  
 var endDate;
+var dayInMseconds = 24* 60 * 60 * 1000;
 // функция для установки переменных startDate и endDate для передачи в функции статистики, звонков итд. Проверка на вид передаваемой даты, конвертация в цифровой вид (11.11.2011)
 function cb(start, end) {
 			if (start.length==10){
 				startDate = start;
 				endDate = end;	
-			}	
-				else{
+			}	else{
 			startDate = moment(start).format("DD-MM-YYYY");;
 			endDate = moment(end).format("DD-MM-YYYY");;
 				}			
     }
+function dateSingleCalendar(start) {
+		startDate = moment(start).format("DD-MM-YYYY");
+		if (isFinite(start)){
+		timeStart = start;
+		timeEnd = start+dayInMseconds;
+		}
+		else{
+		timeStart = moment(startDate,"DD-MM-YYYY").startOf('day').unix()*1000;
+		timeEnd = moment(startDate,"DD-MM-YYYY").endOf('day').unix()*1000;
+		}
+		console.log(start);
+		drawDayCalls(timeStart, timeEnd);
+    }
+function createSingleCalendar(startDate) {
+    $('input[name="chooseDay"]').daterangepicker({
+		locale: { // показываемые данные
+        format: 'DD-MM-YYYY',      
+        "applyLabel": "Выбрать",
+        "cancelLabel": "Отмена",
+        "daysOfWeek": [
+            "ВС",
+            "ПН",
+            "ВТ",
+            "СР",
+            "ЧТ",
+            "ПТ",
+            "СБ"
+        ],
+        "monthNames": [
+            "Январь",
+            "Февраль",
+            "Март",
+            "Апрель",
+            "Май",
+            "Июнь",
+            "Июль",
+            "Август",
+            "Сентябрь",
+            "Октябрь",
+            "Ноябрь",
+            "Декабрь"
+        ],
+        "firstDay": 1 // 1 день Понедельник
+    },
+        singleDatePicker: true,
+        showDropdowns: true,
+		"startDate": timeStart,
+		"opens": "left" // выезжает влево
+    }, dateSingleCalendar);
+};
 // Отрисовка календаря
 function createCalendar(startDate, endDate){
 	$('input[name="daterange"]').daterangepicker({
@@ -48,6 +98,11 @@ function createCalendar(startDate, endDate){
 			"opens": "left" // выезжает влево
     }, cb);
 }
+function StartSingleCalendar(start) {
+	$(function() {
+	createSingleCalendar(start);
+	dateSingleCalendar(start);
+})};
 // Старт, создание календаря, выбор даты
 function StartCalendar() {
 	$(function() {

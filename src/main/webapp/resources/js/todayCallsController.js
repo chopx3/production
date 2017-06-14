@@ -1,26 +1,28 @@
 var fullCallInfo;
 var drawDate = 1; // стандартное значение выбранного дня, умолчание - сегодня
+var timeStart = todayStart = tempDate = moment().startOf('day').unix()*1000;
+var timeEnd = todayEnd = moment().endOf('day').unix()*1000;
 $(document).ready(function() { // получить вопросы и категории с базы
+	
 	$('#dayCalls').click(function() { // при нажатии - выбрать звонки за день, очистить инфу, поменять заголовок, отрисовать данные
 			dayOrEmpty="day";
 			clearData();
 			drawAdditionalTags();
-			fillInfo("remove","Звонки за <a href=# onclick=changeDate(1) id=todayLink name='ourLink'>сегодня</a>, <a href=# onclick=changeDate(0) id=yesterdayLink name='ourLink'>вчера</a>", ""); // отрисовать заголовок с ссылками на день
-			changeDate(drawDate); // поменять дату и отрисовать день
+			console.log(timeStart);
+			StartSingleCalendar(timeStart);
+			fillInfo("remove","Звонки за <a href=# onclick=StartSingleCalendar("+todayStart+") id=todayLink name='ourLink'>сегодня</a>, <input type='text' value="+moment.unix(timeStart/1000).format("DD-MM-YYYY")+" name='chooseDay' style='width:150px;'/>", ""); // отрисовать заголовок с ссылками на день
+			
+			console.log(timeStart);
 			$("#SubForm").addClass("Add"); // включить боковую форму
 			drawBadges(); // отрисовать незаполненные звонки, нужно ли
 		});
 })
-function changeDate(date){ // функция смены дня, активирует выбранный день и сохраняет данную переменную + меняет класс
-	$("[name='ourLink']").removeClass("activeDay"); // очистить обе кнопки от всех классов
-	if (date) { $("#todayLink").addClass("activeDay");} // проверка, вчера или сегодня
-	else {$("#yesterdayLink").addClass("activeDay");}
-	drawDate = date;
-	drawDayCalls(drawDate);
+function changeDate(start, end){
+	timeStart = start;
+	timeEnd = end;
+	drawDayCalls(timeStart, timeEnd);
 }
-function drawDayCalls(date){ // функция отрисовки звонков
-	var timeStart = (date) ? moment(moment().format("DD-MM-YYYY"), "DD-MM-YYYY").unix()*1000 : moment(moment().subtract(1,'days').format("DD-MM-YYYY"), "DD-MM-YYYY").unix()*1000;
-	var timeEnd = 	(date) ? moment(moment().add(1,'days').format("DD-MM-YYYY"), "DD-MM-YYYY").unix()*1000 : moment(moment().format("DD-MM-YYYY"), "DD-MM-YYYY").unix()*1000; // время для запроса, выбирает сегодня либо вчера, в зависимости от кнопки. date = true - сегодня, иначе - вчера. Надо бы переписать
+function drawDayCalls(timeStart, timeEnd){ // функция отрисовки звонков
 	$.get(dayCallsURL+"/"+timeStart+"/"+timeEnd).done(function (data) { // запрос к базе
 	sorting(data, 'timeStart'); // сортировка
 	var nametag = dayCalls = "";	

@@ -69,8 +69,12 @@ function getQuestions(value){ // добавить звонки по нажати
 							var audiotag = callsInfo[i].comId;
 							var nametag = callsInfo[i].agent.username;
                             var timetag = moment.unix(callsInfo[i].timeStart/1000).format(dateFormat); // заполнение данных
-							var audioURL = '<audio class="audio-call" src="'+oktell + audiotag + '" controls></audio><a href="'+oktell+ audiotag +'" target="_blank">' + '<\/a>';
-							outputCalls += '<div class="call col-lg-9" data-time="'+timetag+'" data-sign="'+nametag+'"><span>'+ timetag +' '+nametag + '</span><span class="pull-right myLabel label label-primary">'+ Questions[(callsInfo[i].questionId-1)] +'</span><span class="pull-right myLabel label label-primary">'+ Categories[(callsInfo[i].shopCategoryId-1)] +'</span><span class="pull-right myLabel label label-primary" >ID:<a href="https://adm.avito.ru/users/user/info/'+callsInfo[i].avitoUserId+'" target=_blank>'+ callsInfo[i].avitoUserId +'</a></span><br>' + audioURL + '</div>'; // получившийся код
+							iJump = 0;
+							var nextCall = collectMultipleCalls(callsInfo, i, "");
+							var margin = (nextCall == "") ? "" : "no-margin-top";
+							var audioURL = '<audio class="audio-call '+margin+'" src="'+oktell + audiotag + '" controls></audio><a href="'+oktell+ audiotag +'" target="_blank">' + '<\/a>';
+							outputCalls += '<div class="call col-lg-9" data-time="'+timetag+'" data-sign="'+nametag+'"><span>'+ timetag +' '+nametag + '</span><span class="pull-right myLabel label label-primary">'+ Questions[(callsInfo[i].questionId-1)] +'</span><span class="pull-right myLabel label label-primary">'+ Categories[(callsInfo[i].shopCategoryId-1)] +'</span><span class="pull-right myLabel label label-primary" >ID:<a href="https://adm.avito.ru/users/user/info/'+callsInfo[i].avitoUserId+'" target=_blank>'+ callsInfo[i].avitoUserId +'</a></span><br>'+ nextCall + audioURL + '</div>'; // получившийся код
+							i+=iJump;
 						}					 
 					document.getElementById("secondTable").innerHTML = outputCalls;
 				})
