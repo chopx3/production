@@ -37,7 +37,7 @@ border-radius: 10px;
 	font-size: 48px;
 }
 /* Стандартное значение для скрытия части кнопок и кружков в кнопках */
-[type='checkbox'], [type='radio'], #IsManagerAndNoID, #page-content-wrapper #CallForm {
+[type='checkbox'], [type='radio'], #IsManagerAndNoID, #page-content-wrapper #CallForm, #onlyMyCallsDiv {
 	display: none;
 }
 /* включение скрытых кнопок */

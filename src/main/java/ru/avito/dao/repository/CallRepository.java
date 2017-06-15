@@ -15,6 +15,9 @@ import java.util.List;
 public interface CallRepository extends JpaRepository<Call,Integer>{ //TODO реализовать репозиторий
 
     List<Call> findAllByAvitoUserId(Long agentId);
+
+    List<Call> findByAvitoUserIdAndAgentId(Long avitoUserId, Integer agentId);
+
     List<Call> findByAgentIdAndTimeStartBetween(Integer agentId, Long timeStart, Long timeEnd);
 
     List<Call> findByTimeStartBetweenAndAgentIdAndType(Long timeStart, Long timeEnd, Integer agentId, String typeCall);

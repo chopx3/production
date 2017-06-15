@@ -1,14 +1,16 @@
 var audioURL=additionalInfo=callsData="";
+var addURL = "/all";
 $(document).ready(function() {
 $('#clientCalls').click(function() { //Кнопка "Звонки пользователя"
 		fillInfo("add","Звонки пользователя", ""); // заполнение инфы
 		addButton(); // отображение кнопки
 		$("#MainForm").removeClass("col-md-6").addClass("col-md-12"); // для отображения информации во весь экран(тэги+коммент)
-	});
+	});	
 })
-function getCalls(){ // Функция для вывода информации по ID пользователя
+function getCalls(){ // Функция для вывода информации по ID пользователя	
 	idNumber = idSaver = $('#IDforInfo').val(); // сохранение информации
-		$.get(getCallsURL + idNumber+"/all").done(function (data) { // Вывод всех звонков
+	$("#onlyMyCallsDiv").addClass("Add");
+		$.get(getCallsURL + idNumber+addURL).done(function (data) { // Вывод всех звонков
 			callsData = data; // временная переменная, для махинаций с данными
 			sorting(callsData, "timeStart"); // сортировка
 			document.getElementById("MainForm").innerHTML = ''; // очистка формы
@@ -30,7 +32,7 @@ function drawClientCalls(pageNumber){ // отрисовка собственно
 	var isLastPage = (pageNumber == numberOfPages ) ? "class=disabled" : "onclick=drawClientCalls("+(pageNumber+1)+")"; // или последняя
 	pageLineStart = '<div class=row>						'+
 	'<div class=col-lg-12>									'+
-	'<nav aria-label="Page navigation">						'+
+	'<nav aria-label="Page navigation" class=col-lg-6>						'+
 	'	<ul class="pagination" id=paginationUL>				'+
 	'		<li>											'+
 	'		  <a href="#" '+isFirstPage+'>					'+
@@ -66,16 +68,26 @@ function drawClientCalls(pageNumber){ // отрисовка собственно
 	document.getElementById("MainForm").innerHTML =pageLineStart + pageBody + pageLineEnd + outputCalls; // финальный результат, линия пагинации + звонки
 }
 function addButton() { // Отрисовка кнопки для вывода звонков
-	document.getElementById("CallForm").innerHTML =	'<div class="row">'
-			+ '<div class="col-lg-8">'
-			+ '<div class="input-group goButton">'
-				+ '<input type="number" class="form-control" id="IDforInfo" placeholder="ID учетной записи" autofocus>'
-				+ '<span class="input-group-addon btn btn-success" id="IDSubmit" onclick=getCalls()>GO</span>'
-			+ '</div>'
-			+ '</div>'
-		+ '</div>'; 
+	document.getElementById("CallForm").innerHTML =	'<div class="row">'+
+			'<div class="col-lg-8">'+
+			'<div class="input-group goButton">'+
+			 '<input type="number" class="form-control" id="IDforInfo" placeholder="ID учетной записи" autofocus>'+
+			 '<span class="input-group-addon btn btn-success" id="IDSubmit" onclick=getCalls()>GO</span>'+
+			'</div>'+
+			'</div>'+
+			'<div class="col-lg-4" id="onlyMyCallsDiv"> '+                         
+			'<input type="checkbox" data-toggle="toggle" id="onlyMyCallsToggle" data-on="Мои звонки" data-off="Все звонки" data-offstyle="info btn-avito-blue" data-onstyle="success btn-avito-green" data-width=130>  '+                              
+			'</div>'+
+			'</div>'; 
 $('#IDforInfo').keypress(function (e) { // ловить нажатие энтера
  var key = e.which;
  if (key == 13) {getCalls();}
 });
+$('#onlyMyCallsToggle').bootstrapToggle();
+$(function(){
+	$('#onlyMyCallsToggle').change(function() {
+	addURL = ($('#onlyMyCallsToggle').prop("checked")) ? "/agent/"+agentId+"" : "/all" ;
+	getCalls();
+	console.log(addURL);})
+})
 }

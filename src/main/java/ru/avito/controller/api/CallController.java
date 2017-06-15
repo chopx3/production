@@ -112,6 +112,11 @@ public class CallController {
         return callService.findAllByAvitoUserId(avitoUserId);
     }
 
+    @RequestMapping(value = "find/user/{avitoUserId}/agent/{agentId}", method = RequestMethod.GET) //TODO сделать красиво пагинацию
+    public List<Call> findByAvitoUserIdAndAgentId(@PathVariable("avitoUserId") Long avitoUserId, @PathVariable("agentId") Integer agentId){
+        return callService.findByAvitoUserIdAndAgentId(avitoUserId, agentId);
+    }
+
     @RequestMapping(value = "find/questions/{ids}/{startPeriod}/{endPeriod}", method = RequestMethod.GET)
     public List<Call> findByQuestionIdAndTimeStartBetween(@PathVariable("startPeriod") Long startPeriod,
                                     @PathVariable("endPeriod") Long endPeriod,

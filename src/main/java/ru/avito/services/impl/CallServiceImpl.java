@@ -135,4 +135,8 @@ public class CallServiceImpl implements CallService {
     public List<Call> findByTimeStartBetweenAndType(Long timeStart, Long timeEnd, String typeCall) {
         return callRepository.findByTimeStartBetweenAndType(timeStart, timeEnd, typeCall);
     }
+
+    public List<Call> findByAvitoUserIdAndAgentId(Long avitoUserId, Integer agentId){
+        return callRepository.findByAvitoUserIdAndAgentId(avitoUserId, agentId);
+    }
 }
