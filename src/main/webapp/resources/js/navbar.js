@@ -238,10 +238,14 @@ function  draw(data) { // отрисовка пустых звонков
 			chain = data.emptyCallList[i].chainId;
 			audiosrc = data.emptyCallList[i].comId;
             timetag = moment.unix(data.emptyCallList[i].startTime/1000).format(dateFormat); // определение переменных
-			iJump = 0;
 			CallInfo = [chain, i, false];
-			console.log(data.emptyCallList); 
-			var nextCall = collectMultipleCalls(data.emptyCallList, i, CallInfo);
+			var onPlay = ' onplay=\'change_call('+JSON.stringify(CallInfo)+')\'';
+			var multipleCallsInfo = {
+								data: data.emptyCallList,
+								counter: i,
+								onPlayInfo: onPlay
+							};
+			var nextCall = collectMultipleCalls(multipleCallsInfo);
 			var margin = (nextCall == "") ? "" : "no-margin-top";
 			var audioURL = '<audio id="audio'+i+'" onplay=change_call('+JSON.stringify(CallInfo)+') src="' + oktell + audiosrc + '" class="audio-call '+margin+'" controls></audio><a href="'+ oktell + audiosrc +'" target="_blank">' + '<\/a>'; // аудио-тэг
 			outputEmptyCalls += '<div id="divAddButton' +i+'" onclick=change_call('+JSON.stringify(CallInfo)+') class="call col-lg-12" data-time="'+timetag+'" data-sign="'+nametag+'"><span>'+ timetag +' '+nametag +'</span><br>' + nextCall + audioURL  + '</div>'; // основное заполнение

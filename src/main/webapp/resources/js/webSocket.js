@@ -46,6 +46,7 @@ function getWebsocketMessage(callback){
             default:
                 callback(JSON.parse(webSocketMessage.data));
 				console.log("getWebsocketMessage empty");
+                console.log(JSON.parse(webSocketMessage.data));
                 break;
         }
     }

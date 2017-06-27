@@ -29,11 +29,15 @@ function getCalls(){ // Получить список всех звонков и
 								}
 							if( (catNum==6||catNum==feedbackInfo[i].shopCategoryId-1) && tagCheck ){ // если подходит категория или выбраны все категории и тэг есть в мапе	
 							timetag = moment(feedbackInfo[i].timeStart).format(dateFormat); // дата, стандартный вид
-							iJump = 0;
 							userID = feedbackInfo[i].avitoUserId;
 							Tags = "<div class='tags col-lg-3'><label class='might-overflow'>" + tagCollector + "</label></div>"; // блок тэгов, 1\4 экрана, класс "переполнение"
 							Comment = "<div id='comment"+ i +"' class='col-lg-4 comments'> <textarea class='form-control cursor-def' id='noteArea' disabled>"+ feedbackInfo[i].comments +"</textarea> </div> "; // блок комментов, 1\3 экрана, отключены
-							var nextCall = collectMultipleCalls(feedbackInfo, i, ""); // 
+							var multipleCallsInfo = {
+								data: feedbackInfo,
+								counter: i
+							};
+							console.log(multipleCallsInfo);
+							var nextCall = collectMultipleCalls(multipleCallsInfo); // 
 							var margin = (nextCall == "") ? "" : "no-margin-top"; // отступы при нескольких звонках, сложная схема
 							audioURL = '<audio class="audio-call '+margin+'" id="audio'+i+'" src="' + oktell + feedbackInfo[i].comId + '" controls></audio><a href="'+ oktell + feedbackInfo[i].chainId +'" target="_blank">' + '</a>'; // аудио тэг, уникальный id по номеру, ссылка на октелл
 							Call += '<div class="row"><div id="feedbackCall' +i+'" class="call col-lg-5" data-time="'+timetag+'" data-sign="'+feedbackInfo[i].agent.username+'" value="'+ tagCollector +'"><span>'+ timetag +' '+ feedbackInfo[i].agent.username +  '</span><span class="pull-right myLabel label label-primary" >'+ Categories[(feedbackInfo[i].shopCategoryId-1)] +'</span><span class="pull-right myLabel label label-primary">ID:<a href="https://adm.avito.ru/users/user/info/'+userID+'" target=_blank>'+userID+'</a></span><br>'+nextCall + audioURL + '</div>'+Comment + Tags+'</div>';

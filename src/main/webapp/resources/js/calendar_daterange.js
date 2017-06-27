@@ -22,7 +22,7 @@ function dateSingleCalendar(start) {
 		timeEnd = moment(startDate,"DD-MM-YYYY").endOf('day').unix()*1000;
 		}
 		console.log(start);
-		drawDayCalls(timeStart, timeEnd);
+		changeDate(timeStart, timeEnd);
     }
 function createSingleCalendar(startDate) {
     $('input[name="chooseDay"]').daterangepicker({
@@ -57,7 +57,7 @@ function createSingleCalendar(startDate) {
     },
         singleDatePicker: true,
         showDropdowns: true,
-		"startDate": timeStart,
+		"startDate": startDate,
 		"opens": "left" // выезжает влево
     }, dateSingleCalendar);
 };

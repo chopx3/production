@@ -56,8 +56,13 @@ function drawClientCalls(pageNumber){ // отрисовка собственно
 					var nametag = callsData[i].agent.username;
 					var timetag = moment.unix(callsData[i].timeStart/1000).format(dateFormat); // заполнение переменных
 					var yourCall = (agentName == nametag) ? "yourCall" : ""; // подсветка "твоих" звонков
-					iJump = 0; // прыжок, если есть звонки с тем же ID, обнуление переменной
-					var nextCall = collectMultipleCalls(callsData, i, ""); // склейка звонков
+					var isItSameAgent = (i+1<=endIndex-1) ? nametag == callsData[i+1].agent.username : false ; // ????? надо думать
+					var multipleCallsInfo = {
+								data: callsData,
+								counter: i,
+								isItSameAgent : isItSameAgent
+							};
+					var nextCall = collectMultipleCalls(multipleCallsInfo); // склейка звонков
 					var margin = (nextCall == "") ? "" : "no-margin-top"; // отступы при нескольких звонках, сложная схема
 					var commentBox = (callsData[i].comments == null || callsData[i].comments == "") ? "" : "<textarea rows=4 class='form-control commentBox col-lg-4' disabled>"+callsData[i].comments+"</textarea>"; // если есть комментарии - выводи их в поле справа
 					var tagLabel = (callsData[i].tags.length == 0) ? "" : "<div class='tags col-lg-2'><label class='might-overflow'>" + collectTagForGetCalls(callsData[i].tags) + "</label></div>";  // если есть тэги - справа

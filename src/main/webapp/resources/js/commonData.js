@@ -57,22 +57,25 @@ function getCats() {// получить массив категорий, есл�
 			Categories[i]=(desc.length>=20)? desc.substr(0,18)+"...": desc;
 		}}
 )}
-function collectMultipleCalls(data, i, additionalInfo){ // функция отрисовки нескольких звонков, проверяет до конца списка, пока не находит звонок, chainId которого не совпадает -> break
+function collectMultipleCalls(options){ // функция отрисовки нескольких звонков, проверяет до конца списка, пока не находит звонок, chainId которого не совпадает -> break
+	iJump = 0;
 	var result="";
-	var onPlayChangeCall = (additionalInfo.length == 3) ? ' onplay=change_call('+JSON.stringify(additionalInfo)+') ' : (additionalInfo.length == 10) ? ' onplay=setInfoToCallForm('+JSON.stringify(fullCallInfo)+') ' : "";
+	var onPlay = options.onPlayInfo || "";
+	var data = options.data;
+	var i = options.counter;
+	var isItSameAgent = options.isItSameAgent || true;
+	console.log(options);
 	for (var j = i; j< data.length; j++){ // пробежка по массиву от элемента до конца массива
 		if (j+1<=data.length-1){ // проверка, не конец ли это массива, чтобы без переполнения
-			if (additionalInfo == "") {var isItSameAgent = (data[j].agent.username == data[j+1].agent.username);}
-			else if (additionalInfo[2] == false) {var isItSameAgent = true}
-			else {var isItSameAgent = (data[j].agent.username == data[j+1].agent.username)}
-			// дополнительная проверка тот же этот агент или нет, на случай большого количества
+			console.log(data[j].chainId);
+			console.log(data[j+1].chainId);
 			if (data[j].chainId == data[j+1].chainId && isItSameAgent){ iJump++; } else break;	// звонков с одной учетной записи и переводов. Если да и chainId совпал - +в прыжок
 	}																											// если нет - break из цикла
 	else break;} // если дальше ничего нет - break
-	for (var j =i+iJump; j>i; j--){ // а потом идет в обратную сторону и добавляет звонки в звонок в хронологическом порядке
+	for (var j =i+iJump; j>i; j--){ // а потом идет в обратную сторону и добавляет звонки в общий звонок в хронологическом порядке
 			var margin = (j!= i+iJump) ? "no-margin-top" : ""; // магия для отступа в звонках. У первого звонка только срабатывает, чтобы не было отступа
 			var tempAudio = data[j].comId; // наверное, так удобней, но чот не уверен
-			result += '<audio '+onPlayChangeCall+' class="audio-call '+margin+'" src="'+oktell + tempAudio + '" controls></audio><a href="'+oktell+ tempAudio +'" target="_blank"></a>'; // финальный вывод
+			result += '<audio '+onPlay+' class="audio-call '+margin+'" src="'+oktell + tempAudio + '" controls></audio><a href="'+oktell+ tempAudio +'" target="_blank"></a>'; // финальный вывод
 	}
 return result;	
 }
