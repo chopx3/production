@@ -247,7 +247,7 @@ function  draw(data) { // отрисовка пустых звонков
 							};
 			var nextCall = collectMultipleCalls(multipleCallsInfo);
 			var margin = (nextCall == "") ? "" : "no-margin-top";
-			var audioURL = '<audio id="audio'+i+'" onplay=change_call('+JSON.stringify(CallInfo)+') src="' + oktell + audiosrc + '" class="audio-call '+margin+'" controls></audio><a href="'+ oktell + audiosrc +'" target="_blank">' + '<\/a>'; // аудио-тэг
+			var audioURL = '<audio id="audio'+i+'" '+ onPlay +' src="' + oktell + audiosrc + '" class="audio-call '+margin+'" controls></audio><a href="'+ oktell + audiosrc +'" target="_blank">' + '<\/a>'; // аудио-тэг
 			outputEmptyCalls += '<div id="divAddButton' +i+'" onclick=change_call('+JSON.stringify(CallInfo)+') class="call col-lg-12" data-time="'+timetag+'" data-sign="'+nametag+'"><span>'+ timetag +' '+nametag +'</span><br>' + nextCall + audioURL  + '</div>'; // основное заполнение
 			i+=iJump;
 		}

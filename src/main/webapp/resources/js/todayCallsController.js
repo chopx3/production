@@ -39,10 +39,15 @@ function drawDayCalls(timeStart, timeEnd){ // функция отрисовки 
 			audiosrc = data[i].comId; //
             timetag = moment.unix(data[i].timeStart/1000).format(dateFormat);//
 			fullCallInfo = [agentId, nametag, data[i].avitoUserId, chain, data[i].manager, data[i].questionId, data[i].shopCategoryId, data[i].type, i, tagArray]; // заполнение переменных, сохранение в массив
-			iJump = 0;
-			var nextCall = collectMultipleCalls(data, i, fullCallInfo);
+			var onPlay = ' onplay=\'setInfoToCallForm('+JSON.stringify(fullCallInfo)+')\'';
+			var multipleCallsInfo = {
+								data: data,
+								counter: i,
+								onPlayInfo: onPlay
+							};
+			var nextCall = collectMultipleCalls(multipleCallsInfo);
 			var margin = (nextCall == "") ? "" : "no-margin-top";
-			var audioURL = '<audio class="audio-call '+margin+'" id="audio'+i+'" onplay=setInfoToCallForm('+JSON.stringify(fullCallInfo)+') src="' + oktell + audiosrc + '" controls></audio><a href="'+ oktell + audiosrc +'" target="_blank">' + '<\/a>'; // аудио тэг
+			var audioURL = '<audio class="audio-call '+margin+'" id="audio'+i+'" '+ onPlay +'  src="' + oktell + audiosrc + '" controls></audio><a href="'+ oktell + audiosrc +'" target="_blank">' + '<\/a>'; // аудио тэг
 			dayCalls += '<div id="divAddButton' +i+'" onclick=setInfoToCallForm('+JSON.stringify(fullCallInfo)+') class="call col-lg-12" data-time="'+timetag+'" data-sign="'+nametag+'"><span>'+ timetag +'\t\t</span><span style="display:none" id=commentHide'+i+'>'+data[i].comments+'</span>'+ additionalInfo+'<br>' + nextCall + audioURL  + '</div>'; // основное заполнение звонка - звонок+аудио+доп инфа
 			i+=iJump;
 		}
