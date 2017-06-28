@@ -22,7 +22,7 @@ function getCalls(){ // Функция для вывода информации 
 }
 function drawClientCalls(pageNumber){ // отрисовка собственно звонков
 	var numberOfPages=(Math.ceil(callsData.length / 50) > 20) ? 20 : Math.ceil(callsData.length / 50); // переменная для количества страниц
-	var pageBody=pageLineStart=pageLineEnd=""; // создание переменных для отрисовки строки пагинации
+	var pageBody=pageLineStart=pageLineEnd=pagination=""; // создание переменных для отрисовки строки пагинации
 	if(numberOfPages > 1){ // если страница не одна
 	for (var i=1;i<=numberOfPages;i++){ // цикл для отрисовки страниц
 		var activePage = ( i== pageNumber ) ? "class=active" : ""; // добавление класса .active для текущей страницы
@@ -48,6 +48,7 @@ function drawClientCalls(pageNumber){ // отрисовка собственно
 	'	</ul>												'+
 	'</nav></div></div>'; // и конечная
 	}
+	pagination = pageLineStart + pageBody + pageLineEnd;
 	var endIndex = (pageNumber == Math.ceil(callsData.length / 50)) ? callsData.length : 50*pageNumber; // проверка для последнего элемента отрисовка, 50 звонков или до конца списка
 	outputCalls = ""; // обнуление 
 	for (var i = 50*(pageNumber-1); i < endIndex; i++) { //цикл отрисовки звонков
@@ -71,7 +72,7 @@ function drawClientCalls(pageNumber){ // отрисовка собственно
 					outputCalls += '<div class="row col-lg-12"><div class="call col-lg-6 '+yourCall+'" data-time="'+timetag+'" data-sign="'+nametag+'"><span>'+ timetag +' '+nametag + '</span>'+additionalInfo+'<br>' + nextCall + audioURL  + '</div>'+commentBox+tagLabel+'</div>'; // основная часть формирования звонка
 					i+=iJump; //прыжок, если есть звонки с тем же ID
 				}
-	document.getElementById("MainForm").innerHTML =pageLineStart + pageBody + pageLineEnd + outputCalls; // финальный результат, линия пагинации + звонки
+	document.getElementById("MainForm").innerHTML =pagination + outputCalls + pagination; // финальный результат, линия пагинации + звонки
 }
 function addButton() { // Отрисовка кнопки для вывода звонков
 	document.getElementById("CallForm").innerHTML =	'<div class="row">'+

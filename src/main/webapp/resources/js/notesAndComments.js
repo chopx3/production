@@ -20,7 +20,6 @@ $(document).ready(function() {//Блок комментариев
 	$('#noteArea').change(function(e){ // обновить заметки при внесении каких-либо изменений
 	updateNotes();
 	});
-
 })
 function getComments(){ // отрисовка комментариев
 		idNumber = idSaver = $('#IDforComments').val(); // номер ID
