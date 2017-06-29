@@ -2,7 +2,7 @@
 var catNum = 6; // дефолтное значение для категории, 6=все категории
 var Call = Comment = Tags = ""; 
 $(document).ready(function() {
-	getCats();
+	getCategories();
 	$('input[name="category"]').change(function(e){
 		catNum = $(this).attr("value");
 	});

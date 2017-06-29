@@ -50,7 +50,7 @@ public class CallController {
     @Autowired
     CallRepository callRepository;
 
-    @RequestMapping(value = "find/agent/{startPeriod}/{endPeriod}")
+    @RequestMapping(value = "agent/{startPeriod}/{endPeriod}")
     public List<Call> findByAgentIdAndTimeStartBetween(HttpSession session,
                                              @PathVariable("startPeriod") Long startPeriod,
                                              @PathVariable("endPeriod")Long endPeriod){
@@ -71,14 +71,14 @@ public class CallController {
         return callService.save(updatedCall);
     }
 
-    @RequestMapping(value = "feedback/save", method = RequestMethod.POST)
+    @RequestMapping(value = "feedback", method = RequestMethod.POST)
     public Integer saveCall( @RequestBody FeedbackCall feedbackCall){ //TODO запилить HttpSession
         if(LOG.isDebugEnabled())
             LOG.debug("Incoming Feedback call: "+feedbackCall);
         return callService.save(feedbackCall);
     }
 
-    @RequestMapping(value = "find/type/{typecall}/{startPeriod}/{endPeriod}", method = RequestMethod.GET)//TODO Проверить URL на фронте
+    @RequestMapping(value = "type/{typecall}/{startPeriod}/{endPeriod}", method = RequestMethod.GET)//TODO Проверить URL на фронте
     public List<Call> findEmptyCall(@PathVariable("typecall") String typeCall,
                                     @PathVariable("startPeriod") Long startPeriod,
                                     @PathVariable("endPeriod") Long endPeriod,
@@ -96,31 +96,31 @@ public class CallController {
     }
 
 
-    @RequestMapping(value = "find/tags", method = RequestMethod.POST)
+    @RequestMapping(value = "byTags", method = RequestMethod.POST)
     public List<Call> findEmptyCall(@RequestBody List<Tag> tags){
         return callService.findByTags(tags);
     }
 
-    @RequestMapping(value = "find/user/{avitoUserId}/{page}", method = RequestMethod.GET) //TODO сделать красиво пагинацию
+    @RequestMapping(value = "user/{avitoUserId}/{page}", method = RequestMethod.GET) //TODO сделать красиво пагинацию
     public List<Call> findByAvitoUserId(@PathVariable("avitoUserId") Long avitoUserId, @PathVariable("page") Integer page){
         PageRequest aPage = new PageRequest(page, 50, Sort.Direction.DESC, "timeStart");
         return callService.findByAvitoUserId(avitoUserId, aPage);
     }
 
-    @RequestMapping(value = "find/user/{avitoUserId}/all", method = RequestMethod.GET) //TODO сделать красиво пагинацию
+    @RequestMapping(value = "user/{avitoUserId}/all", method = RequestMethod.GET) //TODO сделать красиво пагинацию
     public List<Call> findAllByAvitoUserId(@PathVariable("avitoUserId") Long avitoUserId){
         return callService.findAllByAvitoUserId(avitoUserId);
     }
 
-    @RequestMapping(value = "find/user/{avitoUserId}/agent/{agentId}", method = RequestMethod.GET) //TODO сделать красиво пагинацию
+    @RequestMapping(value = "user/{avitoUserId}/agent/{agentId}", method = RequestMethod.GET) //TODO сделать красиво пагинацию
     public List<Call> findByAvitoUserIdAndAgentId(@PathVariable("avitoUserId") Long avitoUserId, @PathVariable("agentId") Integer agentId){
         return callService.findByAvitoUserIdAndAgentId(avitoUserId, agentId);
     }
 
-    @RequestMapping(value = "find/questions/{ids}/{startPeriod}/{endPeriod}", method = RequestMethod.GET)
+    @RequestMapping(value = "question/{question}/{startPeriod}/{endPeriod}", method = RequestMethod.GET)
     public List<Call> findByQuestionIdAndTimeStartBetween(@PathVariable("startPeriod") Long startPeriod,
                                     @PathVariable("endPeriod") Long endPeriod,
-                                    @PathVariable Integer ids){
-        return callService.findByQuestionIdAndTimeStartBetween(ids, startPeriod, endPeriod);
+                                    @PathVariable Integer question){
+        return callService.findByQuestionIdAndTimeStartBetween(question, startPeriod, endPeriod);
     }
 }

@@ -17,7 +17,7 @@ import java.util.List;
  */
 
 @RestController
-@RequestMapping(value = Path.API+"comments")
+@RequestMapping(value = Path.API+"comment")
 public class CommentController {
 
     @Autowired
@@ -26,12 +26,12 @@ public class CommentController {
     @Autowired
     AgentService agentService;
 
-    @RequestMapping(value = "find/{avitoUserId}", method = RequestMethod.GET)
+    @RequestMapping(value = "user/{avitoUserId}", method = RequestMethod.GET)
     public List<Comment> findAllByAvitoUserIdOrderByPostTimeDesc(@PathVariable("avitoUserId") Long avitoUserId) {
         return commentService.findAllByAvitoUserIdOrderByPostTimeDesc(avitoUserId);
     }
 
-    @RequestMapping(value = "save", method = RequestMethod.POST)
+    @RequestMapping(value = "add", method = RequestMethod.POST)
     public Comment save(@RequestBody Comment comment, HttpSession httpSession) {
         SecurityContext context = (SecurityContext) httpSession.getAttribute("SPRING_SECURITY_CONTEXT");
         String username = context.getAuthentication().getName();

@@ -14,13 +14,13 @@ import java.util.List;
  */
 
 @RestController
-@RequestMapping(value = Path.API+"roles")
+@RequestMapping(value = Path.API+"role")
 public class RoleController {
                                                 //TODO сделать CRUD ечли нужно.
     @Autowired
     private RoleService roleService;
 
-    @RequestMapping(value = "find")
+    @RequestMapping(value = "all")
     public List<Role> findAllRoles(){
         return roleService.findAll();
     }

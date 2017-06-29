@@ -14,13 +14,13 @@ import java.util.List;
  */
 
 @RestController
-@RequestMapping(value = Path.API+"category/find")
+@RequestMapping(value = Path.API+"category")
 public class CategoryController {
 
     @Autowired
     CategoryService categoryService;
 
-    @RequestMapping(value = {"", "/"})
+    @RequestMapping(value = "find")
     public List<Category> findAll(){
         return categoryService.findAll();
     }

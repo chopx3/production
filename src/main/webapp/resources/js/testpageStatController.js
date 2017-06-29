@@ -2,7 +2,7 @@ var startDate, endDate, tempValue;
 $(document).ready(function() { // при загрузке установить время, получить информацию о категориях и вопросах из базы
 	var start=moment().format("DD-MM-YYYY");
 	var end=moment().add(1,'days').format("DD-MM-YYYY");
-	getCats();
+	getCategories();
 	getQuestionsInfo();
 })
 function openStat(){ // при нажатии на "статистика" очищается информация, добавляются кнопки, стартует календарь, нажимаются кнопки "Всего" и "Сегодня" и рисуются боковые панели
@@ -18,17 +18,13 @@ function getInfo(value){ // получение статистики
 	var timeStart = moment(startDate, "DD-MM-YYYY").unix()*1000;
 	var timeEnd = moment(endDate, "DD-MM-YYYY").unix()*1000; // получение времени
 	if (value != 'date') {tempValue = value;$('.catButtons').each(function () { $(this).removeClass("activeButton"); }); $("[value="+tempValue+"]").addClass("activeButton");} // подсветка выбранной кнопки статистики
-	var getURL = (value != "full_feedback" && value != "empty_feedback") ? statURL+tempValue+"/total/" : callTypeURL + tempValue+"/"; // обычный поиск или поиск feedbackа
+	var getURL = statURL+tempValue; // 
 	$.get(getURL+timeStart+"/"+timeEnd).done(function (data) {
 	document.getElementById("secondTable").innerHTML = ""; // очистка данных
 	var outputComments = message = count = id = thead = codeForSum = additional = ''; // объявление переменных
 	var tbot = '</tbody></table></div></div>'; // низ таблицы
 	var firstColumn = "Field";
 	var secondColumn = "Total"; // названия полей
-	if (tempValue != "full_feedback" && tempValue != "empty_feedback") { // если не фидбек
-	firstColumn = data.fields[0]; 
-	secondColumn = data.fields[1]; //названия полей
-	}
 	var sum = addSum = 0;	
 	if (data.fields.length == 3){ // если кнопка "Пользователи"
 		var thirdColumn = (tempValue == "users") ? "ID" : "Empty"; // третье поле

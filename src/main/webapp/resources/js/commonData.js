@@ -1,32 +1,32 @@
 // Общие URL
 var host = "http://"+location.host + "/firecatcher/api/"; // Основной хост URL
 var oktell = "http://"+location.host + "/firecatcher/oktell/calls?name=Avito_get_file_by_id_conn&attachment=1&startparam1="; // Октелл
-var allAgentsURL = 			host + "agent/find"; // Поиск всех агентов в базе
-var addAgentURL = 			host + "agent/save"; // Добавление нового агента в базу
-var updAgentURL = 			host + "agent/update"; // Обновление информации об агенте
+var allAgentsURL = 			host + "agent/all"; // Поиск всех агентов в базе
+var addAgentURL = 			host + "agent/add"; // Добавление нового агента в базу
+var updateAgentURL = 		host + "agent/update"; // Обновление информации об агенте
 var updateNotesURL = 		host + "agent/notes/update"; // Обновление заметок
-var getNotesURL = 			host + "agent/find/id/"; // Найти определенного агента
-var getQuestionsURL = 		host + "call/find/questions/"; // Найти звонки по вопросу
-var callTypeURL = 			host + "call/find/type/"; // Тип звонка (empty\updated\empty_feedback\full_feedback)
-var getCallsURL = 			host + "call/find/user/"; // вывести список звонков по ID клиента
-var emptyFeedbackURL = 		host + "call/find/type/empty_feedback/1/"; // пустые фидбеки
-var dayCallsURL = 			host + "call/find/agent/"; // звонки за сегодня по агенту
-var updateEmptyCalls = 		host + "call/update"; // обновить информацию в звонке
-var feedbackSaveURL = 		host + "call/feedback/save"; // обновить информацию о фидбеке
-var fullFeedbackURL = 		host + "call/find/type/full_feedback/"; // // URL для заполненных фидбеков
-var updatedForFeedbackURL = host + "call/find/type/updated/"; // // URL для обновленных звонков с тэгами
-var getCatsURL = 			host + "category/find"; // // URL для категорий
-var getCommentsURL = 		host + "comments/find/"; // URL для комментариев по учетке
-var postCommentURL = 		host + "comments/save"; //  сохранение комментария
-var getQuestionsInfoURL = 	host + "question/find"; // URL по вопросам в базе
-var statURL = 				host + "stat/find/"; // статистика
-var tagGroupURL = 			host + "taggroup/find"; // список групп тэгов
-var addTagGroupURL = 		host + "taggroup/save"; // добавить группу тэгов
+var getNotesURL = 			host + "agent/"; // Найти определенного агента + найти его заметки
+var getQuestionsURL = 		host + "call/question/"; // Найти звонки по вопросу
+var callTypeURL = 			host + "call/type/"; // Тип звонка (empty\updated\empty_feedback\full_feedback)
+var getCallsURL = 			host + "call/user/"; // вывести список звонков по ID клиента
+var emptyFeedbackURL = 		host + "call/type/empty_feedback/1/"; // пустые фидбеки
+var dayCallsURL = 			host + "call/agent/"; // звонки за указанный период по авторизованному агенту
+var updateEmptyCallsURL = 	host + "call/update"; // обновить информацию в звонке
+var feedbackSaveURL = 		host + "call/feedback"; // обновить информацию о фидбеке
+var fullFeedbackURL = 		host + "call/type/full_feedback/";// URL для заполненных фидбеков
+var updatedForFeedbackURL = host + "call/type/updated/"; // // URL для обновленных звонков с тэгами
+var getCategoriesURL = 		host + "category/all"; // URL для категорий
+var getCommentsURL = 		host + "comment/"; // URL для комментариев по учетке
+var postCommentURL = 		host + "comment/add"; //  сохранение комментария
+var getQuestionsInfoURL = 	host + "question/all"; // URL по вопросам в базе
+var statURL = 				host + "stat/"; // статистика
+var tagGroupURL = 			host + "taggroup/all"; // список групп тэгов
+var addTagGroupURL = 		host + "taggroup/add"; // добавить группу тэгов
 var updTagGroupURL = 		host + "taggroup/update"; // обновить информацию по группе тэгов
-var tagURL = 				host + "tags/find"; // список тэгов
-var addTagURL = 			host + "tags/save"; // добавить тэг
-var updTagURL = 			host + "tags/update"; // обновить тэг
-var changeTagGroup = 		host + "tags/group"; // изменить группу в тэге
+var tagURL = 				host + "tag/all"; // список тэгов
+var addTagURL = 			host + "tag/add"; // добавить тэг
+var updTagURL = 			host + "tag/update"; // обновить тэг
+var changeTagGroup = 		host + "tag/changeGroup"; // изменить группу в тэге
 // Общие переменные
 var Categories = []; // массив для категорий
 var Questions = []; // и для вопросов. На звонки
@@ -49,8 +49,8 @@ function getQuestionsInfo() { // получить массив вопросов,
 			Questions[i]=(desc.length>=20)? desc.substr(0,18)+"...": desc;
 		}}
 )}
-function getCats() {// получить массив категорий, если длина больше 20 - обрезать
-	$.get(getCatsURL).done(function (data) {
+function getCategories() {// получить массив категорий, если длина больше 20 - обрезать
+	$.get(getCategoriesURL).done(function (data) {
 		var Info = data;
 		for (var i=0;i<Info.length;i++){
 			var desc = Info[i].description;
@@ -92,5 +92,5 @@ function getUniqueData(data) { // подсчет уникальных звонк
 }
 $(document).ready(function() { // загрузка информации о вопросах и о категориях для отображения на звонках
 	getQuestionsInfo();
-	getCats();
+	getCategories();
 })

@@ -20,54 +20,54 @@ public class StatController {
     @Autowired
     StatService statService;
 
-    @RequestMapping(value = "find/categories/total/{startPeriod}/{endPeriod}", produces = "application/json;charset=UTF-8")
+    @RequestMapping(value = "byCategory/{startPeriod}/{endPeriod}", produces = "application/json;charset=UTF-8")
     public String findTotalCallByShopCategory(@PathVariable("startPeriod") Long startPeriod,
                                               @PathVariable("endPeriod") Long endPeriod) {
         return statService.findTotalCallsByShopCategory(startPeriod, endPeriod);
     }
 
-    @RequestMapping(value = "find/outcomings/total/{startPeriod}/{endPeriod}", produces = "application/json;charset=UTF-8")
+    @RequestMapping(value = "outcomings/{startPeriod}/{endPeriod}", produces = "application/json;charset=UTF-8")
     public String findTotalOutcommingCalls(@PathVariable("startPeriod") Long startPeriod,
                                            @PathVariable("endPeriod") Long endPeriod) {
         return statService.findTotalOutcomingCalls(startPeriod, endPeriod);
     }
 
-    @RequestMapping(value = "find/questions/total/{startPeriod}/{endPeriod}", produces = "application/json;charset=UTF-8")
+    @RequestMapping(value = "byQuestion/{startPeriod}/{endPeriod}", produces = "application/json;charset=UTF-8")
     public String findTotalCallsByQuestion(@PathVariable("startPeriod") Long startPeriod,
                                            @PathVariable("endPeriod") Long endPeriod) {
         return statService.findTotalCallsByQuestion(startPeriod, endPeriod);
     }
 
-    @RequestMapping(value = "find/managers/total/{startPeriod}/{endPeriod}", produces = "application/json;charset=UTF-8")
+    @RequestMapping(value = "manager/{startPeriod}/{endPeriod}", produces = "application/json;charset=UTF-8")
     public String findTotalCallsByManager(@PathVariable("startPeriod") Long startPeriod,
                                            @PathVariable("endPeriod") Long endPeriod) {
         return statService.findTotalCallsByManager(startPeriod, endPeriod);
     }
 
-    @RequestMapping(value = "find/users/total/{startPeriod}/{endPeriod}", produces = "application/json;charset=UTF-8")
+    @RequestMapping(value = "byID/{startPeriod}/{endPeriod}", produces = "application/json;charset=UTF-8")
     public String findTotalCallsByCategoryAndAvitoUser(@PathVariable("startPeriod") Long startPeriod,
                                           @PathVariable("endPeriod") Long endPeriod) {
         return statService.findTotalCallsByCategoryAndAvitoUser(startPeriod, endPeriod);
     }
 
-    @RequestMapping(value = "find/agents/total/{startPeriod}/{endPeriod}", produces = "application/json;charset=UTF-8")
+    @RequestMapping(value = "updatedCalls/{startPeriod}/{endPeriod}", produces = "application/json;charset=UTF-8")
     public String findTotalCallsByAgent(@PathVariable("startPeriod") Long startPeriod,
                                                        @PathVariable("endPeriod") Long endPeriod) {
         return statService.findTotalCallsByAgent(startPeriod, endPeriod);
     }
 //todo проверить url на фронте
-    @RequestMapping(value = "find/empty/total/{startPeriod}/{endPeriod}", produces = "application/json;charset=UTF-8")
+    @RequestMapping(value = "emptyCalls/{startPeriod}/{endPeriod}", produces = "application/json;charset=UTF-8")
     public String findTotalEmptyCallsByAgent(@PathVariable("startPeriod") Long startPeriod,
                                              @PathVariable("endPeriod") Long endPeriod) {
         return statService.findTotalEmptyCallsByAgent(startPeriod, endPeriod);
     }
 
-    @RequestMapping(value = "find/fullstat/total/{startPeriod}/{endPeriod}", produces = "application/json;charset=UTF-8")
+    @RequestMapping(value = "fullInfoByAgent/{startPeriod}/{endPeriod}", produces = "application/json;charset=UTF-8")
     public String findFullAndEmptyCallsByAgent(@PathVariable("startPeriod") Long startPeriod,
                                              @PathVariable("endPeriod") Long endPeriod) {
         return statService.findFullAndEmptyCallsByAgent(startPeriod, endPeriod);
     }
-    @RequestMapping(value = "find/feedback/total/{startPeriod}/{endPeriod}", produces = "application/json;charset=UTF-8")
+    @RequestMapping(value = "feedback/{startPeriod}/{endPeriod}", produces = "application/json;charset=UTF-8")
     public String findFullAndEmptyFeedbackByAgent(@PathVariable("startPeriod") Long startPeriod,
                                                @PathVariable("endPeriod") Long endPeriod) {
         return statService.findFullAndEmptyFeedbackByAgent(startPeriod, endPeriod);

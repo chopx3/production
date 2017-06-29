@@ -15,31 +15,31 @@ import java.util.List;
  */
 
 @RestController
-@RequestMapping(value = Path.API+"tags")
+@RequestMapping(value = Path.API+"tag")
 public class TagController {
 
     @Autowired
     TagService tagService;
 
-    @RequestMapping(value ="find")
+    @RequestMapping(value ="all")
     public List <Tag> findAllTags(){
         return tagService.findAll();
     }
 
-    @RequestMapping(value ="find/{id}")
+    @RequestMapping(value ="{id}")
     public Tag findTagByName(@PathVariable("id") int id){
         return tagService.findOne(id);
     }
 
     @ResponseStatus(HttpStatus.CREATED)
-    @RequestMapping(value ="/save", method = RequestMethod.POST)
+    @RequestMapping(value ="/add", method = RequestMethod.POST)
     public ResponseMessage saveTag(@RequestBody Tag tag){
         tagService.save(tag);
         return new ResponseMessage(201,"ok");
     }
 
     @ResponseStatus(HttpStatus.CREATED)
-    @RequestMapping(value ="/group", method = RequestMethod.POST)
+    @RequestMapping(value ="/changeGroup", method = RequestMethod.POST)
     public ResponseMessage changeGroup(@RequestBody Tag tag){
         tagService.changeGroup(tag);
         return new ResponseMessage(201,"ok");

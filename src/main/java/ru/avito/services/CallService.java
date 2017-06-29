@@ -21,7 +21,7 @@ public interface CallService { //TODO доделать
     List<Call> findAllByAvitoUserId(Long avitoUserId);
     List<Call> findByAvitoUserIdAndAgentId(Long avitoUserId, Integer questionId);
     List<Call> findByAvitoUserId(Long avitoUserId, PageRequest aPage);
-    List<Call> findByQuestionIdAndTimeStartBetween(Integer ids, Long timeStart, Long timeEnd);
+    List<Call> findByQuestionIdAndTimeStartBetween(Integer question, Long timeStart, Long timeEnd);
     List<Call> findByTimeStartBetweenAndType(Long timeStart, Long timeEnd, String typeCall);
 
 }

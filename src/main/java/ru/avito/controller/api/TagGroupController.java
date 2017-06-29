@@ -20,17 +20,17 @@ public class TagGroupController {
     @Autowired
     TagGroupService tagGroupService;
 
-    @RequestMapping(value ="find")
+    @RequestMapping(value ="all")
     public ResponseEntity<List<TagGroup>> findAllTagGroup(){
         return new ResponseEntity<List<TagGroup>>(tagGroupService.findAll(), HttpStatus.OK);
     }
 
-    @RequestMapping(value ="find/{id}")
+    @RequestMapping(value ="{id}")
     public ResponseEntity findTagGroupByName(@PathVariable("id") int id){
         return new ResponseEntity<TagGroup>(tagGroupService.findOne(id), HttpStatus.OK);
     }
 
-    @RequestMapping(value ="/save", method = RequestMethod.POST)
+    @RequestMapping(value ="/add", method = RequestMethod.POST)
     public ResponseEntity<TagGroup> saveTagGroup(@RequestBody TagGroup tagGroup){
         tagGroupService.save(tagGroup);
         return new ResponseEntity<TagGroup>(tagGroup,HttpStatus.OK);

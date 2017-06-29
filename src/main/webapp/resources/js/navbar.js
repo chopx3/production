@@ -200,7 +200,7 @@ function fillData(dataArray) { //Отправка данных из боково
 			"comments":  dataArray[7]
     }
 	console.log(updateCall);
-	RestPost(updateCall, updateEmptyCalls);
+	RestPost(updateCall, updateEmptyCallsURL);
 }
 function change_call(CallInfo) { // Добавление стиля выбранного звонка
 	//console.log(CallInfo);

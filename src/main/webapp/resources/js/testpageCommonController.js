@@ -56,9 +56,9 @@ function drawInfo(value){ // функция звполнения групп кн
 	'<button class="btn btn-info" id="today">Сегодня</button>'+
 	'<button class="btn btn-info" id="week">Неделя</button>'+
 	'<button class="btn btn-info" id="month">Месяц</button>';
-	addInfoBody= 	'<div class=row><label class="leftLabel">Звонки</label><div class="inputTextField"><button class="btn btn-primary catButtons" value="categories" onclick="getInfo(\'categories\')">Категория</button><button class="btn btn-primary catButtons" value="users" onclick="getInfo(\'users\')">Users</button><button class="btn btn-primary catButtons" value="questions" onclick="getInfo(\'questions\')">Вопросы</button></div></div>'+
-	'<div class=row><label class="leftLabel">Агенты</label><div class="inputTextField"><button class="btn btn-primary catButtons" value="empty" onclick="getInfo(\'empty\')" >Незаполненные</button><button class="btn btn-primary catButtons" value="agents" onclick="getInfo(\'agents\')" id="allCalls"> Заполненные </button><button class="btn btn-primary catButtons" value="fullstat" onclick="getInfo(\'fullstat\')"> Вместе </button></div></div>'+
-	'<div class=row><label class="leftLabel">Другие</label><div class="inputTextField"><button class="btn btn-primary catButtons" value="managers" onclick="getInfo(\'managers\')">Менеджер</button><button class="btn btn-primary catButtons" value="outcomings" onclick="getInfo(\'outcomings\')">Исходящие</button><button class="btn btn-primary catButtons" value="feedback" onclick="getInfo(\'feedback\')" >Feedback</button></div></div>';
+	addInfoBody= 	'<div class=row><label class="leftLabel">Звонки</label><div class="inputTextField"><button class="btn btn-primary catButtons" value="byCategory" onclick="getInfo(\'byCategory\')">Категория</button><button class="btn btn-primary catButtons" value="byID" onclick="getInfo(\'byID\')">Users</button><button class="btn btn-primary catButtons" value="byQuestion" onclick="getInfo(\'byQuestion\')">Вопросы</button></div></div>'+
+	'<div class=row><label class="leftLabel">Агенты</label><div class="inputTextField"><button class="btn btn-primary catButtons" value="emptyCalls" onclick="getInfo(\'emptyCalls\')" >Незаполненные</button><button class="btn btn-primary catButtons" value="updatedCalls" onclick="getInfo(\'updatedCalls\')" id="allCalls"> Заполненные </button><button class="btn btn-primary catButtons" value="fullInfoByAgent" onclick="getInfo(\'fullInfoByAgent\')"> Вместе </button></div></div>'+
+	'<div class=row><label class="leftLabel">Другие</label><div class="inputTextField"><button class="btn btn-primary catButtons" value="manager" onclick="getInfo(\'manager\')">Менеджер</button><button class="btn btn-primary catButtons" value="outcomings" onclick="getInfo(\'outcomings\')">Исходящие</button><button class="btn btn-primary catButtons" value="feedback" onclick="getInfo(\'feedback\')" >Feedback</button></div></div>';
 	addInfoFooterFunc = updInfoFooterFunc = "";
 	addInfoHeaderValue = "Выбор категории звонка";
 	updInfoHeaderValue =  'Выберите период:';
@@ -123,7 +123,7 @@ function infoCheck(value, type){ // проверка информации и о�
 					"oktellLogin":$(secondField).val(),
 					"roles": JSON.parse(role)
 					};
-					URL = updAgentURL;
+					URL = updateAgentURL;
 					break;
 					case 'tags':
 					infoToServer ={

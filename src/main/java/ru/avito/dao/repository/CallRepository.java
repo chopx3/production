@@ -31,8 +31,8 @@ public interface CallRepository extends JpaRepository<Call,Integer>{ //TODO ре
     @Query("SELECT c FROM Call c INNER JOIN c.tags t WHERE t IN (:tags)")
     List<Call> findByTags(@Param("tags") List<Tag> tags);
 
-    @Query("SELECT c FROM Call c WHERE c.questionId IN (:ids) AND c.timeStart BETWEEN :timeStart AND :timeEnd")
-    List<Call> findByQuestionIdAndTimeStartBetween(@Param("ids") Integer ids,
+    @Query("SELECT c FROM Call c WHERE c.questionId IN (:question) AND c.timeStart BETWEEN :timeStart AND :timeEnd")
+    List<Call> findByQuestionIdAndTimeStartBetween(@Param("question") Integer question,
                                                    @Param("timeStart") Long timeStart,
                                                    @Param("timeEnd") Long timeEnd);
 }

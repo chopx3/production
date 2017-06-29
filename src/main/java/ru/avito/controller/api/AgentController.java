@@ -4,7 +4,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.core.context.SecurityContext;
 import org.springframework.web.bind.annotation.*;
-import ru.avito.JsonConverter;
 import ru.avito.controller.Path;
 import ru.avito.model.agent.Agent;
 import ru.avito.services.AgentService;
@@ -22,23 +21,23 @@ public class AgentController {
     @Autowired
     private AgentService agentService;
 
-    @RequestMapping(value = "find", method = RequestMethod.GET)
+    @RequestMapping(value = "all", method = RequestMethod.GET)
     private List<Agent> findAll(){
         return agentService.findAll();
     }
 
-    @RequestMapping(value = "find/id/{id}", method = RequestMethod.GET)
+    @RequestMapping(value = "{id}", method = RequestMethod.GET)
     private Agent findAgentById(@PathVariable("id") Integer id){
         return agentService.findOne(id);
     }
 
-    @RequestMapping(value = "find/username/{username}", method = RequestMethod.GET)
+    @RequestMapping(value = "username/{username}", method = RequestMethod.GET)
     private Agent findAgentByUsername(@PathVariable("username") String username){
         return agentService.findByUsername(username);
     }
 
     @ResponseStatus(HttpStatus.CREATED)
-    @RequestMapping(value = "save", method = RequestMethod.POST)
+    @RequestMapping(value = "add", method = RequestMethod.POST)
     public Agent saveAgent(@RequestBody Agent agent){
         return agentService.save(agent);
     }
@@ -54,13 +53,5 @@ public class AgentController {
     @RequestMapping(value = "notes/update", method = RequestMethod.POST)
     public String updateNotesAgent(@RequestBody Agent agent){
         return agentService.updateNotes(agent);
-    }
-
-    @ResponseStatus(HttpStatus.OK)
-    @RequestMapping(value = "notes/find", method = RequestMethod.GET)
-    public String findNotesAgent(HttpSession session){
-        SecurityContext context = (SecurityContext) session.getAttribute("SPRING_SECURITY_CONTEXT");
-        Agent agent = agentService.findByUsername(context.getAuthentication().getName());
-        return JsonConverter.buildJsonByField(agent);
     }
 }
