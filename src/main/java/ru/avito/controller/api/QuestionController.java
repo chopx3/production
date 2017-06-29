@@ -14,13 +14,13 @@ import java.util.List;
  */
 
 @RestController
-@RequestMapping(value = Path.API+"question/find")
+@RequestMapping(value = Path.API+"question")
 public class QuestionController {
 
     @Autowired
     QuestionService questionService;
 
-    @RequestMapping(value = {"", "/"})
+    @RequestMapping(value = "all", produces = "application/json;charset=UTF-8")
     public List<Question> findAll(){
         return questionService.findAll();
     }

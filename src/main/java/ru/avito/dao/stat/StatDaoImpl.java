@@ -261,27 +261,27 @@ public class StatDaoImpl implements StatDao {
         try {
             connection = dataSource.getConnection();
             PreparedStatement p =connection.prepareStatement(
-                    "select t1.Field, t1.Total, coalesce(t2.Total, 0) as Additional " +
-                            "from (SELECT users.oktell_login AS 'Field', count(DISTINCT(chain_id)) AS Total " +
+                    "select t1.agent, t1.full, coalesce(t2.empty, 0) as empty " +
+                            "from (SELECT users.oktell_login AS 'agent', count(DISTINCT(chain_id)) AS full " +
                             "FROM calls JOIN users ON calls.user_id = users.id " +
                             "AND time_begin BETWEEN ? AND ? " +
                             "GROUP BY user_id " +
                             "ORDER BY 2 DESC) as t1 " +
                             "left join" +
-                            "(SELECT users.oktell_login AS 'Field', count(DISTINCT(chain_id)) AS Total " +
+                            "(SELECT users.oktell_login AS 'agent', count(DISTINCT(chain_id)) AS empty " +
                             "FROM calls JOIN users ON calls.user_id = users.id " +
                             "WHERE type =\"EMPTY\" " +
                             "AND time_begin BETWEEN ? AND ? " +
                             "GROUP BY user_id " +
                             "ORDER BY 2 DESC) as t2 " +
-                            "on t1.Field = t2.Field;");
+                            "on t1.agent = t2.agent;");
 
             p.setLong(1, timeStart);
             p.setLong(2, timeEnd);
             p.setLong(3, timeStart);
             p.setLong(4, timeEnd);
             ResultSet resultSet = p.executeQuery();
-            result = convert(resultSet, "Field", "Total", "Additional");
+            result = convert(resultSet, "agent", "full", "empty");
         } catch (SQLException e) {
             System.out.println(e);
         }

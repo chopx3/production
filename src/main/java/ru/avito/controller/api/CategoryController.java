@@ -20,7 +20,7 @@ public class CategoryController {
     @Autowired
     CategoryService categoryService;
 
-    @RequestMapping(value = "find")
+    @RequestMapping(value = "all")
     public List<Category> findAll(){
         return categoryService.findAll();
     }
