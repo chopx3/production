@@ -20,6 +20,16 @@ function drawInfo(value){ // функция звполнения групп кн
 							'<input type="radio" name="options" id="optionAdmin" autocomplete="off"> Admin'+
 							'</label>'+
 						'</div>'+
+				'</div>'+
+				'<div class=row><label 	class="leftLabel">Отдел</label>'+
+						'<div class="btn-group inputTextField" role="group" aria-label="Basic example" data-toggle=buttons>'+
+							'<label class="btn btn-primary active">'+
+							'<input type="radio" name="department" id="departmentPro" autocomplete="off" checked>Pro'+
+							'</label>'+
+							'<label class="btn btn-primary">'+
+							'<input type="radio" name="department" id="departmentFFC" autocomplete="off"> FFC'+
+							'</label>'+
+						'</div>'+
 				'</div>';	
 	updInfoFooterFunc = "infoCheck(\'upd\', \'agents\')";
 	break;
@@ -117,11 +127,13 @@ function infoCheck(value, type){ // проверка информации и о�
 					switch(type){
 					case 'agents':
 					var role = ($('#optionAdmin').is(':checked'))?roleAdmin:roleUser;
+					var department = ($('#departmentPro').is(':checked'))?"pro":"ffc";
 					infoToServer ={
 					"id":idNum,
 					"username": $(firstField).val(),
 					"oktellLogin":$(secondField).val(),
-					"roles": JSON.parse(role)
+					"roles": JSON.parse(role),
+					"department": department
 					};
 					URL = updateAgentURL;
 					break;
