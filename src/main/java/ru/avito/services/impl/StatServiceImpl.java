@@ -37,8 +37,13 @@ public class StatServiceImpl implements StatService {
         return statDao.findTotalOutcomingCalls(timeStart, timeEnd);
     }
 
-
+    @Override
     public String findTotalCallsByAgent(Long timeStart, Long timeEnd) {
+        return statDao.findTotalCallsByAgent(timeStart, timeEnd);
+    }
+
+    @Override
+    public String findTotalCallsByAgentFFC(Long timeStart, Long timeEnd) {
         return statDao.findTotalCallsByAgent(timeStart, timeEnd);
     }
 

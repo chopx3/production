@@ -23,30 +23,31 @@ function getInfo(value){ // получение статистики
 	document.getElementById("secondTable").innerHTML = ""; // очистка данных
 	var outputComments = message = count = id = thead = codeForSum = additional = ''; // объявление переменных
 	var tbot = '</tbody></table></div></div>'; // низ таблицы
-	var firstColumn = data.fields[0];
+	var firstColumn = data.fields[0].toLowerCase();
 	var secondColumn = data.fields[1].toLowerCase(); // названия полей
 	var sum = addSum = 0;	
 	if (data.fields.length == 3){ // если кнопка "Пользователи"
 		var thirdColumn = data.fields[2].toLowerCase(); // третье поле
 		thead = '<div class="row"><div class="table-scroll col-lg-8"><table id="commentTable" class="table table-striped table-hover" ><thead><tr><th class="col-lg-4">' + firstColumn + '</th><th class="col-lg-4">' + secondColumn + '</th><th class="col-lg-4">' + thirdColumn + '</th></tr></thead><tbody>'; // третий столбец
 		for (var i = 0; i < data.columns.length; i++) {		 // цикл отрисовки
-			message = data.columns[i][firstColumn.toLowerCase()];
-			count = data.columns[i][secondColumn.toLowerCase()];
-			additional = data.columns[i][thirdColumn.toLowerCase()];
-			sum += parseInt(count);
-			addSum += parseInt(additional);
+			sorting(data.columns, "total");
+			message = data.columns[i][firstColumn];
+			count = parseInt(data.columns[i][secondColumn]);
+			additional = parseInt(data.columns[i][thirdColumn]);
+			sum += count;
+			addSum += additional;
 			var thirdTd = (tempValue == "byID") ? "<a href='https://adm.avito.ru/users/user/info/"+additional+"' target=_blank>"+additional+"</a>" : additional+"(" + Math.floor(additional/count*100) +"%)";
 			codeForSum = (tempValue == "byID") ? "<tr><td class=sum>"+ "Всего" +"</td><td class=sum>"+sum+"</td></tr>" : "<tr><td class=sum>"+ "Всего" +"</td><td class=sum>"+sum+"</td><td class=sum>"+addSum+"(" + Math.floor(addSum/sum*100) +"%) </td></tr>"; // сумма
 			outputComments += '<tr><td>'+message+'</td><td>'+count+'</td><td class="breakable">'+thirdTd+'</td></tr>';}
-			console.log(message+"\n"+count+"\n"+additional+"\n"+firstColumn+"\n"+secondColumn+"\n"+thirdColumn);
+			//console.log(message+"\n"+count+"\n"+additional+"\n"+firstColumn+"\n"+secondColumn+"\n"+thirdColumn);
 							}
 		else {	thead = '<div class="row"><div class="table-scroll col-lg-8"><table id="commentTable" class="table table-striped table-hover" ><thead><tr><th class="col-lg-6">' + firstColumn + '</th><th class="col-lg-6">' + secondColumn + '</th></tr></thead><tbody>'; // шапка
 				 // если не фидбек
 				for (var i = 0; i < data.columns.length; i++) { // отрисовка в цикле
-				var questionAdd =(tempValue == "byQuestion") ? "<button class='btn btn-primary btn-sm pull-right' onclick=getQuestions(\""+data.columns[i].field+"\")>show</button>" : "";
-				if (tempValue != "byQuestion") {message =  data.columns[i][firstColumn.toLowerCase()];}
-				else {message = Questions[data.columns[i][firstColumn.toLowerCase()] - 1];}
-				count =  data.columns[i][secondColumn.toLowerCase()];
+				var questionAdd =(tempValue == "byQuestion") ? "<button class='btn btn-primary btn-sm pull-right' onclick=getQuestions(\""+data.columns[i][firstColumn]+"\")>show</button>" : "";
+				if (tempValue != "byQuestion") {message =  data.columns[i][firstColumn];}
+				else {message = Questions[data.columns[i][firstColumn] - 1];}
+				count =  data.columns[i][secondColumn];
 				sum += parseInt(count);			// счетчик суммы
 				outputComments += '<tr><td>'+message+'</td><td class="breakable" >'+count+questionAdd+'</td></tr>';} // финальное, формирующееся в цикле, сообщение 
 				codeForSum = "<tr><td class=sum>"+ "Всего" +"</td><td class=sum>"+sum+"</td></tr>"; // сумма

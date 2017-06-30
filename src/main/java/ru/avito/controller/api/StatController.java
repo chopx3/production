@@ -72,6 +72,10 @@ public class StatController {
                                                @PathVariable("endPeriod") Long endPeriod) {
         return statService.findFullAndEmptyFeedbackByAgent(startPeriod, endPeriod);
     }
-
+    @RequestMapping(value = "ffc/{startPeriod}/{endPeriod}", produces = "application/json;charset=UTF-8")
+    public String findTotalCallsByAgentFFC(@PathVariable("startPeriod") Long startPeriod,
+                                                  @PathVariable("endPeriod") Long endPeriod) {
+        return statService.findTotalCallsByAgentFFC(startPeriod, endPeriod);
+    }
 
 }

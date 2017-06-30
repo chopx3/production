@@ -35,8 +35,8 @@ var iJump; // для объединения звонков, прыжок на э
 // Общие функции
 function sorting(json_object, key_to_sort_by) { // функция сортировки json'а со звонками в обратном порядке. stackoverflow. Сортирует по ключу.
     function sortByKey(a, b) {
-        var x = a[key_to_sort_by];
-        var y = b[key_to_sort_by];
+        var x = parseInt(a[key_to_sort_by]);
+        var y = parseInt(b[key_to_sort_by]);
         return ((x > y) ? -1 : ((x < y) ? 1 : 0));
     }
     json_object.sort(sortByKey);
