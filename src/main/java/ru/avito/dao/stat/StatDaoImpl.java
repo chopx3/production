@@ -25,7 +25,7 @@ public class StatDaoImpl implements StatDao {
         try {
             connection = dataSource.getConnection();
             PreparedStatement p =connection.prepareStatement(
-                    "SELECT shop_category.description AS Field, count(DISTINCT(calls.chain_id)) AS Total "+
+                    "SELECT shop_category.description AS Category, count(DISTINCT(calls.chain_id)) AS Total "+
                             "FROM calls JOIN shop_category ON calls.shop_category_id = shop_category.id "+
                             "WHERE shop_category_id = shop_category.id "+
                             "AND time_begin BETWEEN ? AND ? "+
@@ -36,7 +36,7 @@ public class StatDaoImpl implements StatDao {
             p.setLong(1,timeStart);
             p.setLong(2,timeEnd);
             ResultSet resultSet = p.executeQuery();
-            result = convert(resultSet, "Field","Total");
+            result = convert(resultSet, "Category","Total");
 
         } catch (SQLException e) {
             System.out.println(e);
@@ -60,7 +60,7 @@ public class StatDaoImpl implements StatDao {
         try {
             connection = dataSource.getConnection();
             PreparedStatement p =connection.prepareStatement(
-                    "SELECT shop_category.description AS Field, count(DISTINCT(calls.chain_id)) AS Total, calls.avito_link AS Additional "+
+                    "SELECT shop_category.description AS Category, count(DISTINCT(calls.chain_id)) AS Total, calls.avito_link AS ID "+
                     "FROM calls JOIN shop_category ON calls.shop_category_id = shop_category.id "+
                     "WHERE shop_category_id = shop_category.id "+
                     "AND time_begin BETWEEN ? AND ? "+
@@ -70,7 +70,7 @@ public class StatDaoImpl implements StatDao {
             p.setLong(1, timeStart);
             p.setLong(2, timeEnd);
             ResultSet resultSet = p.executeQuery();
-            result = convert(resultSet, "Field", "Total" ,"Additional");
+            result = convert(resultSet, "Category", "Total" ,"ID");
         } catch (SQLException e) {
             System.out.println(e);
         }
@@ -94,7 +94,7 @@ public class StatDaoImpl implements StatDao {
         try {
             connection = dataSource.getConnection();
             PreparedStatement p =connection.prepareStatement(
-                    "SELECT shop_category.description AS Field, count(DISTINCT(calls.chain_id)) AS Total " +
+                    "SELECT shop_category.description AS Category, count(DISTINCT(calls.chain_id)) AS Total " +
                             "FROM calls JOIN shop_category ON calls.shop_category_id = shop_category.id " +
                             "WHERE shop_category_id = shop_category.id " +
                             "AND time_begin BETWEEN ? AND ? " +
@@ -105,7 +105,7 @@ public class StatDaoImpl implements StatDao {
             p.setLong(1, timeStart);
             p.setLong(2, timeEnd);
             ResultSet resultSet = p.executeQuery();
-            result = convert(resultSet, "Field", "Total");
+            result = convert(resultSet, "Category", "Total");
         } catch (SQLException e) {
             System.out.println(e);
         }
@@ -129,7 +129,7 @@ public class StatDaoImpl implements StatDao {
         try {
             connection = dataSource.getConnection();
             PreparedStatement p =connection.prepareStatement(
-                    "SELECT question.id AS Field, count(DISTINCT(chain_id)) As Total " +
+                    "SELECT question.id AS Question, count(DISTINCT(chain_id)) As Total " +
                             "FROM calls JOIN question ON calls.question_id = question.id " +
                             "WHERE question_id=question.id " +
                             "AND time_begin BETWEEN ? AND ? " +
@@ -139,7 +139,7 @@ public class StatDaoImpl implements StatDao {
             p.setLong(1, timeStart);
             p.setLong(2, timeEnd);
             ResultSet resultSet = p.executeQuery();
-            result = convert(resultSet, "Field", "Total");
+            result = convert(resultSet, "Question", "Total");
         } catch (SQLException e) {
             System.out.println(e);
         }
@@ -162,7 +162,7 @@ public class StatDaoImpl implements StatDao {
         try {
             connection = dataSource.getConnection();
             PreparedStatement p =connection.prepareStatement(
-                    "SELECT shop_category.description AS Field, count(isOut) AS Total " +
+                    "SELECT shop_category.description AS Category, count(isOut) AS Total " +
                             "FROM calls JOIN shop_category ON calls.shop_category_id = shop_category.id " +
                             "WHERE  isOut = TRUE " +
                             "AND time_begin BETWEEN ? AND ? " +
@@ -172,7 +172,7 @@ public class StatDaoImpl implements StatDao {
             p.setLong(1, timeStart);
             p.setLong(2, timeEnd);
             ResultSet resultSet = p.executeQuery();
-            result = convert(resultSet, "Field", "Total");
+            result = convert(resultSet, "Category", "Total");
         } catch (SQLException e) {
             System.out.println(e);
         }
@@ -261,8 +261,8 @@ public class StatDaoImpl implements StatDao {
         try {
             connection = dataSource.getConnection();
             PreparedStatement p =connection.prepareStatement(
-                    "select t1.agent, t1.full, coalesce(t2.empty, 0) as empty " +
-                            "from (SELECT users.oktell_login AS 'agent', count(DISTINCT(chain_id)) AS full " +
+                    "select t1.agent, t1.updated, coalesce(t2.empty, 0) as empty " +
+                            "from (SELECT users.oktell_login AS 'agent', count(DISTINCT(chain_id)) AS updated " +
                             "FROM calls JOIN users ON calls.user_id = users.id " +
                             "AND time_begin BETWEEN ? AND ? " +
                             "GROUP BY user_id " +
@@ -281,7 +281,7 @@ public class StatDaoImpl implements StatDao {
             p.setLong(3, timeStart);
             p.setLong(4, timeEnd);
             ResultSet resultSet = p.executeQuery();
-            result = convert(resultSet, "agent", "full", "empty");
+            result = convert(resultSet, "agent", "updated", "empty");
         } catch (SQLException e) {
             System.out.println(e);
         }
@@ -304,28 +304,28 @@ public class StatDaoImpl implements StatDao {
         try {
             connection = dataSource.getConnection();
             PreparedStatement p =connection.prepareStatement(
-                    "select t1.Field, t1.Total, coalesce(t2.Total, 0) AS Additional "+
-                    "FROM (SELECT users.oktell_login AS 'Field', count(DISTINCT(chain_id)) AS Total "+
+                    "select t1.Agent, t1.Full_feedback, coalesce(t2.Empty_feedback, 0) AS Empty_feedback "+
+                    "FROM (SELECT users.oktell_login AS 'Agent', count(DISTINCT(chain_id)) AS 'Full_feedback' "+
                     "FROM calls JOIN users ON calls.user_id = users.id "+
                     " WHERE type =\"FULL_FEEDBACK\" "+
                     " AND time_begin BETWEEN ? AND ?  "+
                     " GROUP BY user_id "+
                     "ORDER BY 2 DESC) as t1 "+
                     "left join "+
-                    "(SELECT users.oktell_login AS 'Field', count(DISTINCT(chain_id)) AS Total "+
+                    "(SELECT users.oktell_login AS 'Agent', count(DISTINCT(chain_id)) AS 'Empty_feedback' "+
                     "FROM calls JOIN users ON calls.user_id = users.id "+
                     "WHERE type =\"EMPTY_FEEDBACK\" "+
                     "AND time_begin BETWEEN ? AND ? "+
                     " GROUP BY user_id "+
                     "ORDER BY 2 DESC) as t2 "+
-                    "on t1.Field = t2.Field;");
+                    "on t1.Agent = t2.Agent;");
 
             p.setLong(1, timeStart);
             p.setLong(2, timeEnd);
             p.setLong(3, timeStart);
             p.setLong(4, timeEnd);
             ResultSet resultSet = p.executeQuery();
-            result = convert(resultSet, "Field", "Total", "Additional");
+            result = convert(resultSet, "Agent", "Full_feedback", "Empty_feedback");
         } catch (SQLException e) {
             System.out.println(e);
         }

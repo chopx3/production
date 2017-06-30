@@ -29,6 +29,9 @@ public class Agent {
     @Column(name = "oktell_login")
     private String oktellLogin;
 
+    @Column(name = "department")
+    private String department;
+
     @Column(name = "notes")
     private String notes;
 
@@ -93,6 +96,10 @@ public class Agent {
         this.roles = roles;
     }
 
+    public String getDepartment() {return department;}
+
+    public void setDepartment(String department) {this.department = department;}
+
 //    public Set<Call> getCalls() {
 //        return calls;
 //    }
@@ -110,7 +117,10 @@ public class Agent {
                 ", password='" + password + '\'' +
                 ", oktellLogin='" + oktellLogin + '\'' +
                 ", notes='" + notes + '\'' +
+                ", department='" + department + '\'' +
                 ", roles=" + roles +
                 '}';
     }
+
+
 }
