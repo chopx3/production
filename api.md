@@ -8,7 +8,7 @@
 [/role/](api.md#role-json)  
 [/tag/](api.md#tag-json)  
 [/taggroup/](api.md#taggroup-json)  
-[/stat/](api.md#stat-json)  
+[/stat/](api.md#stat-json-2-or-3-fields)  
 ## Агенты api, Agent Controller
 ### Agent JSON  
 ```sh
