@@ -1,66 +1,70 @@
 # api
 ### /api  
-[/agent/](Агенты-api-agent-controller)  
-/call/  
-/category/  
-/question/  
-/comment/  
-/role/  
-/tag/  
-/taggroup/  
-/stat/  
+[/agent/](api.md#agentall---get--)  
+[/call/](api.md#callagentstartperiodendperiod---get--)  
+[/category/](api.md#categoryall----get-- )  
+[/question/](api.md#questionall----get-- )  
+[/comment/](api.md#commentuseravitouserid----get-- )  
+[/role/](api.md#roleall---get-- )  
+[/tag/](api.md#tagall---get-- )  
+[/taggroup/](api.md#taggroupall---get-- )  
+[/stat/](api.md#statbycategorystartperiodendperiod---get-- )  
 ## Агенты api, Agent Controller
+### Agent JSON  
+```sh
+{"id":1,"username":"asharipova","oktellLogin":"Sharipova Adelya","department":"pro","notes":null,"roles":[{"id":2,"name":"ROLE_USER"}]}
+```
 ### /agent/all 	- (GET) -  
-  выводит общий список агентов   
+  выводит общий список агентов  
 ### /agent/{id} - (GET) -  
  находит конкретного агента по id  
 ### /agent/username/{username} - (GET) -  
  или по username
 ### /agent/add - (POST) -  
- добавить нового агента 
+ добавить нового агента  
+```sh
+{"username": value,"oktellLogin":value}  
+```
 ### /agent/update - (POST) -  
- обновление агента по ID  
+ обновление агента по ID
+```sh 
+{"id":value, "username": value, "oktellLogin": value, "roles": value, "department": value}
+``` 
 ### /agent/notes/update - (POST) -  
  обновление заметок агента по ID  
+ ```sh 
+ {"id": value, "notes": value } 
+ ```  
 ### /agent/notes/find - (GET) -  
  чтение заметок агента по ID  
   
 ## Звонки api, Call Controller 
+### Call JSON
+```sh
+{"id":221937,"agent":{...},"type":"UPDATED","timeStart":1499065882000,"timeEnd":1499065969000,"chainId":"de855c02-06b4-4b81-8838-2139dc51acdd","comId":"E5EF8B6A-2F47-4B68-81AB-C7015F8AC1AC","tags":[{...}],"comments":"","avitoUserId":89209495,"questionId":5,"shopCategoryId":2,"out":false,"manager":false}
+```
 ### /call/agent/{startPeriod}/{endPeriod} - (GET) -  
  возвращает список звонков для авторизованного агента за указанный период  
 ### /call/update - (POST) -  
  обновление звонка. Ждет объект с параметрами Значения параметров могут быть NULL, но имена должны строго соответствовать указанным.  
-    * Integer id;  
-    * String chainId;  
-    * Integer questId;  
-    * Integer shopCategoryId;  
-    * Integer agentId;  
-    * Long avitoUserId;  
-    * Boolean isManager;  
-    * String type;  
-    * Set<Tag> tags;  
+```sh
+{agentId: 33, avitoUserId: "101053604", chainId: "7d716d26-15f5-4178-849e-ca22ea451022", comments: "", isManager: false, questId: 1, shopCategoryId: 5, tags: [{...}], type: "UPDATED"}
+```
 ### /call/feedback - (POST) -  
  обновление feedback - звонков. Ждет объект с параметрами Значения параметров могут быть NULL, но имена должны строго соответствовать указанным.  
-    * Integer id;  
-    * Integer agentId;  
-    * String comId;  
-    * Long avitoUserId;  
-    * Long timeStart;  
-    * String type;  
-    * String comments;  
-    * Set<Tag> tags;  
+ ```sh
+ {agentId: 33, chainId: "b3dce215-1a55-45fb-b3dc-da4179b7da19", comments: "123", tags: [...], type: "FULL_FEEDBACK"}
+ ```
 ### /call/type/{typecall}/{startPeriod}/{endPeriod} - (GET) -  
  возвращает список звонков конкретного типа для авторизованного агента  
-typecall: EMPTY, EMPTY_FEEDBACK, FULL_FEEDBACK, UPDATED.  
-### /call/byTags - (POST) -  
- поиск по тегам.  
-Ждет массив объектов тэг (можно только id) пример: var ids=[{"id":17},{"id":18}]  
-    int id;  
-    String name;  
-    String value;  
-    private String description;  
-### /call/user/{avitoUserId}/{page} - (GET) -  
- поиск всех звонков по ID пользователя постранично, по убыванию. - пока не используется  
+typecall:    
+* EMPTY - пустой звонок, еще не заполнен
+* UPDATED - заполненный звонок
+* EMPTY_FEEDBACK - заполненный звонок, тэг feedback(unhappy) стоит, но информация feedback'a еще не отправлена
+* FULL_FEEDBACK - заполненный звонок, стоит тэг feedback(unhappy), информация отправлена
+### `/call/byTags - (POST) -  `
+### `/call/user/{avitoUserId}/{page} - (GET) -`  
+ `поиск всех звонков по ID пользователя постранично, по убыванию. - пока не используется`  
 ### /call/user/{avitoUserId}/all - (GET) -  
  поиск всех звонков по ID пользователя.  
 ### /call/user/{avitoUserId}/agent/{agentId} - (GET) -  
@@ -68,46 +72,95 @@ typecall: EMPTY, EMPTY_FEEDBACK, FULL_FEEDBACK, UPDATED.
 ### /call/question/{question}/{startPeriod}/{endPeriod} - (GET) -  
  поиск звонков по определенному вопросу и периоду времени (для статистики)  
 ## Категории api, Category Controller  
+### Category JSON
+```sh
+[{"description":"Недвижимость","id":1}, ... ]
+```
 ### /category/all  - (GET) -  
  список категорий.  
-### <del>category/{id} </del>  
-### <del>category/add </del>  
+### `category/{id} `  
+### `category/add `  
 ## Вопросы api, question controller
+### Question JSON
+```sh
+[{"id":1,"description":"Блокировка (отклонение) объявления"}, ... ]
+```
 ### /question/all  - (GET) -  
  список вопросов.  
-### <del>question/{id} </del>  
-### <del>question/add </del>  
+### `question/{id} `  
+### `question/add `  
 ## Комментарии api, Comment Controller 
+### Comment JSON
+```sh
+[{"id":711,"avitoUserId":5051227,"postTime":1498746357442,"message":"505","agent":{...} }, ...]
+```
 ### /comment/user/{avitoUserId}  - (GET) -  
  список комментариев для указанного пользователя.  
 ### /comment/add - (POST) -  
  добавляет комментарий на учетку.  
-### <del> /comment/delete </del>  
+ ```sh
+ {"avitoUserId": id, "postTime": new Date().getTime(), "message": message }
+ ```
+### ` /comment/delete `  
 ## Роли api, Role Controller
+### Role JSON
+```sh
+[{"id":1,"name":"ROLE_ADMIN"},{"id":2,"name":"ROLE_USER"}]
+```
 ### /role/all - (GET) -  
  список ролей.  
-### <del>role/{id}</del>   
-## Тэги api, Tag controller		  
+### `role/{id}`   
+## Тэги api, Tag controller
+### Tag JSON
+```sh
+[ {"id":1,"name":"Listing Fees","value":"lf","description":"Вопросы по платным размещениям"}, ... ]
+```
 ### /tag/all - (GET) -  
  список тегов без групп  
 ### /tag/{id} - (GET) -  
  поиск тега по заданному ID  
-### /tag/changeGroup - (POST) -  
+### /tag/changeGroup - (POST) -
  редактирование группы тэга  
+ ```sh
+ { "id": idNum, "value": $("#exampleSelect1").val() }
+ ```
 ### /tag/add - (POST) -  
  добавление тега   
+ ```sh
+ {"value":$(firstField).val(), "name": $(secondField).val(), "description": $(thirdField).val() };
+ ```
 ### /tag/update - (POST) -  
  редактирование информации о тэге  
-## Группы тэгов api, Taggroup Controller						  
+  ```sh
+ {"id":idNum, "value":$(firstField).val(), "name": $(secondField).val(), "description": $(thirdField).val() };
+ ```
+## Группы тэгов api, Taggroup Controller		
+### Taggroup JSON
+```sh
+[{"id":1,"name":"Main","description":"Основная группа ","tags":[...]}, ...]
+```
 ### /taggroup/all  - (GET) -  
  список групп тегов  
 ### /taggroup/{id} - (GET) -  
  поиск группы тегаов по ID  
 ### /taggroup/add  - (POST) -  
  добавление группы тегов   
+ ```sh
+ {"name": $(firstField).val(), "description": $(secondField).val()}
+ ```
 ### /taggroup/update - (POST) -  
  редактирование группы тегов   
+ ```sh
+ {"id":id, "name": $(firstField).val(), "description": $(secondField).val()}
+ ```
  ## Статистика api, Stat Controller 
+ ### Stat JSON (2 or 3 fields)
+ ```sh
+ {"fields":["Category", "Total"], "columns":[{"category":"Недвижимость","total":"4"}, ...]}
+ ```
+  ```sh
+ {"fields":["Category", "Total", "ID"], "columns":[ {"category":"Частник", "total":"3", "id":"-1"}, ... ]}
+ ```
 ### /stat/byCategory/{startPeriod}/{endPeriod} - (GET) -  
  вывод статистики по категориям за определенный период  
 ### /stat/outcomings/{startPeriod}/{endPeriod} - (GET) -  
