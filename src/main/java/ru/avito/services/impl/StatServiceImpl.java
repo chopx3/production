@@ -44,7 +44,7 @@ public class StatServiceImpl implements StatService {
 
     @Override
     public String findTotalCallsByAgentFFC(Long timeStart, Long timeEnd) {
-        return statDao.findTotalCallsByAgent(timeStart, timeEnd);
+        return statDao.findTotalCallsByAgentFFC(timeStart, timeEnd);
     }
 
     @Override

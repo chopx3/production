@@ -27,6 +27,9 @@ function getCalls(){ // Получить список всех звонков и
 								tagCollector +=feedbackInfo[i].tags[j].value + ' '; // сборка тэгов
 								if (tagsMap.has(feedbackInfo[i].tags[j].id.toString())) {tagCheck=true;}// проверка, есть ли этот тэг в мапе, приведение к стрингу, если есть - тру
 								}
+								console.log(catNum);
+								console.log(feedbackInfo[i].shopCategoryId-1);
+								console.log(tagCheck);
 							if( (catNum==6||catNum==feedbackInfo[i].shopCategoryId-1) && tagCheck ){ // если подходит категория или выбраны все категории и тэг есть в мапе	
 							timetag = moment(feedbackInfo[i].timeStart).format(dateFormat); // дата, стандартный вид
 							userID = feedbackInfo[i].avitoUserId;
@@ -43,7 +46,7 @@ function getCalls(){ // Получить список всех звонков и
 							Call += '<div class="row"><div id="feedbackCall' +i+'" class="call col-lg-5" data-time="'+timetag+'" data-sign="'+feedbackInfo[i].agent.username+'" value="'+ tagCollector +'"><span>'+ timetag +' '+ feedbackInfo[i].agent.username +  '</span><span class="pull-right myLabel label label-primary" >'+ Categories[(feedbackInfo[i].shopCategoryId-1)] +'</span><span class="pull-right myLabel label label-primary">ID:<a href="https://adm.avito.ru/users/user/info/'+userID+'" target=_blank>'+userID+'</a></span><br>'+nextCall + audioURL + '</div>'+Comment + Tags+'</div>';
 							// полный блок звонка, новая строка, 5\12 экрана, время, агент, инфа о звонке, аудио тэг, комменты, тэги. Пополняется на каждом витке цикла
 							i+=iJump; //прыжок, если есть звонки с тем же ID
-							} else {i++;} // не подходит - следующий звонок							
+							} // не подходит - следующий звонок							
 						}
 					}
 					document.getElementById("MainForm").innerHTML = Call; // вся собранная информация в главную форму
