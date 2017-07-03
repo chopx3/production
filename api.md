@@ -1,14 +1,14 @@
 # api
 ### /api  
-[/agent/](api.md#agentall---get--)  
-[/call/](api.md#callagentstartperiodendperiod---get--)  
-[/category/](api.md#categoryall----get-- )  
-[/question/](api.md#questionall----get-- )  
-[/comment/](api.md#commentuseravitouserid----get-- )  
-[/role/](api.md#roleall---get-- )  
-[/tag/](api.md#tagall---get-- )  
-[/taggroup/](api.md#taggroupall---get-- )  
-[/stat/](api.md#statbycategorystartperiodendperiod---get-- )  
+[/agent/](api.md#agent-json)  
+[/call/](api.md#call-json)  
+[/category/](api.md#category-json )  
+[/question/](api.md#question-json)  
+[/comment/](api.md#comment-json)  
+[/role/](api.md#role-json)  
+[/tag/](api.md#tag-json)  
+[/taggroup/](api.md#taggroup-json)  
+[/stat/](api.md#stat-json)  
 ## Агенты api, Agent Controller
 ### Agent JSON  
 ```sh
