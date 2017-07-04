@@ -12,7 +12,7 @@
 ## Агенты api, Agent Controller
 ### Agent JSON  
 ```sh
-{"id":1,"username":"asharipova","oktellLogin":"Sharipova Adelya","department":"pro","notes":null,"roles":[{"id":2,"name":"ROLE_USER"}]}
+{"id":1,"username":"name","oktellLogin":"Oktell Login","department":"pro","notes":null,"roles":[{"id":2,"name":"ROLE_USER"}]}
 ```
 ### /agent/all 	- (GET) -  
   выводит общий список агентов  
@@ -41,19 +41,19 @@
 ## Звонки api, Call Controller 
 ### Call JSON
 ```sh
-{"id":221937,"agent":{...},"type":"UPDATED","timeStart":1499065882000,"timeEnd":1499065969000,"chainId":"de855c02-06b4-4b81-8838-2139dc51acdd","comId":"E5EF8B6A-2F47-4B68-81AB-C7015F8AC1AC","tags":[{...}],"comments":"","avitoUserId":89209495,"questionId":5,"shopCategoryId":2,"out":false,"manager":false}
+{"id":221937,"agent":{...},"type":"UPDATED","timeStart":1499065882000,"timeEnd":1499065969000,"chainId":"de855c02-06b4-4b81-8838-2139dc51acdd","comId":"E5EF8B6A-2F47-4B68-81AB-C7015F8AC1AC","tags":[{...}],"comments":"","avitoUserId":123456,"questionId":5,"shopCategoryId":2,"out":false,"manager":false}
 ```
 ### /call/agent/{startPeriod}/{endPeriod} - (GET) -  
  возвращает список звонков для авторизованного агента за указанный период  
 ### /call/update - (POST) -  
  обновление звонка. Ждет объект с параметрами Значения параметров могут быть NULL, но имена должны строго соответствовать указанным.  
 ```sh
-{agentId: 33, avitoUserId: "101053604", chainId: "7d716d26-15f5-4178-849e-ca22ea451022", comments: "", isManager: false, questId: 1, shopCategoryId: 5, tags: [{...}], type: "UPDATED"}
+{agentId: 33, avitoUserId: "101053604", chainId: "7d716d26-1234-5678-849e-ca22ea451022", comments: "", isManager: false, questId: 1, shopCategoryId: 5, tags: [{...}], type: "UPDATED"}
 ```
 ### /call/feedback - (POST) -  
  обновление feedback - звонков. Ждет объект с параметрами Значения параметров могут быть NULL, но имена должны строго соответствовать указанным.  
  ```sh
- {agentId: 33, chainId: "b3dce215-1a55-45fb-b3dc-da4179b7da19", comments: "123", tags: [...], type: "FULL_FEEDBACK"}
+ {agentId: 33, chainId: "b3dce215-1234-5678-b3dc-da4179b7da19", comments: "123", tags: [...], type: "FULL_FEEDBACK"}
  ```
 ### /call/type/{typecall}/{startPeriod}/{endPeriod} - (GET) -  
  возвращает список звонков конкретного типа для авторизованного агента  
@@ -92,7 +92,7 @@ typecall:
 ## Комментарии api, Comment Controller 
 ### Comment JSON
 ```sh
-[{"id":711,"avitoUserId":5051227,"postTime":1498746357442,"message":"505","agent":{...} }, ...]
+[{"id":711,"avitoUserId":123456,"postTime":1498746357442,"message":"505","agent":{...} }, ...]
 ```
 ### /comment/user/{avitoUserId}  - (GET) -  
  список комментариев для указанного пользователя.  
