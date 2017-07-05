@@ -7,7 +7,7 @@
     <script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
 	<script src="${pageContext.request.contextPath}/resources/js/testpageAgentsController.js"></script>
 	<script src="${pageContext.request.contextPath}/resources/js/testpageStatController.js" type="text/javascript"charset="cp1251"></script>
-	<script src="${pageContext.request.contextPath}/resources/js/calendar_daterange.js" type="text/javascript" charset="utf-8"></script>
+	<script src="${pageContext.request.contextPath}/resources/js/calendar.js" type="text/javascript" charset="utf-8"></script>
 	<script src="${pageContext.request.contextPath}/resources/js/testpageTagsController.js"></script>
 	<script src="${pageContext.request.contextPath}/resources/js/testpageCommonController.js"></script>
 	<link href="${pageContext.request.contextPath}/resources/css/testPage.css" rel="stylesheet">

@@ -11,7 +11,7 @@
 	<script src="${pageContext.request.contextPath}/resources/js/commonData.js"></script>
     <script src="${pageContext.request.contextPath}/resources/js/testpageAgentsController.js"></script>
     <script src="${pageContext.request.contextPath}/resources/js/testpageStatController.js" type="text/javascript"charset="utf-8"></script>
-    <script src="${pageContext.request.contextPath}/resources/js/calendar_daterange.js" type="text/javascript" charset="utf-8"></script>
+    <script src="${pageContext.request.contextPath}/resources/js/calendar.js" type="text/javascript" charset="utf-8"></script>
     <script src="${pageContext.request.contextPath}/resources/js/testpageTagsController.js"></script>    
     <link href="${pageContext.request.contextPath}/resources/css/testPage.css" rel="stylesheet">
 	<link href="${pageContext.request.contextPath}/resources/css/calls.css" rel="stylesheet">

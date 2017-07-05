@@ -11,7 +11,7 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 	<script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
-	<script src="${pageContext.request.contextPath}/resources/js/calendar_daterange.js"></script>
+	<script src="${pageContext.request.contextPath}/resources/js/calendar.js"></script>
 	<script src="${pageContext.request.contextPath}/resources/js/commonData.js"></script>
     <script src="${pageContext.request.contextPath}/resources/js/navbar.js" charset="utf-8"></script>
 	<script src="${pageContext.request.contextPath}/resources/js/todayCallsController.js" charset="utf-8"></script>

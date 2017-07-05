@@ -1,6 +1,5 @@
 var roleUser = '[{ "id":2,"name":"ROLE_USER" }]';
 var roleAdmin = '[{ "id":1,"name":"ROLE_ADMIN" }]';
-var dataArray = [];
 function fillAgents(){ // отрисовка таблицы агентов
 		document.getElementById("secondTable").innerHTML = ""; // обнуление инфы во второй таблице, дополнительной 
 		drawInfo("agents"); // отрисовка дополнительных боковых кнопок

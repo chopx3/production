@@ -27,9 +27,6 @@ function getCalls(){ // Получить список всех звонков и
 								tagCollector +=feedbackInfo[i].tags[j].value + ' '; // сборка тэгов
 								if (tagsMap.has(feedbackInfo[i].tags[j].id.toString())) {tagCheck=true;}// проверка, есть ли этот тэг в мапе, приведение к стрингу, если есть - тру
 								}
-								console.log(catNum);
-								console.log(feedbackInfo[i].shopCategoryId-1);
-								console.log(tagCheck);
 							if( (catNum==6||catNum==feedbackInfo[i].shopCategoryId-1) && tagCheck ){ // если подходит категория или выбраны все категории и тэг есть в мапе	
 							timetag = moment(feedbackInfo[i].timeStart).format(dateFormat); // дата, стандартный вид
 							userID = feedbackInfo[i].avitoUserId;
@@ -67,7 +64,7 @@ function createTagsTable(){ // отрисовка блока с выбором �
 	var columnFinal = oddColumns = oddDiv = ""; // итоговый текст, нечетные колонки, нечетный див
 	var activeColumns = 0; // группы тэгов, подходящие под условия
 	for (var columns = 0; columns<tagGroups;columns++){ // цикл, пробегается по всем группам тэгов
-		if (data[columns].tags.length>0&&data[columns].name!="Unfiltered"){ // не выводит группу Мэйн, пустые группы и Unfiltered
+		if (data[columns].tags.length>0&&data[columns].name!="Unfiltered"){ // не выводит пустые группы и Unfiltered
 			activeColumns++;
 			if ((activeColumns%2)) {oddColumns= '<div class="container-column">'; oddDiv = '';} // если группа 1,3,5 ... То открывает столбец
 			else {oddColumns = "";oddDiv = "</div>";}// 2,4,6 - закрывает столбец

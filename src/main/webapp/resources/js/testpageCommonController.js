@@ -1,5 +1,6 @@
 var idNum;
-function drawInfo(value){ // функция звполнения групп кнопок
+var dataArray = [];
+function drawInfo(value){ // функция заполнения групп кнопок
 	$("#updateWrapper").removeClass("active"); // скрыть обновление информации
 	var addInfoBody = addInfoFooterFunc = updInfoBody = updInfoFooterFunc = addInfoHeaderValue = updInfoHeaderValue = updInfoFooterFuncSecond = ""; // обнуление 
 	switch(value) {//заполнение информации, всего 6 полей. Шапка, тело и низ, для обновления и добавления инфы.
