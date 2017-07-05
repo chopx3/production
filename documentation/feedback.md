@@ -1,14 +1,14 @@
 # js files
-## [/adminFeedbackMain.js/](feedback.md#adminFeedbackMain.js)
-## [/adminFeedbackTags.js/](feedback.md#adminFeedbackTags.js)
-## [/calendar_daterange.js/](feedback.md#calendar_daterange.js)
+## [/adminFeedbackMain.js/](feedback.md#adminFeedbackMainjs-1)
+## [/adminFeedbackTags.js/](feedback.md#adminFeedbackTagsjs-1)
+## [/calendar_daterange.js/](feedback.md#calendar_daterangejs-1)
 
 ### adminFeedbackMain.js
 #### Основной файл для отрисовки звонков и тэгов в фидбеке  
 #### Функции
-1.  [/getCalls()/](feedback.md#getCalls())
-2.  [/createTagsTable()/](feedback.md#createTagsTable())
-3.  [/document.ready()/](feedback.md#afm-document.ready()) 
+1.  [/getCalls()/](feedback.md#getCalls)
+2.  [/createTagsTable()/](feedback.md#createTagsTable)
+3.  [/document.ready()/](feedback.md#afm-documentready) 
 
 #### Глобальные переменные
 1. catNum - категория вопроса, для сортировки
@@ -29,12 +29,12 @@ if( (catNum==6||catNum==feedbackInfo[i].shopCategoryId-1) && tagCheck )
 ### adminFeedbackTags.js
 #### Основной файл для работы с тэгами на странице Feedback. Работа кнопок, карта тэгов, вывод информации, подсчет и так далее
 #### Функции
-1.  [/document.ready()/](feedback.md#aft-document.ready())
-2.  [/toggle()/](feedback.md#toggle())
-3. clickOnLabel(id)
-4.  [/checkAllButton()/](feedback.md#checkAllButton())
-5.  [/clearButton()/](feedback.md#clearButton())
-6.  [/TagActiveChecker()/](feedback.md#TagActiveChecker())
+1.  [/document.ready()/](feedback.md#aft-documentready)
+2.  [/toggle()/](feedback.md#toggle)
+3. [/clickOnLabel(id)/](feedback.md#clickOnLabelid)
+4.  [/checkAllButton()/](feedback.md#checkAllButton)
+5.  [/clearButton()/](feedback.md#clearButton)
+6.  [/TagActiveChecker()/](feedback.md#TagActiveChecker)
 
 #### Глобальные переменные
 1. tagsMap - хранит в себе выбранные тэги, с которыми потом идет сравнение
@@ -55,10 +55,10 @@ if( (catNum==6||catNum==feedbackInfo[i].shopCategoryId-1) && tagCheck )
 Главная функция. Создает мапу тэгов, при каждом вызове, в которую добавляет информацию о выбранных тэгах. После этого, в цикле проходит все тэги и смотрит на наличие класса blueOne. При наличии плюсует в количество активных тэгов и добавляет название тэга в общую строку вывода. При совпадении количества выбранных тэгов с максимальным количеством тэгов(проверка tagSum) выводит фразу - выбраны все тэги.
 
 # css files
-## [/adminFeedback.css/](feedback.md#adminFeedback.css)
-## [/calls.css/](feedback.md#calls.css)
-## [/feedback-tags-main.css/](feedback.md#feedback-tags-main.css)
-## [/feedback-tags-admin.css/](feedback.md#feedback-tags-admin.css)
+## [/adminFeedback.css/](feedback.md#adminFeedbackcss-1)
+## [/calls.css/](feedback.md#callscss-1)
+## [/feedback-tags-main.css/](feedback.md#feedback-tags-maincss-1)
+## [/feedback-tags-admin.css/](feedback.md#feedback-tags-admincss-1)
 
 ### adminFeedback.css
 Содержит в себе стили:
@@ -67,11 +67,10 @@ if( (catNum==6||catNum==feedbackInfo[i].shopCategoryId-1) && tagCheck )
 3. Отрисовку блока комментарий (.comments,\#noteArea, .might-overflow + .might-overflow:hover, .cursor-def)
 4. Отрисовка тэгов (.tags, \#tagInfo)
 5. Манипуляции с высотой и расположением блоков (.li-centered, .same-height, .full-height, .add-height)
+
 ### calls.css
+общий файл для отрисовки звонка. Содержит в себе всю информацию - как звонок рисуется(.call), как он выглядит активным(.call.active), аудио-тэг (.audio-call), отступы (.no-margin-top), подсветка твоих звонков (.yourCall) , дополнительная информация на звонках (.myLabel, .myLabel>a, mylabel>a:link|visited) и комментариев к звонкам (.might-overflow|:hover, .commentBox)
 ### feedback-tags-main.css
+Файл с совпадающими параметрами для feedbacka и для основной части сайта для отображения блоков тэгов. Группы, строки, блоки, реакция на наведение, отношение разных блоков по отношению друг к другу
 ### feedback-tags-admin.css
-
-
-
-
-
+Описание отображение выпадающего блока с тэгами. Все подробно закомметировано в самом файле. Главная форма, хедер, контейнер, первый блок контейнера, колонки и группы
