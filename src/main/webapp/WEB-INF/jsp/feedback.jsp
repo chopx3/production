@@ -16,8 +16,8 @@
     <script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/adminFeedbackTags.js"></script>
     <link href="${pageContext.request.contextPath}/resources/css/adminFeedback.css" rel="stylesheet">
 	<link href="${pageContext.request.contextPath}/resources/css/calls.css" rel="stylesheet">
-    <link href="${pageContext.request.contextPath}/resources/css/feedback-tags-main.css" rel="stylesheet">
-	<link href="${pageContext.request.contextPath}/resources/css/feedback-tags-admin.css" rel="stylesheet">
+    <link href="${pageContext.request.contextPath}/resources/css/feedbackTagsMain.css" rel="stylesheet">
+	<link href="${pageContext.request.contextPath}/resources/css/feedbackTagsAdmin.css" rel="stylesheet">
     <script type="text/javascript" src="https://cdn.jsdelivr.net/bootstrap.daterangepicker/2/daterangepicker.js"></script>
     <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/bootstrap.daterangepicker/2/daterangepicker.css" />
 	<link href="https://gitcdn.github.io/bootstrap-toggle/2.2.2/css/bootstrap-toggle.min.css" rel="stylesheet">

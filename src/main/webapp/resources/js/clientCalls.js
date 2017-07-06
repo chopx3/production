@@ -74,6 +74,13 @@ function drawClientCalls(pageNumber){ // отрисовка собственно
 				}
 	document.getElementById("MainForm").innerHTML =pagination + outputCalls + pagination; // финальный результат, линия пагинации + звонки
 }
+function collectTagForGetCalls(data){ // сбор тэгов для отрисовки в звонках пользователя
+	var tags = "";
+	for (var i=0;i<data.length;i++){ // цикл для сборки тэгов
+	tags +=data[i].value + ' '; // сборка тэгов
+}
+return tags;
+}
 function addButton() { // Отрисовка кнопки для вывода звонков
 	document.getElementById("CallForm").innerHTML =	'<div class="row">'+
 			'<div class="col-lg-8">'+

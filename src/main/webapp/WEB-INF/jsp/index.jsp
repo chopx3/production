@@ -22,8 +22,8 @@
     <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/sidebar.css">
 	<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/callform.css">
 	<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/NotesAndComments.css">
-	<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/feedback-tags-main.css">
-	<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/feedback-tags-firecatcher.css">
+	<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/feedbackTagsMain.css">
+	<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/feedbackTagsFirecatcher.css">
 	<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/calls.css">
 	<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/standartAdditionalColours.css">
 	<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/mainWorkPlace.css">

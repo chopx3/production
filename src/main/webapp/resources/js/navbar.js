@@ -138,13 +138,6 @@ function fillInfo(callForm, headerText, MainForm) {
 	document.getElementById("MainForm").innerHTML = MainForm;
 	document.getElementById("Hello").innerHTML = '';
 }
-function collectTagForGetCalls(data){ // сбор тэгов для отрисовки в звонках пользователя
-	var tags = "";
-	for (var i=0;i<data.length;i++){ // цикл для сборки тэгов
-	tags +=data[i].value + ' '; // сборка тэгов
-}
-return tags;
-}
 function collectAdditionalInfo(data, type){ // сбор дополнительной информации
 	var additionalInfo = "";
 	if (data.type == "EMPTY"){additionalInfo+="<span class='pull-right myLabel label btn-avito-red-2'><a title='Информация еще не заполнена'>Не заполнен</a></span>";}

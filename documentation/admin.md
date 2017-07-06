@@ -1,13 +1,26 @@
 # js files
-## [/testpageAgentsController.js/](admin.md#testpageagentscontrollerjs-1)
-## [/testpageCommonController.js/](admin.md#testpagecommoncontrollerjs-1)
-## [/testpageStatController.js/](admin.md#testpagestatcontrollerjs-1)
-## [/testpageTagsController.js/](admin.md#testpagetagscontrollerjs-1)
-
+## Написанные
+### [testpageAgentsController.js](admin.md#testpageagentscontrollerjs-1)
+### [testpageCommonController.js](admin.md#testpagecommoncontrollerjs-1)
+### [testpageStatController.js](admin.md#testpagestatcontrollerjs-1)
+### [testpageTagsController.js](admin.md#testpagetagscontrollerjs-1)
+___
+## Внешние
+### jquery.min.js (3.1.1) 
+### bootstrap.min.js (3.3.7)
+### moment.js (latest) 
+для работы с датами
+### daterangepicker (2) 
+для работы с календарем
+___
+## Общие
+### [calendar.js](common.md#calendarjs-1)
+### [commonData.js](common.md#commonDatajs-1)
+___
 ### testpageAgentsController.js
 #### Небольшой файл, в котором происходит отрисовка информации по агентам, целая одна функция
 #### Функции
-1.  [/fillAgents()/](admin.md#fillagents)
+1.  [fillAgents()](admin.md#fillagents)
 
 #### Глобальные переменные
 1. roleUser - роль User, кэп
@@ -25,11 +38,11 @@
 ### testpageCommonController.js
 #### Основной общий файл для отрисовки боковых кнопок, управления информацией и отправки данных на сервер, а также поиска и подсветки активного пункта меню
 #### Функции
-1.  [/drawInfo()/](admin.md#drawinfo)
-2.  [/infoCheck()/](admin.md#infocheck)
-3.  [/fillInfo(type)/](admin.md#fillinfotype)
-4.  [/updateInfo(id, nameTag, loginShort, desc)/](admin.md#updateinfoid-nametag-loginshort-desc)
-5.  [/document-ready()/](admin.md#tcc-documentready)
+1.  [drawInfo()](admin.md#drawinfo)
+2.  [infoCheck()](admin.md#infocheck)
+3.  [fillInfo(type)](admin.md#fillinfotype)
+4.  [updateInfo(id, nameTag, loginShort, desc)](admin.md#updateinfoid-nametag-loginshort-desc)
+5.  [document-ready()](admin.md#tcc-documentready)
 
 #### Глобальные переменные
 1. idNum - общая переменная для хранения id элемента для дальнейшей отправки в запрос на сервер
@@ -55,10 +68,10 @@
 ### testpageStatController.js
 #### Здесь хранится вся логика отрисовки страницы статистики
 #### Функции
-1.  [/openStat()/](admin.md#openstat)
-2.  [/getInfo(value)/](admin.md#getinfovalue)
-3.  [/getQuestions(value)/](admin.md#getquestionsvalue)
-4.  [/document-ready()/](admin.md#tsc-documentready)
+1.  [openStat()](admin.md#openstat)
+2.  [getInfo(value)](admin.md#getinfovalue)
+3.  [getQuestions(value)](admin.md#getquestionsvalue)
+4.  [document-ready()](admin.md#tsc-documentready)
 
 #### Глобальные переменные
 1. startDate - дата начала отсчета
@@ -77,10 +90,10 @@
 ### testpageTagsController.js
 #### Здесь хранится вся логика отрисовки страницы тэгов и групп тэгов
 #### Функции
-1.  [/getTagGroups()/](admin.md#gettaggroups)
-2.  [/fillTags(value)/](admin.md#filltagsvalue)
-3.  [/drawTable(info,isGroup)/](admin.md#drawtableinfoisgroup)
-4.  [/ChangeTagGroup()/](admin.md#changetaggroup)
+1.  [getTagGroups()](admin.md#gettaggroups)
+2.  [fillTags(value)](admin.md#filltagsvalue)
+3.  [drawTable(info,isGroup)](admin.md#drawtableinfoisgroup)
+4.  [ChangeTagGroup()](admin.md#changetaggroup)
 
 #### Глобальные переменные
 1. checker - буферное значение выбора режима: тэги или группа тэгов
@@ -95,9 +108,16 @@ get запрос к базе, для получения группы тэгов 
 рекурсивная функция, которая пробегает либо по всем тэгам и выводит их, либо по всем группам тэгов, выводя сначала название группы, а потом тэги, которые есть внутри. Если это группа тэгов - isGroup = true, а логика уже сама делает необходимые запросы. Отрисовка стандартная, разница лишь в добавлении специального класса группе тэгов, для небольшого выделения через css
 #### ChangeTagGroup()
 немного костыльная функция для изменения группы тэгов через переменную value, которая для этого, так-то, не предназначена. Вероятно, в дальнейшем придется добавить дополнительную переменную для этого дела.
+___
 # css files
-## [/testPage.css/](admin.md#testpage-1)
-## [/calls.css/](admin.md#callscss-1)
+## Написанные
+### [testPage.css](admin.md#testpage-1)
+### [calls.css](admin.md#callscss-1)
+___
+## Внешние 
+### bootstrap.css (3.3.7)
+### daterangepicker (2)
+___
 ### testPage.css
 Содержит в себе стили:
 1. Основная обертка (wrapper)
@@ -109,7 +129,7 @@ get запрос к базе, для получения группы тэгов 
 
 ### calls.css
 общий файл для отрисовки звонка. Содержит в себе всю информацию - как звонок рисуется(.call), как он выглядит активным(.call.active), аудио-тэг (.audio-call), отступы (.no-margin-top), подсветка твоих звонков (.yourCall) , дополнительная информация на звонках (.myLabel, .myLabel>a, mylabel>a:link|visited) и комментариев к звонкам (.might-overflow|:hover, .commentBox)
-
+___
 # jsp file
 ## admin.jsp
 Страница включает в себя навигационную панель из 5(пока что) кнопок.

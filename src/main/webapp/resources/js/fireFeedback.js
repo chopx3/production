@@ -36,7 +36,7 @@ function createTagsTable(){ // отрисовка таблицы
 	var serviceMessage = 	"<div><label id='serviceFeedbackMessage'></label></div>"; // сервис сообщения об ошибках или отправлении звонка
 	var commentBox = 		"<div id=commentBox class='input-group'>"+
 							"<textarea class='form-control' rows='4' id='feedbackComment' maxlength='2048'></textarea>"+
-							"<span class='input-group-addon btn btn-success' onclick=CollectInfo()>Save</span></div>"  // блок комментариев и кнопки отправить
+							"<span class='input-group-addon btn btn-success' onclick=collectInfo()>Save</span></div>"  // блок комментариев и кнопки отправить
 	document.getElementById("FeedbackForm").innerHTML = coreHeader+columnFinal+coreFooter+commentBox+serviceMessage; // формирование всего блока фидбек
 	$('label.tag-label').click(function(){ // по нажатию на тэг - добавление класса+выделение синим цветом
 		$(this).toggleClass("blueOne");
@@ -44,7 +44,7 @@ function createTagsTable(){ // отрисовка таблицы
 		$(forcheck).prop('checked', true);
 	}) })
 }
-function CollectInfo() { // сбор инфы по тэгам, отправление на проверку
+function collectInfo() { // сбор инфы по тэгам, отправление на проверку
 lengthOfTagGroup = 0; 
 outputTags ="";
 	$('label[name=info-label]').each(function (){ //каждый тэг
@@ -62,7 +62,7 @@ $('#feedbackComment').removeClass("box-shadow"); // очистить блок о
 $('div.tag-form').removeClass("box-shadow"); // очистить блок от выделения
 if (chainId=="") {$('#serviceFeedbackMessage').text("Выберите звонок").css({"color":"red"}); } //если нет chainID - выберите звонок и ничего не делается
 		else  {
-			if (lengthOfTagGroup<1) {isCorrect = false;
+			if (lengthOfTagGroup == 0) {isCorrect = false;
 					$('div.tag-form').addClass("box-shadow");} // если тэгов нет активных - подсветка и фолс
 			if ($('#feedbackComment').val()=="") {isCorrect=false;
 					$('#feedbackComment').addClass("box-shadow");}  // если комментария нет - подсветка и фолс
@@ -70,7 +70,7 @@ if (chainId=="") {$('#serviceFeedbackMessage').text("Выберите звоно
 										postFeedback(); // отправка фидбека
 										setTimeout(function(){ drawBadges(); drawFeedback()}, 800); //сброс данных, отрисовка заново
 			} 
-			else {$('#serviceFeedbackMessage').text("Введены не все данные").css({"color":"red"});} // если фолс - данное сообщение
+			else {$('#serviceFeedbackMessage').text("Введены не все данные").css({"color":"red"});} // если false - данное сообщение
 		}
 }
 function postFeedback () { // Отправить  фидбек

@@ -1,14 +1,28 @@
 # js files
-## [/adminFeedbackMain.js/](feedback.md#adminfeedbackmainjs-1)
-## [/adminFeedbackTags.js/](feedback.md#adminfeedbacktagsjs-1)
-## [/calendar_daterange.js/](feedback.md#calendar_daterangejs-1)
-
+## Написанные
+### [adminFeedbackMain.js](feedback.md#admin#feedbackmainjs-1)
+### [adminFeedbackTags.js](feedback.md#admin#feedbacktagsjs-1)
+___
+## Внешние
+### jquery.min.js (3.1.1) 
+### bootstrap.min.js (3.3.7)
+### moment.js (latest) 
+для работы с датами
+### daterangepicker (2) 
+для работы с календарем
+### bootstrap-toggle.min.js (2.2.2)
+переключатель
+___
+## Общие
+### [calendar.js](common.md#calendarjs-1)
+### [commonData.js](common.md#commonDatajs-1)
+___
 ### adminFeedbackMain.js
 #### Основной файл для отрисовки звонков и тэгов в фидбеке  
 #### Функции
-1.  [/getCalls()/](feedback.md#getcalls)
-2.  [/createTagsTable()/](feedback.md#createtagstable)
-3.  [/document.ready()/](feedback.md#afm-documentready) 
+1.  [getCalls()](feedback.md#getcalls)
+2.  [createTagsTable()](feedback.md#createtagstable)
+3.  [document.ready()](feedback.md#afm-documentready) 
 
 #### Глобальные переменные
 1. catNum - категория вопроса, для сортировки
@@ -29,12 +43,12 @@ if( (catNum==6||catNum==feedbackInfo[i].shopCategoryId-1) && tagCheck )
 ### adminFeedbackTags.js
 #### Основной файл для работы с тэгами на странице Feedback. Работа кнопок, карта тэгов, вывод информации, подсчет и так далее
 #### Функции
-1.  [/document.ready()/](feedback.md#aft-documentready)
-2.  [/toggle()/](feedback.md#toggle)
-3. [/clickOnLabel(id)/](feedback.md#clickonlabelid)
-4.  [/checkAllButton()/](feedback.md#checkallbutton)
-5.  [/clearButton()/](feedback.md#clearbutton)
-6.  [/TagActiveChecker()/](feedback.md#tagactivechecker)
+1.  [document.ready()](feedback.md#aft-documentready)
+2.  [toggle()](feedback.md#toggle)
+3.  [clickOnLabel(id)](feedback.md#clickonlabelid)
+4.  [checkAllButton()](feedback.md#checkallbutton)
+5.  [clearButton()](feedback.md#clearbutton)
+6.  [TagActiveChecker()](feedback.md#tagactivechecker)
 
 #### Глобальные переменные
 1. tagsMap - хранит в себе выбранные тэги, с которыми потом идет сравнение
@@ -53,13 +67,21 @@ if( (catNum==6||catNum==feedbackInfo[i].shopCategoryId-1) && tagCheck )
 обратное действие, убирает со всех выделение в цикле
 #### TagActiveChecker
 Главная функция. Создает мапу тэгов, при каждом вызове, в которую добавляет информацию о выбранных тэгах. После этого, в цикле проходит все тэги и смотрит на наличие класса blueOne. При наличии плюсует в количество активных тэгов и добавляет название тэга в общую строку вывода. При совпадении количества выбранных тэгов с максимальным количеством тэгов(проверка tagSum) выводит фразу - выбраны все тэги.
-
+___
 # css files
-## [/adminFeedback.css/](feedback.md#adminfeedbackcss-1)
-## [/calls.css/](feedback.md#callscss-1)
-## [/feedbackTagsMain.css/](feedback.md#feedbacktagsmaincss-1)
-## [/feedbackTagsAdmin.css/](feedback.md#feedbacktagsadmincss-1)
-
+## Написанные
+## [adminFeedback.css](feedback.md#adminfeedbackcss-1)
+## [feedbackTagsMain.css](feedback.md#feedbacktagsmaincss-1)
+## [feedbackTagsAdmin.css](feedback.md#feedbacktagsadmincss-1)
+___
+## Внешние 
+### bootstrap.css (3.3.7)
+### daterangepicker (2)
+### bootstrap-toggle.min.css (2.2.2)
+___
+## Общие
+## [calls.css](feedback.md#callscss-1)
+___
 ### adminFeedback.css
 Содержит в себе стили:
 1. Основная обертка (page-content-wrapper)
@@ -74,3 +96,15 @@ if( (catNum==6||catNum==feedbackInfo[i].shopCategoryId-1) && tagCheck )
 Файл с совпадающими параметрами для feedbacka и для основной части сайта для отображения блоков тэгов. Группы, строки, блоки, реакция на наведение, отношение разных блоков по отношению друг к другу
 ### feedbackTagsAdmin.css
 Описание отображение выпадающего блока с тэгами. Все подробно закомметировано в самом файле. Главная форма, хедер, контейнер, первый блок контейнера, колонки и группы
+___
+# jsp file
+## feedback.jsp
+Страница(\#wrapper) состоит из 2 блоков - верхняя часть(навигация \nav) и блок для вывода информации(\#page-content-wrapper>.container-fluid>#MainForm)
+Навигация, в свою очередь, делится еще на 5 блоков.
+1. Выбор категории - All|RE|TR|Serv|Job|Gen + кнопка возврата в статистику (default - ALL)
+2. Выбор дат - календарь + 4 кнопки (Вчера/сегодня/неделя/месяц) (default - Today)
+3. Кнопка тэги с выпадающим меню выбора тэгов (количество тэгов*лейблов + 2 кнопки и переключатель feedback(default)|updated) 
+4. Область для показа информации о количестве тэгов и их названия (default - 0)
+5. кнопка GO - по нажатию на которую и происходит поиск
+
+Нижняя часть экрана состоит только из MainForm, все остальное отрисовывается с помощью js. 
