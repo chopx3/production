@@ -1,5 +1,4 @@
 var checker = optionsReturn = "";
-var dataArray = [];
 var tagGroupsArray = [];
 function getTagGroups(){ // заполнить группы тэгов для select смены группы тэга
 			$.get(tagGroupURL).done(function (data) {
