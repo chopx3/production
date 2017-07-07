@@ -24,6 +24,11 @@ function dateSingleCalendar(start) {
 		console.log(start);
 		changeDate(timeStart, timeEnd);
     }
+function changeDate(start, end){
+    timeStart = start;
+    timeEnd = end;
+    drawDayCalls(timeStart, timeEnd);
+}
 function createSingleCalendar(startDate) {
     $('input[name="chooseDay"]').daterangepicker({
 		locale: { // показываемые данные

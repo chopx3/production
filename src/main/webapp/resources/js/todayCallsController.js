@@ -1,11 +1,11 @@
 var fullCallInfo;
-var drawDate = 1; // стандартное значение выбранного дня, умолчание - сегодня
-var timeStart = todayStart = tempDate = moment().startOf('day').unix()*1000;
+var timeStart = tempDate = moment().startOf('day').unix()*1000;
 var timeEnd = todayEnd = moment().endOf('day').unix()*1000;
-$(document).ready(function() { // получить вопросы и категории с базы	
+$(document).ready(function() { // отрисовка кнопки и календаря + очистка данных + звонки\ feedback бейджи
 	$('#dayCalls').click(function() { // при нажатии - выбрать звонки за день, очистить инфу, поменять заголовок, отрисовать данные
 			dayOrEmpty="day";
 			clearData();
+			var todayStart = moment().startOf('day').unix()*1000;
 			drawAdditionalTags();
 			console.log(timeStart);
 			StartSingleCalendar(timeStart);
@@ -15,11 +15,6 @@ $(document).ready(function() { // получить вопросы и катег�
 			drawBadges(); // отрисовать незаполненные звонки, нужно ли
 		});
 })
-function changeDate(start, end){
-	timeStart = start;
-	timeEnd = end;
-	drawDayCalls(timeStart, timeEnd);
-}
 function drawDayCalls(timeStart, timeEnd){ // функция отрисовки звонков
 	$.get(dayCallsURL+"/"+timeStart+"/"+timeEnd).done(function (data) { // запрос к базе
 	sorting(data, 'timeStart'); // сортировка

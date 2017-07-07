@@ -60,11 +60,6 @@ function changeHeight(i){ // изменить высоту, если переп�
 	else if (scrollHeight>60) {elem.style.maxHeight = scrollHeight + 'px';elem.style.color = "black"} // и обратно
 }
 function postComment () { // отправка комментария
-	var comment = {
-        "avitoUserId":idSaver,
-        "postTime": new Date().getTime(),
-        "message": $('#addCommentBlock').val()
-    }
 	$('#addCommentBlock').removeClass("box-shadow"); 
 	$('#IdforComments').removeClass("box-shadow"); // очистка
 	var correctInfo = true; // проверка. По умолчанию - true
@@ -73,6 +68,11 @@ function postComment () { // отправка комментария
 	if ($('#addCommentBlock').val()== ""){ correctInfo = false; 
 	$('#addCommentBlock').addClass("box-shadow"); } // если что-то не так - false + подсветка
 	if (correctInfo){	// если все норм - отправка
+	var comment = {
+      "avitoUserId":idSaver,
+      "postTime": new Date().getTime(),
+      "message": $('#addCommentBlock').val()
+  }
 	RestPost(comment, postCommentURL);
 	setTimeout(function() {getComments();}, 800); 
 	}

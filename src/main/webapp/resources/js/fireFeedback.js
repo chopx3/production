@@ -108,7 +108,7 @@ function drawFeedback() { // отрисовка Feedbackа
 				var additionalInfo = collectAdditionalInfo(feedbackInfo[i], "feedback");
 				timetag = moment.unix(feedbackInfo[i].timeStart/1000).format(dateFormat);
 				CallInfo = [feedbackInfo[i].chainId, i, true];
-				var onPlay = ' onplay=\'change_call('+JSON.stringify(CallInfo)+')\'';
+				var onPlay = ' onplay=\'changeCall('+JSON.stringify(CallInfo)+')\'';
 				var multipleCallsInfo = {
 								data: feedbackInfo,
 								counter: i,
@@ -117,7 +117,7 @@ function drawFeedback() { // отрисовка Feedbackа
 				var nextCall = collectMultipleCalls(multipleCallsInfo);
 				var margin = (nextCall == "") ? "" : "no-margin-top";
 				audioURL = '<audio class="audio-call '+margin+'" id="audio'+i+'" src="' + oktell + feedbackInfo[i].comId +'" '+onPlay+' controls></audio><a href="'+ oktell + feedbackInfo[i].chainId +'" target="_blank">' + '</a>';
-				feedbackEmptyCalls += '<div id="feedbackCall' +i+'" onclick=change_call('+JSON.stringify(CallInfo)+') class="call col-lg-12 feedback-call" data-time="'+timetag+'" data-sign="'+feedbackInfo[i].agent.username+'" value="'+ feedbackInfo[i].type+'" name='+ tagCollector +'><span style="display:none" id=feedback-com'+i+'>'+feedbackInfo[i].comments+'</span><span>'+ timetag +' '+ feedbackInfo[i].agent.username + '</span>'+additionalInfo+'<br>' + nextCall + audioURL  + '</div>'; // собственно пустые звонки, собирающиеся в цикле
+				feedbackEmptyCalls += '<div id="feedbackCall' +i+'" onclick=changeCall('+JSON.stringify(CallInfo)+') class="call col-lg-12 feedback-call" data-time="'+timetag+'" data-sign="'+feedbackInfo[i].agent.username+'" value="'+ feedbackInfo[i].type+'" name='+ tagCollector +'><span style="display:none" id=feedback-com'+i+'>'+feedbackInfo[i].comments+'</span><span>'+ timetag +' '+ feedbackInfo[i].agent.username + '</span>'+additionalInfo+'<br>' + nextCall + audioURL  + '</div>'; // собственно пустые звонки, собирающиеся в цикле
 				i+=iJump;
 		}
 		document.getElementById("MainForm").innerHTML = feedbackEmptyCalls;		

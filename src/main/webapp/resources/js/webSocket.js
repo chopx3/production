@@ -2,7 +2,6 @@
 var webSocketHost = location.host+'/firecatcher';
 var websocket;
 var websocketUrl = "ws://"+webSocketHost+"/websocket/start";
-var wsCount = 0;
 startConnection();
 function startConnection() {
     websocket = new WebSocket(websocketUrl);
@@ -13,7 +12,6 @@ function startConnection() {
 function sendWebSocketMessage(message){
     if(websocket.readyState === 1){
     websocket.send(message);
-        wsCount=0
     } else {
         console.log("connect to websocket...")
         setTimeout(function () {

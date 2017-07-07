@@ -33,6 +33,19 @@ var Questions = []; // и для вопросов. На звонки
 var dateFormat = 'DD.MM.YYYY HH:mm:ss'; // формат даты 
 var iJump; // для объединения звонков, прыжок на это количество в цикле
 // Общие функции
+var RestPost = function(sendData, url) { // стандартная функция пост отправки данных
+            $.ajax({
+                url: url,
+                type: "post",
+                contentType: "application/json; charset=utf-8",
+                data: JSON.stringify(sendData), //Stringified Json Object
+                async: false,    //Cross-domain requests and dataType: "jsonp" requests do not support synchronous operation
+                cache: false,    //This will force requested pages not to be cached by the browser
+                processData: false, //To avoid making query String instead of JSON
+                success: function (resposeJsonObject) { /* Success Action */  },
+                error: function (message) { alert(message) }
+            });
+    };
 function sorting(json_object, key_to_sort_by) { // функция сортировки json'а со звонками в обратном порядке. stackoverflow. Сортирует по ключу.
     function sortByKey(a, b) {
         var x = parseInt(a[key_to_sort_by]);

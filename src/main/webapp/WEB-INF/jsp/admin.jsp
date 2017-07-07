@@ -19,25 +19,6 @@
     <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/bootstrap.daterangepicker/2/daterangepicker.css" />
 </head>
 <body>
-<script>
-    var RestPost = function(sendData, url) {
-        $.ajax({
-            url: url,
-            type: "post",
-            contentType: "application/json; charset=utf-8",
-            data: JSON.stringify(sendData), //Stringified Json Object
-            async: false,    //Cross-domain requests and dataType: "jsonp" requests do not support synchronous operation
-            cache: false,    //This will force requested pages not to be cached by the browser
-            processData: false, //To avoid making query String instead of JSON
-            success: function (resposeJsonObject) {
-                // Success Action
-            },
-            error: function (message) {
-                alert(message)
-            }
-        });
-    }
-</script>
 <nav class="navbar navbar-default navbar-fixed-top">
     <div class="container-fluid">
         <div class="navbar-header">
