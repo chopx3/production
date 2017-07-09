@@ -52,7 +52,7 @@ function getCalls(){ // Получить список всех звонков и
 function createTagsTable(){ // отрисовка блока с выбором тэгов
 	tagCounter = 0; // количество
 	outputTags=""; //текст
-	TagActiveChecker(); 
+	tagActiveChecker(); 
 	$.get(tagGroupURL).done( function (data) {//Построение списка
 	var coreHeader = 		'<div class="tag-form-header">'+
 							'<span>Тэги по категориям</span>'+

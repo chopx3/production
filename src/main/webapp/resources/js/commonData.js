@@ -54,7 +54,7 @@ function sorting(json, key) { // функция сортировки json'а с�
     }
     json.sort(sortByKey);
 }
-function getQuestionsInfo() { // получить массив вопросов, если длина больше 20 - обрезать
+function getQuestions() { // получить массив вопросов, если длина больше 20 - обрезать
 	$.get(getQuestionsInfoURL).done(function (data) {
 		var Info = data;
 		for (var i=0;i<Info.length;i++){
@@ -77,7 +77,6 @@ function collectMultipleCalls(options){ // функция отрисовки н�
 	var data = options.data;
 	var i = options.counter;
 	var isItSameAgent = options.isItSameAgent || true;
-	console.log(options);
 	for (var j = i; j< data.length; j++){ // пробежка по массиву от элемента до конца массива
 		if (j+1<=data.length-1){ // проверка, не конец ли это массива, чтобы без переполнения
 			console.log(data[j].chainId);
@@ -92,9 +91,8 @@ function collectMultipleCalls(options){ // функция отрисовки н�
 	}
 return result;	
 }
-function getUniqueData(data) { // подсчет уникальных звонков в фидбеке, stackoverflow продакшн.
+function getUniqueData(data, param) { // подсчет уникальных звонков в фидбеке, stackoverflow продакшн.
     var variables = {};
-    var param = "chainId";
 	var count = 0;
     $.each(data, function(){ 
         if (!variables[this[param]]){

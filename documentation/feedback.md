@@ -1,7 +1,7 @@
 # js files
 ## Написанные
-### [adminFeedbackMain.js](feedback.md#admin#feedbackmainjs-1)
-### [adminFeedbackTags.js](feedback.md#admin#feedbacktagsjs-1)
+### [adminFeedbackMain.js](feedback.md#adminfeedbackmainjs-1)
+### [adminFeedbackTags.js](feedback.md#adminfeedbacktagsjs-1)
 ___
 ## Внешние
 ### jquery.min.js (3.1.1) 
@@ -15,7 +15,7 @@ ___
 ___
 ## Общие
 ### [calendar.js](common.md#calendarjs-1)
-### [commonData.js](common.md#commonDatajs-1)
+### [commonData.js](common.md#commondatajs-1)
 ___
 ### adminFeedbackMain.js
 #### Основной файл для отрисовки звонков и тэгов в фидбеке  
@@ -39,7 +39,7 @@ if( (catNum==6||catNum==feedbackInfo[i].shopCategoryId-1) && tagCheck )
 Сбрасывает счетчик тэгов и текст. Делает запрос по тэгам и начинает строить блок. В зависимости от количества групп отрисовывает немного по-разному, четное или нечетное количество. Пробегает по циклу, не выводя группу Unfiltered и пустые группы. Выбирает из запроса название группы, название тэга и выводит их, отрисовывая их как в админке. Добавляет информацию блоками, в конце склеивая их. После этого отрисовывает нижние кнопки.
 #### afm-document.ready() 
 Запрос к базе на получений категорий, jQuery контроль нажатия клавиши категории и отрисовка таблицы с тегами.
-
+___
 ### adminFeedbackTags.js
 #### Основной файл для работы с тэгами на странице Feedback. Работа кнопок, карта тэгов, вывод информации, подсчет и так далее
 #### Функции
@@ -48,7 +48,7 @@ if( (catNum==6||catNum==feedbackInfo[i].shopCategoryId-1) && tagCheck )
 3.  [clickOnLabel(id)](feedback.md#clickonlabelid)
 4.  [checkAllButton()](feedback.md#checkallbutton)
 5.  [clearButton()](feedback.md#clearbutton)
-6.  [TagActiveChecker()](feedback.md#tagactivechecker)
+6.  [tagActiveChecker()](feedback.md#tagactivechecker)
 
 #### Глобальные переменные
 1. tagsMap - хранит в себе выбранные тэги, с которыми потом идет сравнение
@@ -61,11 +61,11 @@ if( (catNum==6||catNum==feedbackInfo[i].shopCategoryId-1) && tagCheck )
 Кривая функция, которую нужно переписать. Нужна для корректной работы переключателя режима вывода звонков. вкл\выкл
 #### clickOnLabel(id)
 обрабатывает нажатия на лейбл тэга. Добавляет тэгу класс blueOne и устанавливает лейблу атрибут checked, После этого обновляет информацию по количеству активных тэгов.
-#### checkAllButton
+#### checkAllButton()
 делает тоже самое, что и clickOnLabel, но в цикле и для всех кнопок тэгов
-#### clearButton
+#### clearButton()
 обратное действие, убирает со всех выделение в цикле
-#### TagActiveChecker
+#### tagActiveChecker()
 Главная функция. Создает мапу тэгов, при каждом вызове, в которую добавляет информацию о выбранных тэгах. После этого, в цикле проходит все тэги и смотрит на наличие класса blueOne. При наличии плюсует в количество активных тэгов и добавляет название тэга в общую строку вывода. При совпадении количества выбранных тэгов с максимальным количеством тэгов(проверка tagSum) выводит фразу - выбраны все тэги.
 ___
 # css files

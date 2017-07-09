@@ -39,7 +39,7 @@ function drawInfo(value){ // функция заполнения групп кн
 		addInfoHeaderValue = 'Добавить тэг';
 		updInfoHeaderValue = 'Изменить информацию о тэге';
 		addInfoFooterFunc = "infoCheck(\'add\', \'tags\')";
-		updInfoFooterFuncSecond = '<button class="btn btn-primary" onclick="ChangeTagGroup()">Изменить группу</button>';
+		updInfoFooterFuncSecond = '<button class="btn btn-primary" onclick="changeTagGroup()">Изменить группу</button>';
 		updInfoFooterFunc = "infoCheck(\'upd\', \'tags\')";
 		addInfoBody = 	'<div class=row><label class="leftLabel">Тэг		</label><input type="text" class="form-control inputTextField" 	id=addTextField1>	</div>'+
 						'<div class=row><label class="leftLabel">Название	</label><input type="text" class="form-control inputTextField" 	id=addTextField2>	</div>'+

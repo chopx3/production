@@ -27,7 +27,7 @@ ___
 функция для смены дат начала и окончания, сделано для сохранения даты в dayCalls. Потом отдает дальше на отрисовку в drawDayCalls. 
 ##### createSingleCalendar(startDate)
 Создание календаря со стандартными значениями дней, месяцев и первым днем. Одинарная дата, выезд влево.
-##### createCalendar(startDate, endDate)
+##### createCalendar(startDate,endDate)
 Тоже самое, но для двойного календаря.
 ##### startSingleCalendar(start)
 Функция для старта одинарного календаря. Создать календарь, записать даты в календарь
@@ -45,7 +45,7 @@ ___
 4.  [getQuestions()](common.md#getquestions)
 5.  [getCategories()](common.md#getcategories)
 6.  [collectMultipleCalls(options)](common.md#collectmultiplecallsoptions)
-7.  [getUniqueData(data)](common.md#getuniquedatadata)
+7.  [getUniqueData(data, param)](common.md#getuniquedatadataparam)
 ___
 
 #### Глобальные переменные
