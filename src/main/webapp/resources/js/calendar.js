@@ -1,6 +1,5 @@
 var startDate;  
 var endDate;
-var dayInMseconds = 24* 60 * 60 * 1000;
 // функция для установки переменных startDate и endDate для передачи в функции статистики, звонков итд. Проверка на вид передаваемой даты, конвертация в цифровой вид (11.11.2011)
 function cb(start, end) {
 			if (start.length==10){
@@ -11,9 +10,10 @@ function cb(start, end) {
 			endDate = moment(end).format("DD-MM-YYYY");;
 				}			
     }
-function dateSingleCalendar(start) {
+function dateSingleCalendar(start) { // дублирующая функция для календаря с одной датой
 		startDate = moment(start).format("DD-MM-YYYY");
 		if (isFinite(start)){
+        var dayInMseconds = 24* 60 * 60 * 1000;
 		timeStart = start;
 		timeEnd = start+dayInMseconds;
 		}
@@ -103,13 +103,13 @@ function createCalendar(startDate, endDate){
 			"opens": "left" // выезжает влево
     }, cb);
 }
-function StartSingleCalendar(start) {
+function startSingleCalendar(start) {
 	$(function() {
 	createSingleCalendar(start);
 	dateSingleCalendar(start);
 })};
 // Старт, создание календаря, выбор даты
-function StartCalendar() {
+function startCalendar() {
 	$(function() {
     createCalendar(startDate, endDate);
     cb(startDate, endDate);

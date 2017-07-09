@@ -46,13 +46,13 @@ var RestPost = function(sendData, url) { // стандартная функци�
                 error: function (message) { alert(message) }
             });
     };
-function sorting(json_object, key_to_sort_by) { // функция сортировки json'а со звонками в обратном порядке. stackoverflow. Сортирует по ключу.
+function sorting(json, key) { // функция сортировки json'а со звонками в обратном порядке. stackoverflow. Сортирует по ключу.
     function sortByKey(a, b) {
-        var x = parseInt(a[key_to_sort_by]);
-        var y = parseInt(b[key_to_sort_by]);
+        var x = parseInt(a[key]);
+        var y = parseInt(b[key]);
         return ((x > y) ? -1 : ((x < y) ? 1 : 0));
     }
-    json_object.sort(sortByKey);
+    json.sort(sortByKey);
 }
 function getQuestionsInfo() { // получить массив вопросов, если длина больше 20 - обрезать
 	$.get(getQuestionsInfoURL).done(function (data) {

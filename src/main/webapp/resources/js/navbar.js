@@ -283,14 +283,16 @@ function drawAdditionalTags(){ // отрисовка дополнительны�
 function drawBadges(){
 	sendWebSocketMessage("getMyEmptyCalls");
 	getWebsocketMessage(function(data){ 	
-		if (getUniqueData(data.emptyCallList)>0){
-					$("#emptyCallsBadge").text(getUniqueData(data.emptyCallList));
+		var uniqueCalls = getUniqueData(data.emptyCallList, "chainId");
+		if (uniqueCalls>0){
+					$("#emptyCallsBadge").text(uniqueCalls);
 					$("#emptyCallsBadge").addClass("Add");
 					$("#favicon").attr("href","./resources/img/favicon2.ico");}
 		else {$("#emptyCallsBadge").removeClass("Add");
 		$("#favicon").attr("href","./resources/img/favicon.ico");}  }); 
 	$.get(emptyFeedbackURL+moment().unix()*1000 +"/").done( function (data) {
-		if (getUniqueData(data)>0) {	$("#emptyFeedbackBadge").text(getUniqueData(data));
+		var uniqueFeedback = getUniqueData(data, "chainId");
+		if (uniqueFeedback>0) {	$("#emptyFeedbackBadge").text(uniqueFeedback);
 										$("#emptyFeedbackBadge").addClass("Add");}
 		else $("#emptyFeedbackBadge").removeClass("Add")});
 		console.log("drawBadges");

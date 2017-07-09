@@ -26,7 +26,7 @@
 <body>
 <script type="text/javascript">
     $(function() {
-        StartCalendar();
+        startCalendar();
 		jQuery('#today').click();
     });
 </script>

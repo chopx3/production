@@ -8,7 +8,7 @@ $(document).ready(function() { // при загрузке установить �
 function openStat(){ // при нажатии на "статистика" очищается информация, добавляются кнопки, стартует календарь, нажимаются кнопки "Всего" и "Сегодня" и рисуются боковые панели
 	document.getElementById("secondTable").innerHTML = "";
 	drawInfo("stat");
-	StartCalendar();
+	startCalendar();
 	jQuery('#allCalls').click();
 	jQuery('#today').click();
 	$("#addWrapper").addClass("active").addClass("higher");
@@ -44,7 +44,7 @@ function getInfo(value){ // получение статистики
 		else {	thead = '<div class="row"><div class="table-scroll col-lg-8"><table id="commentTable" class="table table-striped table-hover" ><thead><tr><th class="col-lg-6">' + firstColumn + '</th><th class="col-lg-6">' + secondColumn + '</th></tr></thead><tbody>'; // шапка
 				 // если не фидбек
 				for (var i = 0; i < data.columns.length; i++) { // отрисовка в цикле
-				var questionAdd =(tempValue == "byQuestion") ? "<button class='btn btn-primary btn-sm pull-right' onclick=getQuestions(\""+data.columns[i][firstColumn]+"\")>show</button>" : "";
+				var questionAdd =(tempValue == "byQuestion") ? "<button class='btn btn-primary btn-sm pull-right' onclick=showCallsByQuestion(\""+data.columns[i][firstColumn]+"\")>show</button>" : "";
 				if (tempValue != "byQuestion") {message =  data.columns[i][firstColumn];}
 				else {message = Questions[data.columns[i][firstColumn] - 1];}
 				count =  data.columns[i][secondColumn];
@@ -55,7 +55,7 @@ function getInfo(value){ // получение статистики
 	document.getElementById("allAgentsTable").innerHTML = thead +codeForSum+ outputComments + tbot;	// финальный код
 			})
 }
-function getQuestions(value){ // добавить звонки по нажатию на show в статистике(вопросы)
+function showCallsByQuestion(value){ // добавить звонки по нажатию на show в статистике(вопросы)
 		var timeStart = moment(startDate, "DD-MM-YYYY").unix()*1000;
 		var timeEnd = moment(endDate, "DD-MM-YYYY").unix()*1000; // установка времени для запроса
 		$.get(getQuestionsURL +value+"/" + timeStart+"/" + timeEnd).done(function (data) { // запрос

@@ -8,8 +8,8 @@ $(document).ready(function() { // отрисовка кнопки и кален�
 			var todayStart = moment().startOf('day').unix()*1000;
 			drawAdditionalTags();
 			console.log(timeStart);
-			StartSingleCalendar(timeStart);
-			fillInfo("remove","Звонки за <a href=# onclick=StartSingleCalendar("+todayStart+") id=todayLink name='ourLink'>сегодня</a>, <input type='text' value="+moment.unix(timeStart/1000).format("DD-MM-YYYY")+" name='chooseDay' style='width:150px;'/>", ""); // отрисовать заголовок с ссылками на день
+			startSingleCalendar(timeStart);
+			fillInfo("remove","Звонки за <a href=# onclick=startSingleCalendar("+todayStart+") id=todayLink name='ourLink'>сегодня</a>, <input type='text' value="+moment.unix(timeStart/1000).format("DD-MM-YYYY")+" name='chooseDay' style='width:150px;'/>", ""); // отрисовать заголовок с ссылками на день
 			console.log(timeStart);
 			$("#SubForm").addClass("Add"); // включить боковую форму
 			drawBadges(); // отрисовать незаполненные звонки, нужно ли
