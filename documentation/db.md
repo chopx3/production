@@ -14,7 +14,7 @@
 
 ___
 ## ER модель
-![ermodel](https://yadi.sk/i/8kankdbj3Kuozv "ER")
+![ermodel](https://yadi.sk/d/x4KA9Tz93KupR8/2017-07-10_12-19-17.png "ER")
 ___
 ## Таблицы
 ### calls
