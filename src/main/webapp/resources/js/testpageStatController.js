@@ -3,7 +3,7 @@ $(document).ready(function() { // при загрузке установить �
 	var start=moment().format("DD-MM-YYYY");
 	var end=moment().add(1,'days').format("DD-MM-YYYY");
 	getCategories();
-	getQuestionsInfo();
+	getQuestions();
 })
 function openStat(){ // при нажатии на "статистика" очищается информация, добавляются кнопки, стартует календарь, нажимаются кнопки "Всего" и "Сегодня" и рисуются боковые панели
 	document.getElementById("secondTable").innerHTML = "";
@@ -58,7 +58,7 @@ function getInfo(value){ // получение статистики
 function showCallsByQuestion(value){ // добавить звонки по нажатию на show в статистике(вопросы)
 		var timeStart = moment(startDate, "DD-MM-YYYY").unix()*1000;
 		var timeEnd = moment(endDate, "DD-MM-YYYY").unix()*1000; // установка времени для запроса
-		$.get(getQuestionsURL +value+"/" + timeStart+"/" + timeEnd).done(function (data) { // запрос
+		$.get(getCallsByQuestionURL +value+"/" + timeStart+"/" + timeEnd).done(function (data) { // запрос
 					document.getElementById("secondTable").innerHTML = ""; 
 					outputCalls =''; // очистка данных
 					var callsInfo = data; 

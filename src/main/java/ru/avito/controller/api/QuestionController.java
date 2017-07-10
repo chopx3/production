@@ -1,8 +1,8 @@
 package ru.avito.controller.api;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.annotation.*;
 import ru.avito.controller.Path;
 import ru.avito.model.Question;
 import ru.avito.services.QuestionService;
@@ -23,5 +23,17 @@ public class QuestionController {
     @RequestMapping(value = "all", produces = "application/json;charset=UTF-8")
     public List<Question> findAll(){
         return questionService.findAll();
+    }
+
+    @ResponseStatus(HttpStatus.CREATED)
+    @RequestMapping(value = "add", method = RequestMethod.POST)
+    public Question saveQuestion(@RequestBody Question question){
+        return questionService.add(question);
+    }
+
+    @ResponseStatus(HttpStatus.OK)
+    @RequestMapping(value = "update", method = RequestMethod.POST)
+    public Question updateQuestion(@RequestBody Question question){
+        return questionService.update(question);
     }
 }

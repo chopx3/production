@@ -18,4 +18,23 @@ public class QuestionServiceImpl implements QuestionService {
     public List<Question> findAll() {
         return questionRepository.findAll();
     }
+
+    @Override
+    public Question update(Question actualQuestion) {
+        Question currentQuestion = questionRepository.findOne(actualQuestion.getId());
+        currentQuestion.setDescription(actualQuestion.getDescription());
+        currentQuestion.setActive(actualQuestion.isActive());
+        currentQuestion.setShortName(actualQuestion.getShortName());
+        return questionRepository.saveAndFlush(currentQuestion);
+    }
+
+    @Override
+    public Question add(Question question) {
+        question.setActive(false);
+        return questionRepository.saveAndFlush(question);
+    }
+
+    @Override
+    public Question findOne(int id) {return questionRepository.findOne(id);}
+
 }

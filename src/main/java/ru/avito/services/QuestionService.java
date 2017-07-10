@@ -10,4 +10,7 @@ import java.util.List;
 public interface QuestionService {
 
     List<Question> findAll();
+    Question update(Question question);
+    Question add(Question question);
+    Question findOne(int id);
 }

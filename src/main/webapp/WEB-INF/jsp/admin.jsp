@@ -12,7 +12,8 @@
     <script src="${pageContext.request.contextPath}/resources/js/testpageAgentsController.js"></script>
     <script src="${pageContext.request.contextPath}/resources/js/testpageStatController.js" type="text/javascript"charset="utf-8"></script>
     <script src="${pageContext.request.contextPath}/resources/js/calendar.js" type="text/javascript" charset="utf-8"></script>
-    <script src="${pageContext.request.contextPath}/resources/js/testpageTagsController.js"></script>    
+    <script src="${pageContext.request.contextPath}/resources/js/testpageTagsController.js"></script>
+    <script src="${pageContext.request.contextPath}/resources/js/testpageQuestionsController.js"></script>    
     <link href="${pageContext.request.contextPath}/resources/css/testPage.css" rel="stylesheet">
 	<link href="${pageContext.request.contextPath}/resources/css/calls.css" rel="stylesheet">
     <script type="text/javascript" src="https://cdn.jsdelivr.net/bootstrap.daterangepicker/2/daterangepicker.js"></script>
@@ -32,9 +33,10 @@
         </div>
         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
             <ul class="nav navbar-nav topbar">
-                <li class="hl highlight"><a href="#" onclick=fillAgents()>Агенты </a></li>
-                <li class="hl"><a href="#" onclick=fillTags("tags")>Тэги</a></li>
-                <li class="hl"><a href="#" onclick=fillTags("group")>Группы тэгов</a></li>
+                <li class="hl highlight"><a href="#" onclick=openAgents()>Агенты </a></li>
+                <li class="hl"><a href="#" onclick=openTags("tags")>Тэги</a></li>
+                <li class="hl"><a href="#" onclick=openTags("group")>Группы тэгов</a></li>
+                <li class="hl"><a href="#" onclick=openQuestions()>Вопросы</a></li>
                 <li class="hl"><a href="#" onclick=openStat()>Статистика</a></li>
 				<li class="hl"><a href="http://192.168.10.132/firecatcher/admin/feedback">Feedback</a></li>
             </ul>

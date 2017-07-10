@@ -503,9 +503,9 @@ Old form
 
     <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
       <ul class="nav navbar-nav topbar">
-        <li class="hl"><a href="#" onclick=fillAgents()>Агенты </a></li>
-        <li class="hl"><a href="#" onclick=fillTags("tags")>Тэги</a></li>
-		<li class="hl"><a href="#" onclick=fillTags("group")>Группы тэгов</a></li>
+        <li class="hl"><a href="#" onclick=openAgents()>Агенты </a></li>
+        <li class="hl"><a href="#" onclick=openTags("tags")>Тэги</a></li>
+		<li class="hl"><a href="#" onclick=openTags("group")>Группы тэгов</a></li>
 		<li class="hl"><a href="#" onclick=openStat()>Статистика</a></li>
       </ul>
       <form class="navbar-form navbar-left">

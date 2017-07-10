@@ -9,7 +9,7 @@ function getTagGroups(){ // заполнить группы тэгов для se
 					}				
 				})				
 }
-function fillTags(value){ // функция отрисовки верха и низа таблицы
+function openTags(value){ // функция отрисовки верха и низа таблицы
 		document.getElementById("secondTable").innerHTML = "";
 		var tbody =""; // обнуление параметров
 		checker = value;

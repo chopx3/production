@@ -1,4 +1,4 @@
-﻿var chainId = tagsString = tagBuffer = agentName = ""; // объявление переменных
+var chainId = tagsString = tagBuffer = agentName = ""; // объявление переменных
 var idSaver, dataArray, additionalTags, dayOrEmpty, callInfo; // объявление переменных
 var sentCall=false; // для отображения "отправки" звонка
 var questNum = catNum = 1; // начальные значения категории и вопроса, по умолчанию 1\1
@@ -280,7 +280,7 @@ function drawAdditionalTags(){ // отрисовка дополнительны�
 				document.getElementById("additionalTagsDiv").innerHTML = outputTags;
 			})
 }
-function drawBadges(){
+function drawBadges(){ // отрисовка бейджей напротив звонков и feedback'a. Делается два запроса, если звонки есть - добавляется бейдж. Если есть незаполненные обычные звонки меняется еще и иконка
 	sendWebSocketMessage("getMyEmptyCalls");
 	getWebsocketMessage(function(data){ 	
 		var uniqueCalls = getUniqueData(data.emptyCallList, "chainId");

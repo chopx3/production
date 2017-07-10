@@ -161,8 +161,8 @@ function infoCheck(value, type){ // проверка информации и о�
 	}
 }
 function fillInfo(type){ // обновление нужной страницы
-	if (type == "agents") 	{fillAgents()}
-	else {fillTags(type)}
+	if (type == "agents") 	{openAgents()}
+	else {openTags(type)}
 }
 function updateInfo(id, nameTag, loginShort, desc){ // добавление данных в поле обновления
 	idNum = id;
@@ -172,7 +172,7 @@ function updateInfo(id, nameTag, loginShort, desc){ // добавление да
 	$("#updateWrapper").addClass("active");
 }
 $(document).ready(function() {
-	fillAgents(); // стандартная страница при переходе в админку
+	openAgents(); // стандартная страница при переходе в админку
 	getTagGroups(); // для отображения групп в смене группы
 	$('li.hl').click(function(){ // подсветка активного пункта навигации
 		$('li.hl').removeClass('highlight');
