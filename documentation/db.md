@@ -13,6 +13,9 @@
 11. [users](db.md#users)
 
 ___
+## ER модель
+![ermodel](https://yadi.sk/i/8kankdbj3Kuozv "ER")
+___
 ## Таблицы
 ### calls
 Основная, собственно, таблица. Хранит в себе информацию о звонках.
@@ -88,7 +91,7 @@ ___
 3. Составной ключ (taggroup_id, tag_id) - **UNIQUE**
 
 ___
-## tag
+## tags
 Таблица для тэгов
 Поля:
 1. id  - **Primary Key**, int, id тэга
