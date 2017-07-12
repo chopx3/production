@@ -108,8 +108,8 @@ public class CallController {
     }
 
     @RequestMapping(value = "user/{avitoUserId}/all", method = RequestMethod.GET) //TODO сделать красиво пагинацию
-    public List<Call> findAllByAvitoUserId(@PathVariable("avitoUserId") Long avitoUserId){
-        return callService.findAllByAvitoUserId(avitoUserId);
+    public List<Call> findTop1000ByAvitoUserId(@PathVariable("avitoUserId") Long avitoUserId){
+        return callService.findTop1000ByAvitoUserId(avitoUserId);
     }
 
     @RequestMapping(value = "user/{avitoUserId}/agent/{agentId}", method = RequestMethod.GET) //TODO сделать красиво пагинацию

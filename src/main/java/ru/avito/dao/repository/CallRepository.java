@@ -16,6 +16,8 @@ public interface CallRepository extends JpaRepository<Call,Integer>{ //TODO ре
 
     List<Call> findAllByAvitoUserId(Long agentId);
 
+    List<Call> findTop1000ByAvitoUserId(Long agentId);
+
     List<Call> findByAvitoUserIdAndAgentId(Long avitoUserId, Integer agentId);
 
     List<Call> findByAgentIdAndTimeStartBetween(Integer agentId, Long timeStart, Long timeEnd);

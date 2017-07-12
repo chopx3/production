@@ -127,6 +127,10 @@ public class CallServiceImpl implements CallService {
         return callRepository.findAllByAvitoUserId(avitoUserId);
     }
 
+    public List<Call> findTop1000ByAvitoUserId(Long avitoUserId) {
+        return callRepository.findTop1000ByAvitoUserId(avitoUserId);
+    }
+
     public List<Call> findByQuestionIdAndTimeStartBetween(Integer question, Long timeStart, Long timeEnd){
         return callRepository.findByQuestionIdAndTimeStartBetween(question, timeStart, timeEnd);
     }
