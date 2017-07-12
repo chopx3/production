@@ -43,7 +43,7 @@ function drawDayCalls(timeStart, timeEnd){ // функция отрисовки 
 			var nextCall = collectMultipleCalls(multipleCallsInfo);
 			var margin = (nextCall == "") ? "" : "no-margin-top";
 			var audioURL = '<audio class="audio-call '+margin+'" id="audio'+i+'" '+ onPlay +'  src="' + oktell + audiosrc + '" controls></audio><a href="'+ oktell + audiosrc +'" target="_blank">' + '<\/a>'; // аудио тэг
-			dayCalls += '<div id="divAddButton' +i+'" onclick=setInfoToCallForm('+JSON.stringify(fullCallInfo)+') class="call col-lg-12" data-time="'+timetag+'" data-sign="'+nametag+'"><span>'+ timetag +'\t\t</span><span style="display:none" id=commentHide'+i+'>'+data[i].comments+'</span>'+ additionalInfo+'<br>' + nextCall + audioURL  + '</div>'; // основное заполнение звонка - звонок+аудио+доп инфа
+			dayCalls += '<div id="receivedCall' +i+'" onclick=setInfoToCallForm('+JSON.stringify(fullCallInfo)+') class="call col-lg-12" data-time="'+timetag+'" data-sign="'+nametag+'"><span>'+ timetag +'\t\t</span><span style="display:none" id=commentHide'+i+'>'+data[i].comments+'</span>'+ additionalInfo+'<br>' + nextCall + audioURL  + '</div>'; // основное заполнение звонка - звонок+аудио+доп инфа
 			i+=iJump;
 		}
 		document.getElementById("MainForm").innerHTML = dayCalls;
@@ -56,7 +56,7 @@ function drawDayCalls(timeStart, timeEnd){ // функция отрисовки 
 function setInfoToCallForm(fullCallInfo){ // функция выставления информации из звонка в боковую форму
 	clearData(); // очистка
 	var allTags = fullCallInfo[9]; // ---
-	var idd = '#divAddButton'+fullCallInfo[8]; // ---
+	var idd = '#receivedCall'+fullCallInfo[8]; // ---
 	var feedId = '#feedbackCall'+fullCallInfo[8];   //заполнение инфы 
 	$(idd).addClass('active').siblings().removeClass('active'); // ---
 	$(feedId).addClass('active').siblings().removeClass('active'); // подсветка

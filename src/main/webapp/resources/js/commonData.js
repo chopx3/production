@@ -81,8 +81,6 @@ function collectMultipleCalls(options){ // функция отрисовки н�
 	var isItSameAgent = options.isItSameAgent || true;
 	for (var j = i; j< data.length; j++){ // пробежка по массиву от элемента до конца массива
 		if (j+1<=data.length-1){ // проверка, не конец ли это массива, чтобы без переполнения
-			console.log(data[j].chainId);
-			console.log(data[j+1].chainId);
 			if (data[j].chainId == data[j+1].chainId && isItSameAgent){ iJump++; } else break;	// звонков с одной учетной записи и переводов. Если да и chainId совпал - +в прыжок
 	}																											// если нет - break из цикла
 	else break;} // если дальше ничего нет - break

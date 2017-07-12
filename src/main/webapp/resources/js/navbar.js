@@ -181,7 +181,8 @@ function fillData(dataArray) { //Отправка данных из боково
 }
 function changeCall(callInfo) { // Добавление стиля выбранного звонка
 	//console.log(callInfo);
-	var idd = '#divAddButton'+callInfo[1]; // id + div, для сброса стилей
+	console.log("clicked");
+	var idd = '#receivedCall'+callInfo[1]; // id + div, для сброса стилей
 	var feedId = '#feedbackCall'+callInfo[1]; // id + feedback, для сброса стилей
 	tagBuffer = $(feedId).attr("value"); // сохранить сюда тэги
 	$(idd).addClass('active').siblings().removeClass('active');
@@ -190,6 +191,7 @@ function changeCall(callInfo) { // Добавление стиля выбран�
 	chainId = callInfo[0];
 	additionalTags =$(feedId).attr("name");
 	$("#IDNum").focus();
+	$("#feedbackComment").focus();
 	var comments = (!($("#feedback-com"+callInfo[1]).text()=="null" || $("#feedback-com"+callInfo[1]).text()== "" ));
 	if (comments) {$("#feedbackComment").val($("#feedback-com"+callInfo[1]).text());}
 }
@@ -225,10 +227,11 @@ function  draw(data) { // отрисовка пустых звонков
 			var nextCall = collectMultipleCalls(multipleCallsInfo);
 			var margin = (nextCall == "") ? "" : "no-margin-top";
 			var audioURL = '<audio id="audio'+i+'" '+ onPlay +' src="' + oktell + audiosrc + '" class="audio-call '+margin+'" controls></audio><a href="'+ oktell + audiosrc +'" target="_blank">' + '<\/a>'; // аудио-тэг
-			outputEmptyCalls += '<div id="divAddButton' +i+'" onclick=changeCall('+JSON.stringify(callInfo)+') class="call col-lg-12" data-time="'+timetag+'" data-sign="'+nametag+'"><span>'+ timetag +' '+nametag +'</span><br>' + nextCall + audioURL  + '</div>'; // основное заполнение
+			outputEmptyCalls += '<div id="receivedCall' +i+'" onclick=changeCall('+JSON.stringify(callInfo)+') class="call col-lg-12" data-time="'+timetag+'" data-sign="'+nametag+'"><span>'+ timetag +' '+nametag +'</span><br>' + nextCall + audioURL  + '</div>'; // основное заполнение
 			i+=iJump;
 		}
 		document.getElementById("MainForm").innerHTML = outputEmptyCalls;
+		$('#receivedCall0').trigger('click');
 	}
 	$("audio").each(function(){ //Функция по остановке всех остальных аудио-файлов
 		$(this).bind("play",stopAll).bind("click",stopAll);

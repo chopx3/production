@@ -120,7 +120,8 @@ function drawFeedback() { // отрисовка Feedbackа
 				feedbackEmptyCalls += '<div id="feedbackCall' +i+'" onclick=changeCall('+JSON.stringify(CallInfo)+') class="call col-lg-12 feedback-call" data-time="'+timetag+'" data-sign="'+feedbackInfo[i].agent.username+'" value="'+ feedbackInfo[i].type+'" name='+ tagCollector +'><span style="display:none" id=feedback-com'+i+'>'+feedbackInfo[i].comments+'</span><span>'+ timetag +' '+ feedbackInfo[i].agent.username + '</span>'+additionalInfo+'<br>' + nextCall + audioURL  + '</div>'; // собственно пустые звонки, собирающиеся в цикле
 				i+=iJump;
 		}
-		document.getElementById("MainForm").innerHTML = feedbackEmptyCalls;		
+		document.getElementById("MainForm").innerHTML = feedbackEmptyCalls;
+		$('#feedbackCall0').trigger('click');
 	}
 	$("audio").each(function(){
 		$(this).bind("play",stopAll).bind("click",stopAll);
