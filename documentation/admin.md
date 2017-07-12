@@ -4,6 +4,7 @@
 ### [testpageCommonController.js](admin.md#testpagecommoncontrollerjs-1)
 ### [testpageStatController.js](admin.md#testpagestatcontrollerjs-1)
 ### [testpageTagsController.js](admin.md#testpagetagscontrollerjs-1)
+### [testpageQuestionsController.js](admin.md#testpagequestionscontrollerjs-1)
 ___
 ## Внешние
 ### jquery.min.js (3.1.1) 
@@ -110,6 +111,21 @@ get запрос к базе, для получения группы тэгов 
 #### changeTagGroup()
 немного костыльная функция для изменения группы тэгов через переменную value, которая для этого, так-то, не предназначена. Вероятно, в дальнейшем придется добавить дополнительную переменную для этого дела.
 ___
+### testpageAgentsController.js
+#### Небольшой файл, в котором происходит отрисовка информации по агентам, целая одна функция
+#### Функции
+1.  [openQuestions()](admin.md#openquestions)
+
+#### Глобальные переменные
+
+##### openQuestions()
+Отрисовывает таблицу Вопросы. После отрисовки боковых кнопок, обнуления всех полей, а также установки кнопок в нужные позиции, происходит запрос к базе по вопросам. После этого, в цикле, строится таблица, включающая в себя: 
+* id 
+* description
+* shortName
+* active
+* кнопка edit, которая, при нажатии, отправляет в кнопку редакта всю вышеперечисленную информацию
+___
 # css files
 ## Написанные
 ### [testPage.css](admin.md#testpagecss-1)
@@ -133,10 +149,11 @@ ___
 ___
 # jsp file
 ## admin.jsp
-Страница включает в себя навигационную панель из 5(пока что) кнопок.
+Страница включает в себя навигационную панель из 6(пока что) кнопок.
 1. Агенты ( openAgents() )
 2. Тэги ( openTags(tags) )
 3. Группы тэгов ( openTags(group) )
+4. Вопросы ( openQuestions() )
 4. Статистика ( openStat() )
 5. Feedback( переход на другую страницу )
 А также строки поиска, которая ищет по названию строки и модно прокручивается к найденному элементу.

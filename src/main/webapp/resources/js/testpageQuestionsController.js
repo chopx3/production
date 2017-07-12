@@ -11,8 +11,8 @@ function openQuestions(){
 				var id = info[i].id; 
 				var description = info[i].description;
 				var shortname = info[i].shortName;
-				var isActive = info[i].active;
-				var isActiveHTML = (info[i].active) ? "<i style='color:green;'>Active<i>":"<i style='color:red;'>Disabled<i>";
+				var isActive = info[i].active; // заполнение переменных
+				var isActiveHTML = (info[i].active) ? "<i style='color:green;'>Active<i>":"<i style='color:red;'>Disabled<i>"; // отрисовка Active|Disabled
 				dataArray = [id, description, shortname, isActive]; // массив, который будет передаваться
 				tbody += "<tr id="+shortname+" class='table-row'>"+
 					"<td>"+id+"</td>"+

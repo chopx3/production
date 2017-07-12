@@ -5,7 +5,6 @@ var questNum = catNum = 1; // начальные значения категор
 var comFormat = 'DD.MM.YY HH:mm'; // формат отображения комментариев
 var isHappy = true; // для тогглера happy|unhappy
 var happy = unhappy = agentId = 0;
-var activeQuestionsArray = [];
 
 $(document).ready(function() { // основной блок
 	drawQuestions();
@@ -301,24 +300,33 @@ function drawBadges(){ // отрисовка бейджей напротив з�
 		else $("#emptyFeedbackBadge").removeClass("Add")});
 		console.log("drawBadges");
 }
-function drawQuestions(){
-console.log("drawQuestions");
-
+function drawQuestions(){ // отрисовка вопросов
+	var activeQuestionsArray = [];
+	function drawQuestionLine(data, i, offset, width, questQuantity){ // логика отрисовки линии
+	var outputLine = "<div class='col-md-offset-"+offset+"'>"; // отделение каждой строки в отдельный div со смещением(для линий с длиной меньше 4)
+	for (var j=0; j<questQuantity; j++){ // от 0 до количества элементов в строке
+		var idOfQuest = activeQuestionsArray[i*4+j]; // для сокращения
+		outputLine += 
+		'<label class="btn btn-primary col-md-'+width+'" id="label-quest-'+idOfQuest+'" onclick=changeQuestion('+idOfQuest+') name="label-question">' + // отрисовка надписи с определенной шириной и функцией по нажатию
+		'<input type="radio" name="question" id="quest-'+idOfQuest+'" autocomplete="off" value="'+idOfQuest+'">'+data[(activeQuestionsArray[i*4+j])-1].shortName + '</label>'; // отрисовка кнопки со значением и подписью
+	}
+	outputLine += "</div>"; // закрытие дива со смещением
+	return outputLine;
+}
 	$.get(getQuestionsURL).done(function (data) { // запрос
 		var output = "";
-		activeQuestionsArray.length = 0;
-		var activeCounter = 0;
+		activeQuestionsArray.length = 0; // обнуление массива с активными тэгами
+		var activeCounter = 0; // обнуление счетчика активных тэгов
 		for (var i = 0; i<data.length;i++){ 
-			if (data[i].active){activeQuestionsArray[activeCounter] = data[i].id;activeCounter++}
+			if (data[i].active){activeQuestionsArray[activeCounter] = data[i].id;activeCounter++} // пробежаться по массиву, заполнить вопросы и счетчик
 		}
-		console.log(activeQuestionsArray);
 		var lines = Math.ceil(activeQuestionsArray.length/4); // определяет количество строк
 		var length = activeQuestionsArray.length;
-		var offset = width = questQuantity = nextline = 0;
+		var offset = width = questQuantity = nextline = 0; // переменные: смещение в отрисовку, ширина отрисовываемого блока, количество отрисовываемых вопросов и количество вопросов в следующей линии
 		for (var i=0;i<lines;i++){
-			if(length>=(i+1)*4){ nextline = 0;}
+			if(length>=(i+1)*4){ nextline = 0;} // схожая логика в тэгах. Если длина тэгов больше 4*виток цикла, значит отрисовывай следующую полную линию, нет - попадай на switch\case с заполнением параметров
 			else {nextline = length%4}
-			switch(nextline){
+			switch(nextline){ // заполнение параметров следующей строки
 							case 0:
 							offset = 0;
 							width = 3;
@@ -340,24 +348,12 @@ console.log("drawQuestions");
 							questQuantity = 3;
 							break;
 						}
-				output +=drawQuestionLine(data, i, offset, width, questQuantity);
+				output +=drawQuestionLine(data, i, offset, width, questQuantity); // передача параметров на отрисовку линии
 		}
 		output +='</div>';
 		document.getElementById("questButtonGroup").innerHTML = output;
 			})	
 }
-function drawQuestionLine(data, i, offset, width, questQuantity){
-	var outputLine = "<div class='col-md-offset-"+offset+"'>";
-	for (var j=0; j<questQuantity; j++){
-		var idOfQuest = activeQuestionsArray[i*4+j];
-		outputLine += 
-		'<label class="btn btn-primary col-md-'+width+'" id="label-quest-'+idOfQuest+'" onclick=changeQuestion('+idOfQuest+') name="label-question">' +
-		'<input type="radio" name="question" id="quest-'+idOfQuest+'" autocomplete="off" value="'+idOfQuest+'">'+data[(activeQuestionsArray[i*4+j])-1].shortName +
-		'</label>';
-	}
-	outputLine += "</div>";
-	return outputLine;
-}
-function changeQuestion(value){
-questNum = value;
-}
+function changeQuestion(i){ // так как вопросы динамические теперь - в отдельную функцию из d.ready() перенес
+		questNum = i;
+		}

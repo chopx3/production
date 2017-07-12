@@ -191,6 +191,9 @@ ___
 10. [stopAll(e)](index.md#stopalle)
 11. [drawAdditionalTags()](index.md#drawadditionaltags)
 12. [drawBadges()](index.md#drawbadges)
+13. [drawQuestions()](index.md#drawquestions)
+14. [drawQuestionLine(data,i,offset,width,questQuantity)](index.md#drawquestionlinedataioffsetwidthquestquantity)
+15. [changeQuestion(i)](index.md#changequestioni)
 
 #### Переменные
 1. chainId - Нужна для передачи при смене звонка, чтобы заносить корректную информацию
@@ -211,7 +214,7 @@ ___
 #### nav-document.ready()
 1. magic.click() - включение\выключение css дополнительной
 2. ('#openQuestionLabel').click() - если общий вопрос - id=100
-3. $('input[name="question|category"]').change - две функции, одна суть. При изменении категории/вопроса - меняй значение переменных.
+3. $('input[name="category"]').change - При изменении категории - меняй значение переменных.
 4. $('#IsManagerDiv').click() - проверка, нажата ли кнопка менеджер, если да - появляется кнопка Без ID, если нажата повторна - скрывается и обнуляется ID
 5. $("#private").click() - логика кнопки частник. Отправка стандартных значений
 6. $('#sendDataButton').click() - кнопка отправить. Проверка корректности и полноты информации, заполнение массива, отправка, обновление страницы.
@@ -259,6 +262,11 @@ ___
 
 #### drawBadges()
 Отрисовка количество звонков\фидбеков незаполненных. Просто делает два запроса и считает уникальные comId. Если есть звонки незаполненные также меняет иконку.
+
+#### drawQuestions()
+Отрисовка вопросов, включает в себя подфункцию drawQuestionLine(args), которая овечает за отрисовку линий, а сама только передает ей параметры и рулит циклом. Логика схожая с drawAdditionalTags, но немного более продуманная и настраиваемая.
+#### drawQuestionLine(data,i,offset,width,questQuantity)
+Основная функция отрисовки линий с вопросами. Получает на вход параметры для смещения, ширины, количества вопросов, а также полный запрос с информацией и номер активного отрисовываемого вопроса. В цикле рисует строку.
 ___
 # css files
 ## Написанные

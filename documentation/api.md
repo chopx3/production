@@ -83,12 +83,14 @@ typecall:
 ## Вопросы api, question controller
 ### Question JSON
 ```sh
-[{"id":1,"description":"Блокировка (отклонение) объявления"}, ... ]
+[{"id":1,"description":"Блокировка (отклонение) объявления","active":true,"shortName":"Блокировки"}, ... ]
 ```
 ### /question/all  - (GET) -  
  список вопросов.  
-### `question/{id} `  
-### `question/add `  
+### question/update - (POST) -
+обновить информацию о вопросе   
+### question/add   - (POST) -
+добавить новый вопрос
 ## Комментарии api, Comment Controller 
 ### Comment JSON
 ```sh

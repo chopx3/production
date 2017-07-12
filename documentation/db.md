@@ -59,6 +59,8 @@ ___
 Поля:
 1. id  - **Primary Key**, int, id вопроса
 2. description - **not null**, varchar(150), описание вопроса
+3. shortName - **not null**, varchar(20), краткое название вопроса
+4. active - **not null**, tinyint(1), вкл\выкл отображение вопроса на главной странице
 
 ___
 ## roles
