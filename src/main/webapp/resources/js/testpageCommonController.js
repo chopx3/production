@@ -94,6 +94,26 @@ function drawInfo(value){ // функция заполнения групп кн
 				'</div>';	
 	updInfoFooterFunc = "infoCheck(\'upd\', \'quest\')";
 	break;
+	case "cats":   //если значение = вопрос.
+		addInfoHeaderValue = 'Добавить категорию';
+		updInfoHeaderValue = 'Изменить информацию о категории';
+		addInfoBody = 	'<div class=row><label class="leftLabel">description</label><input type="text" class="form-control inputTextField" id=addTextField1></div>'+
+						'<div class=row><label class="leftLabel">shortName</label><input type="text" class="form-control inputTextField" id=addTextField2></div>';
+		addInfoFooterFunc = "infoCheck(\'add\', \'cats\')";
+		updInfoBody = 	'<div class=row><label 	class="leftLabel">description</label>	<input type="text" 	class="form-control inputTextField" id=updTextField1></div>'+
+						'<div class=row><label 	class="leftLabel">shortName</label>	<input type="text" 	class="form-control inputTextField" id=updTextField2></div>'+
+						'<div class=row><label 	class="leftLabel">isActive</label>'+
+						'<div class="btn-group inputTextField" role="group" aria-label="Basic example" data-toggle=buttons>'+
+							'<label class="btn btn-primary active">'+
+							'<input type="radio" name="options" id="optionActive" autocomplete="off" checked>Active'+
+							'</label>'+
+							'<label class="btn btn-primary">'+
+							'<input type="radio" name="options" id="optionDisabled" autocomplete="off"> Disabled'+
+							'</label>'+
+						'</div>'+
+				'</div>';	
+	updInfoFooterFunc = "infoCheck(\'upd\', \'cats\')";
+	break;
 	}
 	var addInfoHeader = "<label>"+addInfoHeaderValue+"</label>"; // добавление инфы в хедеры
 	var updInfoHeader = "<label>"+updInfoHeaderValue+"</label>"; // добавление инфы в хедеры
@@ -145,12 +165,19 @@ function infoCheck(value, type){ // проверка информации и о�
 					URL=addTagGroupURL; 
 					break;
 					case 'quest':
-						infoToServer ={
-						"description": $(firstField).val(),
-						"shortName":$(secondField).val()
-						};
-						URL=addQuestionURL; 
-						break;}
+					infoToServer ={
+					"description": $(firstField).val(),
+					"shortName":$(secondField).val()
+					};
+					URL=addQuestionURL; 
+					break;
+					case 'cats':
+					infoToServer ={
+					"description": $(firstField).val(),
+					"shortName":$(secondField).val()
+					};
+					URL=addCategoriesURL; 
+					break;}
 		break;
 		case 'upd':
 					switch(type){
@@ -197,6 +224,16 @@ function infoCheck(value, type){ // проверка информации и о�
 					};
 					URL = updateQuestionURL;
 					func = openQuestions;
+					break;
+					case 'cats':
+					infoToServer ={
+					"id":idNum,
+					"description": $(firstField).val(),
+					"shortName":$(secondField).val(),
+					"active": +$('#optionActive').is(':checked')
+					};
+					URL = updateCategoriesURL;
+					func = openCategories;
 					break;}
 		break;}	
 		RestPost(infoToServer, URL); // запрос на сервер

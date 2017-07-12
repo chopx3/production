@@ -11,4 +11,7 @@ import java.util.List;
 public interface CategoryService {
 
     List<Category> findAll();
+    Category update(Category category);
+    Category add(Category category);
+    Category findOne( int id);
 }

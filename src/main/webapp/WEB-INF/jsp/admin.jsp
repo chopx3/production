@@ -13,7 +13,8 @@
     <script src="${pageContext.request.contextPath}/resources/js/testpageStatController.js" type="text/javascript"charset="utf-8"></script>
     <script src="${pageContext.request.contextPath}/resources/js/calendar.js" type="text/javascript" charset="utf-8"></script>
     <script src="${pageContext.request.contextPath}/resources/js/testpageTagsController.js"></script>
-    <script src="${pageContext.request.contextPath}/resources/js/testpageQuestionsController.js"></script>    
+    <script src="${pageContext.request.contextPath}/resources/js/testpageQuestionsController.js"></script>
+    <script src="${pageContext.request.contextPath}/resources/js/testpageCategoriesController.js"></script>    
     <link href="${pageContext.request.contextPath}/resources/css/testPage.css" rel="stylesheet">
 	<link href="${pageContext.request.contextPath}/resources/css/calls.css" rel="stylesheet">
     <script type="text/javascript" src="https://cdn.jsdelivr.net/bootstrap.daterangepicker/2/daterangepicker.js"></script>
@@ -37,6 +38,7 @@
                 <li class="hl"><a href="#" onclick=openTags("tags")>Тэги</a></li>
                 <li class="hl"><a href="#" onclick=openTags("group")>Группы тэгов</a></li>
                 <li class="hl"><a href="#" onclick=openQuestions()>Вопросы</a></li>
+                <li class="hl"><a href="#" onclick=openCategories()>Категории</a></li>
                 <li class="hl"><a href="#" onclick=openStat()>Статистика</a></li>
 				<li class="hl"><a href="http://192.168.10.132/firecatcher/admin/feedback">Feedback</a></li>
             </ul>

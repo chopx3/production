@@ -18,6 +18,12 @@ public class Category {
     @Column(name = "description")
     private String description;
 
+    @Column(name = "active")
+    private Boolean active;
+
+    @Column(name = "shortName")
+    private String shortName;
+
     public Category() {
     }
 
@@ -36,5 +42,13 @@ public class Category {
     public void setDescription(String description) {
         this.description = description;
     }
+
+    public Boolean getActive() { return active; }
+
+    public void setActive(Boolean active) { this.active = active; }
+
+    public String getShortName() { return shortName; }
+
+    public void setShortName(String shortName) { this.shortName = shortName; }
 
 }
