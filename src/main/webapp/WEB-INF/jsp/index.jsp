@@ -87,31 +87,6 @@
 
         <div class="row">
             <div class="btn-group col-md-12" data-toggle="buttons" id="questButtonGroup">
-                <label class="btn btn-primary col-md-3" id="label-quest-1">
-                    <input type="radio" name="question" id="quest-1" autocomplete="off" value="1"> Блокировки
-                </label>
-                <label class="btn btn-primary col-md-3" id="label-quest-2">
-                    <input type="radio" name="question" id="quest-2" autocomplete="off" value="2"> Платные услуги
-                </label>
-                <label class="btn btn-primary col-md-3" id="label-quest-3">
-                    <input type="radio" name="question" id="quest-3" autocomplete="off" value="3"> Автозагрузка
-                </label>
-                <label class="btn btn-primary col-md-3" id="label-quest-4">
-                    <input type="radio" name="question" id="quest-4" autocomplete="off" value="4"> Технические
-                </label>
-                <label class="btn btn-primary col-md-3" id="label-quest-5">
-                    <input type="radio" name="question" id="quest-5" autocomplete="off" value="5"> Другие вопросы
-                </label>
-                <label class="btn btn-primary col-md-3" id="label-quest-6">
-                    <input type="radio" name="question" id="quest-6" autocomplete="off" value="6"> Жалобы
-                </label>
-                <label class="btn btn-primary col-md-3" id="label-quest-7">
-                    <input type="radio" name="question" id="quest-7" autocomplete="off" value="7"> Рекламные
-                </label>
-                <label class="btn btn-primary col-md-3" id="label-quest-8">
-                    <input type="radio" name="question" id="quest-8" autocomplete="off" value="8"> Несколько
-                </label>
-
             </div>
         </div>
         <div>

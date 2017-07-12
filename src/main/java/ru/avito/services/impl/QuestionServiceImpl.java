@@ -23,7 +23,7 @@ public class QuestionServiceImpl implements QuestionService {
     public Question update(Question actualQuestion) {
         Question currentQuestion = questionRepository.findOne(actualQuestion.getId());
         currentQuestion.setDescription(actualQuestion.getDescription());
-        currentQuestion.setActive(actualQuestion.isActive());
+        currentQuestion.setActive(actualQuestion.getActive());
         currentQuestion.setShortName(actualQuestion.getShortName());
         return questionRepository.saveAndFlush(currentQuestion);
     }

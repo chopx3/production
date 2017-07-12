@@ -18,8 +18,8 @@ public class Question {
     @Column(name = "description")
     private String description;
 
-    @Column(name = "isActive")
-    private boolean isActive;
+    @Column(name = "active")
+    private Boolean active;
 
     @Column(name = "shortName")
     private String shortName;
@@ -43,9 +43,9 @@ public class Question {
         this.description = description;
     }
 
-    public boolean isActive() {return isActive;}
+    public Boolean getActive() {        return active;    }
 
-    public void setActive(boolean active) {isActive = active;}
+    public void setActive(Boolean active) {        this.active = active;    }
 
     public String getShortName() {return shortName;}
 

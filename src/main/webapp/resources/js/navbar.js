@@ -5,7 +5,10 @@ var questNum = catNum = 1; // начальные значения категор
 var comFormat = 'DD.MM.YY HH:mm'; // формат отображения комментариев
 var isHappy = true; // для тогглера happy|unhappy
 var happy = unhappy = agentId = 0;
+var activeQuestionsArray = [];
+
 $(document).ready(function() { // основной блок
+	drawQuestions();
 	var outputCalls;
 	var isManager=false;
 	$('#magic').click(function(){ // МЭЭЭДЖИК, включение или отключение css'ки
@@ -17,7 +20,8 @@ $(document).ready(function() { // основной блок
 		$('#IDNum').val(100); 
 	});
 	$('input[name="question"]').change(function(e){ // смена значения переменной при нажатии на другой вопрос
-		questNum = $(this).attr("value");
+		
+		console.log(questNum);
 	});
 	$('input[name="category"]').change(function(e){ //смена значения переменной при нажатии на другую категорию
 		catNum = $(this).attr("value");
@@ -145,7 +149,7 @@ function clearData() { // Очистка данных в боковой форм
 	$('#serviceMessage').text("");
 	$('#label-cat-1').removeClass('active').siblings().removeClass('active');
 	$('input:radio[name=category]').each(function () { $(this).prop('checked', false); });
-	$('#label-quest-1').removeClass('active').siblings().removeClass('active');
+	$('label[name=label-question]').each(function () { $(this).removeClass('active'); });
 	$('input:radio[name=question]').each(function () { $(this).prop('checked', false); });
 	$('label[name=addTags]').each(function () { $(this).removeClass('active'); });
 	$('input:checkbox[name=addTags]').each(function () { $(this).prop('checked', false); });
@@ -296,4 +300,64 @@ function drawBadges(){ // отрисовка бейджей напротив з�
 										$("#emptyFeedbackBadge").addClass("Add");}
 		else $("#emptyFeedbackBadge").removeClass("Add")});
 		console.log("drawBadges");
+}
+function drawQuestions(){
+console.log("drawQuestions");
+
+	$.get(getQuestionsURL).done(function (data) { // запрос
+		var output = "";
+		activeQuestionsArray.length = 0;
+		var activeCounter = 0;
+		for (var i = 0; i<data.length;i++){ 
+			if (data[i].active){activeQuestionsArray[activeCounter] = data[i].id;activeCounter++}
+		}
+		console.log(activeQuestionsArray);
+		var lines = Math.ceil(activeQuestionsArray.length/4); // определяет количество строк
+		var length = activeQuestionsArray.length;
+		var offset = width = questQuantity = nextline = 0;
+		for (var i=0;i<lines;i++){
+			if(length>=(i+1)*4){ nextline = 0;}
+			else {nextline = length%4}
+			switch(nextline){
+							case 0:
+							offset = 0;
+							width = 3;
+							questQuantity = 4;
+							break;
+							case 1:
+							offset = 4;
+							width = 6;
+							questQuantity = 1;
+							break;
+							case 2:
+							offset = 3;
+							width = 4;
+							questQuantity = 2;
+							break;
+							case 3:
+							offset = 0;
+							width = 4;
+							questQuantity = 3;
+							break;
+						}
+				output +=drawQuestionLine(data, i, offset, width, questQuantity);
+		}
+		output +='</div>';
+		document.getElementById("questButtonGroup").innerHTML = output;
+			})	
+}
+function drawQuestionLine(data, i, offset, width, questQuantity){
+	var outputLine = "<div class='col-md-offset-"+offset+"'>";
+	for (var j=0; j<questQuantity; j++){
+		var idOfQuest = activeQuestionsArray[i*4+j];
+		outputLine += 
+		'<label class="btn btn-primary col-md-'+width+'" id="label-quest-'+idOfQuest+'" onclick=changeQuestion('+idOfQuest+') name="label-question">' +
+		'<input type="radio" name="question" id="quest-'+idOfQuest+'" autocomplete="off" value="'+idOfQuest+'">'+data[(activeQuestionsArray[i*4+j])-1].shortName +
+		'</label>';
+	}
+	outputLine += "</div>";
+	return outputLine;
+}
+function changeQuestion(value){
+questNum = value;
 }

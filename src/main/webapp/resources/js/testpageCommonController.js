@@ -74,6 +74,26 @@ function drawInfo(value){ // функция заполнения групп кн
 	addInfoHeaderValue = "Выбор категории звонка";
 	updInfoHeaderValue =  'Выберите период:';
 	break;
+	case "quest":   //если значение = вопрос.
+		addInfoHeaderValue = 'Добавить вопрос';
+		updInfoHeaderValue = 'Изменить информацию о вопросе';
+		addInfoBody = 	'<div class=row><label class="leftLabel">description</label><input type="text" class="form-control inputTextField" id=addTextField1></div>'+
+						'<div class=row><label class="leftLabel">shortName</label><input type="text" class="form-control inputTextField" id=addTextField2></div>';
+		addInfoFooterFunc = "infoCheck(\'add\', \'quest\')";
+		updInfoBody = 	'<div class=row><label 	class="leftLabel">description</label>	<input type="text" 	class="form-control inputTextField" id=updTextField1></div>'+
+						'<div class=row><label 	class="leftLabel">shortName</label>	<input type="text" 	class="form-control inputTextField" id=updTextField2></div>'+
+						'<div class=row><label 	class="leftLabel">isActive</label>'+
+						'<div class="btn-group inputTextField" role="group" aria-label="Basic example" data-toggle=buttons>'+
+							'<label class="btn btn-primary active">'+
+							'<input type="radio" name="options" id="optionActive" autocomplete="off" checked>Active'+
+							'</label>'+
+							'<label class="btn btn-primary">'+
+							'<input type="radio" name="options" id="optionDisabled" autocomplete="off"> Disabled'+
+							'</label>'+
+						'</div>'+
+				'</div>';	
+	updInfoFooterFunc = "infoCheck(\'upd\', \'quest\')";
+	break;
 	}
 	var addInfoHeader = "<label>"+addInfoHeaderValue+"</label>"; // добавление инфы в хедеры
 	var updInfoHeader = "<label>"+updInfoHeaderValue+"</label>"; // добавление инфы в хедеры
@@ -97,6 +117,7 @@ function infoCheck(value, type){ // проверка информации и о�
 	$(secondField).removeClass("box-shadow");
 	if($(firstField).val()==""){$(firstField).addClass("box-shadow");check = false;}
 	if($(secondField).val()==""){$(secondField).addClass("box-shadow"); check = false;} // проверка значений
+	var param = "";
 	if(check){	var URL, infoToServer;	
 		switch(value){ // сначала проверяется добавление это или обновление данных
 		case 'add': 
@@ -122,7 +143,14 @@ function infoCheck(value, type){ // проверка информации и о�
 					"description": $(secondField).val()
 					};
 					URL=addTagGroupURL; 
-					break;}
+					break;
+					case 'quest':
+						infoToServer ={
+						"description": $(firstField).val(),
+						"shortName":$(secondField).val()
+						};
+						URL=addQuestionURL; 
+						break;}
 		break;
 		case 'upd':
 					switch(type){
@@ -137,6 +165,7 @@ function infoCheck(value, type){ // проверка информации и о�
 					"department": department
 					};
 					URL = updateAgentURL;
+					func = openAgents;
 					break;
 					case 'tags':
 					infoToServer ={
@@ -146,6 +175,8 @@ function infoCheck(value, type){ // проверка информации и о�
 					"description": $(thirdField).val(),
 					};
 					URL = updTagURL;
+					func = openTags;
+					param = type;
 					break;
 					case 'group':
 					infoToServer ={
@@ -154,15 +185,26 @@ function infoCheck(value, type){ // проверка информации и о�
 					"description": $(thirdField).val()
 					};
 					URL = updTagGroupURL;
+					func = openTags;
+					param = type;
+					break;
+					case 'quest':
+					infoToServer ={
+					"id":idNum,
+					"description": $(firstField).val(),
+					"shortName":$(secondField).val(),
+					"active": +$('#optionActive').is(':checked')
+					};
+					URL = updateQuestionURL;
+					func = openQuestions;
 					break;}
 		break;}	
 		RestPost(infoToServer, URL); // запрос на сервер
-		fillInfo(type); // обновление нужной страницы
+		invokeFunc(func, param); // обновление нужной страницы
 	}
 }
-function fillInfo(type){ // обновление нужной страницы
-	if (type == "agents") 	{openAgents()}
-	else {openTags(type)}
+function invokeFunc(ourFunc, param){
+ourFunc(param);
 }
 function updateInfo(id, nameTag, loginShort, desc){ // добавление данных в поле обновления
 	idNum = id;

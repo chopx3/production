@@ -60,7 +60,7 @@ function getQuestions() { // получить массив вопросов, е�
 	$.get(getQuestionsURL).done(function (data) {
 		var Info = data;
 		for (var i=0;i<Info.length;i++){
-			var desc = Info[i].description;
+			var desc = Info[i].shortName;
 			Questions[i]=(desc.length>=20)? desc.substr(0,18)+"...": desc;
 		}}
 )}
