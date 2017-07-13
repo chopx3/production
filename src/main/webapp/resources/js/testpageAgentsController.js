@@ -7,21 +7,23 @@ function openAgents(){ // отрисовка таблицы агентов
 		$.get(allAgentsURL).done(function (data) { // запрос к базе по всем агентам
 			var info = data;
 			var tbody =""; 
-			var thead = '<div class="table-scroll col-lg-12"><table id="commentTable" class="table table-striped table-hover" ><thead><tr><th class="col-lg-1">id</th><th class="col-lg-4">username</th><th class="col-lg-4">OktellLogin</th><th class="col-lg-1">Отдел</th><th class="col-lg-1">Роль</th><th class="col-lg-1">edit</th></tr></thead><tbody>'; // шапка таблицы
+			var thead = '<div class="table-scroll col-lg-12"><table id="commentTable" class="table table-striped table-hover" ><thead><tr><th class="col-lg-1">id</th><th class="col-lg-2">username</th><th class="col-lg-3">OktellLogin</th><th class="col-lg-3">russianName</th><th class="col-lg-1">Отдел</th><th class="col-lg-1">Роль</th><th class="col-lg-1">edit</th></tr></thead><tbody>'; // шапка таблицы
 			var tbot = '</tbody></table></div>'; // низ таблицы
 			for(var i=0;i<info.length;i++){ // для всех тэгов
 				var id = info[i].id; 
 				var login = info[i].oktellLogin;
 				var name = info[i].username;
 				var department = info[i].department;
+				var russianName = info[i].russianName;
 				//var notes = info[i].notes;
 				var role = (info[i].roles.length > 0)? info[i].roles[0].id : 0; // есть ли роли у пользователя
 				var userRole = (role == 0) ? "Undefined" : (role == 1) ? "Admin" : "User"; // не определена, админ или юзер
-				dataArray = [id, name, login, id]; // массив, который будет передаваться
+				dataArray = [id, name, login, russianName]; // массив, который будет передаваться
 				tbody += "<tr id="+name+" class='table-row'>"+
 					"<td>"+id+"</td>"+
 					"<td>"+name+"</td>"+
 					"<td>"+login+"</td>"+
+					"<td>"+russianName+"</td>"+
 					"<td>"+department+"</td>"+
 					"<td>"+userRole+"</td>"+
 					'<td><button class="btn btn-sm btn-info" onclick=\"updateInfo(\''+dataArray[0]+'\',\''+dataArray[1]+'\',\''+dataArray[2]+'\',\''+dataArray[3]+'\')\">edit</button></td>'+

@@ -35,6 +35,9 @@ public class Agent {
     @Column(name = "notes")
     private String notes;
 
+    @Column(name = "russianName")
+    private String russianName;
+
 
     @ManyToMany
     @JoinTable(name = "user_roles", joinColumns = @JoinColumn(name = "user_id"),
@@ -100,6 +103,10 @@ public class Agent {
 
     public void setDepartment(String department) {this.department = department;}
 
+    public String getRussianName() {        return russianName;    }
+
+    public void setRussianName(String russianName) {        this.russianName = russianName;    }
+
 //    public Set<Call> getCalls() {
 //        return calls;
 //    }
@@ -116,6 +123,7 @@ public class Agent {
                 ", username='" + username + '\'' +
                 ", password='" + password + '\'' +
                 ", oktellLogin='" + oktellLogin + '\'' +
+                ", russianName='" + russianName + '\'' +
                 ", notes='" + notes + '\'' +
                 ", department='" + department + '\'' +
                 ", roles=" + roles +

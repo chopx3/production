@@ -12,6 +12,7 @@ function drawInfo(value){ // функция заполнения групп кн
 		addInfoFooterFunc = "infoCheck(\'add\', \'agents\')";
 		updInfoBody = 	'<div class=row><label 	class="leftLabel">username</label>	<input type="text" 	class="form-control inputTextField" id=updTextField1></div>'+
 						'<div class=row><label 	class="leftLabel">OktellLogin</label>	<input type="text" 	class="form-control inputTextField" id=updTextField2></div>'+
+						'<div class=row><label 	class="leftLabel">russianName</label>	<input type="text" 	class="form-control inputTextField" id=updTextField3></div>'+
 						'<div class=row><label 	class="leftLabel">Роль</label>'+
 						'<div class="btn-group inputTextField" role="group" aria-label="Basic example" data-toggle=buttons>'+
 							'<label class="btn btn-primary active">'+
@@ -130,9 +131,8 @@ function infoCheck(value, type){ // проверка информации и о�
 	var check = true;
 	var firstField = 	"#"+value+"TextField1";
 	var secondField = 	"#"+value+"TextField2";// присвоение значений. По умолчанию - данные верны, пока не доказно обратное.
-	if (type != "agents") { // в тэгах и группе есть третье значение, объявление и проверка
 	var thirdField = 	"#"+value+"TextField3";
-	if($(thirdField).val()==""){$(thirdField).addClass("box-shadow"); check = false;}}
+	if($(thirdField).val()==""){$(thirdField).addClass("box-shadow"); check = false;}
 	$(firstField).removeClass("box-shadow");
 	$(secondField).removeClass("box-shadow");
 	if($(firstField).val()==""){$(firstField).addClass("box-shadow");check = false;}
@@ -189,7 +189,8 @@ function infoCheck(value, type){ // проверка информации и о�
 					"username": $(firstField).val(),
 					"oktellLogin":$(secondField).val(),
 					"roles": JSON.parse(role),
-					"department": department
+					"department": department,
+					"russianName":$(thirdField).val()
 					};
 					URL = updateAgentURL;
 					func = openAgents;

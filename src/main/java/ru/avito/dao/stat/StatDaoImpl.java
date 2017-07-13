@@ -235,7 +235,7 @@ public class StatDaoImpl implements StatDao {
                             "WHERE time_begin BETWEEN ? AND ? " +
                             " AND department = 'pro' " +
                             "GROUP BY user_id " +
-                            "ORDER BY 2 DESC");
+                            "ORDER BY 2 DESC, 1 ASC");
 
             p.setLong(1, timeStart);
             p.setLong(2, timeEnd);

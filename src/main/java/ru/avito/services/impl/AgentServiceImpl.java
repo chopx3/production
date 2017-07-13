@@ -40,6 +40,7 @@ public class AgentServiceImpl implements AgentService {
         agent.setPassword("test"); //TODO убрать хардкод
         Set<Role> roles = new HashSet<>();
         roles.add(roleRepository.findOne(2));
+        agent.setRussianName("name");
         agent.setDepartment("pro");
         agent.setRoles(roles);
         return agentRepository.saveAndFlush(agent);
@@ -53,6 +54,7 @@ public class AgentServiceImpl implements AgentService {
         currentAgent.setRoles(actualAgent.getRoles());
         currentAgent.setUsername(actualAgent.getUsername());
         currentAgent.setDepartment(actualAgent.getDepartment());
+        currentAgent.setRussianName(actualAgent.getRussianName());
         return agentRepository.save(currentAgent);
     }
 

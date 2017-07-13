@@ -12,7 +12,7 @@ function createTagsTable(){ // отрисовка таблицы
 	var columnsArray = [];
 	var columnFinal = ""; // итоговый текст
 	for (var columns = 0; columns<tagGroups;columns++){ // цикл, пробегается по всем группам тэгов
-		if (finalForm[columns].name!="Main"&&finalForm[columns].tags.length>0&&finalForm[columns].name!="User satisfaction"&&finalForm[columns].name!="Unfiltered"){
+		if (finalForm[columns].name!="Main"&&finalForm[columns].tags.length>0&&finalForm[columns].name!="Unfiltered"){
 			// не выводит группу Мэйн, пустые группы, Unfiltered и Satisfaction
 		var columnsHead = '<div class="container-column">'+	
 				'<div class="container-column-group">'	+				

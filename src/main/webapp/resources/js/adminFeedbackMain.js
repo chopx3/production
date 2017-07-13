@@ -38,7 +38,6 @@ function getCalls(){ // Получить список всех звонков и
 								data: feedbackInfo,
 								counter: i
 							};
-							console.log(multipleCallsInfo);
 							var nextCall = collectMultipleCalls(multipleCallsInfo); // 
 							var margin = (nextCall == "") ? "" : "no-margin-top"; // отступы при нескольких звонках, сложная схема
 							audioURL = '<audio class="audio-call '+margin+'" id="audio'+i+'" src="' + oktell + feedbackInfo[i].comId + '" controls></audio><a href="'+ oktell + feedbackInfo[i].chainId +'" target="_blank">' + '</a>'; // аудио тэг, уникальный id по номеру, ссылка на октелл
