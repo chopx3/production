@@ -11,9 +11,11 @@ $(document).ready(function() {
 function getCalls(){ // Получить список всех звонков и вывести их в поле, после проверки условий
 	var timeStart = moment(startDate, "DD-MM-YYYY").unix()*1000;
 	var timeEnd = moment(endDate, "DD-MM-YYYY").unix()*1000;
-	var URL = ($("#toggle-trigger").prop("checked"))? updatedForFeedbackURL : fullFeedbackURL;
-		$.get(URL+timeStart+"/"+timeEnd+"/") // Получение полного списка
-			.done( function (data) {
+	var URL;
+	if (catNum==6){URL = ($("#toggle-trigger").prop("checked"))? updatedForFeedbackURL : fullFeedbackURL;}
+	else { var toggle = ($("#toggle-trigger").prop("checked")) ? "updated/" : "full_feedback/";
+		URL = getCallsByQuestionandTypeURL + (parseInt(catNum)+1) + "/" + toggle;}
+		$.get(URL+timeStart+"/"+timeEnd+"/").done( function (data) { // Получение полного списка
 					Call ='';
 					document.getElementById("MainForm").innerHTML = ''; // очистка основной формы
 					var feedbackInfo = data;
@@ -27,7 +29,7 @@ function getCalls(){ // Получить список всех звонков и
 								tagCollector +=feedbackInfo[i].tags[j].value + ' '; // сборка тэгов
 								if (tagsMap.has(feedbackInfo[i].tags[j].id.toString())) {tagCheck=true;}// проверка, есть ли этот тэг в мапе, приведение к стрингу, если есть - тру
 								}
-							if( (catNum==6||catNum==feedbackInfo[i].shopCategoryId-1) && tagCheck ){ // если подходит категория или выбраны все категории и тэг есть в мапе	
+							if( tagCheck ){ // если подходит категория или выбраны все категории и тэг есть в мапе	
 							timetag = moment(feedbackInfo[i].timeStart).format(dateFormat); // дата, стандартный вид
 							userID = feedbackInfo[i].avitoUserId;
 							Tags = "<div class='tags col-lg-3'><label class='might-overflow'>" + tagCollector + "</label></div>"; // блок тэгов, 1\4 экрана, класс "переполнение"
@@ -48,7 +50,8 @@ function getCalls(){ // Получить список всех звонков и
 					}
 					document.getElementById("MainForm").innerHTML = Call; // вся собранная информация в главную форму
 				})
-}
+	}
+
 function createTagsTable(){ // отрисовка блока с выбором тэгов
 	tagCounter = 0; // количество
 	outputTags=""; //текст

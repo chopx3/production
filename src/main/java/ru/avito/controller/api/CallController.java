@@ -120,7 +120,14 @@ public class CallController {
     @RequestMapping(value = "question/{question}/{startPeriod}/{endPeriod}", method = RequestMethod.GET)
     public List<Call> findByQuestionIdAndTimeStartBetween(@PathVariable("startPeriod") Long startPeriod,
                                     @PathVariable("endPeriod") Long endPeriod,
-                                    @PathVariable Integer question){
+                                    @PathVariable("question") Integer question){
         return callService.findByQuestionIdAndTimeStartBetween(question, startPeriod, endPeriod);
+    }
+
+    @RequestMapping(value = "catandtype/{category}/{type}/{startPeriod}/{endPeriod}", method = RequestMethod.GET)
+    public List<Call> findByTimeStartBetweenAndTypeAndShopCategoryId(@PathVariable("startPeriod")Long startPeriod,
+                                                          @PathVariable("endPeriod") Long endPeriod,
+                                                          @PathVariable("category") Integer category, @PathVariable("type") String type){
+        return callService.findByTimeStartBetweenAndTypeAndShopCategoryId(startPeriod, endPeriod, type,  category);
     }
 }

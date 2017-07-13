@@ -48,9 +48,8 @@
             <li class="hl"><a href="#" id="feedback"><i class ="fa fa-pencil menuIcons fa-fw"></i><span>Feedback</span><span class="badge mybadge" id=emptyFeedbackBadge>0</span></a></li>
 			<li><a href="#" id="magic"><i class ="fa fa-magic menuIcons fa-fw"></i><span>Magic</span></a></li>
             <li><a href="${pageContext.request.contextPath}/j_spring_security_logout" id="logout"><i class ="fa  fa-times-circle menuIcons fa-fw"></i><span>Выйти</span></a></li>
-            <i class ="fa fa-trophy fa-fw trophy" style="display:none" id=trophy title="За прохождение опроса, ТЫ ТАКОЙ МОЛОДЕЦ"></i>
-            
         </ul>
+        <i class ="fa fa-trophy fa-fw trophy" style="display:none" id=trophy title="За прохождение опроса, ТЫ ТАКОЙ МОЛОДЕЦ"></i>
         <label id="websocketStatus">Cтатус </label>
     </div>
 	
@@ -121,7 +120,7 @@
 		</div>
 		<div class="row">
             <div class="col-md-12">
-			<textarea class="form-control" rows=5 id=callComments placeholder="Поле для комментария (необязательное)"></textarea>
+			<textarea class="form-control" rows=4 id=callComments placeholder="Поле для комментария (необязательное)"></textarea>
 			</div>
 		</div>
     </div>

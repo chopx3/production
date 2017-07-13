@@ -123,10 +123,6 @@ public class CallServiceImpl implements CallService {
         return callRepository.findByAvitoUserId(avitoUserId, aPage);
     }
 
-    public List<Call> findAllByAvitoUserId(Long avitoUserId) {
-        return callRepository.findAllByAvitoUserId(avitoUserId);
-    }
-
     public List<Call> findTop1000ByAvitoUserId(Long avitoUserId) {
         return callRepository.findTop1000ByAvitoUserId(avitoUserId);
     }
@@ -142,5 +138,9 @@ public class CallServiceImpl implements CallService {
 
     public List<Call> findByAvitoUserIdAndAgentId(Long avitoUserId, Integer agentId){
         return callRepository.findByAvitoUserIdAndAgentId(avitoUserId, agentId);
+    }
+
+    public List<Call> findByTimeStartBetweenAndTypeAndShopCategoryId( Long timeStart, Long timeEnd, String typeCall, Integer category ){
+        return callRepository.findByTimeStartBetweenAndTypeAndShopCategoryId(timeStart, timeEnd, typeCall, category);
     }
 }

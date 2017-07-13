@@ -18,11 +18,10 @@ public interface CallService { //TODO доделать
     List<Call> findByAgentIdAndTimeStartBetween(Integer userId, Long timeStart, Long timeEnd);
     List<Call> findByTimeStartBetweenAndAgentIdAndType(Integer agentId, Long startPeriod, Long endPeriod, String typeCall);
     List<Call> findByTags(List<Tag> tagsIds);
-    List<Call> findAllByAvitoUserId(Long avitoUserId);
     List<Call> findTop1000ByAvitoUserId(Long avitoUserId);
     List<Call> findByAvitoUserIdAndAgentId(Long avitoUserId, Integer questionId);
     List<Call> findByAvitoUserId(Long avitoUserId, PageRequest aPage);
     List<Call> findByQuestionIdAndTimeStartBetween(Integer question, Long timeStart, Long timeEnd);
     List<Call> findByTimeStartBetweenAndType(Long timeStart, Long timeEnd, String typeCall);
-
+    List<Call> findByTimeStartBetweenAndTypeAndShopCategoryId(Long timeStart, Long timeEnd, String typeCall, Integer category);
 }

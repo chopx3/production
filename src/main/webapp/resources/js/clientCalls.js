@@ -64,7 +64,6 @@ function drawClientCalls(pageNumber){ // отрисовка собственно
 								isItSameAgent : isItSameAgent
 							};
 					var nextCall = collectMultipleCalls(multipleCallsInfo); // склейка звонков
-					console.log(iJump);
 					var margin = (nextCall == "") ? "" : "no-margin-top"; // отступы при нескольких звонках, сложная схема
 					var commentBox = (callsData[i].comments == null || callsData[i].comments == "") ? "" : "<textarea style='height:"+(78.4+iJump*36)+"px;' class='form-control commentBox col-lg-4' disabled>"+callsData[i].comments+"</textarea>"; // если есть комментарии - выводи их в поле справа
 					var tagLabel = (callsData[i].tags.length == 0) ? "" : "<div class='tags col-lg-2'><label class='might-overflow'>" + collectTagForGetCalls(callsData[i].tags) + "</label></div>";  // если есть тэги - справа

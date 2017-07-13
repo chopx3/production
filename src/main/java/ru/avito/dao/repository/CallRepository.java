@@ -14,8 +14,6 @@ import java.util.List;
  */
 public interface CallRepository extends JpaRepository<Call,Integer>{ //TODO реализовать репозиторий
 
-    List<Call> findAllByAvitoUserId(Long agentId);
-
     List<Call> findTop1000ByAvitoUserId(Long agentId);
 
     List<Call> findByAvitoUserIdAndAgentId(Long avitoUserId, Integer agentId);
@@ -30,6 +28,8 @@ public interface CallRepository extends JpaRepository<Call,Integer>{ //TODO ре
 
     List<Call> findByAvitoUserId(Long avitoUserId, Pageable aPage);
 
+    List<Call> findByTimeStartBetweenAndTypeAndShopCategoryId( Long timeStart, Long timeEnd, String typeCall, Integer category );
+
     @Query("SELECT c FROM Call c INNER JOIN c.tags t WHERE t IN (:tags)")
     List<Call> findByTags(@Param("tags") List<Tag> tags);
 
@@ -37,4 +37,5 @@ public interface CallRepository extends JpaRepository<Call,Integer>{ //TODO ре
     List<Call> findByQuestionIdAndTimeStartBetween(@Param("question") Integer question,
                                                    @Param("timeStart") Long timeStart,
                                                    @Param("timeEnd") Long timeEnd);
+
 }
