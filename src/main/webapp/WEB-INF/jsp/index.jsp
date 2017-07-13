@@ -48,8 +48,10 @@
             <li class="hl"><a href="#" id="feedback"><i class ="fa fa-pencil menuIcons fa-fw"></i><span>Feedback</span><span class="badge mybadge" id=emptyFeedbackBadge>0</span></a></li>
 			<li><a href="#" id="magic"><i class ="fa fa-magic menuIcons fa-fw"></i><span>Magic</span></a></li>
             <li><a href="${pageContext.request.contextPath}/j_spring_security_logout" id="logout"><i class ="fa  fa-times-circle menuIcons fa-fw"></i><span>Выйти</span></a></li>
-            <label id="websocketStatus">Cтатус </label>
+            <i class ="fa fa-trophy fa-fw trophy" style="display:none" id=trophy title="За прохождение опроса, ТЫ ТАКОЙ МОЛОДЕЦ"></i>
+            
         </ul>
+        <label id="websocketStatus">Cтатус </label>
     </div>
 	
     <div id="SubForm" class="form-group col-md-5 container-fluid">

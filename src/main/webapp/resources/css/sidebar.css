@@ -71,3 +71,15 @@
 	bottom: 0px;
 	margin:auto;
 }
+.trophy{
+	position: fixed;
+	bottom: 30px;
+	font-size: 30px;
+	color:gold;
+	-webkit-transition: -webkit-transform .8s ease-in-out;
+          transition:         transform .8s ease-in-out;
+}
+.trophy:hover {
+  -webkit-transform: rotate(360deg);
+          transform: rotate(360deg);
+}

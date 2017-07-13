@@ -5,7 +5,7 @@ var questNum = catNum = 1; // начальные значения категор
 var comFormat = 'DD.MM.YY HH:mm'; // формат отображения комментариев
 var isHappy = true; // для тогглера happy|unhappy
 var happy = unhappy = agentId = 0;
-
+var googleFormParticipants = [85,78,86,65,7,13,14,121,120,34,20,98];
 $(document).ready(function() { // основной блок
 	drawQuestions();
 	var outputCalls;
@@ -302,6 +302,8 @@ function drawBadges(){ // отрисовка бейджей напротив з�
 										$("#emptyFeedbackBadge").addClass("Add");}
 		else $("#emptyFeedbackBadge").removeClass("Add")});
 		console.log("drawBadges");
+		if (googleFormParticipants.includes(agentId)){$('#trophy').addClass("Add")}
+		console.log("agentId:" + agentId +"\\n" + googleFormParticipants.includes(agentId));
 }
 function drawQuestions(){ // отрисовка вопросов
 	var activeQuestionsArray = [];
