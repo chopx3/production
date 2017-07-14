@@ -6,6 +6,7 @@ var comFormat = 'DD.MM.YY HH:mm'; // формат отображения ком�
 var isHappy = true; // для тогглера happy|unhappy
 var happy = unhappy = agentId = 0;
 var googleFormParticipants = [85,78,86,65,7,13,14,121,120,34,20,98];
+var magicColours = ["blue", "red", "green", "purple", "gray"];
 $(document).ready(function() { // основной блок
 	drawQuestions();
 	var outputCalls;
@@ -14,6 +15,7 @@ $(document).ready(function() { // основной блок
 	if   	( $('#colours').prop("disabled"))
 			{ $('#colours').prop("disabled", false);}
 	else 	{ $('#colours').prop("disabled", true);	}
+	$('#magicWand').toggleClass("magic");
 	});
 	$('#openQuestionLabel').click(function(){ // общий вопрос, кнопка, ввести ID = 100
 		$('#IDNum').val(100); 
@@ -132,7 +134,7 @@ function collectAdditionalInfo(data, type){ // сбор дополнительн
 	if (data.out == true) { additionalInfo += "<span class='pull-right myLabel label label-primary'><a title='Исходящий звонок'>Исх</a></span>";} // если исходяшка
 	if (data.manager == true) { additionalInfo += "<span class='pull-right myLabel label label-primary'><a title='Менеджер'>М</a></span>";} // если менеджер
 	if (userID == -1) { additionalInfo = "<span class='pull-right myLabel label btn-avito-red-2'>"+Questions[questionID-1]+"</span>";} // частник
-	else {additionalInfo += "<span class='pull-right myLabel label label-primary'>"+Questions[questionID-1]+"</span><span class='pull-right myLabel label label-primary'>  "+Categories[catID-1]+"</span><span class='pull-right myLabel label label-primary'>ID:<a href='https://adm.avito.ru/users/user/info/"+userID+"' target=_blank>"+userID+"</a></span>"} // обычный звонок				
+	else {additionalInfo += "<span class='pull-right myLabel label label-primary'>"+Questions[questionID-1]+"</span><span class='pull-right myLabel label label-primary btn-avito-"+magicColours[catID-1]+"'>  "+Categories[catID-1]+"</span><span class='pull-right myLabel label label-primary'>ID:<a href='https://adm.avito.ru/users/user/info/"+userID+"' target=_blank>"+userID+"</a></span>"} // обычный звонок				
 	if (type == "feedback") {}
 	else {
 	if (data.type == "FULL_FEEDBACK") { additionalInfo+= "<span class='pull-right myLabel label label-primary'><a title='Заполненный звонок с тэгом feedback'>F</a></span>"} // заполненный фидбек

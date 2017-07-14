@@ -1,4 +1,8 @@
 @charset "utf-8";
+/* активация режима */
+.magic{
+	color:gold;
+}
 /* Синий Авитовский цвет */
 .box-shadow-cat{
 	border:1px solid transparent;
