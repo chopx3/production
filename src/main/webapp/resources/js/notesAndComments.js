@@ -9,6 +9,7 @@ $(document).ready(function() {//Блок комментариев
 		$("#commentForm").toggleClass("On");
 		$('#glyphCom').toggleClass('glyphicon-triangle-right').toggleClass('glyphicon-triangle-left');	
 		$('#glyphNote').addClass('glyphicon-triangle-right').removeClass('glyphicon-triangle-left');
+		$('#closeButton').addClass('Add');
 	});	//Блок заметок
 	$('#notes').click(function(){ //Кнопка "Заметки", тоже самое, что в комментах, только наоборот + подгрузка заметок
 		$("#noteForm").toggleClass("On");
@@ -16,9 +17,17 @@ $(document).ready(function() {//Блок комментариев
 		getNotes();
 		$('#glyphNote').toggleClass('glyphicon-triangle-right').toggleClass('glyphicon-triangle-left');
 		$('#glyphCom').addClass('glyphicon-triangle-right').removeClass('glyphicon-triangle-left');
+		$('#closeButton').addClass('Add');
 	});
 	$('#noteArea').change(function(e){ // обновить заметки при внесении каких-либо изменений
 	updateNotes();
+	});
+	$('#closeButton').click(function() {
+		$("#noteForm").removeClass("On");
+		$("#commentForm").removeClass("On");
+		$('#glyphNote').addClass('glyphicon-triangle-right').removeClass('glyphicon-triangle-left');
+		$('#glyphCom').addClass('glyphicon-triangle-right').removeClass('glyphicon-triangle-left');
+		$('#closeButton').removeClass('Add');
 	});
 })
 function getComments(){ // отрисовка комментариев

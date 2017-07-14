@@ -96,3 +96,17 @@
 #IDforInfo{
 	z-index : 0;
 }
+#closeButton{
+	margin-left:-30px;
+	margin-top: 10px;
+	font-size: 30px;
+	z-index: 10;
+	position: relative;
+	display:none;
+	color:black;
+	transition:         transform .6s ease-in-out;
+}
+#closeButton:hover{
+	color:gray;
+	transition: .6s;
+}
