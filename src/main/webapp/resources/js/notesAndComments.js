@@ -7,17 +7,19 @@ $(document).ready(function() {//Блок комментариев
 		addButton();
 		$("#noteForm").removeClass("On");
 		$("#commentForm").toggleClass("On");
+		if ($("#commentForm").hasClass("On")) {$('#closeButton').addClass('Add')}
+		else {$('#closeButton').removeClass('Add');}
 		$('#glyphCom').toggleClass('glyphicon-triangle-right').toggleClass('glyphicon-triangle-left');	
 		$('#glyphNote').addClass('glyphicon-triangle-right').removeClass('glyphicon-triangle-left');
-		$('#closeButton').addClass('Add');
 	});	//Блок заметок
 	$('#notes').click(function(){ //Кнопка "Заметки", тоже самое, что в комментах, только наоборот + подгрузка заметок
 		$("#noteForm").toggleClass("On");
 		$("#commentForm").removeClass("On");
+		if ($("#noteForm").hasClass("On")) {$('#closeButton').addClass('Add')}
+			else {$('#closeButton').removeClass('Add');}
 		getNotes();
 		$('#glyphNote').toggleClass('glyphicon-triangle-right').toggleClass('glyphicon-triangle-left');
 		$('#glyphCom').addClass('glyphicon-triangle-right').removeClass('glyphicon-triangle-left');
-		$('#closeButton').addClass('Add');
 	});
 	$('#noteArea').change(function(e){ // обновить заметки при внесении каких-либо изменений
 	updateNotes();

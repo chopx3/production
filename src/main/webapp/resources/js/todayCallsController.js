@@ -18,7 +18,10 @@ $(document).ready(function() { // отрисовка кнопки и кален�
 function drawDayCalls(timeStart, timeEnd){ // функция отрисовки звонков
 	$.get(dayCallsURL+"/"+timeStart+"/"+timeEnd).done(function (data) { // запрос к базе
 	sorting(data, 'timeStart'); // сортировка
-	var nametag = dayCalls = "";	
+	var nametag = dayCalls = "";
+	var callsSum = '<div class="row col-lg-12">Количество звонков за выбранный день: '+getUniqueData(data, "chainId")+'</div>';
+	
+	console.log(data);
 	if(data.length==0){ document.getElementById("MainForm").innerHTML = "Звонки не обнаружены :("; } // если не пусто
 	else {	var audioURL, audiosrc, chain, additionalInfo; // рисуй
 			for (var i = 0; i < data.length; i++) { // основной цикл
@@ -46,7 +49,8 @@ function drawDayCalls(timeStart, timeEnd){ // функция отрисовки 
 			dayCalls += '<div id="receivedCall' +i+'" onclick=setInfoToCallForm('+JSON.stringify(fullCallInfo)+') class="call col-lg-12" data-time="'+timetag+'" data-sign="'+nametag+'"><span>'+ timetag +'\t\t</span><span style="display:none" id=commentHide'+i+'>'+data[i].comments+'</span>'+ additionalInfo+'<br>' + nextCall + audioURL  + '</div>'; // основное заполнение звонка - звонок+аудио+доп инфа
 			i+=iJump;
 		}
-		document.getElementById("MainForm").innerHTML = dayCalls;
+		console.log(getUniqueData(data, "chainID"));
+		document.getElementById("MainForm").innerHTML = callsSum + dayCalls;
 	}
 	$("audio").each(function(){ //Функция по остановке всех остальных аудио-файлов
 		$(this).bind("play",stopAll).bind("click",stopAll);

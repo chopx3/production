@@ -97,6 +97,9 @@ $(document).ready(function() { // основной блок
 		drawFeedback();
 		createTagsTable();	
 	});
+var qs = getQueryStrings();
+if (qs.comments) {setTimeout(function(){ $("#comments").trigger("click");$("#IDforComments").val(qs.id); $("#IDSubmitComments").trigger('click'); }, 1000);
+		 console.log("clicked");}	
 });
 // --- Завершение блока документ.реди
 // --- Функции
@@ -132,11 +135,10 @@ function collectAdditionalInfo(data, type){ // сбор дополнительн
 	var questionID = data.questionId;
 	var catID = data.shopCategoryId; // переменные. Названия говорят сами за себя
 	if (data.out == true) { additionalInfo += "<span class='pull-right myLabel label label-primary'><a title='Исходящий звонок'>Исх</a></span>";} // если исходяшка
-	if (data.manager == true) { additionalInfo += "<span class='pull-right myLabel label label-primary'><a title='Менеджер'>М</a></span>";} // если менеджер
+	if (data.manager == true) { additionalInfo += "<span class='pull-right myLabel label label-primary btn-avito-red'><a title='Менеджер'>М</a></span>";} // если менеджер
 	if (userID == -1) { additionalInfo = "<span class='pull-right myLabel label btn-avito-red-2'>"+Questions[questionID-1]+"</span>";} // частник
 	else {additionalInfo += "<span class='pull-right myLabel label label-primary'>"+Questions[questionID-1]+"</span><span class='pull-right myLabel label label-primary btn-avito-"+magicColours[catID-1]+"'>  "+Categories[catID-1]+"</span><span class='pull-right myLabel label label-primary'>ID:<a href='https://adm.avito.ru/users/user/info/"+userID+"' target=_blank>"+userID+"</a></span>"} // обычный звонок				
-	if (type == "feedback") {}
-	else {
+	if (type != "feedback"){
 	if (data.type == "FULL_FEEDBACK") { additionalInfo+= "<span class='pull-right myLabel label label-primary'><a title='Заполненный звонок с тэгом feedback'>F</a></span>"} // заполненный фидбек
 	if (data.type == "EMPTY_FEEDBACK") { additionalInfo+= "<span class='pull-right myLabel label btn-avito-red-2'><a title='Незаполненный звонок с тэгом feedback'>F</a></span>"}} // пустой
 	}
@@ -364,3 +366,17 @@ function drawQuestions(){ // отрисовка вопросов
 function changeQuestion(i){ // так как вопросы динамические теперь - в отдельную функцию из d.ready() перенес
 		questNum = i;
 		}
+function getQueryStrings() { 
+  var assoc  = {};
+  var decode = function (s) { return decodeURIComponent(s.replace(/\+/g, " ")); };
+  var queryString = location.search.substring(1); 
+  var keyValues = queryString.split('&'); 
+
+  for(var i in keyValues) { 
+    var key = keyValues[i].split('=');
+    if (key.length > 1) {
+      assoc[decode(key[0])] = decode(key[1]);
+    }
+  } 
+  return assoc; 
+} 

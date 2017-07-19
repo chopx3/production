@@ -196,7 +196,7 @@ public class StatDaoImpl implements StatDao {
         try {
             connection = dataSource.getConnection();
             PreparedStatement p =connection.prepareStatement(
-                    " SELECT users.oktell_login AS Field, count(DISTINCT(chain_id)) AS Total " +
+                    " SELECT users.russianName AS Field, count(DISTINCT(chain_id)) AS Total " +
                             "FROM calls JOIN users ON calls.user_id = users.id " +
                             "WHERE type =\"EMPTY\" " +
                             "AND time_begin BETWEEN ? AND ? " +
@@ -230,7 +230,7 @@ public class StatDaoImpl implements StatDao {
         try {
             connection = dataSource.getConnection();
             PreparedStatement p =connection.prepareStatement(
-                    " SELECT users.oktell_login AS Field, count(DISTINCT(chain_id)) AS Total " +
+                    " SELECT users.russianName AS Field, count(DISTINCT(chain_id)) AS Total " +
                             "FROM calls JOIN users ON calls.user_id = users.id " +
                             "WHERE time_begin BETWEEN ? AND ? " +
                             " AND department = 'pro' " +
@@ -263,7 +263,7 @@ public class StatDaoImpl implements StatDao {
         try {
             connection = dataSource.getConnection();
             PreparedStatement p =connection.prepareStatement(
-                    " SELECT users.oktell_login AS Field, count(DISTINCT(chain_id)) AS Total " +
+                    " SELECT users.russianName AS Field, count(DISTINCT(chain_id)) AS Total " +
                             "FROM calls JOIN users ON calls.user_id = users.id " +
                             "WHERE time_begin BETWEEN ? AND ? " +
                             " AND department = 'ffc' " +
@@ -297,14 +297,14 @@ public class StatDaoImpl implements StatDao {
             connection = dataSource.getConnection();
             PreparedStatement p =connection.prepareStatement(
                     "select t1.agent, t1.total, coalesce(t2.empty, 0) as empty " +
-                            "from (SELECT users.oktell_login AS 'agent', count(DISTINCT(chain_id)) AS total " +
+                            "from (SELECT users.russianName AS 'agent', count(DISTINCT(chain_id)) AS total " +
                             "FROM calls JOIN users ON calls.user_id = users.id " +
                             "AND time_begin BETWEEN ? AND ? " +
                             " AND department = 'pro' " +
                             "GROUP BY user_id " +
                             "ORDER BY 2 DESC) as t1 " +
                             "left join" +
-                            "(SELECT users.oktell_login AS 'agent', count(DISTINCT(chain_id)) AS empty " +
+                            "(SELECT users.russianName AS 'agent', count(DISTINCT(chain_id)) AS empty " +
                             "FROM calls JOIN users ON calls.user_id = users.id " +
                             "WHERE type =\"EMPTY\" " +
                             "AND time_begin BETWEEN ? AND ? " +
@@ -342,7 +342,7 @@ public class StatDaoImpl implements StatDao {
             connection = dataSource.getConnection();
             PreparedStatement p =connection.prepareStatement(
                     "select t1.Agent, (t1.Full_feedback+coalesce(t2.Empty_feedback, 0)) as Total, coalesce(t2.Empty_feedback, 0) AS Empty "+
-                    "FROM (SELECT users.oktell_login AS 'Agent', count(DISTINCT(chain_id)) AS 'Full_feedback' "+
+                    "FROM (SELECT users.russianName AS 'Agent', count(DISTINCT(chain_id)) AS 'Full_feedback' "+
                     "FROM calls JOIN users ON calls.user_id = users.id "+
                     " WHERE type =\"FULL_FEEDBACK\" "+
                     " AND time_begin BETWEEN ? AND ?  "+
@@ -350,7 +350,7 @@ public class StatDaoImpl implements StatDao {
                     " GROUP BY user_id "+
                     "ORDER BY 2 DESC) as t1 "+
                     "left join "+
-                    "(SELECT users.oktell_login AS 'Agent', count(DISTINCT(chain_id)) AS 'Empty_feedback' "+
+                    "(SELECT users.russianName AS 'Agent', count(DISTINCT(chain_id)) AS 'Empty_feedback' "+
                     "FROM calls JOIN users ON calls.user_id = users.id "+
                     "WHERE type =\"EMPTY_FEEDBACK\" "+
                     "AND time_begin BETWEEN ? AND ? "+

@@ -1,6 +1,6 @@
 // Общие URL
 var host = "http://"+location.host + "/firecatcher/api/"; // Основной хост URL
-var oktell = "http://"+location.host + "/firecatcher/oktell/calls?name=Avito_get_file_by_id_conn&attachment=1&startparam1="; // Октелл
+var oktell = "http://192.168.10.132/firecatcher/oktell/calls?name=Avito_get_file_by_id_conn&attachment=1&startparam1="; // Октелл
 var allAgentsURL = 								host + "agent/all"; // Поиск всех агентов в базе
 var addAgentURL = 								host + "agent/add"; // Добавление нового агента в базу
 var updateAgentURL = 							host + "agent/update"; // Обновление информации об агенте
@@ -94,9 +94,9 @@ function collectMultipleCalls(options){ // функция отрисовки н�
 return result;	
 }
 function getUniqueData(data, param) { // подсчет уникальных звонков в фидбеке, stackoverflow продакшн.
-    var variables = {};
+  var variables = {};
 	var count = 0;
-    $.each(data, function(){ 
+    $.each(data, function(){
         if (!variables[this[param]]){
             variables[this[param]] = [];    
        count++;}

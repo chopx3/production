@@ -5,7 +5,10 @@ $('#clientCalls').click(function() { //Кнопка "Звонки пользов
 		fillInfo("add","Звонки пользователя", ""); // заполнение инфы
 		addButton(); // отображение кнопки
 		$("#MainForm").removeClass("col-md-6").addClass("col-md-12"); // для отображения информации во весь экран(тэги+коммент)
-	});	
+	});
+	var qs = getQueryStrings();
+	if (qs.calls) {setTimeout(function(){ $("#clientCalls").trigger("click");$("#IDforInfo").val(qs.id); $("#IDSubmit").trigger('click'); }, 1000);
+		 console.log("clicked");}	
 })
 function getCalls(){ // Функция для вывода информации по ID пользователя	
 	idNumber = idSaver = $('#IDforInfo').val(); // сохранение информации
