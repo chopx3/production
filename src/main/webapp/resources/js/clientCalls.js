@@ -34,8 +34,7 @@ function drawClientCalls(pageNumber){ // отрисовка собственно
 	var isFirstPage = (pageNumber == 1) ? "class=disabled" : "onclick=drawClientCalls("+(pageNumber-1)+")"; // проверка - первая ли это страница
 	var isLastPage = (pageNumber == numberOfPages ) ? "class=disabled" : "onclick=drawClientCalls("+(pageNumber+1)+")"; // или последняя
 	pageLineStart = '<div class=row>						'+
-	'<div class=col-lg-12>									'+
-	'<nav aria-label="Page navigation" class=col-lg-6>						'+
+	'<nav aria-label="Page navigation" class=col-lg-12>						'+
 	'	<ul class="pagination" id=paginationUL>				'+
 	'		<li>											'+
 	'		  <a href="#" '+isFirstPage+'>					'+
@@ -49,7 +48,7 @@ function drawClientCalls(pageNumber){ // отрисовка собственно
 	'		  </a>											'+
 	'		</li>											'+
 	'	</ul>												'+
-	'</nav></div></div>'; // и конечная
+	'</nav></div>'; // и конечная
 	}
 	pagination = pageLineStart + pageBody + pageLineEnd;
 	var endIndex = (pageNumber == Math.ceil(callsData.length / 50)) ? callsData.length : 50*pageNumber; // проверка для последнего элемента отрисовка, 50 звонков или до конца списка

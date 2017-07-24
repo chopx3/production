@@ -7,8 +7,10 @@ var isHappy = true; // для тогглера happy|unhappy
 var happy = unhappy = agentId = 0;
 var googleFormParticipants = [85,78,86,65,7,13,14,121,120,34,20,98];
 var magicColours = ["blue", "red", "green", "purple", "gray"];
-$(document).ready(function() { // основной блок
+$(document).ready(function() {
+	 // основной блок
 	drawQuestions();
+	console.log(agentId);
 	var outputCalls;
 	var isManager=false;
 	$('#magic').click(function(){ // МЭЭЭДЖИК, включение или отключение css'ки

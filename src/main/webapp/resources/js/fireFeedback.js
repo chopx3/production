@@ -18,7 +18,7 @@ function createTagsTable(){ // отрисовка таблицы
 				'<div class="container-column-group">'	+				
 					'<ul class="group-list">'+
 						'<label class="group-header">'+ 
-						finalForm[columns].name + '</label>';	 // построение группы тэгов, шапка блока	
+						finalForm[columns].description + '</label>';	 // построение группы тэгов, шапка блока	
 		var columnsBody = ""; // обнуление тела
 		for (var colTags = 0; colTags<finalForm[columns].tags.length;colTags++){ // цикл "накачки" тела, пробегается по всем тэгам, берет значение, номер и название
 			var value = finalForm[columns].tags[colTags].value;
