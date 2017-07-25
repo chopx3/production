@@ -83,3 +83,19 @@
   -webkit-transform: rotate(360deg);
           transform: rotate(360deg);
 }
+.achievment{
+	color: lightseagreen;
+	text-align: left;
+	display: none;
+}
+#achievmentText{
+	font-size: 20px;
+	position: fixed;
+	bottom: 75px;
+	left: 45px;
+}
+#achievmentIcon{
+	font-size: 35px;
+	position: fixed;
+	bottom: 75px;
+}

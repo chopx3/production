@@ -46,6 +46,7 @@
 	      <li><a href="#" id="magic"><i class ="fa fa-magic menuIcons fa-fw" id="magicWand"></i><span>Magic</span></a></li>
         <li><a href="${pageContext.request.contextPath}/j_spring_security_logout" id="logout"><i class ="fa  fa-times-circle menuIcons fa-fw"></i><span>Выйти</span></a></li>
       </ul>
+      <div class="achievment-block"><i class ="fa fa-circle fa-inverse fa-fw achievment" id=achievmentIcon></i><label class=achievment id=achievmentText>0</label></div>
       <i class ="fa fa-trophy fa-fw trophy" style="display:none" id=trophy title="За прохождение опроса, ТЫ ТАКОЙ МОЛОДЕЦ"></i>
       <label id="websocketStatus">Cтатус </label>
     </div>

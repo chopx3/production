@@ -7,6 +7,8 @@ var isHappy = true; // для тогглера happy|unhappy
 var happy = unhappy = agentId = 0;
 var googleFormParticipants = [85,78,86,65,7,13,14,121,120,34,20,98];
 var magicColours = ["blue", "red", "green", "purple", "gray"];
+var todayCalls = 0;
+var achievmentGradeIcon = ["fa-circle","fa-bicycle","fa-motorcycle","fa-car","fa-subway","fa-fighter-jet fa-rotate-270","fa-rocket","fa-space-shuttle fa-rotate-270"];
 $(document).ready(function() {
 	 // основной блок
 	drawQuestions();
@@ -21,10 +23,6 @@ $(document).ready(function() {
 	});
 	$('#openQuestionLabel').click(function(){ // общий вопрос, кнопка, ввести ID = 100
 		$('#IDNum').val(100); 
-	});
-	$('input[name="question"]').change(function(e){ // смена значения переменной при нажатии на другой вопрос
-		
-		console.log(questNum);
 	});
 	$('input[name="category"]').change(function(e){ //смена значения переменной при нажатии на другую категорию
 		catNum = $(this).attr("value");
@@ -310,6 +308,10 @@ function drawBadges(){ // отрисовка бейджей напротив з�
 		console.log("drawBadges");
 		if (googleFormParticipants.includes(agentId)){$('#trophy').addClass("Add")}
 		console.log("agentId:" + agentId +"\\n" + googleFormParticipants.includes(agentId));
+		$.get(dayCallsURL+"/"+ moment().startOf('day').unix()*1000 +"/"+moment().endOf('day').unix()*1000).done(function (data) {
+		todayCalls = getUniqueData(data, "chainId");
+		});
+		drawAchievments();
 }
 function drawQuestions(){ // отрисовка вопросов
 	var activeQuestionsArray = [];
@@ -382,3 +384,9 @@ function getQueryStrings() {
   } 
   return assoc; 
 } 
+function drawAchievments(){
+	var achievmentGrade = (todayCalls>79) ? 7 : Math.ceil(todayCalls/10);
+	if (achievmentGrade) {$(".achievment").css("display", "block");
+	$("#achievmentIcon").removeClass().addClass("fa fa-inverse fa-fw achievment").addClass(achievmentGradeIcon[achievmentGrade]);
+	achievmentText.textContent = todayCalls;}
+}
