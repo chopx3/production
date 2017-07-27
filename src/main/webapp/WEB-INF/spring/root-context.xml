@@ -63,7 +63,7 @@
     <bean id ="categoryService" class="ru.avito.services.impl.CategoryServiceImpl"/>
     <bean id ="nestedCategoryService" class="ru.avito.services.impl.NestedCategoryServiceImpl"/>
     <bean id ="productService" class="ru.avito.services.impl.ProductServiceImpl"/>
-
+    <bean id="premiumClientsService" class="ru.avito.services.impl.PremiumClientServiceImpl"/>
     <bean id ="statService" class="ru.avito.services.impl.StatServiceImpl"/>
     <bean id ="statDao" class="ru.avito.dao.stat.StatDaoImpl"/>
     <bean id ="nestedCategoryDao" class="ru.avito.dao.stat.NestedCategoryDaoImpl"/>
