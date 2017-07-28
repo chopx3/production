@@ -155,6 +155,61 @@
 </div>
 <div class="col-md-offset-6" id="closeButtonDiv">
   <i class="fa fa-times-circle" aria-hidden="true" id="closeButton"></i>
+</div>
+<div class="form-group col-md-4 col-md-offset-8 reprem-block">
+<div class="panel panel-default">
+  <div class="panel-heading text-center">Клиент</div>
+  <div class="panel-body">
+    <div class="row reprem-row">
+      <div class="col-md-3 reprem-icon"><i class="fa fa-id-card"></i></div>
+      <div class="col-md-9 reprem-text reprem-text-1 reprem-text-id input-number" value=1>
+        <label for="" class="col-md-12 reprem-label reprem-label-1">1</label>
+      </div>
+    </div>
+    <div class="row reprem-row">
+      <div class="col-md-3 reprem-icon"><i class="fa fa-suitcase"></i></div>
+      <div class="col-md-9 reprem-text reprem-text-2 reprem-text-company input-text" value=2>
+        <label for="" class="col-md-12 reprem-label reprem-label-2">2</label>
+			</div>
+    </div>
+    <div class="row reprem-row">
+      <div class="col-md-3 reprem-icon"><i class="fa fa-user"></i></div>
+      <div class="col-md-9 reprem-text reprem-text-3 reprem-text-contact input-text" value=3>
+        <label for="" class="col-md-12 reprem-label reprem-label-3">3</label>
+			</div>
+    </div>
+    <div class="row reprem-row">
+      <div class="col-md-3 reprem-icon"><i class="fa fa-info-circle"></i></div>
+      <div class="col-md-9 reprem-text reprem-text-4 reprem-text-info input-text" value=4>
+        <label for="" class="col-md-12 reprem-label reprem-label-4">4</label>
+			</div>
+    </div>
+    <div class="row reprem-row">
+      <div class="col-md-3 reprem-icon">1. <i class="fa fa-phone"></i></div>
+      <div class="col-md-9 reprem-text reprem-text-5 reprem-text-mainPhone input-number" value=5>
+        <label for="" class="col-md-12 reprem-label reprem-label-5">5</label>
+			</div>
+    </div>
+    <div class="row reprem-row">
+      <div class="col-md-3 reprem-icon">2. <i class="fa fa-phone"></i></div>
+      <div class="col-md-9 reprem-text reprem-text-6 reprem-text-secondPhone input-number" value=6>
+        <label for="" class="col-md-12 reprem-label reprem-label-6">6</label>
+			</div>
+    </div>
+    <div class="row reprem-row">
+      <div class="col-md-3 reprem-icon reprem-icon-last">+ <i class="fa fa-phone"></i></div>
+      <div class="col-md-9 reprem-text reprem-text-7 reprem-text-otherPhones input-textarea" value=7>
+        <textarea rows=2 class="form-control col-md-12 reprem-label reprem-label-7 reprem-input-textarea"></textarea>
+			</div>
+    </div>
+  </div>
+  <div class="panel-footer">
+    <div class="row reprem-button-row">
+      <button class="btn btn-default reprem-button edit-button">Edit</button>
+      <button class="btn btn-default reprem-button save-button">Save</button>
+    </div>
+  </div>
+</div>
 </div>       
 <script>
     setTimeout(jQuery(function(){

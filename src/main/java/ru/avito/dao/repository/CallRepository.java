@@ -14,7 +14,9 @@ import java.util.List;
  */
 public interface CallRepository extends JpaRepository<Call,Integer>{ //TODO реализовать репозиторий
 
-    List<Call> findTop1000ByAvitoUserId(Long agentId);
+    List<Call> findFirst1000ByAvitoUserId(Long agentId);
+
+    List<Call> findAllByAvitoUserIdAndIsOutTrue(Long agentId);
 
     List<Call> findByAvitoUserIdAndAgentId(Long avitoUserId, Integer agentId);
 

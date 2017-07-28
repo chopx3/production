@@ -123,8 +123,12 @@ public class CallServiceImpl implements CallService {
         return callRepository.findByAvitoUserId(avitoUserId, aPage);
     }
 
-    public List<Call> findTop1000ByAvitoUserId(Long avitoUserId) {
-        return callRepository.findTop1000ByAvitoUserId(avitoUserId);
+    public List<Call> findFirst1000ByAvitoUserId(Long avitoUserId) {
+        return callRepository.findFirst1000ByAvitoUserId(avitoUserId);
+    }
+
+    public List<Call> findAllByAvitoUserIdAndIsOutTrue(Long avitoUserId) {
+        return callRepository.findAllByAvitoUserIdAndIsOutTrue(avitoUserId);
     }
 
     public List<Call> findByQuestionIdAndTimeStartBetween(Integer question, Long timeStart, Long timeEnd){
@@ -139,6 +143,8 @@ public class CallServiceImpl implements CallService {
     public List<Call> findByAvitoUserIdAndAgentId(Long avitoUserId, Integer agentId){
         return callRepository.findByAvitoUserIdAndAgentId(avitoUserId, agentId);
     }
+
+
 
     public List<Call> findByTimeStartBetweenAndTypeAndShopCategoryId( Long timeStart, Long timeEnd, String typeCall, Integer category ){
         return callRepository.findByTimeStartBetweenAndTypeAndShopCategoryId(timeStart, timeEnd, typeCall, category);

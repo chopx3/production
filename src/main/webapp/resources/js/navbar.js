@@ -5,14 +5,14 @@ var questNum = catNum = 1; // начальные значения категор
 var comFormat = 'DD.MM.YY HH:mm'; // формат отображения комментариев
 var isHappy = true; // для тогглера happy|unhappy
 var happy = unhappy = agentId = 0;
-var googleFormParticipants = [85,78,86,65,7,13,14,121,120,34,20,98];
+var googleFormParticipants = [85,78,86,65,7,13,14,121,120,34,20,98]; // массив людей, принявших участие в опросе
+var premiumUsers = [6, 10, 14, 33, 20, 75, 86]; // отдел ре-премиум
 var magicColours = ["blue", "red", "green", "purple", "gray"];
 var todayCalls = 0;
 var achievmentGradeIcon = ["fa-circle","fa-bicycle","fa-motorcycle","fa-car","fa-subway","fa-fighter-jet fa-rotate-270","fa-rocket","fa-space-shuttle fa-rotate-270"];
 $(document).ready(function() {
 	 // основной блок
 	drawQuestions();
-	console.log(agentId);
 	var outputCalls;
 	var isManager=false;
 	$('#magic').click(function(){ // МЭЭЭДЖИК, включение или отключение css'ки
@@ -100,6 +100,7 @@ $(document).ready(function() {
 var qs = getQueryStrings();
 if (qs.comments) {setTimeout(function(){ $("#comments").trigger("click");$("#IDforComments").val(qs.id); $("#IDSubmitComments").trigger('click'); }, 1000);
 		 console.log("clicked");}	
+
 });
 // --- Завершение блока документ.реди
 // --- Функции
@@ -120,6 +121,7 @@ function showMyEmptyCalls() { //Функция, отправляющая зап�
 function fillInfo(callForm, headerText, MainForm) {
 	$("#MainForm").removeClass("col-md-12").addClass("col-md-6");
 	$("#SubForm").removeClass("Add");
+	$(".reprem-block").removeClass('Add');
 	$("#FeedbackForm").removeClass("Add");
 	if (callForm==="add") { $("#CallForm").addClass("Add"); } 
 	else { $("#CallForm").removeClass("Add"); }

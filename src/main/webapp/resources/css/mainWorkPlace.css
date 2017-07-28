@@ -45,3 +45,32 @@ border-radius: 10px;
 .Add{
 	display: inline-block !important;
 }
+.reprem-row{
+	text-align: center;
+	line-height: 40px;
+}
+.reprem-icon{
+	font-size: 20px;
+}
+.reprem-icon-last{
+	margin: 7px 0;
+}
+.reprem-button-row{
+	text-align: center;
+}
+.reprem-button{
+	margin: 0 30px;
+}
+.reprem-block{
+	display: none;
+}
+.reprem-input{
+	margin: 3px 0;
+}
+.reprem-button-activator{
+	display:none;
+}
+.input-textarea{
+	resize:none;
+	overflow:auto;
+}
