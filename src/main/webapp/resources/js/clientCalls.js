@@ -6,7 +6,7 @@ $(document).ready(function() {
 $('#clientCalls').click(function() { //Кнопка "Звонки пользователя"
 		fillInfo("add","Звонки пользователя", ""); // заполнение инфы
 		addButton(); // отображение кнопки
-		if (premiumUsers.indexOf(agentId)== -1){ $(".reprem-button-activator").removeClass('Add');}
+		if (repremAgents.indexOf(agentId)== -1){ $(".reprem-button-activator").removeClass('Add');}
 		$("#MainForm").removeClass("col-md-6").addClass("col-md-12"); // для отображения информации во весь экран(тэги+коммент)
 	});
 	var qs = getQueryStrings();
@@ -36,8 +36,9 @@ $('#clientCalls').click(function() { //Кнопка "Звонки пользов
 				}
 				if ($(this).hasClass('input-textarea')){
 					console.log("poof");
-					classArray[0].innerHTML = '<textarea class="reprem-label-'+index+' form-control reprem-input input-textarea" name="'+index+'" rows=2  value="'+savedValue+'">'+savedValue+'</textarea>';
+					classArray[0].innerHTML = '<textarea class="reprem-label-'+index+' form-control reprem-input reprem-input-textarea" name="'+index+'" rows=2  value="'+savedValue+'">'+savedValue+'</textarea>';
 				}
+				oneActiveButton(".save-button");
 			});
 		});
 		$(".save-button").click(function() {
@@ -49,14 +50,14 @@ $('#clientCalls').click(function() { //Кнопка "Звонки пользов
 				var savedValue = $(this).val();
 				premiumClientData[index-1] = savedValue;
 				if ($(this).hasClass('input-text')){
-					classArray[0].innerHTML = '<label class="reprem-label-'+index+' reprem-input input-text" name="'+index+'" value="'+savedValue+'">'+savedValue+'</label>';
+					classArray[0].innerHTML = '<label class="reprem-label-'+index+' reprem-label reprem-input input-text" name="'+index+'" value="'+savedValue+'">'+savedValue+'</label>';
 				}
 				if ($(this).hasClass('input-number')){
-					classArray[0].innerHTML = '<label class="reprem-label-'+index+' reprem-input input-text" name="'+index+'" value="'+savedValue+'">'+savedValue+'</label>';
+					classArray[0].innerHTML = '<label class="reprem-label-'+index+' reprem-label reprem-input input-text" name="'+index+'" value="'+savedValue+'">'+savedValue+'</label>';
 				}
 				if ($(this).hasClass('input-textarea')){
 					console.log("poof");
-					classArray[0].innerHTML = '<textarea class="reprem-label-'+index+' form-control reprem-input input-textarea" name="'+index+'" rows=2  value="'+savedValue+'">'+savedValue+'</textarea>';
+					classArray[0].innerHTML = '<textarea class="reprem-label-'+index+' reprem-label form-control reprem-input reprem-input-textarea" name="'+index+'" rows=2  value="'+savedValue+'">'+savedValue+'</textarea>';
 				}
 			});
 			var clientNewData = {
@@ -71,7 +72,20 @@ $('#clientCalls').click(function() { //Кнопка "Звонки пользов
 				};
 				console.log(clientNewData);
 				RestPost(clientNewData, updateRepremURL);
+				oneActiveButton(".edit-button");
 		});		 		 	
+		$(".create-button").click(function(){
+			var clientNewData = {
+					"avitoId" : idSaver,
+					"username" : "username",
+					"admPhone" : "89000000000",
+					"contactPhone" : "89000000001"
+				};
+				console.log(clientNewData);
+				RestPost(clientNewData, addRepremURL);
+				getRepremData(idSaver);
+				oneActiveButton(".edit-button");
+		})
 })
 function getCalls(){ // Функция для вывода информации по ID пользователя	
 	idNumber = idSaver = $('#IDforInfo').val(); // сохранение информации
@@ -202,9 +216,22 @@ function getRepremData(id){
 	$.get(getRepremURL+id, function(data) {
 		repremInfoId = data.id;
 		console.log(data.id);
+		if (data.avitoId>1){
+		oneActiveButton(".edit-button");
 		for (var i = 0; i < 7; i++) {
-			var info = (data.avitoId>1) ? data[repremFields[i]] : " ";
+			var info = data[repremFields[i]];
 			$(".reprem-label-"+(i+1)).text(info);
 		}
+	}
+	else {
+		oneActiveButton(".create-button");
+		$(".reprem-label").text("");
+		$(".reprem-label-1").text("Нет информации о клиенте");
+		$(".reprem-input-textarea").text("");
+	}
 	});
+}
+function oneActiveButton(value){
+		$(".reprem-button").addClass("hidden-button");
+		$(value).removeClass("hidden-button");
 }

@@ -46,11 +46,11 @@ border-radius: 10px;
 	display: inline-block !important;
 }
 .reprem-row{
-	text-align: center;
 	line-height: 40px;
 }
 .reprem-icon{
 	font-size: 20px;
+	text-align: center;
 }
 .reprem-icon-last{
 	margin: 7px 0;
@@ -61,16 +61,22 @@ border-radius: 10px;
 .reprem-button{
 	margin: 0 30px;
 }
+.hidden-button{
+	display: none;
+}
 .reprem-block{
 	display: none;
 }
 .reprem-input{
-	margin: 3px 0;
+	margin: 3px 0 !important;
+}
+.reprem-label{
+	margin-bottom: 0 !important;
 }
 .reprem-button-activator{
 	display:none;
 }
-.input-textarea{
+.reprem-input-textarea{
 	resize:none;
 	overflow:auto;
 }

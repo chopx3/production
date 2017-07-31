@@ -25,6 +25,7 @@ var addQuestionURL			=					host + "question/add"; // URL для добавлен
 var updateQuestionURL		=					host + "question/update"; // URL для обновления вопроса
 var getRepremURL				=					host + "premium/avitoid/"; // URL для получения Reprem данных
 var updateRepremURL				=				host + "premium/update"; // URL для обновления Reprem данных
+var addRepremURL				=				host + "premium/add"; // URL для добавления Reprem данных
 var statURL = 										host + "stat/"; // статистика
 var tagGroupURL = 								host + "taggroup/all"; // список групп тэгов
 var addTagGroupURL = 							host + "taggroup/add"; // добавить группу тэгов

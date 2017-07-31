@@ -6,7 +6,7 @@ var comFormat = 'DD.MM.YY HH:mm'; // формат отображения ком�
 var isHappy = true; // для тогглера happy|unhappy
 var happy = unhappy = agentId = 0;
 var googleFormParticipants = [85,78,86,65,7,13,14,121,120,34,20,98]; // массив людей, принявших участие в опросе
-var premiumUsers = [6, 10, 14, 33, 20, 75, 86]; // отдел ре-премиум
+var repremAgents = [6, 10, 14, 33, 20, 75, 86]; // отдел ре-премиум
 var magicColours = ["blue", "red", "green", "purple", "gray"];
 var todayCalls = 0;
 var achievmentGradeIcon = ["fa-circle","fa-bicycle","fa-motorcycle","fa-car","fa-subway","fa-fighter-jet fa-rotate-270","fa-rocket","fa-space-shuttle fa-rotate-270"];
