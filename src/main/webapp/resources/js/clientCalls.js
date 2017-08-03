@@ -96,7 +96,7 @@ function getCalls(){ // Функция для вывода информации 
 			sorting(callsData, "timeStart"); // сортировка
 			document.getElementById("MainForm").innerHTML = ''; // очистка формы
 			if (data.length != 0 && idNumber != '') { // если есть звонки и ID не пробел
-				drawClientCalls(1, ""); // отрисовать первую страницу при первом нажатии
+				drawClientCalls(1); // отрисовать первую страницу при первом нажатии
 				$(".reprem-button-activator").addClass('Add');
 			}
 			else {document.getElementById("MainForm").innerHTML ='Звонки не обнаружены :(';} // звонков нет
@@ -105,7 +105,7 @@ function getCalls(){ // Функция для вывода информации 
 			}	
 			})
 }
-function drawClientCalls(pageNumber, options){ // отрисовка собственно звонков
+function drawClientCalls(pageNumber){ // отрисовка собственно звонков
 	chosenPage = pageNumber;
 	var numberOfPages=(Math.ceil(callsData.length / 50) > 20) ? 20 : Math.ceil(callsData.length / 50); // переменная для количества страниц
 	var pageBody=pageLineStart=pageLineEnd=pagination=""; // создание переменных для отрисовки строки пагинации
@@ -140,7 +140,7 @@ function drawClientCalls(pageNumber, options){ // отрисовка собст�
 					additionalInfo = collectAdditionalInfo(callsData[i], "full"); // сбор дополнительной информации			
 					var audiotag = callsData[i].comId;
 					var nametag = callsData[i].agent.username;
-					var timetag = moment.unix(callsData[i].timeStart/1000).format(dateFormat); // заполнение переменных
+					
 					var yourCall = (agentName == nametag) ? "yourCall" : ""; // подсветка "твоих" звонков
 					var isItSameAgent = (i+1<=endIndex-1) ? nametag == callsData[i+1].agent.username : false ; // ????? надо думать
 					var multipleCallsInfo = {
@@ -149,18 +149,19 @@ function drawClientCalls(pageNumber, options){ // отрисовка собст�
 								isItSameAgent : isItSameAgent
 							};
 					var nextCall = collectMultipleCalls(multipleCallsInfo); // склейка звонков
+					var timetag = moment.unix(callsData[i+iJump].timeStart/1000).format(dateFormat); // заполнение переменных
 					var margin = (nextCall == "") ? "" : "no-margin-top"; // отступы при нескольких звонках, сложная схема
 					audioURL = '<audio class="audio-call '+margin+'" src="'+oktell + audiotag + '" controls></audio><a href="'+oktell+ audiotag +'" target="_blank">' + '<\/a>'; 
-					if (options.reprem) {
+				/*	if (options.reprem) {
 						var commentBox=""; 
 						var tagLabel="";
 								outputCalls += (callsData[i].out) ? '<div class="row col-lg-12"><div class="call col-lg-6 '+yourCall+'" data-time="'+timetag+'" data-sign="'+nametag+'"><span>'+ timetag +' '+nametag + '</span>'+additionalInfo+'<br>' + nextCall + audioURL  + '</div>'+commentBox+tagLabel+'</div>' : " " ; // основная часть формирования звонка
 							}
-					else {
+					else {*/
 						var commentBox = (callsData[i].comments == null || callsData[i].comments == "") ? "" : "<textarea style='height:"+(78.4+iJump*36)+"px;' class='form-control commentBox col-lg-4' disabled>"+callsData[i].comments+"</textarea>"; // если есть комментарии - выводи их в поле справа
 						var tagLabel = (callsData[i].tags.length == 0) ? "" : "<div class='tags col-lg-2'><label class='might-overflow'>" + collectTagForGetCalls(callsData[i].tags) + "</label></div>";  // если есть тэги - справа
 								outputCalls += '<div class="row col-lg-12"><div class="call col-lg-6 '+yourCall+'" data-time="'+timetag+'" data-sign="'+nametag+'"><span>'+ timetag +' '+nametag + '</span>'+additionalInfo+'<br>' + nextCall + audioURL  + '</div>'+commentBox+tagLabel+'</div>'; // основная часть формирования звонка
-							}		
+							//}		
 					i+=iJump; //прыжок, если есть звонки с тем же ID
 				}
 	document.getElementById("MainForm").innerHTML =pagination + outputCalls + pagination; // финальный результат, линия пагинации + звонки
