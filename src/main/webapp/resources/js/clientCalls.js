@@ -26,6 +26,7 @@ $('#clientCalls').click(function() { //Кнопка "Звонки пользов
 		$(".edit-button").click(function() {
 			$(".reprem-text").each(function() {
 				var index = $(this).attr('value');
+				console.log(index);
 				var classArray = document.getElementsByClassName("reprem-text-"+index);
 				var savedValue = $(".reprem-label-"+index).text();
 				if ($(this).hasClass('input-text')){

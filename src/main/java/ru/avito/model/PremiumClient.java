@@ -36,8 +36,8 @@ public class PremiumClient {
     @Column(name = "active")
     private Boolean active;
 
-    @Column(name = "field")
-    private String field;
+    @Column(name = "email")
+    private String email;
 
     public PremiumClient() {
     }
@@ -82,7 +82,7 @@ public class PremiumClient {
 
     public void setActive(Boolean active) {this.active = active;}
 
-    public String getField() {return field;}
+    public String getEmail() {return email;}
 
-    public void setField(String field) {this.field = field;}
+    public void setEmail(String email) {this.email = email;}
 }

@@ -83,6 +83,7 @@ function drawInfo(value){ // функция заполнения групп кн
 		addInfoFooterFunc = "infoCheck(\'add\', \'quest\')";
 		updInfoBody = 	'<div class=row><label 	class="leftLabel">description</label>	<input type="text" 	class="form-control inputTextField" id=updTextField1></div>'+
 						'<div class=row><label 	class="leftLabel">shortName</label>	<input type="text" 	class="form-control inputTextField" id=updTextField2></div>'+
+						'<div class=row><label 	class="leftLabel">Position</label>	<input type="number" 	class="form-control inputTextField" id=updTextField3></div>'+
 						'<div class=row><label 	class="leftLabel">isActive</label>'+
 						'<div class="btn-group inputTextField" role="group" aria-label="Basic example" data-toggle=buttons>'+
 							'<label class="btn btn-primary active">'+
@@ -128,6 +129,7 @@ function drawInfo(value){ // функция заполнения групп кн
 	document.getElementById("addHeader").innerHTML 	= addInfoHeader; // заполнение
 };
 function infoCheck(value, type){ // проверка информации и отправление данных, value = add или upd, type= agent, stat, tag, group
+	var func;
 	var check = true;
 	var firstField = 	"#"+value+"TextField1";
 	var secondField = 	"#"+value+"TextField2";// присвоение значений. По умолчанию - данные верны, пока не доказно обратное.
@@ -147,6 +149,7 @@ function infoCheck(value, type){ // проверка информации и о�
 					"username": $(firstField).val(),
 					"oktellLogin":$(secondField).val()
 					};
+					func = openAgents;
 					URL=addAgentURL; 
 					break;
 					case 'tags':
@@ -155,6 +158,8 @@ function infoCheck(value, type){ // проверка информации и о�
 					"name": $(secondField).val(),
 					"description": $(thirdField).val()
 					};
+					func = openTags;
+					param = type;
 					URL=addTagURL;
 					break;
 					case 'group':
@@ -162,6 +167,8 @@ function infoCheck(value, type){ // проверка информации и о�
 					"name": $(firstField).val(),
 					"description": $(secondField).val()
 					};
+					func = openTags;
+					param = type;
 					URL=addTagGroupURL; 
 					break;
 					case 'quest':
@@ -169,6 +176,7 @@ function infoCheck(value, type){ // проверка информации и о�
 					"description": $(firstField).val(),
 					"shortName":$(secondField).val()
 					};
+					func = openQuestions;
 					URL=addQuestionURL; 
 					break;
 					case 'cats':
@@ -176,6 +184,7 @@ function infoCheck(value, type){ // проверка информации и о�
 					"description": $(firstField).val(),
 					"shortName":$(secondField).val()
 					};
+					func = openCategories;
 					URL=addCategoriesURL; 
 					break;}
 		break;
@@ -221,6 +230,7 @@ function infoCheck(value, type){ // проверка информации и о�
 					"id":idNum,
 					"description": $(firstField).val(),
 					"shortName":$(secondField).val(),
+					"position":$(thirdField).val(),
 					"active": +$('#optionActive').is(':checked')
 					};
 					URL = updateQuestionURL;
@@ -239,10 +249,11 @@ function infoCheck(value, type){ // проверка информации и о�
 		break;}	
 		RestPost(infoToServer, URL); // запрос на сервер
 		invokeFunc(func, param); // обновление нужной страницы
+
 	}
 }
-function invokeFunc(ourFunc, param){
-ourFunc(param);
+function invokeFunc(callback, args){
+callback(args);
 }
 function updateInfo(id, nameTag, loginShort, desc){ // добавление данных в поле обновления
 	idNum = id;

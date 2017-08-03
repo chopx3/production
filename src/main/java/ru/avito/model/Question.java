@@ -24,6 +24,9 @@ public class Question {
     @Column(name = "shortName")
     private String shortName;
 
+    @Column(name = "position")
+    private String position;
+
     public Question() {
     }
 
@@ -50,4 +53,8 @@ public class Question {
     public String getShortName() {return shortName;}
 
     public void setShortName(String shortName) {this.shortName = shortName;}
+
+    public String getPosition() { return position; }
+
+    public void setPosition(String position) { this.position = position; }
 }

@@ -25,12 +25,14 @@ public class QuestionServiceImpl implements QuestionService {
         currentQuestion.setDescription(actualQuestion.getDescription());
         currentQuestion.setActive(actualQuestion.getActive());
         currentQuestion.setShortName(actualQuestion.getShortName());
+        currentQuestion.setPosition(actualQuestion.getPosition());
         return questionRepository.saveAndFlush(currentQuestion);
     }
 
     @Override
     public Question add(Question question) {
         question.setActive(false);
+        question.setPosition("0");
         return questionRepository.saveAndFlush(question);
     }
 

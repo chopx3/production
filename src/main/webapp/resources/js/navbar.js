@@ -222,7 +222,6 @@ function  draw(data) { // отрисовка пустых звонков
 		for (var i = 0; i < data.emptyCallList.length; i++) { // основной цикл заполнения инфы
 			chain = data.emptyCallList[i].chainId;
 			audiosrc = data.emptyCallList[i].comId;
-            timetag = moment.unix(data.emptyCallList[i].startTime/1000).format(dateFormat); // определение переменных
 			callInfo = [chain, i, false];
 			var onPlay = ' onplay=\'changeCall('+JSON.stringify(callInfo)+')\'';
 			var multipleCallsInfo = {
@@ -231,6 +230,7 @@ function  draw(data) { // отрисовка пустых звонков
 								onPlayInfo: onPlay
 							};
 			var nextCall = collectMultipleCalls(multipleCallsInfo);
+			timetag = moment.unix(data.emptyCallList[i+iJump].startTime/1000).format(dateFormat); // определение переменных
 			var margin = (nextCall == "") ? "" : "no-margin-top";
 			var audioURL = '<audio id="audio'+i+'" '+ onPlay +' src="' + oktell + audiosrc + '" class="audio-call '+margin+'" controls></audio><a href="'+ oktell + audiosrc +'" target="_blank">' + '<\/a>'; // аудио-тэг
 			outputEmptyCalls += '<div id="receivedCall' +i+'" onclick=changeCall('+JSON.stringify(callInfo)+') class="call col-lg-12" data-time="'+timetag+'" data-sign="'+nametag+'"><span>'+ timetag +' '+nametag +'</span><br>' + nextCall + audioURL  + '</div>'; // основное заполнение
@@ -330,10 +330,16 @@ function drawQuestions(){ // отрисовка вопросов
 }
 	$.get(getQuestionsURL).done(function (data) { // запрос
 		var output = "";
-		activeQuestionsArray.length = 0; // обнуление массива с активными тэгами
-		var activeCounter = 0; // обнуление счетчика активных тэгов
-		for (var i = 0; i<data.length;i++){ 
-			if (data[i].active){activeQuestionsArray[activeCounter] = data[i].id;activeCounter++} // пробежаться по массиву, заполнить вопросы и счетчик
+		console.log(data);
+		sorting(data, "position")
+		
+		activeQuestionsArray.length = 0; // обнуление массива с активными вопросами
+		var activeCounter = 0; // обнуление счетчика активных вопросов
+		for (var i = 0; i<data.length;i++){
+		console.log("poof\n" + data[i]); 
+			if (data[i].active){
+			activeQuestionsArray[activeCounter] = data[i].position;
+			activeCounter++} // пробежаться по массиву, заполнить вопросы и счетчик
 		}
 		var lines = Math.ceil(activeQuestionsArray.length/4); // определяет количество строк
 		var length = activeQuestionsArray.length;
