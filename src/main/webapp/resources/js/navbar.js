@@ -320,7 +320,7 @@ function drawQuestions(){ // отрисовка вопросов
 	function drawQuestionLine(data, i, offset, width, questQuantity){ // логика отрисовки линии
 	var outputLine = "<div class='col-md-offset-"+offset+"'>"; // отделение каждой строки в отдельный div со смещением(для линий с длиной меньше 4)
 	for (var j=0; j<questQuantity; j++){ // от 0 до количества элементов в строке
-		var idOfQuest = activeQuestionsArray[i*4+j]; // для сокращения
+		var idOfQuest = data[(activeQuestionsArray[i*4+j])-1].id; // для сокращения
 		outputLine += 
 		'<label class="btn btn-primary col-md-'+width+'" id="label-quest-'+idOfQuest+'" onclick=changeQuestion('+idOfQuest+') name="label-question">' + // отрисовка надписи с определенной шириной и функцией по нажатию
 		'<input type="radio" name="question" id="quest-'+idOfQuest+'" autocomplete="off" value="'+idOfQuest+'">'+data[(activeQuestionsArray[i*4+j])-1].shortName + '</label>'; // отрисовка кнопки со значением и подписью
