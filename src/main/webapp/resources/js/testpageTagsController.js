@@ -54,6 +54,6 @@ return forInfo;
 function changeTagGroup(){ // изменить группу тэгов, костыльный способ, через левую переменную
 		TagInfo ={	"id": 		idNum,
 					"value": 	$("#exampleSelect1").val()};
-		var URL=changeTagGroup; 
+		var URL=changeTagGroupURL; 
 		RestPost(TagInfo, URL);
 }
