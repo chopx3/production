@@ -220,8 +220,12 @@ function getRepremData(id){
 		console.log(data.id);
 		if (data.avitoId>1){
 		oneActiveButton(".edit-button");
+		var regExpMultilines = /(\n)+/gm;
 		for (var i = 0; i < 7; i++) {
 			var info = data[repremFields[i]];
+			if (repremFields[i] ==="additionalPhones"){
+				info = info.replace(regExpMultilines, "\n");
+			}
 			$(".reprem-label-"+(i+1)).text(info);
 		}
 	}
