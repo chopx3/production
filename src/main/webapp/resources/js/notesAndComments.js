@@ -31,7 +31,6 @@ $(document).ready(function() {//Блок комментариев
 		$('#glyphCom').addClass('glyphicon-triangle-right').removeClass('glyphicon-triangle-left');
 		$('#closeButton').removeClass('Add');
 	});
-	testComments();
 })
 function getComments(){ // отрисовка комментариев
 		idNumber = idSaver = $('#IDforComments').val(); // номер ID
@@ -100,15 +99,3 @@ function updateNotes() { // обновление заметок
 function getNotes() { // получение заметок
 	$.get(getNotesURL+agentId).done(function (data) {$('#noteArea').val(data.notes);}
 )}
-
-function testComments(){
-	var comment = {
-      "avitoUserId": 125,
-      "postTime": new Date().getTime(),
-      "message": "test",
-  }
-  var URL = host + "comment/addFromAdm";
-  console.log(URL);
-  console.log(comment);
-  RestPost(comment, URL);
-}
