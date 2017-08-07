@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name Calls and comments
-// @version 0.2
+// @version 0.4
 // @match https://adm.avito.ru/users/user/info/*
 // @require http://code.jquery.com/jquery-latest.js
 // @updateURL   https://raw.githubusercontent.com/chopx3/production/dev/src/main/webapp/resources/script/callscomments.js
@@ -8,24 +8,37 @@
 // @require https://cdn.jsdelivr.net/momentjs/latest/moment.min.js
 // @grant GM_xmlhttpRequest
 // ==/UserScript==
+var commentBlock = 
+'<div class="comment-block" id="comment-block">'+
+'  <div class="panel panel-default panel-comments">'+
+'    <div class="panel-heading text-center" style="font-size: 16px; font-weight: bold;">Комментарии</div>'+
+'    <div class="panel-body" id="forComments">'+
+'    </div>'+
+'    <div class="panel-footer">'+
+'      <div class="row text-center">'+
+'        <div class="col-md-5"><button class="btn btn-default close-comments-button">Закрыть</button></div>'+
+'        <div class="col-md-7"><button class="btn btn-default firecatcher-button">Открыть в firecatcher</button></div>'+
+'      </div>'+
+'    </div>'+
+'   </div>'+
+'</div>';
 var numOfCalls = iJump = 0;
 var oktell = "http://192.168.10.132/firecatcher/oktell/calls?name=Avito_get_file_by_id_conn&startparam1=";
 var sheet = document.createElement('style');
-sheet.innerHTML = "#commentForm{"+ 
+sheet.innerHTML = "#comment-block{"+ 
 " z-index: 1;"+ 
 " position: fixed;"+ 
 " overflow-y: hidden;"+ 
-" right: 0%;"+ 
-" top: 5%;"+ 
+" right: 1%;"+ 
+" top: 6%;"+ 
 " background : white;"+ 
-" height: 65vh; "+ 
+" width: 30vw; "+     
 " visibility : hidden;"+ 
+" padding-top:4px;"+
 " padding-top:4px;"+ 
-" padding-left: 20px;"+ 
-" padding-right: 20px;"+ 
 " opacity: 0.5;"+ 
 "}"+ 
-"#commentForm.On{"+ 
+"#comment-block.On{"+ 
 " visibility : visible;"+ 
 " overflow-y: hidden; "+ 
 " overflow-x: hidden; "+ 
@@ -39,7 +52,10 @@ sheet.innerHTML = "#commentForm{"+
 "#addCommentBlock{"+ 
 " overflow: auto;"+ 
 " resize:none;"+ 
-"}"+ 
+"}"+
+".panel-comments{"+ 
+" margin-bottom: 0 !important;"+ 
+"}"+
 ".table-scroll{ "+ 
 " height: 70vh;"+ 
 " overflow: auto;"+ 
@@ -72,11 +88,18 @@ onreadystatechange: function(res) {
 onload: function(res) {
 var numOfComments = JSON.parse(res.response).length;
 commentData = JSON.parse(res.response);
-$(".form-group.js-passwords").after("<div id='commentForm' style='width:25vw;'><div class='row'><h1>Комментарии</h1></div><div class='row' id='forComments'></div></div>");
+$(".form-group.js-passwords").after(commentBlock);
 if (numOfComments >0) {
 $("#REpremium").after("<div class='unactive' style='color: rgb(92, 184, 92); cursor: pointer;' id='commentClick'>• Комментарии ("+numOfComments+") </div>");}
 else {$("#REpremium").after("<div class='unactive' style='color:rgb(189, 189, 189); cursor: pointer;' id='commentClick'>• Комментарии("+numOfComments+") </div>");}
 $("#commentClick").click(getComments);
+$(".close-comments-button").click(function() {
+   $("#comment-block").removeClass('On');
+   });
+$(".firecatcher-button").click(function() {
+    var url = "http://192.168.10.132/firecatcher/?comments=true&id="+login;
+    window.open(url, '_blank');
+});  
 }
 });
 var calls = GM_xmlhttpRequest({
@@ -87,7 +110,6 @@ onreadystatechange: function(res) {
 },
 onload: function(res) {
 numOfCalls = JSON.parse(res.response).length;
-$(".form-group.js-passwords").after("<div id='commentForm' style='width:25vw;'><div class='row'><h1>Комментарии</h1></div><div class='row' id='forComments'></div></div>");
 if (numOfCalls >0) {
 $("#commentClick").after("<div class='unactive' style='color: rgb(92, 184, 92); cursor: pointer;' id='callClick'>• Звонки("+numOfCalls+") </div>");}
 else {$("#commentClick").after("<div class='unactive' style='color:rgb(189, 189, 189); cursor: pointer;' id='callClick'>• Звонки("+numOfCalls+") </div>");}
@@ -103,11 +125,9 @@ function getId(url){
 return url.substring(url.lastIndexOf('/')+1);
 }
 function getComments(zEvent){
-$("#commentForm").toggleClass('On');
+$("#comment-block").toggleClass('On');
 document.getElementById("forComments").innerHTML = '';
 var outputComments = thead = tbot = ''; // обнуление инфы и объявление переменных
-var addComment = '<div class="row"><div class="col-lg-12"><div class="input-group"><span class="input-group-addon btn btn-success" id="postCommentButton">Открыть в firecatcher</span>'+
-'</div></div></div>'; // поле добавления комментария
 if (commentData.length !== 0) { // если есть комментарии
 thead = '<div class="row"><div class="table-scroll col-lg-12"><table id="commentTable" class="table table-striped table-hover" ><thead><tr><th >Агент</th><th>Комментарий</th></tr></thead><tbody>'; // шапка
 tbot = '</tbody></table></div></div>'; // низ
@@ -119,10 +139,6 @@ var elem = document.getElementById("div-table-content-"+i);
 outputComments += '<tr class="table-row"><td>'+timetag +'\n'+ nametag +'</td><td class="breakable"><div class="table-content" id="div-table-content-'+i+'">'+message+'</div></td></tr>';
 } // отрисовка комментариев
 }
-else { outputComments='На данной учетной записи еще не оставляли комментариев'; } // если комментариев нет
-document.getElementById("forComments").innerHTML = thead + outputComments + tbot + addComment;
-$("#postCommentButton").click(function(){
-var url = "http://192.168.10.132/firecatcher/?comments=true&id="+login;
-window.open(url, '_blank');
-});
+else { outputComments='<div class="text-center">На данной учетной записи еще не оставляли комментариев</div>'; } // если комментариев нет
+document.getElementById("forComments").innerHTML = thead + outputComments + tbot;
 }
