@@ -1,15 +1,11 @@
 // ==UserScript==
 // @name Calls and comments
-// @version 0.1
+// @version 0.2
 // @match https://adm.avito.ru/users/user/info/*
 // @require http://code.jquery.com/jquery-latest.js
 // @require https://cdn.jsdelivr.net/momentjs/latest/moment.min.js
 // @grant GM_xmlhttpRequest
 // ==/UserScript==
-var meta = document.createElement('meta');
-meta.httpEquiv = "Content-Security-Policy";
-meta.content = "default-src *; img-src * data: 'unsafe-inline'; style-src * 'self' 'unsafe-inline' 'unsafe-eval'; script-src * 'self' 'unsafe-inline' 'unsafe-eval';";
-document.getElementsByTagName('head')[0].appendChild(meta);
 var numOfCalls = iJump = 0;
 var oktell = "http://192.168.10.132/firecatcher/oktell/calls?name=Avito_get_file_by_id_conn&startparam1=";
 var sheet = document.createElement('style');
@@ -55,6 +51,7 @@ sheet.innerHTML = "#commentForm{"+
 "#commentForm h1{"+ 
 " margin-left:3px;"+ 
 "}";
+//updated version
 document.body.appendChild(sheet);
 var userID = getId(window.location.href);
 var login = URL = commentData = callData = "";
