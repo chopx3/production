@@ -4,6 +4,7 @@
 // @match https://adm.avito.ru/users/user/info/*
 // @require http://code.jquery.com/jquery-latest.js
 // @updateURL   https://raw.githubusercontent.com/chopx3/production/dev/src/main/webapp/resources/script/callscomments.js
+// @downloadURL   https://raw.githubusercontent.com/chopx3/production/dev/src/main/webapp/resources/script/callscomments.js
 // @require https://cdn.jsdelivr.net/momentjs/latest/moment.min.js
 // @grant GM_xmlhttpRequest
 // ==/UserScript==
