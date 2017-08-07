@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name Calls and comments
-// @version 0.4
+// @version 0.5
 // @match https://adm.avito.ru/users/user/info/*
 // @require http://code.jquery.com/jquery-latest.js
 // @updateURL   https://raw.githubusercontent.com/chopx3/production/dev/src/main/webapp/resources/script/callscomments.js
@@ -22,7 +22,7 @@ var commentBlock =
 '    </div>'+
 '   </div>'+
 '</div>';
-var numOfCalls = iJump = 0;
+var numOfCalls = iJump = counter = 0;
 var oktell = "http://192.168.10.132/firecatcher/oktell/calls?name=Avito_get_file_by_id_conn&startparam1=";
 var sheet = document.createElement('style');
 sheet.innerHTML = "#comment-block{"+ 
@@ -76,32 +76,9 @@ var login = URL = commentData = callData = "";
 $(document).ready(function(){
 if(window.location.href.indexOf('/user/info') != -1){
 login = $('a.js-user-id').attr("data-user-id");
-commentURL = "http://192.168.10.132/firecatcher/api/comment/user/" + login;
 callURL = "http://192.168.10.132/firecatcher/api/call/user/"+login + "/all";
 console.log(URL);
-var comments = GM_xmlhttpRequest({
-method: "GET",
-headers: {"Accept": "application/json"},
-url: commentURL,
-onreadystatechange: function(res) {
-},
-onload: function(res) {
-var numOfComments = JSON.parse(res.response).length;
-commentData = JSON.parse(res.response);
-$(".form-group.js-passwords").after(commentBlock);
-if (numOfComments >0) {
-$("#REpremium").after("<div class='unactive' style='color: rgb(92, 184, 92); cursor: pointer;' id='commentClick'>• Комментарии ("+numOfComments+") </div>");}
-else {$("#REpremium").after("<div class='unactive' style='color:rgb(189, 189, 189); cursor: pointer;' id='commentClick'>• Комментарии("+numOfComments+") </div>");}
-$("#commentClick").click(getComments);
-$(".close-comments-button").click(function() {
-   $("#comment-block").removeClass('On');
-   });
-$(".firecatcher-button").click(function() {
-    var url = "http://192.168.10.132/firecatcher/?comments=true&id="+login;
-    window.open(url, '_blank');
-});  
-}
-});
+getCommentsInfo(0);
 var calls = GM_xmlhttpRequest({
 method: "GET",
 headers: {"Accept": "application/json"},
@@ -124,21 +101,78 @@ window.open(url, '_blank');
 function getId(url){
 return url.substring(url.lastIndexOf('/')+1);
 }
+function getCommentsInfo(newComment){
+commentURL = "http://192.168.10.132/firecatcher/api/comment/user/" + login;
+GM_xmlhttpRequest({
+method: "GET",
+headers: {"Accept": "application/json"},
+url: commentURL,
+onreadystatechange: function(res) {
+},
+onload: function(res) {
+var numOfComments = JSON.parse(res.response).length;
+commentData = JSON.parse(res.response);
+    if (!counter){
+$(".form-group.js-passwords").after(commentBlock);
+    counter++;
+}
+    if (newComment){document.getElementById("commentClick").innerHTML = '• Комментарии('+numOfComments+')';}
+    else {if (numOfComments >0) {
+$("#REpremium").after("<div class='unactive' style='color: rgb(92, 184, 92); cursor: pointer;' id='commentClick'>• Комментарии ("+numOfComments+") </div>");}
+else {$("#REpremium").after("<div class='unactive' style='color:rgb(189, 189, 189); cursor: pointer;' id='commentClick'>• Комментарии("+numOfComments+") </div>");}}
+$("#commentClick").click(getComments);
+$(".close-comments-button").click(function() {
+   $("#comment-block").removeClass('On');
+   });
+$(".firecatcher-button").click(function() {
+    var url = "http://192.168.10.132/firecatcher/?comments=true&id="+login;
+    window.open(url, '_blank');
+});
+}
+});   
+}
+function postComment(zEvent){
+       var comment = {
+      "avitoUserId":login,
+      "postTime": new Date().getTime(),
+      "message": $('#addCommentBlock').val()
+  }
+    var addCommentURL = "http://192.168.10.132/firecatchertest/api/comment/addFromAdm" ;
+	RestPost(comment, addCommentURL);
+    setTimeout(function() {getCommentsInfo(1);}, 500);
+    setTimeout(function() {$("#commentClick").trigger("click");}, 1000);
+}
 function getComments(zEvent){
-$("#comment-block").toggleClass('On');
+$("#comment-block").addClass('On');
 document.getElementById("forComments").innerHTML = '';
+var addComment = 	'<div class="row"><div class="col-lg-12"><div class="input-group"><textarea class="form-control" id="addCommentBlock" rows="3" placeholder="Добавить комментарий"></textarea>'+
+					'<span class="input-group-addon btn btn-success post-comment">+</span>'+
+					'</div></div></div>'; // поле добавления комментария
 var outputComments = thead = tbot = ''; // обнуление инфы и объявление переменных
 if (commentData.length !== 0) { // если есть комментарии
 thead = '<div class="row"><div class="table-scroll col-lg-12"><table id="commentTable" class="table table-striped table-hover" ><thead><tr><th >Агент</th><th>Комментарий</th></tr></thead><tbody>'; // шапка
 tbot = '</tbody></table></div></div>'; // низ
 for (var i = 0; i < commentData.length; i++) { // тело
 var message = commentData[i].message;
-var nametag = commentData[i].agent.username;
+if (commentData[i].agent === null) {var nametag = "Из админки";}
+    else {var nametag = commentData[i].agent.username;}
 var timetag = moment.unix(commentData[i].postTime/1000).format("DD.MM.YY HH:mm");
 var elem = document.getElementById("div-table-content-"+i);
 outputComments += '<tr class="table-row"><td>'+timetag +'\n'+ nametag +'</td><td class="breakable"><div class="table-content" id="div-table-content-'+i+'">'+message+'</div></td></tr>';
 } // отрисовка комментариев
 }
 else { outputComments='<div class="text-center">На данной учетной записи еще не оставляли комментариев</div>'; } // если комментариев нет
-document.getElementById("forComments").innerHTML = thead + outputComments + tbot;
+document.getElementById("forComments").innerHTML = thead + outputComments + tbot + addComment;
+ $(".post-comment").click(postComment);
+}
+function RestPost(data, url){
+ GM_xmlhttpRequest({
+                method: "POST",
+                url:  url,
+                data: JSON.stringify(data),
+                headers: {"Content-Type": "application/json; charset=cp1251",},
+                onload: function(res) {
+                
+                }
+        });   
 }
