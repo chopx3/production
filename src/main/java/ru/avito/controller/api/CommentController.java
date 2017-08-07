@@ -42,8 +42,6 @@ public class CommentController {
 
     @RequestMapping(value = "addFromAdm", method = RequestMethod.POST)
     public Comment save(@RequestBody Comment comment) {
-        Agent agent = agentService.findByUsername("fromAdm"); //TODO лишнее обращение к БД
-        comment.setAgent(agent);
         return commentService.save(comment);
     }
 

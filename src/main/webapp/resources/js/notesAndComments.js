@@ -31,6 +31,7 @@ $(document).ready(function() {//Блок комментариев
 		$('#glyphCom').addClass('glyphicon-triangle-right').removeClass('glyphicon-triangle-left');
 		$('#closeButton').removeClass('Add');
 	});
+	testComments();
 })
 function getComments(){ // отрисовка комментариев
 		idNumber = idSaver = $('#IDforComments').val(); // номер ID
@@ -49,7 +50,8 @@ function getComments(){ // отрисовка комментариев
 					tbot = '</tbody></table></div></div>'; // низ
 					for (var i = 0; i < data.length; i++) { // тело
 						var message = data[i].message;
-						var nametag = data[i].agent.username;
+						if (data[i].agent == null){var nametag = "Из админки";}
+						else {var nametag = data[i].agent.username;}
 						var timetag = moment.unix(data[i].postTime/1000).format(comFormat);
 						var elem = document.getElementById("div-table-content-"+i);
 						var isLongEnough = (message.length > 140) ? "longMessage" : "" ;
@@ -98,3 +100,15 @@ function updateNotes() { // обновление заметок
 function getNotes() { // получение заметок
 	$.get(getNotesURL+agentId).done(function (data) {$('#noteArea').val(data.notes);}
 )}
+
+function testComments(){
+	var comment = {
+      "avitoUserId": 125,
+      "postTime": new Date().getTime(),
+      "message": "test",
+  }
+  var URL = host + "comment/addFromAdm";
+  console.log(URL);
+  console.log(comment);
+  RestPost(comment, URL);
+}
