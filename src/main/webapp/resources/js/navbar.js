@@ -9,7 +9,8 @@ var googleFormParticipants = [85,78,86,65,7,13,14,121,120,34,20,98]; // масс
 var repremAgents = [6, 10, 14, 33, 20, 75, 86]; // отдел ре-премиум
 var magicColours = ["blue", "red", "green", "purple", "gray"];
 var todayCalls = 0;
-var achievmentGradeIcon = ["fa-circle","fa-bicycle","fa-motorcycle","fa-car","fa-subway","fa-fighter-jet fa-rotate-270","fa-rocket","fa-space-shuttle fa-rotate-270"];
+var lastActiveCall = 0;
+var achievmentGradeIcon = ["fa-circle","fa-bicycle","fa-motorcycle","fa-car","fa-subway","fa-plane","fa-rocket","fa-reddit-alien", "fa-grav"];
 $(document).ready(function() {
 	 // основной блок
 	drawQuestions();
@@ -186,20 +187,22 @@ function fillData(dataArray) { //Отправка данных из боково
 	RestPost(updateCall, updateEmptyCallsURL);
 }
 function changeCall(callInfo) { // Добавление стиля выбранного звонка
-	//console.log(callInfo);
-	console.log("clicked");
 	var idd = '#receivedCall'+callInfo[1]; // id + div, для сброса стилей
 	var feedId = '#feedbackCall'+callInfo[1]; // id + feedback, для сброса стилей
 	tagBuffer = $(feedId).attr("value"); // сохранить сюда тэги
 	$(idd).addClass('active').siblings().removeClass('active');
 	$(feedId).addClass('active').siblings().removeClass('active'); // ИСПРАВИТЬ
-	if ((callInfo[0]!=chainId)&&(chainId!="")) { clearData(); } // если изменился звонок - очистить
+	//???   if ((callInfo[0]!=chainId)&&(chainId!="")) { clearData(); } // если изменился звонок - очистить
 	chainId = callInfo[0];
 	additionalTags =$(feedId).attr("name");
 	$("#IDNum").focus();
 	$("#feedbackComment").focus();
 	var comments = (!($("#feedback-com"+callInfo[1]).text()=="null" || $("#feedback-com"+callInfo[1]).text()== "" ));
 	if (comments) {$("#feedbackComment").val($("#feedback-com"+callInfo[1]).text());}
+	else {console.log($("#feedbackComment").val());
+		$("#feedback-com"+lastActiveCall).text($("#feedbackComment").val());
+	$("#feedbackComment").val("");}
+	lastActiveCall = callInfo[1];
 }
 function collectTags (feedOrCall){ // Проверка тегов, от фидбека или обычного звонка
 	var choice = feedOrCall; 
@@ -395,7 +398,7 @@ function getQueryStrings() {
   return assoc; 
 } 
 function drawAchievments(){
-	var achievmentGrade = (todayCalls>79) ? 7 : Math.ceil(todayCalls/10);
+	var achievmentGrade = (todayCalls>80) ? 8 : Math.ceil(todayCalls/10);
 	if (achievmentGrade) {$(".achievment").css("display", "block");
 	$("#achievmentIcon").removeClass().addClass("fa fa-inverse fa-fw achievment").addClass(achievmentGradeIcon[achievmentGrade]);
 	achievmentText.textContent = todayCalls;}
