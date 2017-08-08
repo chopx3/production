@@ -101,7 +101,8 @@ $(document).ready(function() {
 var qs = getQueryStrings();
 if (qs.comments) {setTimeout(function(){ $("#comments").trigger("click");$("#IDforComments").val(qs.id); $("#IDSubmitComments").trigger('click'); }, 1000);
 		 console.log("clicked");}	
-
+if (qs.lastcall){setTimeout(function(){ $("#emptyCalls").trigger("click");$("#label-cat-"+qs.cat).trigger("click"); $("#IDNum").val(qs.id); }, 1000);
+		 console.log("clicked");}	
 });
 // --- Завершение блока документ.реди
 // --- Функции
