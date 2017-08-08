@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         Comments, calls and repremium
 // @match        https://adm.avito.ru/users/user/info/*
-// @version      0.6
+// @version      0.61
 // @require      http://code.jquery.com/jquery-latest.js
 // @require      https://cdn.jsdelivr.net/momentjs/latest/moment.min.js
 // @updateURL    https://raw.githubusercontent.com/chopx3/production/dev/src/main/webapp/resources/script/reprem.js
@@ -102,7 +102,7 @@ var ourDivBlock = '<div class="reprem-block" id=reprem-block>'+
 '      </div>'+
 '    </div>'+
 '  </div>';
-var numOfCalls = iJump = 0;
+var numOfCalls = iJump = counter = 0;
 var oktell = "http://192.168.10.132/firecatcher/oktell/calls?name=Avito_get_file_by_id_conn&startparam1=";
 var sheet = document.createElement('style');
 sheet.innerHTML = "#comment-block{"+ 

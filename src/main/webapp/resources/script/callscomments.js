@@ -101,9 +101,6 @@ sheet.innerHTML = "#comment-block{"+
 ".hidden-category-picker.On{"+ 
 " display: block;"+ 
 " position:absolute;"+  
-"}"+    
-"#commentForm h1{"+ 
-" margin-left:3px;"+ 
 "}";
 //updated version
 document.body.appendChild(sheet);
