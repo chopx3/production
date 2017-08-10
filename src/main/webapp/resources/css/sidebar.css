@@ -89,6 +89,7 @@
 	display: none;
 }
 #achievmentText{
+	margin-left: 10px;
 	font-size: 20px;
 	position: fixed;
 	bottom: 75px;

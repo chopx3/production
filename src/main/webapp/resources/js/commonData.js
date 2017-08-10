@@ -44,7 +44,10 @@ var RestPost = function(sendData, url) { // стандартная функци�
             $.ajax({
                 url: url,
                 type: "post",
-                contentType: "application/json; charset=utf-8",
+                headers: { 
+        				Accept : "text/csv; charset=utf-8",
+        				"Content-Type": "text/csv; charset=utf-8"
+    						},
                 data: JSON.stringify(sendData), //Stringified Json Object
                 async: false,    //Cross-domain requests and dataType: "jsonp" requests do not support synchronous operation
                 cache: false,    //This will force requested pages not to be cached by the browser

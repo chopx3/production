@@ -81,7 +81,7 @@ sheet.innerHTML = "#comment-block{"+
 " margin-bottom: 0 !important;"+ 
 "}"+
 ".table-scroll{ "+ 
-" height: 70vh;"+ 
+" max-height: 50vh;"+ 
 " overflow: auto;"+ 
 " margin: 0 0 20px;"+ 
 " max-width: 750px;"+ 
