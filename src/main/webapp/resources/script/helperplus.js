@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name         Helper plus
-// @version      1.5
+// @version      1.6
 // @author       izayats@avito.ru
 // @include      https://adm.avito.ru/*
 // @require      http://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js
@@ -122,7 +122,7 @@ function turnOnRemovedHistory(){
             GM_setClipboard(s.substring(0,s.length-1));
         }
     }));
-     $('#checkRemoved').after($('<input type="button" value="Открыть" class = "btn btn-default mb_activate green"/>').click(function(){
+     $('#checkRemoved').after($('<input type="button" value="Открыть каждое" class = "btn btn-default mb_activate green"/>').click(function(){
         var s = [];
         var counter = 0;
         $('input[name^="item_id"]:checked').each(function(){
@@ -134,6 +134,16 @@ function turnOnRemovedHistory(){
             var url = "https://adm.avito.ru/items/item/info/"+s[i];
             window.open(url, '_blank');
             }
+        }
+    }));
+     $('#checkRemoved').after($('<input type="button" value="Поиск по выделенным" class = "btn btn-default mb_activate green"/>').click(function(){
+        var s = "";
+        $('input[name^="item_id"]:checked').each(function(){
+           s += $(this).val() +'|';
+        });
+        if(s.length > 0){
+            var url = "https://adm.avito.ru/items/search?query="+s;
+            window.open(url, '_blank');
         }
     }));
 }
