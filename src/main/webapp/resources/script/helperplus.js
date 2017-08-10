@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name         Helper plus
-// @version      1.6
+// @version      1.7
 // @author       izayats@avito.ru
 // @include      https://adm.avito.ru/*
 // @require      http://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js
@@ -33,7 +33,7 @@ var status_colors = {
 var firstTime = true;
  
 $(document).ready(function(){
-    $("td.item-checkbox").click(function() {
+  $("td.item-checkbox").click(function() {
   if ($(this).find("input").prop('checked')){
   $(this).find("input").prop('checked', false)
   }
@@ -61,7 +61,7 @@ $(document).ready(function(){
 });
 function turnOnRemovedHistory(){
     $('body').append('<div id="item_info" style="position: fixed; left: 100px; top: 60px;border: 4px double black; overflow:auto;max-width:600px;max-height:500px;z-index:250;background-color:WHITE;visibility:hidden;"></div>');
-    $('input[name=percent_max]').after('<input type="button" id="checkRemoved" value="История удаленных" style="margin-left:20px;" class = "btn btn-default mb_activate green"/>');
+    $('.form-row:nth-child(4)').after('<div class="form-row"><input type="button" id="checkRemoved" value="История удаленных" class = "btn btn-default mb_activate green"/>');
     $('#checkRemoved').bind("click",function(){
         if(!firstTime)
             return;
@@ -80,7 +80,7 @@ function turnOnRemovedHistory(){
     });
     $('input[name="query"]').before($('<input id="gnum" type="button" value="|">').click(function(){var e = $('input[name="query"]')[0]; var r = $(e).val().match(/\d{9,}/g);r && $(e).val(r.join('|'));}));
     $('input[name="itemIds"]').before($('<input id="gnum" type="button" value=",">').click(function(){var e = $('input[name="itemIds"]')[0]; var r = $(e).val().match(/\d{9,}/g);r && $(e).val(r.join(','));}));
-    $('#checkRemoved').after($('<input type="button" value="Bleach" class = "btn btn-default mb_activate green"/>').click(function(){
+    $('#checkRemoved').after($('<input type="button" value="Bleach" class = "btn btn-default mb_activate green"/></div>').click(function(){
         if(confirm('Вы уверены что хотите отбелить выделенные объявления?')){
             $('input[name^="item_id"]:checked').each(function(){
                 $.get('https://adm.avito.ru/items/item/bleach/' + $(this).val()).fail(function(resp){alert('Ошибка: ' + resp);});
