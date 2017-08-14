@@ -25,7 +25,9 @@ var addQuestionURL			=					host + "question/add"; // URL для добавлен
 var updateQuestionURL		=					host + "question/update"; // URL для обновления вопроса
 var getRepremURL				=					host + "premium/avitoid/"; // URL для получения Reprem данных
 var updateRepremURL				=				host + "premium/update"; // URL для обновления Reprem данных
-var addRepremURL				=				host + "premium/add"; // URL для добавления Reprem данных
+var updateRepremActiveURL				=	host + "premium/updateActive"; // URL для обновления Reprem данных
+var addRepremURL				=					host + "premium/add"; // URL для добавления Reprem данных
+var getAllRepremUsersURL =				host + "premium/all" // URL для отображения всех премиум пользователей
 var statURL = 										host + "stat/"; // статистика
 var tagGroupURL = 								host + "taggroup/all"; // список групп тэгов
 var addTagGroupURL = 							host + "taggroup/add"; // добавить группу тэгов
@@ -44,10 +46,7 @@ var RestPost = function(sendData, url) { // стандартная функци�
             $.ajax({
                 url: url,
                 type: "post",
-                headers: { 
-        				Accept : "text/csv; charset=utf-8",
-        				"Content-Type": "text/csv; charset=utf-8"
-    						},
+                contentType: "application/json; charset=utf-8",
                 data: JSON.stringify(sendData), //Stringified Json Object
                 async: false,    //Cross-domain requests and dataType: "jsonp" requests do not support synchronous operation
                 cache: false,    //This will force requested pages not to be cached by the browser

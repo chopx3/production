@@ -34,6 +34,12 @@ public class PremiumClientController {
         return premiumClientService.update(premiumClient);
     }
 
+    @ResponseStatus(HttpStatus.OK)
+    @RequestMapping(value = "updateActive", method = RequestMethod.POST)
+    public PremiumClient updateActive(@RequestBody PremiumClient premiumClient){
+        return premiumClientService.updateActiveStatus(premiumClient);
+    }
+
     @ResponseStatus(HttpStatus.CREATED)
     @RequestMapping(value = "add", method = RequestMethod.POST)
     public PremiumClient add(@RequestBody PremiumClient premiumClient){

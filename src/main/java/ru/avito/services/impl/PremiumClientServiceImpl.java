@@ -26,6 +26,13 @@ public class PremiumClientServiceImpl implements PremiumClientService{
         return premiumClientRepository.save(currentClient);
     }
 
+    @Transactional
+    public PremiumClient updateActiveStatus(PremiumClient actualClient) {
+        PremiumClient currentClient = premiumClientRepository.findByAvitoId(actualClient.getAvitoId());
+        currentClient.setActive(actualClient.getActive());
+        return premiumClientRepository.save(currentClient);
+    }
+
     @Override
     public PremiumClient add(PremiumClient premiumClient) {
         return premiumClientRepository.saveAndFlush(premiumClient);

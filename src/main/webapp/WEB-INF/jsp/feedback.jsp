@@ -9,7 +9,7 @@
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-  <script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
+  <script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/external/moment.min.js"></script>
 	<script src="${pageContext.request.contextPath}/resources/js/commonData.js"></script>
   <script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/adminFeedbackMain.js"></script>
   <script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/calendar.js"></script>
@@ -22,39 +22,8 @@
   <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/bootstrap.daterangepicker/2/daterangepicker.css" />
 	<link href="https://gitcdn.github.io/bootstrap-toggle/2.2.2/css/bootstrap-toggle.min.css" rel="stylesheet">
   <script src="https://gitcdn.github.io/bootstrap-toggle/2.2.2/js/bootstrap-toggle.min.js"></script>
-  <script src="${pageContext.request.contextPath}/resources/test/xlsx.full.min.js"></script>
 </head>
 <body>
-<script>
-/* set up XMLHttpRequest */
-$(document).ready(function() {
-    $.ajax({
-        type: "GET",
-        url: "${pageContext.request.contextPath}/resources/test/test.csv",
-        dataType: "text",
-        headers: { 
-        Accept : "text/csv; charset=utf-8",
-        "Content-Type": "text/csv; charset=utf-8"
-        },
-        success: function(data) {csvJSON(data);}
-     });
-});
-
-function csvJSON(csv){
-  var lines=csv.split("\n");
-  var result = [];
-  var headers=lines[0].split(";");
-  for(var i=1;i<lines.length;i++){
-    var obj = {};
-    var currentline=lines[i].split(";");
-    for(var j=0;j<headers.length;j++){
-      obj[headers[j]] = currentline[j];
-    }
-    result.push(obj);
-  }
-  console.log(JSON.parse(JSON.stringify(result))); //JSON
-}
-</script>
 <script type="text/javascript">
     $(function() {
         startCalendar();
