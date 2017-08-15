@@ -14,7 +14,8 @@
   <script src="${pageContext.request.contextPath}/resources/js/calendar.js" type="text/javascript" charset="utf-8"></script>
   <script src="${pageContext.request.contextPath}/resources/js/testpageTagsController.js"></script>
   <script src="${pageContext.request.contextPath}/resources/js/testpageQuestionsController.js"></script>
-  <script src="${pageContext.request.contextPath}/resources/js/testpageCategoriesController.js"></script>    
+  <script src="${pageContext.request.contextPath}/resources/js/testpageCategoriesController.js"></script>
+  <script src="${pageContext.request.contextPath}/resources/js/rePremFiles.js"></script>      
   <link href="${pageContext.request.contextPath}/resources/css/testPage.css" rel="stylesheet">
 	<link href="${pageContext.request.contextPath}/resources/css/calls.css" rel="stylesheet">
   <script type="text/javascript" src="https://cdn.jsdelivr.net/bootstrap.daterangepicker/2/daterangepicker.js"></script>
@@ -52,7 +53,11 @@
               </div>
             </div>
           </form>
-      </div><!-- /.navbar-collapse -->
+          <div class="form-group navbar-right">
+          <label for="exampleInputFile">Файл для загрузки</label>
+          <input type="file" class="form-control-file" id="files" aria-describedby="fileHelp" name="files[]">
+          </div>
+      </div> <!-- /.navbar-collapse -->
     </div><!-- /.container-fluid -->
   </nav>
 <div id="wrapper" class="col-lg-12 container-fluid">
