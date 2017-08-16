@@ -83,7 +83,7 @@ function checkClientsToAdd(map, array){
     }
 }
 function createCSV(){
-    $.get(getAllRepremUsersURL).done(function (data) {
+$.get(getAllRepremUsersURL).done(function (data) {
   var info = data;
   var regExpMultilines = /(\r\n|\n|\r)\1{1,}/gm;
   var phoneRegExp = /([7|8])([0-9]{10})/gm;

@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name         Helper plus
-// @version      1.7
+// @version      1.8
 // @author       izayats@avito.ru
 // @include      https://adm.avito.ru/*
 // @require      http://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js
@@ -80,47 +80,19 @@ function turnOnRemovedHistory(){
     });
     $('input[name="query"]').before($('<input id="gnum" type="button" value="|">').click(function(){var e = $('input[name="query"]')[0]; var r = $(e).val().match(/\d{9,}/g);r && $(e).val(r.join('|'));}));
     $('input[name="itemIds"]').before($('<input id="gnum" type="button" value=",">').click(function(){var e = $('input[name="itemIds"]')[0]; var r = $(e).val().match(/\d{9,}/g);r && $(e).val(r.join(','));}));
-    $('#checkRemoved').after($('<input type="button" value="Bleach" class = "btn btn-default mb_activate green"/></div>').click(function(){
-        if(confirm('Вы уверены что хотите отбелить выделенные объявления?')){
-            $('input[name^="item_id"]:checked').each(function(){
-                $.get('https://adm.avito.ru/items/item/bleach/' + $(this).val()).fail(function(resp){alert('Ошибка: ' + resp);});
-            });
-            location.reload();
-        }
-    }));
-    $('#checkRemoved').after($('<input type="button" value="Push up" class = "btn btn-default mb_activate green"/>').click(function(){
-        if(confirm('Вы уверены что хотите поднять выделенные объявления?')){
-            $('input[name^="item_id"]:checked').each(function(){
-                $.get('https://adm.avito.ru/items/item/push2up/' + $(this).val()).fail(function(resp){alert('Ошибка: ' + resp);});
-            });
-            location.reload();
-        }
-    }));
+    $('#checkRemoved').after($('<input type="button" value="ТН combo" class = "btn btn-default mb_activate green"/>').click(function(){
+        bleachItems();
+        pushUpItems();
+        addCommentToItem(true);
+        collectItemsNumbers(true);
+    }))
+    $('#checkRemoved').after($('<input type="button" value="Bleach" class = "btn btn-default mb_activate green"/></div>').click(bleachItems));
+    $('#checkRemoved').after($('<input type="button" value="Push up" class = "btn btn-default mb_activate green"/>').click(pushUpItems));
     $('#checkRemoved').after($('<input type="button" value="Оставить комментарий" class = "btn btn-default mb_activate green"/>').click(function(){
-        var comment = prompt('Введите пожалуйста комментарий');
-        if(comment == null)
-            return;
-        $('input[name^="item_id"]:checked').each(function(){
-            $.post('https://adm.avito.ru/comment',
-                   {
-                objectTypeId:1,
-                objectId:$(this).val(),
-                comment:comment
-            }).fail(function(resp){
-                alert('Ошибка: ' + resp);
-                throw 'comment Error...';
-            });
-        });
-        alert('комментарий был успешно оставлен');
+        addCommentToItem(false);
     }));
     $('#checkRemoved').after($('<input type="button" value="Номера объявлений" class = "btn btn-default mb_activate green"/>').click(function(){
-        var s = '';
-        $('input[name^="item_id"]:checked').each(function(){
-            s += $(this).val() +'|';
-        });
-        if(s.length > 0){
-            GM_setClipboard(s.substring(0,s.length-1));
-        }
+        collectItemsNumbers(false);
     }));
      $('#checkRemoved').after($('<input type="button" value="Открыть каждое" class = "btn btn-default mb_activate green"/>').click(function(){
         var s = [];
@@ -145,8 +117,52 @@ function turnOnRemovedHistory(){
             var url = "https://adm.avito.ru/items/search?query="+s;
             window.open(url, '_blank');
         }
-    }));
+    }))
+    ;
 }
+function bleachItems(zEvent){
+if(confirm('Вы уверены что хотите отбелить выделенные объявления?')){
+            $('input[name^="item_id"]:checked').each(function(){
+                $.get('https://adm.avito.ru/items/item/bleach/' + $(this).val()).fail(function(resp){alert('Ошибка: ' + resp);});
+            });
+            location.reload();
+        }
+}
+function pushUpItems(zEvent){
+        if(confirm('Вы уверены что хотите поднять выделенные объявления?')){
+            $('input[name^="item_id"]:checked').each(function(){
+                $.get('https://adm.avito.ru/items/item/push2up/' + $(this).val()).fail(function(resp){alert('Ошибка: ' + resp);});
+            });
+            location.reload();
+        }
+    }
+function addCommentToItem(isTN){
+        var comment = (isTN) ? "ТН, поднятие в поиске, блич" : prompt('Введите пожалуйста комментарий');
+        if(comment == null)
+            return;
+        $('input[name^="item_id"]:checked').each(function(){
+            $.post('https://adm.avito.ru/comment',
+                   {
+                objectTypeId:1,
+                objectId:$(this).val(),
+                comment:comment
+            }).fail(function(resp){
+                alert('Ошибка: ' + resp);
+                throw 'comment Error...';
+            });
+        });
+        alert('комментарий был успешно оставлен');
+    }
+function collectItemsNumbers(isTN){
+        var s = '';
+        $('input[name^="item_id"]:checked').each(function(){
+            s += $(this).val() +'|';
+        });
+        if(s.length > 0){
+            var toClipBoard = (isTN) ? "ТН, Объявления №" + s.substring(0,s.length-1) + " , поднятие в поиске, bleach" : s.substring(0,s.length-1);
+            GM_setClipboard(toClipBoard);
+        }
+    }
 function checkItemHistory(link, row){
     $(row).find('.item-status.grey').parent().html(removed + "<span style='color:#FF8C00;'>(Проверяем...)</span>");
     $.get( "https://adm.avito.ru" + link, function( data ) {

@@ -97,9 +97,9 @@ function getCalls(){ // Функция для вывода информации 
 			document.getElementById("MainForm").innerHTML = ''; // очистка формы
 			if (data.length != 0 && idNumber != '') { // если есть звонки и ID не пробел
 				drawClientCalls(1); // отрисовать первую страницу при первом нажатии
-				$(".reprem-button-activator").addClass('Add');
 			}
 			else {document.getElementById("MainForm").innerHTML ='Звонки не обнаружены :(';} // звонков нет
+			$(".reprem-button-activator").addClass('Add');
 			if ($(".reprem-block").hasClass('Add')){
 				getRepremData($("#IDforInfo").val());
 			}	
