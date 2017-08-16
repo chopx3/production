@@ -49,7 +49,9 @@ function getComments(){ // отрисовка комментариев
 					tbot = '</tbody></table></div></div>'; // низ
 					for (var i = 0; i < data.length; i++) { // тело
 						var message = data[i].message;
-						if (data[i].agent == null){var nametag = "Из админки";}
+						if (data[i].agent == null){
+							var nametag = (message.indexOf("~")>0) ? message.substring(0, message.indexOf("~")) : "Из админки";
+    					message = message.substring(message.indexOf("~")+1, message.length);}
 						else {var nametag = data[i].agent.username;}
 						var timetag = moment.unix(data[i].postTime/1000).format(comFormat);
 						var elem = document.getElementById("div-table-content-"+i);

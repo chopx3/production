@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name Calls and comments
-// @version 0.6
+// @version 0.8
 // @match https://adm.avito.ru/users/user/info/*
 // @require http://code.jquery.com/jquery-latest.js
 // @updateURL   https://raw.githubusercontent.com/chopx3/production/dev/src/main/webapp/resources/script/callscomments.js
@@ -27,7 +27,7 @@ var categoryBlock =
     "  <span class='fill-call-span'>• Заполнить звонок"+
     "    <div class='hidden-category-picker'>"+
 "  <div class='btn-group btn-group-justified col-lg-3' data-toggle='buttons' id='catButtonGroup'>"+
-"	<label class='btn btn-default btn-sm category-label' value='1' >"+
+" <label class='btn btn-default btn-sm category-label' value='1' >"+
 "        <input type='radio' autocomplete='off' >RE"+
 "    </label>"+
 "    <label class='btn btn-default btn-sm category-label' value='2'>"+
@@ -81,7 +81,7 @@ sheet.innerHTML = "#comment-block{"+
 " margin-bottom: 0 !important;"+ 
 "}"+
 ".table-scroll{ "+ 
-" max-height: 50vh;"+ 
+" height: 70vh;"+ 
 " overflow: auto;"+ 
 " margin: 0 0 20px;"+ 
 " max-width: 750px;"+ 
@@ -101,13 +101,17 @@ sheet.innerHTML = "#comment-block{"+
 ".hidden-category-picker.On{"+ 
 " display: block;"+ 
 " position:absolute;"+  
+"}"+    
+"#commentForm h1{"+ 
+" margin-left:3px;"+ 
 "}";
 //updated version
 document.body.appendChild(sheet);
 var userID = getId(window.location.href);
 var catNum = 0;
-var login = URL = commentData = callData = "";
+var login = URL = commentData = callData = agentName = "";
 $(document).ready(function(){
+agentName = $('ul.nav>li:last-child>a').text().trim();
 if(window.location.href.indexOf('/user/info') != -1){
 login = $('a.js-user-id').attr("data-user-id");
 callURL = "http://192.168.10.132/firecatcher/api/call/user/"+login + "/all";
@@ -179,26 +183,29 @@ function postComment(zEvent){
        var comment = {
       "avitoUserId":login,
       "postTime": new Date().getTime(),
-      "message": $('#addCommentBlock').val()
+      "message": agentName + "~"+$('#addCommentBlock').val()
   }
     var addCommentURL = "http://192.168.10.132/firecatchertest/api/comment/addFromAdm" ;
-	RestPost(comment, addCommentURL);
+  RestPost(comment, addCommentURL);
     setTimeout(function() {commentGetRequest(1);}, 500);
     setTimeout(function() {$("#commentClick").trigger("click");}, 1000);
 }
 function getComments(zEvent){
-$("#comment-block").addClass('On');
+$("#comment-block").toggleClass('On');
 document.getElementById("forComments").innerHTML = '';
-var addComment = 	'<div class="row"><div class="col-lg-12"><div class="input-group"><textarea class="form-control" id="addCommentBlock" rows="3" placeholder="Добавить комментарий"></textarea>'+
-					'<span class="input-group-addon btn btn-success post-comment">+</span>'+
-					'</div></div></div>'; // поле добавления комментария
+var addComment =  '<div class="row"><div class="col-lg-12"><div class="input-group"><textarea class="form-control" id="addCommentBlock" rows="3" placeholder="Добавить комментарий"></textarea>'+
+          '<span class="input-group-addon btn btn-success post-comment">+</span>'+
+          '</div></div></div>'; // поле добавления комментария
 var outputComments = thead = tbot = ''; // обнуление инфы и объявление переменных
 if (commentData.length !== 0) { // если есть комментарии
 thead = '<div class="row"><div class="table-scroll col-lg-12"><table id="commentTable" class="table table-striped table-hover" ><thead><tr><th >Агент</th><th>Комментарий</th></tr></thead><tbody>'; // шапка
 tbot = '</tbody></table></div></div>'; // низ
 for (var i = 0; i < commentData.length; i++) { // тело
 var message = commentData[i].message;
-if (commentData[i].agent === null) {var nametag = "Из админки";}
+if (commentData[i].agent === null) {
+    console.log(message.indexOf("~"));
+    var nametag = (message.indexOf("~")>0) ? message.substring(0, message.indexOf("~")) : "Из админки";
+    message = message.substring(message.indexOf("~")+1, message.length);                               }
     else {var nametag = commentData[i].agent.username;}
 var timetag = moment.unix(commentData[i].postTime/1000).format("DD.MM.YY HH:mm");
 var elem = document.getElementById("div-table-content-"+i);
