@@ -19,6 +19,19 @@
 	margin: 10px auto 0 auto;
 	width: 100%;
 }
+.with-hold{
+	width: calc(100% - 24px);
+}
+.hold-span{
+	  height: 20px;
+    width: 20px;
+    display: inline-block;
+    position: relative;
+    bottom: 12px;
+    margin-left: 3px;
+    margin-bottom: -18px;
+    padding: 0px 5px;
+}
 /* Убрать отступ у звонков, которые выводятся в ряд */
 .no-margin-top{
 	margin-top: 0px;

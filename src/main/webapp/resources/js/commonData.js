@@ -93,8 +93,11 @@ function collectMultipleCalls(options){ // функция отрисовки н�
 	else break;} // если дальше ничего нет - break
 	for (var j =i+iJump; j>i; j--){ // а потом идет в обратную сторону и добавляет звонки в общий звонок в хронологическом порядке
 			var margin = (j!= i+iJump) ? "no-margin-top" : ""; // магия для отступа в звонках. У первого звонка только срабатывает, чтобы не было отступа
+			var holdTime = (data[j-1].timeStart - data[j].timeEnd)/1000;
+			var minutes = Math.floor(holdTime/60);
+			var seconds = holdTime - minutes*60;
 			var tempAudio = data[j].comId; // наверное, так удобней, но чот не уверен
-			result += '<audio '+onPlay+' class="audio-call '+margin+'" src="'+oktell + tempAudio + '" controls></audio><a href="'+oktell+ tempAudio +'" target="_blank"></a>'; // финальный вывод
+			result += '<div><audio '+onPlay+' class="audio-call with-hold '+margin+'" src="'+oktell + tempAudio + '" controls></audio><a href="'+oktell+ tempAudio +'" target="_blank"></a><span class="label-primary myLabel hold-span" title="'+minutes+':' + seconds +'">H</span></div>'; // финальный вывод
 	}
 return result;	
 }
