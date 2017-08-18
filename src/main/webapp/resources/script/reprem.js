@@ -103,6 +103,7 @@ var ourDivBlock = '<div class="reprem-block" id=reprem-block>'+
 '    </div>'+
 '  </div>';
 var numOfCalls = iJump = counter = 0;
+var regexp = /\"/g;
 var oktell = "http://192.168.10.132/firecatcher/oktell/calls?name=Avito_get_file_by_id_conn&startparam1=";
 var sheet = document.createElement('style');
 sheet.innerHTML = "#comment-block{"+ 
@@ -229,7 +230,7 @@ $(document).ready(function(){
   agentName = $('ul.nav>li:last-child>a').text().trim();
     if(window.location.href.indexOf('/user/info') != -1){
     login = $('a.js-user-id').attr("data-user-id");
-    companyName = JSON.stringify($('input[name="name"]').attr("value"));
+    companyName = $('input[name="name"]').attr("value");
     var commentURL = host +"comment/user/" + login;
     var callURL = host +"call/user/"+login + "/all";
     console.log(URL);
@@ -293,7 +294,7 @@ reprem = GM_xmlhttpRequest({
 function createButton(zEvent){
  var clientNewData = { 
                     "avitoId" : login, 
-                    "username" : JSON.parse(companyName), 
+                    "username" : companyName.replace(regexp, "''"), 
                     "admPhone" : "89000000000", 
                     "contactPhone" : "89000000001" 
                 }; 
@@ -337,9 +338,9 @@ function editButton(zEvent){
                 var index = $(this).attr('value');
                 var classArray = document.getElementsByClassName("reprem-text-"+index); 
                 var savedValue = $(".reprem-label-"+index).text();
-                var regexp = /\"/g;
+                
                 if ($(this).hasClass('input-text')){ 
-                    classArray[0].innerHTML = '<input type="text" class="reprem-label-'+index+' form-control reprem-input input-text" name="'+index+'" value=\"'+savedValue.replace(regexp, "'")+'\">'; 
+                    classArray[0].innerHTML = '<input type="text" class="reprem-label-'+index+' form-control reprem-input input-text" name="'+index+'" value=\"'+savedValue.replace(regexp, "''")+'\">'; 
                 } 
                 if ($(this).hasClass('input-number')){ 
                     classArray[0].innerHTML = '<input type="number" class="reprem-label-'+index+' form-control reprem-input input-number" name="'+index+'" value="'+savedValue+'">'; 
@@ -402,7 +403,7 @@ function postComment(zEvent){
       "message": agentName + "~"+$('#addCommentBlock').val()
   }
     var addCommentURL = "http://192.168.10.132/firecatchertest/api/comment/addFromAdm" ;
-  RestPost(comment, addCommentURL);
+    RestPost(comment, addCommentURL);
     setTimeout(function() {commentGetRequest(1);}, 500);
     setTimeout(function() {$("#commentClick").trigger("click");}, 1000);
 }
