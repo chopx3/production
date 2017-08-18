@@ -229,7 +229,7 @@ $(document).ready(function(){
   agentName = $('ul.nav>li:last-child>a').text().trim();
     if(window.location.href.indexOf('/user/info') != -1){
     login = $('a.js-user-id').attr("data-user-id");
-    companyName = $('input[name="name"]').attr("value");
+    companyName = JSON.stringify($('input[name="name"]').attr("value"));
     var commentURL = host +"comment/user/" + login;
     var callURL = host +"call/user/"+login + "/all";
     console.log(URL);
@@ -293,7 +293,7 @@ reprem = GM_xmlhttpRequest({
 function createButton(zEvent){
  var clientNewData = { 
                     "avitoId" : login, 
-                    "username" : companyName, 
+                    "username" : JSON.parse(companyName), 
                     "admPhone" : "89000000000", 
                     "contactPhone" : "89000000001" 
                 }; 
@@ -337,8 +337,9 @@ function editButton(zEvent){
                 var index = $(this).attr('value');
                 var classArray = document.getElementsByClassName("reprem-text-"+index); 
                 var savedValue = $(".reprem-label-"+index).text();
+                var regexp = /\"/g;
                 if ($(this).hasClass('input-text')){ 
-                    classArray[0].innerHTML = '<input type="text" class="reprem-label-'+index+' form-control reprem-input input-text" name="'+index+'" value="'+savedValue+'">'; 
+                    classArray[0].innerHTML = '<input type="text" class="reprem-label-'+index+' form-control reprem-input input-text" name="'+index+'" value=\"'+savedValue.replace(regexp, "'")+'\">'; 
                 } 
                 if ($(this).hasClass('input-number')){ 
                     classArray[0].innerHTML = '<input type="number" class="reprem-label-'+index+' form-control reprem-input input-number" name="'+index+'" value="'+savedValue+'">'; 
