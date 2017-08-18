@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         Comments, calls and repremium
 // @match        https://adm.avito.ru/users/user/info/*
-// @version      0.8
+// @version      0.9
 // @require      http://code.jquery.com/jquery-latest.js
 // @require      https://cdn.jsdelivr.net/momentjs/latest/moment.min.js
 // @updateURL    https://raw.githubusercontent.com/chopx3/production/dev/src/main/webapp/resources/script/reprem.js
@@ -426,10 +426,6 @@ var timetag = moment.unix(commentData[i].postTime/1000).format("DD.MM.YY HH:mm")
 var elem = document.getElementById("div-table-content-"+i);
 outputComments += '<tr class="table-row"><td>'+timetag +'\n'+ nametag +'</td><td class="breakable"><div class="table-content" id="div-table-content-'+i+'">'+message+'</div></td></tr>';
 } // отрисовка комментариев
-}
-else { outputComments='<div class="text-center">На данной учетной записи еще не оставляли комментариев</div>'; } // если комментариев нет
-document.getElementById("forComments").innerHTML = thead + outputComments + tbot + addComment;
- $(".post-comment").click(postComment);
 }
 else { outputComments='<div class="text-center">На данной учетной записи еще не оставляли комментариев</div>'; } // если комментариев нет
 document.getElementById("forComments").innerHTML = thead + outputComments + tbot + addComment;
