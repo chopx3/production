@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         Comments, calls and repremium
 // @match        https://adm.avito.ru/users/user/info/*
-// @version      0.9
+// @version      1.0
 // @require      http://code.jquery.com/jquery-latest.js
 // @require      https://cdn.jsdelivr.net/momentjs/latest/moment.min.js
 // @updateURL    https://raw.githubusercontent.com/chopx3/production/dev/src/main/webapp/resources/script/reprem.js
@@ -47,7 +47,7 @@ var categoryBlock =
 " <span>"+
 "</div>";
 var ourDivBlock = '<div class="reprem-block" id=reprem-block>'+
-'  <div class="panel panel-default">'+
+'  <div class="panel panel-default reprem-panel">'+
 '    <div class="panel-heading text-center">Клиент</div>'+
 '    <div class="panel-body">'+
 '      <div class="row reprem-row">'+
@@ -130,6 +130,9 @@ sheet.innerHTML = "#comment-block{"+
 " opacity : 1;"+ 
 " transition:all linear 0.3s;"+ 
 "}"+ 
+".reprem-panel{"+
+"margin-bottom: 0px !important; "+
+"}" +
 "#addCommentBlock{"+ 
 " overflow: auto;"+ 
 " resize:none;"+ 
@@ -153,7 +156,7 @@ sheet.innerHTML = "#comment-block{"+
 " overflow-y: hidden;"+ 
 " right: 1%;"+ 
 " top: 6%;"+    
-" height: 465px;"+     
+" min-height: 465px;"+     
 " width: 30vw;"+      
 " background : white;"+ 
 " visibility : hidden;"+ 
@@ -219,15 +222,16 @@ document.body.appendChild(sheet);
 var userID = getId(window.location.href);
 var catNum = 0;
 var login = URL = commentData = callData = agentName = companyName = "";
-
  var host = "http://192.168.10.132/firecatchertest/api/";
- var getRepremURL = host +"premium/avitoid/";
  var updateRepremURL = host +"premium/update";
+  var getRepremURL = host +"premium/avitoid/";
  var addRepremURL = host +"premium/add";
 var repremInfoId = 0;
 var reprem = "";
+var dataToDraw = "";
 $(document).ready(function(){
-  agentName = $('ul.nav>li:last-child>a').text().trim();
+    
+    agentName = $('ul.nav>li:last-child>a').text().trim();
     if(window.location.href.indexOf('/user/info') != -1){
     login = $('a.js-user-id').attr("data-user-id");
     companyName = $('input[name="name"]').attr("value");
@@ -235,6 +239,7 @@ $(document).ready(function(){
     var callURL = host +"call/user/"+login + "/all";
     console.log(URL);
     commentGetRequest(0);
+        getRepremRequest();
 var calls = GM_xmlhttpRequest({
 method: "GET",
 headers: {"Accept": "application/json"},
@@ -277,8 +282,8 @@ reprem = GM_xmlhttpRequest({
       else {document.getElementById("REpremium").innerHTML = (" <div style='cursor:pointer;' id='repremClick'>• <span>RE premium</span> <span style='color:red;'> ✖ </span></div>");}
     $("#repremClick").click(function(){
     $(".reprem-block").toggleClass('On');
-    if (res.response === undefined){getRepremData("");}
-    else {getRepremData(JSON.parse(res.response));}
+    console.log(dataToDraw);
+    getRepremData(dataToDraw);
 }); 
    $(".edit-button").click( editButton);
    $(".save-button").click( saveButton);
@@ -299,7 +304,7 @@ function createButton(zEvent){
                     "contactPhone" : "89000000001" 
                 }; 
                 RestPost(clientNewData, addRepremURL);
-                oneActiveButton(".edit-button");    
+                location.reload();    
 }
 function saveButton(zEvent){
  var premiumClientData = []; 
@@ -328,7 +333,8 @@ function saveButton(zEvent){
                     "admPhone" : premiumClientData[4], 
                     "contactPhone" : premiumClientData[5], 
                     "additionalPhones" : premiumClientData[6] 
-                }; 
+                };
+                dataToDraw = clientNewData;
                 console.log(clientNewData+"clientNewData"); 
                 RestPost(clientNewData, updateRepremURL); 
                 oneActiveButton(".edit-button");    
@@ -364,6 +370,21 @@ function RestPost(data, url){
 }
 function getId(url){
     return url.substring(url.lastIndexOf('/')+1);
+}
+function getRepremRequest(zEvent){
+ GM_xmlhttpRequest({
+  method: "GET",
+  headers: {"Accept": "application/json"},
+  url: getRepremURL+login,
+  ignoreCache : true,
+  onreadystatechange: function(res) {
+  },
+  onload: function(res) {
+    console.log(res.response);
+    if (res.response === undefined){dataToDraw = "";}
+    else {dataToDraw = JSON.parse(res.response);}
+  }
+});
 }
 function commentGetRequest(newComment){
 commentURL = "http://192.168.10.132/firecatcher/api/comment/user/" + login;
