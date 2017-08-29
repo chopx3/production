@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         Comments, calls and repremium
 // @match        https://adm.avito.ru/users/user/info/*
-// @version      1.0
+// @version      1.1
 // @require      http://code.jquery.com/jquery-latest.js
 // @require      https://cdn.jsdelivr.net/momentjs/latest/moment.min.js
 // @updateURL    https://raw.githubusercontent.com/chopx3/production/dev/src/main/webapp/resources/script/reprem.js
@@ -51,51 +51,51 @@ var ourDivBlock = '<div class="reprem-block" id=reprem-block>'+
 '    <div class="panel-heading text-center">Клиент</div>'+
 '    <div class="panel-body">'+
 '      <div class="row reprem-row">'+
-'        <div class="col-md-5 reprem-icon"> <label class="reprem-input">ID:</label></div>'+
-'        <div class="col-md-7 reprem-text reprem-text-1 reprem-text-id input-number" value=1>'+
-'          <label for="" class="col-md-12 reprem-label reprem-label-1"></label>'+
+'        <div class="col-md-4 reprem-icon"> <label class="reprem-input">ID:</label></div>'+
+'        <div class="col-md-8 reprem-text reprem-text-1 reprem-text-id input-number" value=1>'+
+'          <label for="" class="reprem-label reprem-label-1"></label>'+
 '        </div>'+
 '      </div>'+
 '      <div class="row reprem-row">'+
-'        <div class="col-md-5 reprem-icon"> <label class="reprem-input">Company:</label></div>'+
-'        <div class="col-md-7 reprem-text reprem-text-2 reprem-text-company input-text" value=2>'+
-'          <label for="" class="col-md-12 reprem-label reprem-label-2"></label>'+
+'        <div class="col-md-4 reprem-icon"> <label class="reprem-input">Компания:</label></div>'+
+'        <div class="col-md-8 reprem-text reprem-text-2 reprem-text-company input-textarea" value=2>'+
+'          <label for="" class="reprem-label reprem-label-2 reprem-label-narrow"></label>'+
 '              </div>'+
 '      </div>'+
 '      <div class="row reprem-row">'+
-'        <div class="col-md-5 reprem-icon"> <label class="reprem-input">Contact:</label></div>'+
-'        <div class="col-md-7 reprem-text reprem-text-3 reprem-text-contact input-text" value=3>'+
-'          <label for="" class="col-md-12 reprem-label reprem-label-3"></label>'+
+'        <div class="col-md-4 reprem-icon"> <label class="reprem-input">Контакт:</label></div>'+
+'        <div class="col-md-8 reprem-text reprem-text-3 reprem-text-contact input-textarea" value=3>'+
+'          <label for="" class="reprem-label reprem-label-3 reprem-label-narrow"></label>'+
 '              </div>'+
 '      </div>'+
 '      <div class="row reprem-row">'+
-'        <div class="col-md-5 reprem-icon"> <label class="reprem-input">Info:</label></div>'+
-'        <div class="col-md-7 reprem-text reprem-text-4 reprem-text-info input-text" value=4>'+
-'          <label for="" class="col-md-12 reprem-label reprem-label-4"></label>'+
+'        <div class="col-md-4 reprem-icon"> <label class="reprem-input">Info:</label></div>'+
+'        <div class="col-md-8 reprem-text reprem-text-4 reprem-text-info input-textarea" value=4>'+
+'          <label for="" class="reprem-label reprem-label-4 reprem-label-narrow"></label>'+
 '              </div>'+
 '      </div>'+
 '      <div class="row reprem-row">'+
-'        <div class="col-md-5 reprem-icon"> <label class="reprem-input">Phone1</label></div>'+
-'        <div class="col-md-7 reprem-text reprem-text-5 reprem-text-mainPhone input-number" value=5>'+
-'          <label for="" class="col-md-12 reprem-label reprem-label-5"></label>'+
+'        <div class="col-md-4 reprem-icon"> <label class="reprem-input">Телефон 1:</label></div>'+
+'        <div class="col-md-8 reprem-text reprem-text-5 reprem-text-mainPhone input-number" value=5>'+
+'          <label for="" class="reprem-label reprem-label-5"></label>'+
 '              </div>'+
 '      </div>'+
 '      <div class="row reprem-row">'+
-'        <div class="col-md-5 reprem-icon"> <label class="reprem-input">Phone2</label></div>'+
-'        <div class="col-md-7 reprem-text reprem-text-6 reprem-text-secondPhone input-number" value=6>'+
-'          <label for="" class="col-md-12 reprem-label reprem-label-6"></label>'+
+'        <div class="col-md-4 reprem-icon"> <label class="reprem-input">Телефон 2:</label></div>'+
+'        <div class="col-md-8 reprem-text reprem-text-6 reprem-text-secondPhone input-number" value=6>'+
+'          <label for="" class="reprem-label reprem-label-6"></label>'+
 '              </div>'+
 '      </div>'+
 '      <div class="row reprem-row">'+
-'        <div class="col-md-5 reprem-icon reprem-icon-last">+ Phones</label></div>'+
-'        <div class="col-md-7 reprem-text reprem-text-7 reprem-text-otherPhones input-textarea" value=7>'+
-'          <textarea rows=2 class="form-control col-md-12 reprem-label reprem-label-7 reprem-input-textarea"></textarea>'+
-'              </div>'+
+'        <div class="col-md-4 reprem-icon"><label class="reprem-input">Другие:</label></div>'+
+'          <div class="col-md-8 reprem-text reprem-text-7 reprem-text-addPhones input-textarea" value=7>'+
+'          <label for="" class="reprem-label reprem-label-7 reprem-label-narrow"></label>'+
+'          </div>'+
 '      </div>'+
 '    </div>'+
 '    <div class="panel-footer">'+
 '      <div class="row reprem-button-row">'+
-'        <div class="col-md-5 reprem-icon"><button class="btn btn-default close-button">Закрыть</button></div>'+
+'        <div class="col-md-4 reprem-icon"><button class="btn btn-default close-button">Закрыть</button></div>'+
 '        <button class="btn btn-default reprem-button edit-button hidden-button">Редактировать</button>'+
 '        <button class="btn btn-default reprem-button save-button hidden-button">Сохранить</button>'+
 '        <button class="btn btn-default reprem-button create-button hidden-button">Создать</button>'+
@@ -176,6 +176,11 @@ sheet.innerHTML = "#comment-block{"+
 "}"+ 
  ".reprem-row{ "+
 "    line-height: 40px; "+
+"} "+
+".reprem-label-narrow{ "+
+"    line-height: 20px; "+
+"    padding-top: 10px; "+
+"    overflow-x: hidden; "+
 "} "+
 ".reprem-icon{ "+
 "    font-size: 14px; "+
@@ -313,20 +318,17 @@ function saveButton(zEvent){
                 var classArray = document.getElementsByClassName("reprem-text-"+index); 
                 var savedValue = $(this).val(); 
                 premiumClientData[index-1] = savedValue; 
-                if ($(this).hasClass('input-text')){ 
-                    classArray[0].innerHTML = '<label class="reprem-label-'+index+' reprem-label reprem-input input-text" name="'+index+'" value="'+savedValue+'">'+savedValue+'</label>'; 
-                } 
                 if ($(this).hasClass('input-number')){ 
-                    classArray[0].innerHTML = '<label class="reprem-label-'+index+' reprem-label reprem-input input-text" name="'+index+'" value="'+savedValue+'">'+savedValue+'</label>'; 
+                    classArray[0].innerHTML = '<label class="reprem-label-'+index+' reprem-label reprem-input input-number" name="'+index+'" value="'+savedValue+'">'+savedValue+'</label>'; 
                 } 
                 if ($(this).hasClass('input-textarea')){ 
                     console.log("poof"); 
-                    classArray[0].innerHTML = '<textarea class="reprem-label-'+index+' reprem-label form-control reprem-input reprem-input-textarea" name="'+index+'" rows=2  value="'+savedValue+'">'+savedValue+'</textarea>'; 
+                    classArray[0].innerHTML = '<label class="reprem-label-'+index+' reprem-label reprem-input input-textarea reprem-label-narrow" name="'+index+'" value="'+savedValue+'">'+savedValue+'</label>'; 
                 } 
             }); 
             var clientNewData = { 
                     "id" : repremInfoId, 
-                    "avitoId" : premiumClientData[0], 
+                    "avitoId" : login, 
                     "username" : premiumClientData[1], 
                     "contactPerson" : premiumClientData[2], 
                     "comments" : premiumClientData[3], 
@@ -335,7 +337,7 @@ function saveButton(zEvent){
                     "additionalPhones" : premiumClientData[6] 
                 };
                 dataToDraw = clientNewData;
-                console.log(clientNewData+"clientNewData"); 
+                console.log(clientNewData); 
                 RestPost(clientNewData, updateRepremURL); 
                 oneActiveButton(".edit-button");    
 }
@@ -344,15 +346,12 @@ function editButton(zEvent){
                 var index = $(this).attr('value');
                 var classArray = document.getElementsByClassName("reprem-text-"+index); 
                 var savedValue = $(".reprem-label-"+index).text();
-                
-                if ($(this).hasClass('input-text')){ 
-                    classArray[0].innerHTML = '<input type="text" class="reprem-label-'+index+' form-control reprem-input input-text" name="'+index+'" value=\"'+savedValue.replace(regexp, "''")+'\">'; 
-                } 
-                if ($(this).hasClass('input-number')){ 
-                    classArray[0].innerHTML = '<input type="number" class="reprem-label-'+index+' form-control reprem-input input-number" name="'+index+'" value="'+savedValue+'">'; 
+                if ($(this).hasClass('input-number')){
+                if (index != 1) {
+                    classArray[0].innerHTML = '<input type="number" class="reprem-label-'+index+' form-control reprem-input input-number" name="'+index+'" value="'+savedValue+'">';} 
                 } 
                 if ($(this).hasClass('input-textarea')){ 
-                    classArray[0].innerHTML = '<textarea class="reprem-label-'+index+' form-control reprem-input reprem-input-textarea" name="'+index+'" rows=2  value="'+savedValue+'">'+savedValue+'</textarea>'; 
+                    classArray[0].innerHTML = '<textarea class="reprem-label-'+index+' form-control reprem-input reprem-input-textarea input-textarea" name="'+index+'" rows=2  value="'+savedValue+'">'+savedValue+'</textarea>'; 
                 } 
                 oneActiveButton(".save-button"); 
             }); 
@@ -422,7 +421,7 @@ function postComment(zEvent){
       "avitoUserId":login,
       "postTime": new Date().getTime(),
       "message": agentName + "~"+$('#addCommentBlock').val()
-  }
+  };
     var addCommentURL = "http://192.168.10.132/firecatchertest/api/comment/addFromAdm" ;
     RestPost(comment, addCommentURL);
     setTimeout(function() {commentGetRequest(1);}, 500);
@@ -463,9 +462,9 @@ function getRepremData(data){
         oneActiveButton(".edit-button");
         var regExpMultiLines = /(\n)+/gm;
         for (var i = 0; i < 7; i++) { 
-            var info = data[repremFields[i]];
+            var info = (data[repremFields[i]] === null) ? "" : data[repremFields[i]];
       if (repremFields[i] ===  "additionalPhones"){
-      info = info.replace(regExpMultiLines, "\n");
+      info = info.replace(regExpMultiLines, "\n").trim();
       }
             $(".reprem-label-"+(i+1)).text(info);
         } 
