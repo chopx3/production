@@ -54,7 +54,7 @@ public class CallFactory {
 
     public List<EmptyCall> getEmptyCalls(List<Call> calls){
        List<EmptyCall> emptyCalls = new ArrayList<>(calls.size());
-       calls.forEach(ec -> emptyCalls.add(new EmptyCall(ec.getId(), ec.getChainId(), ec.getComId(), ec.getTimeStart())));
+       calls.forEach(ec -> emptyCalls.add(new EmptyCall(ec.getId(), ec.getChainId(), ec.getComId(), ec.getTimeStart(),ec.getTimeEnd())));
         return emptyCalls;
     }
 

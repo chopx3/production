@@ -24,23 +24,28 @@ public class EmptyCall {
     private String comId;
 
     @Column(name ="time_begin")
-    private Long startTime;
+    private Long timeStart;
+
+    @Column(name ="time_end")
+    private Long timeEnd;
 
     public EmptyCall() {
     }
 
-    public EmptyCall(int id, String chainId, String comId, Long startTime) {
+    public EmptyCall(int id, String chainId, String comId, Long timeStart, Long timeEnd) {
         this.id = id;
         this.chainId = chainId;
         this.comId = comId;
-        this.startTime = startTime;
+        this.timeStart = timeStart;
+        this.timeEnd = timeEnd;
     }
 
     public EmptyCall(Call call) {
         this.id = call.getId();
         this.chainId = call.getChainId();
         this.comId = call.getComId();
-        this.startTime = call.getTimeStart();
+        this.timeStart = call.getTimeStart();
+        this.timeEnd = call.getTimeEnd();
     }
 
     public Integer getId() {
@@ -67,13 +72,13 @@ public class EmptyCall {
         this.comId = comId;
     }
 
-    public Long getStartTime() {
-        return startTime;
-    }
+    public Long getTimeStart() { return timeStart; }
 
-    public void setStartTime(Long startTime) {
-        this.startTime = startTime;
-    }
+    public void setTimeStart(Long timeStart) { this.timeStart = timeStart; }
+
+    public Long getTimeEnd() { return timeEnd; }
+
+    public void setTimeEnd(Long timeEnd) { this.timeEnd = timeEnd; }
 
 
     @Override
@@ -82,7 +87,8 @@ public class EmptyCall {
                 "id=" + id +
                 ", chainId='" + chainId + '\'' +
                 ", comId='" + comId + '\'' +
-                ", startTime=" + startTime +
+                ", timeStart=" + timeStart +
+                ", timeEnd=" + timeEnd +
                 '}';
     }
 }

@@ -213,7 +213,7 @@ function collectTags (feedOrCall){ // Проверка тегов, от фидб
 	tagsString= "[" + tagsString + happyCheck + "]";
 }
 function  draw(data) { // отрисовка пустых звонков
-	sorting(data.emptyCallList, "startTime"); // сортировка в обратном порядке
+	sorting(data.emptyCallList, "timeStart"); // сортировка в обратном порядке
 	agentId = data.agentId;
 	agentName = data.agentName;
 	console.log("draw"); 
@@ -234,9 +234,9 @@ function  draw(data) { // отрисовка пустых звонков
 								onPlayInfo: onPlay
 							};
 			var nextCall = collectMultipleCalls(multipleCallsInfo);
-			timetag = moment.unix(data.emptyCallList[i].startTime/1000).format(dateFormat); // определение переменных
+			timetag = moment.unix(data.emptyCallList[i].timeStart/1000).format(dateFormat); // определение переменных
 			console.log (timetag);
-			console.log(moment.unix(data.emptyCallList[i+iJump].startTime/1000).format(dateFormat));
+			console.log(moment.unix(data.emptyCallList[i+iJump].timeStart/1000).format(dateFormat));
 			var margin = (nextCall == "") ? "" : "no-margin-top";
 			var audioURL = '<audio id="audio'+i+'" '+ onPlay +' src="' + oktell + audiosrc + '" class="audio-call '+margin+'" controls></audio><a href="'+ oktell + audiosrc +'" target="_blank">' + '<\/a>'; // аудио-тэг
 			outputEmptyCalls += '<div id="receivedCall' +i+'" onclick=changeCall('+JSON.stringify(callInfo)+') class="call col-lg-12" data-time="'+timetag+'" data-sign="'+nametag+'"><span>'+ timetag +' '+nametag +'</span><br>' + nextCall + audioURL  + '</div>'; // основное заполнение
