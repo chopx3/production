@@ -96,4 +96,7 @@ tr.search{
  /* Выделение активной\выбранной вкладки в навигационной панели */
 .navbar-default .navbar-nav>li>a:hover, .navbar-default .navbar-nav>li>a:focus, .navbar-default .navbar-nav>li>a:active, .navbar-default .navbar-nav>li>a.active, .highlight{
 	background-color: #CCC;
+}
+.noMargin{
+	margin-bottom: 0 !important;
 } 

@@ -23,17 +23,19 @@ function readFile() {
       }
     };
     reader.readAsText(file);
-    csvJSON(ourData);
+    setTimeout(function(){csvJSON(ourData);
     getAllRepremUsers();
     setTimeout(function(){checkClientsToAdd(clientsInFCBaseMap, result);}, 1500);
-    createCSV();    
+    createCSV();    }, 2000);
     console.log(clientsInFCBaseMap);
     console.log(clientsFromBIBaseMap);
   }
 function csvJSON(csv){
   var lines=csv.split("\n");
+  console.log(lines);
   var mapResult = [];
   var headers=lines[0].split(";");
+  console.log(headers);
   for(var i=1;i<lines.length;i++){
     var obj = {};
     var currentline=lines[i].split(";");
@@ -97,7 +99,7 @@ $.get(getAllRepremUsersURL).done(function (data) {
                 "Phone" : +phone            
             }
             if (phone<1000000000 || phone>70000000000){wrongNumbers.push(obj);}
-            arrayOfObjectsOfActiveUsers.push(obj);
+            else {arrayOfObjectsOfActiveUsers.push(obj)};
             if (info[i].contactPhone > 0){
                 var phone = (info[i].contactPhone+"").replace(phoneRegExp, "$2");
                 obj = {
@@ -105,20 +107,20 @@ $.get(getAllRepremUsersURL).done(function (data) {
                 "Phone" : +phone            
                 }
                 if (phone<1000000000 || phone>70000000000){wrongNumbers.push(obj);}
-            arrayOfObjectsOfActiveUsers.push(obj);  
+            else {arrayOfObjectsOfActiveUsers.push(obj)};  
             }
             if(info[i].additionalPhones !== null){
                 if ((info[i].additionalPhones).replace(regExpMultilines, "") !== null && (info[i].additionalPhones).replace(regExpMultilines, "") !== "" && (info[i].additionalPhones).replace(regExpMultilines, "") !== " "){
                     var numbers = (info[i].additionalPhones).replace(regExpMultilines, "\n").trim();
                     var numbersArray = numbers.split("\n");
                     for (var j=0;j<numbersArray.length; j++){
-                        var phone = (numbersArray[j]+"").replace(phoneRegExp, "$2");
+                        var phone = parseInt((numbersArray[j]+"").replace(phoneRegExp, "$2"));
                         obj = {
                         "Name" : info[i].avitoId + ", " + nameWOComma,
-                        "Phone" : +phone            
+                        "Phone" : phone           
                         }
-                        if (phone<1000000000 || phone>70000000000){wrongNumbers.push(obj);}
-                        arrayOfObjectsOfActiveUsers.push(obj);  
+                        if (phone<1000000000 || phone>70000000000 || phone === NaN){wrongNumbers.push(obj);}
+                        else {arrayOfObjectsOfActiveUsers.push(obj)};  
                     }
                 }       
             }           

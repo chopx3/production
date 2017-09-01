@@ -53,7 +53,7 @@
               </div>
             </div>
           </form>
-          <div class="form-group navbar-right">
+          <div class="form-group navbar-right noMargin">
           <label for="exampleInputFile">Файл для загрузки</label>
           <input type="file" class="form-control-file" id="files" aria-describedby="fileHelp" name="files[]">
           </div>
