@@ -19,7 +19,7 @@ function getCalls(){ // Получить список всех звонков и
 		URL = getCallsByQuestionandTypeURL + (parseInt(catNum)+1) + "/" + toggle;}
 		$.get(URL+timeStart+"/"+timeEnd+"/").done( function (data) { // Получение полного списка
 					Call ='';
-					document.getElementById("MainForm").innerHTML = ''; // очистка основной формы
+					document.getElementById("mainForm").innerHTML = ''; // очистка основной формы
 					var feedbackInfo = data;
 					sorting(feedbackInfo, "timeStart");
 					if (feedbackInfo.length != 0) { // Если не пустой выводи v					
@@ -49,7 +49,7 @@ function getCalls(){ // Получить список всех звонков и
 							} // не подходит - следующий звонок							
 						}
 					}
-					document.getElementById("MainForm").innerHTML = Call; // вся собранная информация в главную форму
+					document.getElementById("mainForm").innerHTML = Call; // вся собранная информация в главную форму
 				})
 	}
 

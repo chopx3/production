@@ -4,10 +4,13 @@ var chosenPage = 0;
 var repremInfoId = 0;
 $(document).ready(function() {
 $('#clientCalls').click(function() { //Кнопка "Звонки пользователя"
-		fillInfo("add","Звонки пользователя", ""); // заполнение инфы
-		addButton(); // отображение кнопки
-		if (repremAgents.indexOf(agentId)== -1){ $(".reprem-button-activator").removeClass('Add');}
-		$("#MainForm").removeClass("col-md-6").addClass("col-md-12"); // для отображения информации во весь экран(тэги+коммент)
+	var options = {
+		header: "Звонки пользователя",
+		mainFormWidth: 12,
+		searchFormOn: true	}
+	fillInfo(options); // заполнение инфы
+	addButton(); // отображение кнопки
+	if (repremAgents.indexOf(agentId)== -1){ $(".reprem-button-activator").removeClass('Add');}
 	});
 	var qs = getQueryStrings();
 	if (qs.calls) {setTimeout(function(){ 
@@ -94,11 +97,11 @@ function getCalls(){ // Функция для вывода информации 
 		$.get(getCallsURL + idNumber+addURL).done(function (data) { // Вывод всех звонков
 			callsData = data; // временная переменная, для махинаций с данными
 			sorting(callsData, "timeStart"); // сортировка
-			document.getElementById("MainForm").innerHTML = ''; // очистка формы
+			document.getElementById("mainForm").innerHTML = ''; // очистка формы
 			if (data.length != 0 && idNumber != '') { // если есть звонки и ID не пробел
 				drawClientCalls(1); // отрисовать первую страницу при первом нажатии
 			}
-			else {document.getElementById("MainForm").innerHTML ='Звонки не обнаружены :(';} // звонков нет
+			else {document.getElementById("mainForm").innerHTML ='Звонки не обнаружены :(';} // звонков нет
 			$(".reprem-button-activator").addClass('Add');
 			if ($(".reprem-block").hasClass('Add')){
 				getRepremData($("#IDforInfo").val());
@@ -164,7 +167,7 @@ function drawClientCalls(pageNumber){ // отрисовка собственно
 							//}		
 					i+=iJump; //прыжок, если есть звонки с тем же ID
 				}
-	document.getElementById("MainForm").innerHTML =pagination + outputCalls + pagination; // финальный результат, линия пагинации + звонки
+	document.getElementById("mainForm").innerHTML =pagination + outputCalls + pagination; // финальный результат, линия пагинации + звонки
 }
 function collectTagForGetCalls(data){ // сбор тэгов для отрисовки в звонках пользователя
 	var tags = "";
@@ -174,7 +177,7 @@ function collectTagForGetCalls(data){ // сбор тэгов для отрисо
 return tags;
 }
 function addButton() { // Отрисовка кнопки для вывода звонков
-	document.getElementById("CallForm").innerHTML =	'<div class="row">'+
+	document.getElementById("searchForm").innerHTML =	'<div class="row">'+
 			'<div class="col-lg-6">'+
 			'<div class="input-group goButton">'+
 			 '<input type="number" class="form-control" id="IDforInfo" placeholder="ID учетной записи" autofocus>'+

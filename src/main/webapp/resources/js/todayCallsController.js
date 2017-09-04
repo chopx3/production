@@ -10,9 +10,12 @@ $(document).ready(function() { // отрисовка кнопки и кален�
 			drawAdditionalTags();
 			console.log(timeStart);
 			startSingleCalendar(timeStart);
-			fillInfo("remove","Звонки за <a href=# onclick=startSingleCalendar("+todayStart+") id=todayLink name='ourLink'>сегодня</a>, <input type='text' value="+moment.unix(timeStart/1000).format("DD-MM-YYYY")+" name='chooseDay' style='width:150px;'/> ", ""); // отрисовать заголовок с ссылками на день
+			var options = {
+				header : "Звонки за <a href=# onclick=startSingleCalendar("+todayStart+") id=todayLink name='ourLink'>сегодня</a>, <input type='text' value="+moment.unix(timeStart/1000).format("DD-MM-YYYY")+" name='chooseDay' style='width:150px;'/> ",
+				fillingFormOn : true
+			}
+			fillInfo(options); // отрисовать заголовок с ссылками на день
 			console.log(timeStart);
-			$("#SubForm").addClass("Add"); // включить боковую форму
 			drawBadges(); // отрисовать незаполненные звонки, нужно ли
 		});
 })
@@ -21,7 +24,7 @@ function drawDayCalls(timeStart, timeEnd){ // функция отрисовки 
 	sorting(data, 'timeStart'); // сортировка
 	var nametag = dayCalls = "";
 	var sideCounter = 0;
-	if(data.length==0){ document.getElementById("MainForm").innerHTML = "Звонки не обнаружены :("; } // если не пусто
+	if(data.length==0){ document.getElementById("mainForm").innerHTML = "Звонки не обнаружены :("; } // если не пусто
 	else {	
 			var emptyCallsButton = '<div class="col-lg-4 Add" id="onlyEmptyCallsDiv"> '+                         
 			'<input type="checkbox" data-toggle="toggle" id="onlyEmptyCallsToggle" data-on="Незаполненные" data-off="Все звонки" data-offstyle="info btn-avito-blue float-right" data-onstyle="danger btn-avito-red float-right" data-width=130 data-size="small">  '+                              
@@ -39,7 +42,7 @@ function drawDayCalls(timeStart, timeEnd){ // функция отрисовки 
 			chain = data[i].chainId;//
 			audiosrc = data[i].comId; //
 			fullCallInfo = [agentId, nametag, data[i].avitoUserId, chain, data[i].manager, data[i].questionId, data[i].shopCategoryId, data[i].type, i, tagArray]; // заполнение переменных, сохранение в массив
-			var onPlay = ' onplay=\'setInfoToCallForm('+JSON.stringify(fullCallInfo)+')\'';
+			var onPlay = ' onplay=\'setInfoToFillingForm('+JSON.stringify(fullCallInfo)+')\'';
 			var multipleCallsInfo = {
 								data: data,
 								counter: i,
@@ -49,13 +52,13 @@ function drawDayCalls(timeStart, timeEnd){ // функция отрисовки 
 			timetag = moment.unix(data[i+iJump].timeStart/1000).format(dateFormat);//
 			var margin = (nextCall == "") ? "" : "no-margin-top";
 			var audioURL = '<audio class="audio-call '+margin+'" id="audio'+i+'" '+ onPlay +'  src="' + oktell + audiosrc + '" controls></audio><a href="'+ oktell + audiosrc +'" target="_blank">' + '<\/a>'; // аудио тэг
-			if (onlyEmptyCalls){ if (data[i].type == "EMPTY") {dayCalls+='<div id="receivedCall' +i+'" onclick=setInfoToCallForm('+JSON.stringify(fullCallInfo)+') class="call col-lg-12" data-time="'+timetag+'" data-sign="'+nametag+'"><span>'+ timetag +'\t\t</span><span style="display:none" id=commentHide'+i+'>'+data[i].comments+'</span>'+ additionalInfo+'<br>' + nextCall + audioURL  + '</div>';
+			if (onlyEmptyCalls){ if (data[i].type == "EMPTY") {dayCalls+='<div id="receivedCall' +i+'" onclick=setInfoToFillingForm('+JSON.stringify(fullCallInfo)+') class="call col-lg-12" data-time="'+timetag+'" data-sign="'+nametag+'"><span>'+ timetag +'\t\t</span><span style="display:none" id=commentHide'+i+'>'+data[i].comments+'</span>'+ additionalInfo+'<br>' + nextCall + audioURL  + '</div>';
 				sideCounter++;
 				}
 				i+=iJump; 
 				}
 			else{
-			dayCalls += '<div id="receivedCall' +i+'" onclick=setInfoToCallForm('+JSON.stringify(fullCallInfo)+') class="call col-lg-12" data-time="'+timetag+'" data-sign="'+nametag+'"><span>'+ timetag +'\t\t</span><span style="display:none" id=commentHide'+i+'>'+data[i].comments+'</span>'+ additionalInfo+'<br>' + nextCall + audioURL  + '</div>'; // основное заполнение звонка - звонок+аудио+доп инфа
+			dayCalls += '<div id="receivedCall' +i+'" onclick=setInfoToFillingForm('+JSON.stringify(fullCallInfo)+') class="call col-lg-12" data-time="'+timetag+'" data-sign="'+nametag+'"><span>'+ timetag +'\t\t</span><span style="display:none" id=commentHide'+i+'>'+data[i].comments+'</span>'+ additionalInfo+'<br>' + nextCall + audioURL  + '</div>'; // основное заполнение звонка - звонок+аудио+доп инфа
 			i+=iJump;
 		}
 		}
@@ -63,7 +66,7 @@ function drawDayCalls(timeStart, timeEnd){ // функция отрисовки 
 		console.log(callSumIf);
 		console.log(sideCounter);
 		var callsSum = '<div class="row"><div class="col-lg-8" style="margin-top:5px;">Количество звонков за выбранный день: '+callSumIf+'</div>'+emptyCallsButton+'</div>';
-		document.getElementById("MainForm").innerHTML = callsSum + dayCalls;
+		document.getElementById("mainForm").innerHTML = callsSum + dayCalls;
 		var isEnabled = (onlyEmptyCalls) ? 'on' : 'off';
 		$('#onlyEmptyCallsToggle').bootstrapToggle(isEnabled);
 		$('div.float-right').css("float", "right");
@@ -78,7 +81,7 @@ function drawDayCalls(timeStart, timeEnd){ // функция отрисовки 
 	});
 			})
 }
-function setInfoToCallForm(fullCallInfo){ // функция выставления информации из звонка в боковую форму
+function setInfoToFillingForm(fullCallInfo){ // функция выставления информации из звонка в боковую форму
 	clearData(); // очистка
 	var allTags = fullCallInfo[9]; // ---
 	var idd = '#receivedCall'+fullCallInfo[8]; // ---

@@ -10,7 +10,7 @@ var repremAgents = [6, 10, 14, 33, 20, 75, 86]; // отдел ре-премиу�
 var magicColours = ["blue", "red", "green", "purple", "gray"];
 var todayCalls = 0;
 var lastActiveCall = 0;
-var achievmentGradeIcon = ["fa-circle","fa-bicycle","fa-motorcycle","fa-car","fa-subway","fa-plane","fa-rocket","fa-reddit-alien", "fa-grav"];
+var achievmentGradeIcon = ["fa-circle","fa-bicycle","fa-motorcycle","fa-car","fa-subway","fa-plane","fa-rocket","fa-reddit-alien", "fa-grav", "fa-android"];
 $(document).ready(function() {
 	 // основной блок
 	drawQuestions();
@@ -92,8 +92,10 @@ $(document).ready(function() {
 		showMyEmptyCalls(); // отображение пустых звонков
 	});
 	$('#feedback').click(function() { //Кнопка "Фидбек"
-		fillInfo("remove","Feedback", ""); //заполнение информации
-		$("#FeedbackForm").addClass("Add");
+		var options = {
+			header : "Feedback",
+			feedbackFormOn : true};
+		fillInfo(options); //заполнение информации
 		chainId=="";
 		drawFeedback();
 		createTagsTable();	
@@ -107,29 +109,36 @@ if (qs.lastcall){setTimeout(function(){ $("#emptyCalls").trigger("click");$("#la
 // --- Завершение блока документ.реди
 // --- Функции
 function showMyEmptyCalls() { //Функция, отправляющая запрос по ws, получает данные JSON и отдает их на отрисовку draw()
-	$("#MainForm").removeClass("col-md-6").addClass("col-md-12");
 	sendWebSocketMessage("getMyEmptyCalls");
 	if (sentCall) { $('#serviceMessage').text("Звонок отправлен");
 					sentCall = false; } 
 	else { $('#serviceMessage').text(""); }
 	chainId = "";
-	document.getElementById("CallForm").innerHTML = '';
-	fillInfo("remove","Мои звонки", "");
+	var options = {
+		header : "Мои звонки",
+		fillingFormOn : true
+}
+	fillInfo(options);
 	getWebsocketMessage(function(emptyCallsInfo){ draw(emptyCallsInfo); });
-	$("#SubForm").addClass("Add");
 	console.log("showMyEmptyCalls");
 }
 //Стандартная отрисовка после нажатия на кнопку бокового меню, для удобства читабельности. Форма звонка(вкл\выкл), текст заголовка страницы, текст основного меню
-function fillInfo(callForm, headerText, MainForm) {
-	$("#MainForm").removeClass("col-md-12").addClass("col-md-6");
-	$("#SubForm").removeClass("Add");
+function fillInfo(options) {
+	options.mainFormWidth = options.mainFormWidth || 6 ;
+	options.searchFormOn = options.searchFormOn || false;
+	options.feedbackFormOn = options.feedbackFormOn || false;
+	options.fillingFormOn = options.fillingFormOn || false;
+	$("#mainForm").removeClass().addClass('col-md-'+options.mainFormWidth);
 	$(".reprem-block").removeClass('Add');
-	$("#FeedbackForm").removeClass("Add");
-	if (callForm==="add") { $("#CallForm").addClass("Add"); } 
-	else { $("#CallForm").removeClass("Add"); }
-	document.getElementById("HeaderText").innerHTML = headerText;
-	document.getElementById("MainForm").innerHTML = MainForm;
-	document.getElementById("Hello").innerHTML = '';
+	if (options.fillingFormOn) { $("#fillingForm").addClass("Add"); } 
+	else { $("#fillingForm").removeClass("Add"); }
+	if (options.feedbackFormOn) { $("#feedbackForm").addClass("Add"); } 
+	else { $("#feedbackForm").removeClass("Add"); }
+	if (options.searchFormOn) { $("#searchForm").addClass("Add"); } 
+	else { $("#searchForm").removeClass("Add"); }
+	document.getElementById("HeaderText").innerHTML = options.header;
+	document.getElementById("mainForm").innerHTML = "";
+	document.getElementById("Hello").innerHTML = "";
 }
 function collectAdditionalInfo(data, type){ // сбор дополнительной информации
 	var additionalInfo = "";
@@ -219,7 +228,7 @@ function  draw(data) { // отрисовка пустых звонков
 	console.log("draw"); 
 	var nametag = data.agentName; // заполнение данных
 	var outputEmptyCalls = '';
-	if (data.emptyCallList.length==0){document.getElementById("MainForm").innerHTML = "Все звонки заполнены";} // если пусто - заглушка
+	if (data.emptyCallList.length==0){document.getElementById("mainForm").innerHTML = "Все звонки заполнены";} // если пусто - заглушка
 	else { // иначе отрисовка звонков
 		dayOrEmpty = "empty"; // для обновления страницы в дальнейшем
 		var audioURL,audiosrc,chain; // переменные
@@ -242,7 +251,7 @@ function  draw(data) { // отрисовка пустых звонков
 			outputEmptyCalls += '<div id="receivedCall' +i+'" onclick=changeCall('+JSON.stringify(callInfo)+') class="call col-lg-12" data-time="'+timetag+'" data-sign="'+nametag+'"><span>'+ timetag +' '+nametag +'</span><br>' + nextCall + audioURL  + '</div>'; // основное заполнение
 			i+=iJump;
 		}
-		document.getElementById("MainForm").innerHTML = outputEmptyCalls;
+		document.getElementById("mainForm").innerHTML = outputEmptyCalls;
 		$('#receivedCall0').trigger('click');
 	}
 	$("audio").each(function(){ //Функция по остановке всех остальных аудио-файлов

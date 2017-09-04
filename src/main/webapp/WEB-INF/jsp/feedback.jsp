@@ -90,7 +90,7 @@
 <div id="page-content-wrapper" class="col-lg-12">
 	<div class="container-fluid ">
 		<div class="row">
-			<p id="MainForm" class="col-lg-12"></p>
+			<p id="mainForm" class="col-lg-12"></p>
 		</div>
 	</div>
 </div>

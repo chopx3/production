@@ -19,6 +19,7 @@
 	<script src="${pageContext.request.contextPath}/resources/js/webSocket.js"></script>
 	<script src="${pageContext.request.contextPath}/resources/js/clientCalls.js"></script>
 	<script src="${pageContext.request.contextPath}/resources/js/notesAndComments.js"></script>
+  <script src="${pageContext.request.contextPath}/resources/js/statistic.js"></script>
   <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/sidebar.css">
 	<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/callform.css">
 	<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/NotesAndComments.css">
@@ -43,6 +44,7 @@
         <li><a href="#" id="comments"><i class ="fa fa-commenting menuIcons fa-fw"></i><span>Комментарии</span><span class="glyphicon glyphicon-triangle-right glyph pull-right" aria-hidden="true" id="glyphCom"></span></a></li>
         <li><a href="#" id="notes"><i class ="fa fa-sticky-note menuIcons fa-fw"></i><span>Заметки</span><span class="glyphicon glyphicon-triangle-right glyph pull-right" aria-hidden="true" id="glyphNote"></span> </a></li>
         <li class="hl"><a href="#" id="feedback"><i class ="fa fa-pencil menuIcons fa-fw"></i><span>Feedback</span><span class="badge mybadge" id=emptyFeedbackBadge>0</span></a></li>
+        <li class="hl"><a href="#" id="statistic"><i class ="fa fa-pie-chart menuIcons fa-fw"></i><span>Статистика</span></a></li>
 	      <li><a href="#" id="magic"><i class ="fa fa-magic menuIcons fa-fw" id="magicWand"></i><span>Magic</span></a></li>
         <li><a href="${pageContext.request.contextPath}/j_spring_security_logout" id="logout"><i class ="fa  fa-times-circle menuIcons fa-fw"></i><span>Выйти</span></a></li>
       </ul>
@@ -50,12 +52,12 @@
       <i class ="fa fa-trophy fa-fw trophy" style="display:none" id=trophy title="За прохождение опроса, ТЫ ТАКОЙ МОЛОДЕЦ"></i>
       <label id="websocketStatus">Cтатус </label>
     </div>
-    <div id="SubForm" class="form-group col-md-5 container-fluid">
+    <div id="fillingForm" class="form-group col-md-5 container-fluid">
       <div class="row">
         <div class="form-group col-md-6 text-center">
           <input type="number" class="form-control" id="IDNum" placeholder="ID учетной записи">
         </div>
-        <div id="CloseSubForm" class="btn-group col-md-5" data-toggle="buttons">
+        <div id="closeFillingForm" class="btn-group col-md-5" data-toggle="buttons">
           <button type="button" id="private" class="btn btn-danger btn-avito-red-2 pull-right">Частник   <span class="glyphicon glyphicon-remove pull-right" ></span></button>
         </div>
       </div>
@@ -116,15 +118,15 @@
   			</div>
   		</div>
     </div>
-    <div id="FeedbackForm" class="form-group container-fluid col-md-5"></div>	
+    <div id="feedbackForm" class="form-group container-fluid col-md-5"></div>	
     <div id="page-content-wrapper">
       <div class="container-fluid col-md-offset-2">
         <h1 id="HeaderText"></h1>
         <div class="row">
-          <div id="CallForm" class="form-group col-md-6"></div>
+          <div id="searchForm" class="form-group col-md-6"></div>
         </div>
         <div class="row">
-          <p id="MainForm" class="col-md-6">
+          <p id="mainForm" class="col-md-6">
             <div id="Hello">
               <h1>Здравствуй, ${username} !</h1>
             </div>				

@@ -37,7 +37,7 @@ function createTagsTable(){ // отрисовка таблицы
 	var commentBox = 		"<div id=commentBox class='input-group'>"+
 							"<textarea class='form-control' rows='4' id='feedbackComment' maxlength='2048'></textarea>"+
 							"<span class='input-group-addon btn btn-success' onclick=collectInfo()>Save</span></div>"  // блок комментариев и кнопки отправить
-	document.getElementById("FeedbackForm").innerHTML = coreHeader+columnFinal+coreFooter+commentBox+serviceMessage; // формирование всего блока фидбек
+	document.getElementById("feedbackForm").innerHTML = coreHeader+columnFinal+coreFooter+commentBox+serviceMessage; // формирование всего блока фидбек
 	$('label.tag-label').click(function(){ // по нажатию на тэг - добавление класса+выделение синим цветом
 		$(this).toggleClass("blueOne");
 		var forcheck = "#" + $(this).attr("for");
@@ -95,7 +95,7 @@ function drawFeedback() { // отрисовка Feedbackа
 	var feedbackInfo = data;
 	sorting(feedbackInfo, 'timeStart'); // сортировка, последние сверху
 	var chainId = feedbackEmptyCalls = ""; // очистка чейнайди и выходного сообщения
-	if(feedbackInfo.length==0) 	{document.getElementById("MainForm").innerHTML = "Все звонки заполнены";} // пусто
+	if(feedbackInfo.length==0) 	{document.getElementById("mainForm").innerHTML = "Все звонки заполнены";} // пусто
 	else { 	var callInfo = []; var timetag,audioURL; 
 			for (var i = 0; i < feedbackInfo.length; i++) { //цикл отрисовки пустых звонков
 				var tagCollector =""; // переменная для тэгов, которые уже стоят в звонке
@@ -121,7 +121,7 @@ function drawFeedback() { // отрисовка Feedbackа
 				feedbackEmptyCalls += '<div id="feedbackCall' +i+'" onclick=changeCall('+JSON.stringify(CallInfo)+') class="call col-lg-12 feedback-call" data-time="'+timetag+'" data-sign="'+feedbackInfo[i].agent.username+'" value="'+ feedbackInfo[i].type+'" name='+ tagCollector +'><span style="display:none" id=feedback-com'+i+'>'+feedbackInfo[i].comments+'</span><span>'+ timetag +' '+ feedbackInfo[i].agent.username + '</span>'+additionalInfo+'<br>' + nextCall + audioURL  + '</div>'; // собственно пустые звонки, собирающиеся в цикле
 				i+=iJump;
 		}
-		document.getElementById("MainForm").innerHTML = feedbackEmptyCalls;
+		document.getElementById("mainForm").innerHTML = feedbackEmptyCalls;
 		$('#feedbackCall0').trigger('click');
 	}
 	$("audio").each(function(){

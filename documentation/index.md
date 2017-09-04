@@ -130,7 +130,7 @@ ___
 #### Функции
 1.  [document.ready()](index.md#tcc-documentready)
 2.  [drawDayCalls(timeStart,timeEnd)](index.md#drawdaycallstimestarttimeend)
-3.  [setInfoToCallForm(fullCallInfo)](index.md#setinfotocallformfullcallinfo)
+3.  [setInfoToFillingForm(fullCallInfo)](index.md#setinfotocallformfullcallinfo)
 
 #### Глобальные переменные
 1. fullCallInfo
@@ -162,7 +162,7 @@ ___
 9. Вывод информации
 10. bind аудиозаписей на события play и click
 
-##### setInfoToCallForm(fullCallInfo)
+##### setInfoToFillingForm(fullCallInfo)
 Большая функция, смысл которой все собранные данные отрисовать в боковую панель. ID, категория, вопрос, клиент\менеджер, happy\unhappy, тэги, комментарий, частник
 ___
 ### websocket.js
@@ -181,7 +181,7 @@ ___
 #### Функции
 1.  [document.ready()](index.md#nav-documentready)
 2.  [showMyEmptyCalls()](index.md#showmyemptycalls)
-3.  [fillInfo(callForm,headerText,MainForm)](index.md#fillinfocallformheadertextmainform)
+3.  [fillInfo(callForm,headerText,mainForm)](index.md#fillinfocallformheadertextmainform)
 4.  [collectAdditionalInfo(data,type)](index.md#collectadditionalinfodatatype)
 5.  [clearData()](index.md#cleardata)
 6.  [fillData(dataArray)](index.md#filldatadataarray)
@@ -223,7 +223,7 @@ ___
 
 #### showMyEmptyCalls()
 Функция, отправляющая запрос по ws, получает данные JSON и отдает их на отрисовку draw()
-#### fillInfo(callForm,headerText,MainForm)
+#### fillInfo(callForm,headerText,mainForm)
 Стандартная отрисовка после нажатия на кнопку бокового меню, для удобства читабельности. Форма звонка(вкл\выкл), текст заголовка страницы, текст основного меню
 #### collectAdditionalInfo(data,type)
 Функция пробегается по всем параметрам звонка и выводит их при отрисовке звонка. Возвращает полностью собранную html разметку.
@@ -310,9 +310,9 @@ ___
 Страница включает в себя:
 1. Основная обертка. #wrapper
 2. Боковая навигационная панель со списком из 8 пунктов и онлайн статуса #sidebar-wrapper
-3. Боковая форма для заполнения звонков (id-частник, категория, вопрос, тумблеры, доп. тэги, комментарий, кнопка отправки) #SubForm
-4. Пустое поле для отрисовки туда фидбека #FeedbackForm
-5. Обертка рабочей области, которая состоит из приветствия(#Hello), поля для звонков и основного поля(#MainForm) #page-content-wrapper 
+3. Боковая форма для заполнения звонков (id-частник, категория, вопрос, тумблеры, доп. тэги, комментарий, кнопка отправки) #fillingForm
+4. Пустое поле для отрисовки туда фидбека #feedbackForm
+5. Обертка рабочей области, которая состоит из приветствия(#Hello), поля для звонков и основного поля(#mainForm) #page-content-wrapper 
 6. Заметки #noteForm
 7. Комментарии #commentForm
 

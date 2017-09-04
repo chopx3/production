@@ -26,7 +26,7 @@
 	margin-right:20px;
 }
 /* Боковая форма заполнения звонка */
-#SubForm{
+#fillingForm{
 	z-index: 1;
 	position: fixed;
 	overflow-y: hidden;
@@ -39,7 +39,7 @@
 	margin:0;
 }
 /* Кнопка частник, вся форма */
-#CloseSubForm{
+#closeFillingForm{
 	float:right;
 	margin-right:5px;
 }
