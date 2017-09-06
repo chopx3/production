@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name         Helper plus
-// @version      1.8
+// @version      1.9
 // @author       izayats@avito.ru
 // @include      https://adm.avito.ru/*
 // @require      http://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js
