@@ -23,6 +23,11 @@ public class StatServiceImpl implements StatService {
     }
 
     @Override
+    public String findTotalCallsByCategoryAndAgent(Long timeStart, Long timeEnd, Integer agent) {
+        return statDao.findTotalCallsByCategoryAndAgent(timeStart, timeEnd, agent);
+    }
+
+    @Override
     public String findTotalCallsByManager(Long timeStart, Long timeEnd) {
         return statDao.findTotalCallsByManager(timeStart, timeEnd);
     }

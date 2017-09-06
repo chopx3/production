@@ -26,6 +26,13 @@ public class StatController {
         return statService.findTotalCallsByShopCategory(startPeriod, endPeriod);
     }
 
+    @RequestMapping(value = "byCategory/{agent}/{startPeriod}/{endPeriod}", produces = "application/json;charset=UTF-8")
+    public String findTotalCallsByCategoryAndAgent(@PathVariable("agent") Integer agent,
+                                                   @PathVariable("startPeriod") Long startPeriod,
+                                              @PathVariable("endPeriod") Long endPeriod) {
+        return statService.findTotalCallsByCategoryAndAgent(startPeriod, endPeriod, agent);
+    }
+
     @RequestMapping(value = "outcomings/{startPeriod}/{endPeriod}", produces = "application/json;charset=UTF-8")
     public String findTotalOutcommingCalls(@PathVariable("startPeriod") Long startPeriod,
                                            @PathVariable("endPeriod") Long endPeriod) {

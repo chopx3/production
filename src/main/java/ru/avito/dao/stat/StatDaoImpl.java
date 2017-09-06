@@ -255,6 +255,41 @@ public class StatDaoImpl implements StatDao {
         }
         return result;
     }
+    @Override
+    public String findTotalCallsByCategoryAndAgent(Long timeStart, Long timeEnd, Integer agent) {
+        Connection connection = null;
+        String result = null;
+        try {
+            connection = dataSource.getConnection();
+            PreparedStatement p =connection.prepareStatement(
+                    " SELECT shop_category.description AS Category, count(DISTINCT(calls.chain_id)) AS Total "+
+                    "FROM calls JOIN shop_category ON calls.shop_category_id = shop_category.id "+
+                            "WHERE shop_category_id = shop_category.id "+
+                            "AND time_begin BETWEEN ? AND ? "+
+                            "AND isOut = FALSE "+
+                            "AND user_id = ? "+
+                            "GROUP BY shop_category_id "+
+                            "ORDER BY 2 DESC;");
+
+            p.setLong(1, timeStart);
+            p.setLong(2, timeEnd);
+            p.setInt(3, agent);
+            ResultSet resultSet = p.executeQuery();
+            result = convert(resultSet, "Category", "Total");
+        } catch (SQLException e) {
+            System.out.println(e);
+        }
+        finally {
+            try {
+                if (connection != null) {
+                    connection.close();
+                }
+            } catch (SQLException e) {
+                System.out.println(e);
+            }
+        }
+        return result;
+    }
 
     @Override
     public String findTotalCallsByAgentFFC(Long timeStart, Long timeEnd) {

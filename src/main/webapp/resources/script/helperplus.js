@@ -52,6 +52,18 @@ $(document).ready(function(){
     if(window.location.href.indexOf('/user/info') != -1){
         login = $('.dropdown-toggle').slice(-1)[0].innerHTML.match(/([^\n]+)/i)[1];
     }
+    if (window.location.href.indexOf('/helpdesk/details/') != -1){
+        var angryUsers = [{email:"(angar021@bk.ru)", ticket: "https://adm.avito.ru/helpdesk/details/8271525", id:113277188}, 
+                  {email:"(fortestate-msk@mail.ru)", ticket: "https://adm.avito.ru/helpdesk/details/8113441", id:379577}, 
+                  {email:"(obelov145@gmail.com)", ticket: "https://adm.avito.ru/helpdesk/details/8118620", id:32465247}];
+        var emailToCheck = "";
+        login = $('.dropdown-toggle').slice(-1)[0].innerHTML.match(/([^\n]+)/i)[1];
+        emailToCheck = $("a.hd-ticket-header-email").text();
+        for (var i=0; i<angryUsers.length;i++){
+         if (angryUsers[i].email == emailToCheck) {
+            $(".hd-ticket-header-title").after("<div class='row text-center'><b style='font-size:20px;color:red;'>Обращения данного пользователя обрабатываются в отдельном <a href="+angryUsers[i].ticket+">тикете</a></b></div>");}
+        }
+    }
     var sum = 0;
     $('.text-right.red').each(function(){
         var reg = /[^\d]([\d\s]+).*/i;

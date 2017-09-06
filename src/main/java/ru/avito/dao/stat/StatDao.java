@@ -21,6 +21,8 @@ public interface StatDao {
 
     String findTotalCallsByAgentFFC(Long timeStart, Long timeEnd);
 
+    String findTotalCallsByCategoryAndAgent(Long timeStart, Long timeEnd, Integer agent);
+
     String findFullAndEmptyCallsByAgent(Long timeStart, Long timeEnd);
 
     String findFullAndEmptyFeedbackByAgent(Long timeStart, Long timeEnd);
