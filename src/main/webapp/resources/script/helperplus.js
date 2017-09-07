@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name         Helper plus
-// @version      2.0
+// @version      2.1
 // @author       izayats@avito.ru
 // @include      https://adm.avito.ru/*
 // @require      http://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js
@@ -64,7 +64,9 @@ $(document).ready(function(){
         console.log(emailToCheck);
         console.log($("a.hd-ticket-header-email").text());
         for (var i=0; i<angryUsers.length;i++){
-         if (emailToCheck.indexOf(angryUsers[i].email)) {
+         if (emailToCheck.indexOf(angryUsers[i].email)>0) {
+             console.log(angryUsers[i].email);
+              console.log(emailToCheck.indexOf(angryUsers[i].email));
             $(".hd-ticket-header-title").after("<div class='row text-center'><b style='font-size:20px;color:red;'>Жалобы данного пользователя обрабатываются в отдельном <a href="+angryUsers[i].ticket+">тикете</a></b></div>");
          break;}
         }
