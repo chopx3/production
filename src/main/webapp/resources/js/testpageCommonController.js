@@ -96,6 +96,27 @@ function drawInfo(value){ // функция заполнения групп кн
 				'</div>';	
 	updInfoFooterFunc = "infoCheck(\'upd\', \'quest\')";
 	break;
+	case "angry":   //если значение = вопрос.
+		addInfoHeaderValue = 'Добавить пользователя';
+		updInfoHeaderValue = 'Изменить информацию';
+		addInfoBody = 	'<div class=row><label class="leftLabel">Avito ID</label><input type="text" class="form-control inputTextField" id=addTextField1></div>'+
+						'<div class=row><label class="leftLabel">email</label><input type="text" class="form-control inputTextField" id=addTextField2></div>'+
+						'<div class=row><label class="leftLabel">Ticket</label><input type="text" class="form-control inputTextField" id=addTextField3></div>';
+		addInfoFooterFunc = "infoCheck(\'add\', \'angry\')";
+		updInfoBody = 	'<div class=row><label 	class="leftLabel">email</label>	<input type="text" 	class="form-control inputTextField" id=updTextField1></div>'+
+						'<div class=row><label 	class="leftLabel">ticket</label>	<input type="text" 	class="form-control inputTextField" id=updTextField2></div>'+
+						'<div class=row><label 	class="leftLabel">isActive</label>'+
+						'<div class="btn-group inputTextField" role="group" aria-label="Basic example" data-toggle=buttons>'+
+							'<label class="btn btn-primary active">'+
+							'<input type="radio" name="options" id="optionActive" autocomplete="off" checked>Active'+
+							'</label>'+
+							'<label class="btn btn-primary">'+
+							'<input type="radio" name="options" id="optionDisabled" autocomplete="off"> Disabled'+
+							'</label>'+
+						'</div>'+
+				'</div>';	
+	updInfoFooterFunc = "infoCheck(\'upd\', \'angry\')";
+	break;
 	case "cats":   //если значение = вопрос.
 		addInfoHeaderValue = 'Добавить категорию';
 		updInfoHeaderValue = 'Изменить информацию о категории';
@@ -152,6 +173,15 @@ function infoCheck(value, type){ // проверка информации и о�
 					func = openAgents;
 					URL=addAgentURL; 
 					break;
+					case 'angry':
+					infoToServer ={
+					"avitoid": $(firstField).val(),
+					"email":$(secondField).val(),
+					"ticket": $(thirdField).val()
+					};
+					func = openAngry;
+					URL=addAngryUserURL; 
+					break;
 					case 'tags':
 					infoToServer ={
 					"value":$(firstField).val(),
@@ -203,6 +233,16 @@ function infoCheck(value, type){ // проверка информации и о�
 					};
 					URL = updateAgentURL;
 					func = openAgents;
+					break;
+					case 'angry':
+					infoToServer ={
+					"avitoid":idNum,
+					"email": $(firstField).val(),
+					"ticket":$(secondField).val(),
+					"active": +$('#optionActive').is(':checked')
+					};
+					URL = updateAngryUserURL;
+					func = openAngry;
 					break;
 					case 'tags':
 					infoToServer ={

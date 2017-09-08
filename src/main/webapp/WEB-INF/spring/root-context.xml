@@ -66,6 +66,7 @@
     <bean id="premiumClientsService" class="ru.avito.services.impl.PremiumClientServiceImpl"/>
     <bean id ="statService" class="ru.avito.services.impl.StatServiceImpl"/>
     <bean id ="statDao" class="ru.avito.dao.stat.StatDaoImpl"/>
+    <bean id ="angryUserService" class="ru.avito.services.impl.AngryUserServiceImpl"/>
     <bean id ="nestedCategoryDao" class="ru.avito.dao.stat.NestedCategoryDaoImpl"/>
     <bean id="callFactory" class="ru.avito.factory.CallFactory"/>
 

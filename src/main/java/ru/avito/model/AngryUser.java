@@ -6,30 +6,18 @@ import javax.persistence.*;
 @Table(name="angryusers")
 public class AngryUser {
 
-    @Id
-    @Column(name = "id")
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private Integer id;
-
     @Column(name = "email")
     private String email;
 
-    @Column(name = "email")
+    @Column(name = "ticket")
     private Integer ticket;
 
-    @Column(name = "email")
+    @Id
+    @Column(name = "avitoid")
     private Integer avitoid;
 
     @Column(name = "active")
     private Boolean active;
-
-    public Integer getId() {
-        return id;
-    }
-
-    public void setId(Integer id) {
-        this.id = id;
-    }
 
     public String getEmail() {
         return email;

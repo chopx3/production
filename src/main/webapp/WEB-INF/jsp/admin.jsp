@@ -15,6 +15,7 @@
   <script src="${pageContext.request.contextPath}/resources/js/testpageTagsController.js"></script>
   <script src="${pageContext.request.contextPath}/resources/js/testpageQuestionsController.js"></script>
   <script src="${pageContext.request.contextPath}/resources/js/testpageCategoriesController.js"></script>
+  <script src="${pageContext.request.contextPath}/resources/js/testpageAngryUsers.js"></script>
   <script src="${pageContext.request.contextPath}/resources/js/rePremFiles.js"></script>      
   <link href="${pageContext.request.contextPath}/resources/css/testPage.css" rel="stylesheet">
 	<link href="${pageContext.request.contextPath}/resources/css/calls.css" rel="stylesheet">
@@ -41,6 +42,7 @@
           <li class="hl"><a href="#" onclick=openQuestions()>Вопросы</a></li>
           <li class="hl"><a href="#" onclick=openCategories()>Категории</a></li>
           <li class="hl"><a href="#" onclick=openStat()>Статистика</a></li>
+          <li class="hl"><a href="#" onclick=openAngry()>Злость</a></li>
 	        <li class="hl"><a href="http://192.168.10.132/firecatcher/admin/feedback">Feedback</a></li>
         </ul>
           <form class="navbar-form navbar-left" onSubmit="return false;">
