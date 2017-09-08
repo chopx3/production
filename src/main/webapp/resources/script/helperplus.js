@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name         Helper plus
-// @version      2.1
+// @version      2.2
 // @author       izayats@avito.ru
 // @include      https://adm.avito.ru/*
 // @require      http://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js
@@ -53,20 +53,25 @@ $(document).ready(function(){
         login = $('.dropdown-toggle').slice(-1)[0].innerHTML.match(/([^\n]+)/i)[1];
     }
     if (window.location.href.indexOf('/helpdesk/details/') != -1){
+        var angryUsers = "";
+        var URL = "http://192.168.10.132/firecatchertest/api/angry/all";
+        GM_xmlhttpRequest({
+method: "GET",
+headers: {"Accept": "application/json"},
+url: URL,
+onreadystatechange: function(res) {
+},
+onload: function(res) {
+    angryUsers = JSON.parse(res.response);
+}
+});
         setTimeout(function() {
-        var angryUsers = [{email:"angar021@bk.ru", ticket: "https://adm.avito.ru/helpdesk/details/8271525", id:113277188}, 
-                  {email:"fortestate-msk@mail.ru", ticket: "https://adm.avito.ru/helpdesk/details/8113441", id:379577}, 
-                  {email:"obelov145@gmail.com", ticket: "https://adm.avito.ru/helpdesk/details/8118620", id:32465247},
-                  {email:"volkov.wn.avito2@gmail.com", ticket: "https://adm.avito.ru/helpdesk/details/8267795", id:10527419}];
         var emailToCheck = "";
         login = $('.dropdown-toggle').slice(-1)[0].innerHTML.match(/([^\n]+)/i)[1];
         emailToCheck = $("a.hd-ticket-header-email").text();
-        console.log(emailToCheck);
-        console.log($("a.hd-ticket-header-email").text());
+            console.log(angryUsers.length);
         for (var i=0; i<angryUsers.length;i++){
-         if (emailToCheck.indexOf(angryUsers[i].email)>0) {
-             console.log(angryUsers[i].email);
-              console.log(emailToCheck.indexOf(angryUsers[i].email));
+         if (emailToCheck.indexOf(angryUsers[i].email)>0 && angryUsers[i].active) {
             $(".hd-ticket-header-title").after("<div class='row text-center'><b style='font-size:20px;color:red;'>Жалобы данного пользователя обрабатываются в отдельном <a href="+angryUsers[i].ticket+">тикете</a></b></div>");
          break;}
         }
