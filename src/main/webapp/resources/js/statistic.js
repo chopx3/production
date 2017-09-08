@@ -1,4 +1,5 @@
 $(document).ready(function() {
+	var timeStart = 0, timeEnd = 0;//moment().endOf('day').unix()*1000
 	$('#statistic').click(function() {
 		var options = {
 			header : "Статистика",
@@ -7,34 +8,56 @@ $(document).ready(function() {
 		fillInfo(options);
 		var menuStatistic = '<div class="row">'+
 	'<div class="btn-group col-md-4" data-toggle="buttons" id="statTimeButtonGroup">'+
-	'<label for="" class="btn btn-default"><input type="radio" name="statTime" id="">Вчера</label>'+
-'<label for="" class="btn btn-default"><input type="radio" name="statTime" id="">Сегодня</label>'+
-'<label for="" class="btn btn-default"><input type="radio" name="statTime" id="">Неделя</label>'+
-'<label for="" class="btn btn-default"><input type="radio" name="statTime" id="">Месяц</label>'+
+	'<label for="" class="btn btn-default"><input type="radio" name="statTime" id="yesterday">Вчера</label>'+
+'<label for="" class="btn btn-default active"><input type="radio" name="statTime" id="today">Сегодня</label>'+
+'<label for="" class="btn btn-default"><input type="radio" name="statTime" id="week">Неделя</label>'+
+'<label for="" class="btn btn-default"><input type="radio" name="statTime" id="month">Месяц</label>'+
 '</div>'+
 '</div>';
 		document.getElementById("mainForm").innerHTML = menuStatistic;
-	let timeStart = 1491339600000;//moment().startOf('day').unix()*1000;
-	let timeEnd = 1491426000000;//moment().endOf('day').unix()*1000
+$("#yesterday").click(function () { 	// Кнопка Вчера
+		timeStart = moment().subtract(1, 'days').format("DD-MM-YYYY");
+		timeEnd = moment().format("DD-MM-YYYY");
+		afterClickActions();
+}); 
+$("#today").click(function () {	 		// Кнопка Сегодня
+		timeStart = moment().format("DD-MM-YYYY");
+		timeEnd = moment().add(1,'days').format("DD-MM-YYYY");
+        afterClickActions();
+}); 
+$("#week").click(function () {			//Кнопка Неделя
+		timeStart = moment().startOf('week').add(1,'days').format("DD-MM-YYYY");
+		timeEnd = moment().endOf('week').add(1,'days').format("DD-MM-YYYY");
+        afterClickActions();		
+}); 
+$("#month").click(function () {			// Кнопка месяц
+		timeStart = moment().startOf('month').format("DD-MM-YYYY");
+		timeEnd = moment().endOf('month').format("DD-MM-YYYY");
+        afterClickActions();
+});
 	collectData(timeStart, timeEnd);
 	});
 	
 });
 function timeInCall(data){
-	var totalCallsTime = 0;
-	var totalHoldTime = 0;
+	var outputInfo = {};
+	var totalCallsTime = 0, totalHoldTime = 0, holdCounter = 0;
 	for (var i = 0; i < data.length; i++) {
 		var fullResult = multipleCalls(data, i);
 		totalCallsTime +=fullResult.callTime;
-		console.log(fullResult);
+		holdCounter += fullResult.holdC;
+		totalHoldTime +=fullResult.holdTime;
 		i+=fullResult.iJump;
 	}
-	return totalCallsTime;
+	outputInfo.holdTime = totalHoldTime;
+	outputInfo.holdCounter = holdCounter;
+	outputInfo.callTime = totalCallsTime;
+	return outputInfo;
 }
 function collectData(timeStart, timeEnd){
 	var URL = dayCallsURL;
 				$.get(URL+timeStart+"/"+timeEnd).done(function (data) {
-							var totalTime = new moment.duration(timeInCall(data));
+							var totalTime = new moment.duration(timeInCall(data).callTime);
 							console.log(totalTime.asHours())	;
 							console.log(totalTime.asMinutes())	;
 					})				
