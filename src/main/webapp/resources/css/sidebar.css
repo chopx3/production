@@ -100,3 +100,15 @@
 	position: fixed;
 	bottom: 75px;
 }
+
+.flexItems{
+	display: flex;
+	flex-wrap: wrap;
+}
+.flexElement{
+	flex-basis: 250px;
+	background-color: gray;
+	text-align: center;
+	margin: 5px;
+	padding: 5px;
+}
