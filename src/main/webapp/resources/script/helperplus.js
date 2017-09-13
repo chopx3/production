@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name         Helper plus
-// @version      2.2
+// @version      2.3
 // @author       izayats@avito.ru
 // @include      https://adm.avito.ru/*
 // @require      http://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js
@@ -31,7 +31,7 @@ var status_colors = {
     "Unblocked":"#40FF00"
 };
 var firstTime = true;
- 
+var angryUsers = ""; 
 $(document).ready(function(){
   $("td.item-checkbox").click(function() {
   if ($(this).find("input").prop('checked')){
@@ -52,10 +52,25 @@ $(document).ready(function(){
     if(window.location.href.indexOf('/user/info') != -1){
         login = $('.dropdown-toggle').slice(-1)[0].innerHTML.match(/([^\n]+)/i)[1];
     }
-    if (window.location.href.indexOf('/helpdesk/details/') != -1){
-        var angryUsers = "";
-        var URL = "http://192.168.10.132/firecatchertest/api/angry/all";
-        GM_xmlhttpRequest({
+    if (window.location.href.indexOf('/helpdesk') != -1){
+    checkAngryUser(); }
+    var sum = 0;
+    $('.text-right.red').each(function(){
+        var reg = /[^\d]([\d\s]+).*/i;
+        sum += parseInt($(this).html().match(reg)[1].replace(' ',''));
+    });
+var currentPage = window.location.href;
+setInterval(function(){
+    if (currentPage != window.location.href && window.location.href.indexOf('/helpdesk') != -1)    {
+        currentPage = window.location.href;
+        checkAngryUser();
+        console.log("check");
+    }
+},2000);
+});
+function checkAngryUser(zEvent){
+var URL = "http://192.168.10.132/firecatchertest/api/angry/all";
+GM_xmlhttpRequest({
 method: "GET",
 headers: {"Accept": "application/json"},
 url: URL,
@@ -65,25 +80,16 @@ onload: function(res) {
     angryUsers = JSON.parse(res.response);
 }
 });
-        setTimeout(function() {
-        var emailToCheck = "";
-        login = $('.dropdown-toggle').slice(-1)[0].innerHTML.match(/([^\n]+)/i)[1];
-        emailToCheck = $("a.hd-ticket-header-email").text();
-            console.log(angryUsers.length);
-        for (var i=0; i<angryUsers.length;i++){
-         if (emailToCheck.indexOf(angryUsers[i].email)>0 && angryUsers[i].active) {
+    setTimeout(function(){
+    var emailToCheck = "";
+    emailToCheck = $("a.hd-ticket-header-email").text();
+    console.log(angryUsers.length);
+    for (var i=0; i<angryUsers.length;i++){
+        if (emailToCheck.indexOf(angryUsers[i].email)>0 && angryUsers[i].active) {
             $(".hd-ticket-header-title").after("<div class='row text-center'><b style='font-size:20px;color:red;'>Жалобы данного пользователя обрабатываются в отдельном <a href="+angryUsers[i].ticket+">тикете</a></b></div>");
-         break;}
-        }
-    }, 500);
-                   }
-    var sum = 0;
-    $('.text-right.red').each(function(){
-        var reg = /[^\d]([\d\s]+).*/i;
-        sum += parseInt($(this).html().match(reg)[1].replace(' ',''));
-    });
-    
-});
+            break;}
+    }}, 500);    
+}
 function turnOnRemovedHistory(){
     $('body').append('<div id="item_info" style="position: fixed; left: 100px; top: 60px;border: 4px double black; overflow:auto;max-width:600px;max-height:500px;z-index:250;background-color:WHITE;visibility:hidden;"></div>');
     $('.form-row:nth-child(4)').after('<div class="form-row"><input type="button" id="checkRemoved" value="История удаленных" class = "btn btn-default mb_activate green"/>');
