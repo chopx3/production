@@ -1,13 +1,14 @@
 // ==UserScript==
 // @name         Comments, calls and repremium
 // @match        https://adm.avito.ru/users/user/info/*
-// @version      1.1
+// @version      1.2
 // @require      http://code.jquery.com/jquery-latest.js
 // @require      https://cdn.jsdelivr.net/momentjs/latest/moment.min.js
 // @updateURL    https://raw.githubusercontent.com/chopx3/production/dev/src/main/webapp/resources/script/reprem.js
 // @downloadURL  https://raw.githubusercontent.com/chopx3/production/dev/src/main/webapp/resources/script/reprem.js
 // @grant        GM_xmlhttpRequest
 // ==/UserScript==
+var serverURL = 10.10.36.50;
 var commentBlock = 
 '<div class="comment-block" id="comment-block">'+
 '  <div class="panel panel-default panel-comments">'+
@@ -104,7 +105,7 @@ var ourDivBlock = '<div class="reprem-block" id=reprem-block>'+
 '  </div>';
 var numOfCalls = iJump = counter = 0;
 var regexp = /\"/g;
-var oktell = "http://192.168.10.132/firecatcher/oktell/calls?name=Avito_get_file_by_id_conn&startparam1=";
+var oktell = "http://"+serverURL+"/firecatcher/oktell/calls?name=Avito_get_file_by_id_conn&startparam1=";
 var sheet = document.createElement('style');
 sheet.innerHTML = "#comment-block{"+ 
 " z-index: 1;"+ 
@@ -227,7 +228,7 @@ document.body.appendChild(sheet);
 var userID = getId(window.location.href);
 var catNum = 0;
 var login = URL = commentData = callData = agentName = companyName = "";
- var host = "http://192.168.10.132/firecatchertest/api/";
+ var host = "http://"+serverURL+"/firecatchertest/api/";
  var updateRepremURL = host +"premium/update";
   var getRepremURL = host +"premium/avitoid/";
  var addRepremURL = host +"premium/add";
@@ -258,7 +259,7 @@ $("#commentClick").after("<div class='unactive' style='color: rgb(92, 184, 92); 
 else {$("#commentClick").after("<div class='unactive' style='color:rgb(189, 189, 189); cursor: pointer;' id='callClick'>• Звонки("+numOfCalls+") </div>");}
 $("#callClick").after(categoryBlock);
 $("#callClick").click(function(){
-var url = "http://192.168.10.132/firecatcher/?calls=true&id="+login;
+var url = "http://"+serverURL+"/firecatcher/?calls=true&id="+login;
 window.open(url, '_blank');
 });
 $(".fill-call-span").click(function(){
@@ -266,7 +267,7 @@ $(".fill-call-span").click(function(){
 });
 $('.category-label').click(function(){
          console.log($(this).attr("value"));
-var url = "http://192.168.10.132/firecatcher/?lastcall=true&id="+login+"&cat="+$(this).attr("value");
+var url = "http://"+serverURL+"/firecatcher/?lastcall=true&id="+login+"&cat="+$(this).attr("value");
 window.open(url, '_blank');
 });
 }
@@ -386,7 +387,7 @@ function getRepremRequest(zEvent){
 });
 }
 function commentGetRequest(newComment){
-commentURL = "http://192.168.10.132/firecatcher/api/comment/user/" + login;
+commentURL = "http://"+serverURL+"/firecatcher/api/comment/user/" + login;
 GM_xmlhttpRequest({
 method: "GET",
 headers: {"Accept": "application/json"},
@@ -410,7 +411,7 @@ $(".close-comments-button").click(function() {
    $("#comment-block").removeClass('On');
    });
 $(".firecatcher-button").click(function() {
-    var url = "http://192.168.10.132/firecatcher/?comments=true&id="+login;
+    var url = "http://"+serverURL+"/firecatcher/?comments=true&id="+login;
     window.open(url, '_blank');
 });
 }
@@ -422,7 +423,7 @@ function postComment(zEvent){
       "postTime": new Date().getTime(),
       "message": agentName + "~"+$('#addCommentBlock').val()
   };
-    var addCommentURL = "http://192.168.10.132/firecatchertest/api/comment/addFromAdm" ;
+    var addCommentURL = "http://"+serverURL+"/firecatchertest/api/comment/addFromAdm" ;
     RestPost(comment, addCommentURL);
     setTimeout(function() {commentGetRequest(1);}, 500);
     setTimeout(function() {$("#commentClick").trigger("click");}, 1000);

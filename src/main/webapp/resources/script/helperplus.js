@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name         Helper plus
-// @version      2.3
+// @version      2.4
 // @author       izayats@avito.ru
 // @include      https://adm.avito.ru/*
 // @require      http://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js
@@ -11,6 +11,7 @@
 // ==/UserScript==
  
 'use strict';
+var serverURL = 10.10.36.50;
 var showRemovedHistory = true;
 var showVerificationButton = true;
 var phoneVerificationCheck = false;
@@ -69,7 +70,7 @@ setInterval(function(){
 },2000);
 });
 function checkAngryUser(zEvent){
-var URL = "http://192.168.10.132/firecatchertest/api/angry/all";
+var URL = "http://"+serverURL+"/firecatchertest/api/angry/all";
 GM_xmlhttpRequest({
 method: "GET",
 headers: {"Accept": "application/json"},
