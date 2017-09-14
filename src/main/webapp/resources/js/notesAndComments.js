@@ -11,6 +11,7 @@ $(document).ready(function() {//Блок комментариев
 		else {$('#closeButton').removeClass('Add');}
 		$('#glyphCom').toggleClass('glyphicon-triangle-right').toggleClass('glyphicon-triangle-left');	
 		$('#glyphNote').addClass('glyphicon-triangle-right').removeClass('glyphicon-triangle-left');
+		$("#IDforComments").focus();
 	});	//Блок заметок
 	$('#notes').click(function(){ //Кнопка "Заметки", тоже самое, что в комментах, только наоборот + подгрузка заметок
 		$("#noteForm").toggleClass("On");

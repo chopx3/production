@@ -11,6 +11,7 @@ $('#clientCalls').click(function() { //Кнопка "Звонки пользов
 	fillInfo(options); // заполнение инфы
 	addButton(); // отображение кнопки
 	if (repremAgents.indexOf(agentId)== -1){ $(".reprem-button-activator").removeClass('Add');}
+	$("#IDforInfo").focus();
 	});
 	var qs = getQueryStrings();
 	if (qs.calls) {setTimeout(function(){ 

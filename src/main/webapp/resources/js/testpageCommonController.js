@@ -1,5 +1,10 @@
 var idNum;
 var dataArray = [];
+function openFeedback(){
+	var url = "http://10.10.36.50/firecatcher/admin/feedback";
+	window.open(url, 'newWindow');
+	
+}
 function drawInfo(value){ // функция заполнения групп кнопок
 	$("#updateWrapper").removeClass("active"); // скрыть обновление информации
 	var addInfoBody = addInfoFooterFunc = updInfoBody = updInfoFooterFunc = addInfoHeaderValue = updInfoHeaderValue = updInfoFooterFuncSecond = ""; // обнуление 
