@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name Calls and comments
-// @version 1.0
+// @version 1.1
 // @match https://adm.avito.ru/users/user/info/*
 // @require http://code.jquery.com/jquery-latest.js
 // @updateURL   https://raw.githubusercontent.com/chopx3/production/dev/src/main/webapp/resources/script/callscomments.js
@@ -8,7 +8,7 @@
 // @require https://cdn.jsdelivr.net/momentjs/latest/moment.min.js
 // @grant GM_xmlhttpRequest
 // ==/UserScript==
-var serverURL = 10.10.36.50;
+var serverURL = "10.10.36.50";
 var commentBlock = 
 '<div class="comment-block" id="comment-block">'+
 '  <div class="panel panel-default panel-comments">'+

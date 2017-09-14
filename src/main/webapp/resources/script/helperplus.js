@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name         Helper plus
-// @version      2.4
+// @version      2.5
 // @author       izayats@avito.ru
 // @include      https://adm.avito.ru/*
 // @require      http://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js
@@ -11,7 +11,7 @@
 // ==/UserScript==
  
 'use strict';
-var serverURL = 10.10.36.50;
+var serverURL = "10.10.36.50";
 var showRemovedHistory = true;
 var showVerificationButton = true;
 var phoneVerificationCheck = false;

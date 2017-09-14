@@ -1,14 +1,14 @@
 // ==UserScript==
 // @name         Comments, calls and repremium
 // @match        https://adm.avito.ru/users/user/info/*
-// @version      1.2
+// @version      1.3
 // @require      http://code.jquery.com/jquery-latest.js
 // @require      https://cdn.jsdelivr.net/momentjs/latest/moment.min.js
 // @updateURL    https://raw.githubusercontent.com/chopx3/production/dev/src/main/webapp/resources/script/reprem.js
 // @downloadURL  https://raw.githubusercontent.com/chopx3/production/dev/src/main/webapp/resources/script/reprem.js
 // @grant        GM_xmlhttpRequest
 // ==/UserScript==
-var serverURL = 10.10.36.50;
+var serverURL = "10.10.36.50";
 var commentBlock = 
 '<div class="comment-block" id="comment-block">'+
 '  <div class="panel panel-default panel-comments">'+
