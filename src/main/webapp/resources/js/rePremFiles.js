@@ -15,7 +15,7 @@ function start() {
   .then(function(csv) { return map=convertCsvToMap(csv); })
   .then(function(map){ return updatedMap = updateMap(map) })
   .then(function(updatedMap){ 
-    setTimeout(function(){  
+//    setTimeout(function(){  
     for (var [key, value] of updatedMap) {
       if (value["inBase"] == false && key>0){ 
         checkNumber(value);
@@ -23,6 +23,8 @@ function start() {
       }
     };
     var date = new Date();
+    sorting(correctNumbers, "Name");
+    sorting(wrongNumbers, "Name");
     downloadCSV({
               data: dedupe(correctNumbers),
               filename: "reprem-"+date.getHours()+"-"+date.getMinutes()+".csv"
@@ -31,7 +33,7 @@ function start() {
               data: dedupe(wrongNumbers),
               filename: "wrongNumbers-"+date.getHours()+"-"+date.getMinutes()+".csv"
           })
-  }, 1000)
+//  }, 1000)
   });
 }
 function readFile(file){
@@ -51,9 +53,9 @@ function convertCsvToMap(csv){
   var clientsFromBIBaseMap = new Map();
   var regExpTab = /\t/gm;
   csv = csv.replace(regExpTab, ";");
-  console.log(csv);
+  //console.log(csv);
   var lines=csv.split("\n");
-  console.log(lines);
+  //console.log(lines);
   var mapResult = [];
   var headers=lines[0].split(";");
   console.log(headers);
@@ -77,7 +79,8 @@ function convertCsvToMap(csv){
 }
 function updateMap(map) {
   var updatedMap = map;
-  $.get(getAllRepremUsersURL).done(function (data) {
+  return ajax({ url: getAllRepremUsersURL })
+  .then(function(data) { 
   var info = data;  
   for (var i = 0;i<info.length;i++) {
     if ( updatedMap.has(info[i].avitoId) && info[i].avitoId > 0 ) {
@@ -87,8 +90,13 @@ function updateMap(map) {
     updatedMap.set(info[i].avitoId, idArray);
   }
   }
+  return updatedMap;
 })
-return updatedMap;
+}
+function ajax(options) {
+  return new Promise(function(resolve, reject) {
+    $.ajax(options).done(resolve).fail(reject);
+  });
 }
 function addClient(client) {
   var newClient = {
