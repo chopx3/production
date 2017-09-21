@@ -46,8 +46,8 @@ function changeDateWeek(){
 	drawFlexBoxItems(timeStart,timeEnd)
 }
 function changeDateMonth(){
-	timeStart = moment().startOf('month').subtract(180, 'days');
-	timeEnd = moment().endOf('month').subtract(150, 'days');
+	timeStart = moment().startOf('month');
+	timeEnd = moment().endOf('month');
 	drawFlexBoxItems(timeStart,timeEnd)
 }
 function timeInCall(data){

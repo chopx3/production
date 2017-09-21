@@ -87,7 +87,7 @@ onload: function(res) {
     console.log(angryUsers.length);
     for (var i=0; i<angryUsers.length;i++){
         if (emailToCheck.indexOf(angryUsers[i].email)>0 && angryUsers[i].active) {
-            $(".hd-ticket-header-title").after("<div class='row text-center'><b style='font-size:20px;color:red;'>Жалобы данного пользователя обрабатываются в отдельном <a href="+angryUsers[i].ticket+">тикете</a></b></div>");
+            $(".hd-ticket-header-title").after("<div class='row text-center'><b style='font-size:20px;color:red;'>Жалобы данного пользователя обрабатываются в отдельном <a href="+angryUsers[i].ticket+"?limit=30&p=1&sortField=reactionTxtime&sortType=asc>тикете</a></b></div>");
             break;}
     }}, 500);    
 }

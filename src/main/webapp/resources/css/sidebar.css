@@ -100,7 +100,24 @@
 	position: fixed;
 	bottom: 75px;
 }
-
+.bdayAlert{
+	display: none;
+	bottom: 150px; 
+	position: fixed; 
+	left: 100px; 
+	background-color: white;
+	text-align: center;	
+	margin: 5px;	
+	padding: 5px;	
+	border-radius: 10px;	
+	box-shadow: rgba(0, 0, 0, 0.172549) 0px 6px 12px;	
+	border-width: 1px;  
+	border-style: solid;  
+	border-color: rgba(0, 0, 0, 0.14902);  
+	border-image: initial;  
+	border-radius: 4px;  
+	font-size: 16px;
+}
 
 
 .flexItems{

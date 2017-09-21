@@ -20,6 +20,7 @@
 	<script src="${pageContext.request.contextPath}/resources/js/clientCalls.js"></script>
 	<script src="${pageContext.request.contextPath}/resources/js/notesAndComments.js"></script>
   <script src="${pageContext.request.contextPath}/resources/js/statistic.js"></script>
+  <script src="${pageContext.request.contextPath}/resources/js/bdays.js"></script>
   <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/sidebar.css">
 	<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/callform.css">
 	<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/NotesAndComments.css">
