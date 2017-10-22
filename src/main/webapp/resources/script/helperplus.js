@@ -1,15 +1,16 @@
 // ==UserScript==
 // @name         Helper plus
-// @version      2.7
+// @version      2.8
 // @author       izayats@avito.ru
 // @include      https://adm.avito.ru/*
 // @require      http://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js
+// @require      https://cdn.jsdelivr.net/momentjs/latest/moment.min.js
 // @require      https://raw.githubusercontent.com/phstc/jquery-dateFormat/master/dist/jquery-dateFormat.min.js
 // @downloadURL  https://raw.githubusercontent.com/chopx3/production/dev/src/main/webapp/resources/script/helperplus.js
 // @grant        GM_xmlhttpRequest
 // @grant        GM_setClipboard
 // ==/UserScript==
- 
+
 'use strict';
 var serverURL = "10.10.36.50";
 var showRemovedHistory = true;
@@ -23,6 +24,7 @@ var comments = [];
 var COMM_AMOUNTS = 20;
 var MAX_LEN = 600;
 var removed = "<span class='item-status  grey'>Removed</span>";
+var archived = '<span class="item-status  grey">Archived</span>';
 var notSync = 0;
 var status_colors = {
     "Blocked":"RED",
@@ -32,8 +34,12 @@ var status_colors = {
     "Unblocked":"#40FF00"
 };
 var firstTime = true;
-var angryUsers = ""; 
+var angryUsers = "";
 $(document).ready(function(){
+  var todayTime = moment().endOf("day").format("DD/MM/YYYY HH:mm");
+  var minusMonthTime =  moment().startOf("day").subtract(30, "days").format("DD/MM/YYYY HH:mm");
+  var timeToFind =  minusMonthTime + " - " + todayTime;
+  $(".items").after(`<a href="/items/search?user_id=${userID}&date=${timeToFind}&status%5B%5D=rejected&status%5B%5D=blocked" class="items">bl+rej(30)</a>`);
   $("td.item-checkbox").click(function() {
   if ($(this).find("input").prop('checked')){
   $(this).find("input").prop('checked', false)
@@ -89,7 +95,7 @@ onload: function(res) {
         if (emailToCheck.indexOf(angryUsers[i].email)>0 && angryUsers[i].active) {
             $(".hd-ticket-header-title").after("<div class='row text-center'><b style='font-size:20px;color:red;'>Жалобы данного пользователя обрабатываются в отдельном <a href="+angryUsers[i].ticket+"?limit=30&p=1&sortField=reactionTxtime&sortType=asc>тикете</a></b></div>");
             break;}
-    }}, 500);    
+    }}, 500);
 }
 function turnOnRemovedHistory(){
     $('body').append('<div id="item_info" style="position: fixed; left: 100px; top: 60px;border: 4px double black; overflow:auto;max-width:600px;max-height:500px;z-index:250;background-color:WHITE;visibility:hidden;"></div>');
@@ -101,15 +107,14 @@ function turnOnRemovedHistory(){
         var items = document.getElementById('items').rows;
         for(var i = 1;i < items.length;i++){
             var row = items[i].innerHTML;
-            if(row.indexOf('Removed') != -1){
+            if(row.indexOf('Removed') != -1 || row.indexOf('Archived') != -1){
+                var isRemoved = (row.indexOf('Removed') != -1);
                 notSync++;
-                checkItemHistory($(row).find('.item_title').attr('href'), items[i]);
+                checkItemHistory($(row).find('.item_title').attr('href'), items[i], isRemoved);
             }
         }
     });
-    $('#item_info').click(function(){
-        $('#item_info').css('visibility','hidden');
-    });
+    $('#item_info').click(function(){ $('#item_info').css('visibility','hidden'); });
     $('input[name="query"]').before($('<input id="gnum" type="button" value="|">').click(function(){var e = $('input[name="query"]')[0]; var r = $(e).val().match(/\d{9,}/g);r && $(e).val(r.join('|'));}));
     $('input[name="itemIds"]').before($('<input id="gnum" type="button" value=",">').click(function(){var e = $('input[name="itemIds"]')[0]; var r = $(e).val().match(/\d{9,}/g);r && $(e).val(r.join(','));}));
     $('#checkRemoved').after($('<input type="button" value="ТН combo" class = "btn btn-default mb_activate green"/>').click(function(){
@@ -195,26 +200,36 @@ function collectItemsNumbers(isTN){
             GM_setClipboard(toClipBoard);
         }
     }
-function checkItemHistory(link, row){
-    $(row).find('.item-status.grey').parent().html(removed + "<span style='color:#FF8C00;'>(Проверяем...)</span>");
-    $.get( "https://adm.avito.ru" + link, function( data ) {
+function checkItemHistory(link, row, status){
+    var statusText = (status) ? removed : archived;
+    $(row).find('.item-status.grey').parent().html(statusText + "<span style='color:#FF8C00;'>(Проверяем...)</span>");
+    $.get( "https://adm.avito.ru" + link+"/frst_history?history=-100", function( data ) {
         var tables = "";
-        $(data).find(".table-scroll").each(
-            function(){
-                tables += $(this).html();
-                if(this.innerHTML.indexOf('Admin event') != -1){
-                    var admin_row = $(this).find("tr:nth-child(2)");
-                    var id = link + "item";
-                    var pred_stat = $(admin_row).find("td:nth-child(3)").html();
-                    var color = status_colors[pred_stat] == undefined?"#808080":status_colors[pred_stat];
-                    var pred = "<div id ='"+id+"' class = 'Spoiler' style='cursor:pointer;'>***<br>предыдущий статус:<br>" + " <span style='color:"+color+"'>" + pred_stat + "</span><br>дата:<br>" +
-                        $(admin_row).find("td:nth-child(1)").html() +"<br>***</div>";
-                    $(row).find('.sort-time').after(pred);
-                    $(row).find('.item-status.grey').parent().html(removed);
-                }
-            }
-        );
-        $(row).find('.Spoiler').append("<div id='item_page_data' style='visibility:hidden;width:1px;height:1px;'>" + tables + "</div>");
+        var array = [];
+        var tableMid = "";
+        var tableTop = `
+        <div class="table-scroll">
+          <table class="table table-striped">
+        <thead>
+            <tr> <th width="145">Дата</th> <th>Admin event</th> <th>Статус</th></tr>
+        </thead>
+        <tbody class="js-tbody">`;
+        var tableBot = `
+        </tbody>
+        </table>
+        </div>`;
+        console.log(data);
+        var dataLength = (data.length >= 3) ? 3 : data.length;
+        for (var i = 0; i< dataLength; i++){
+            var time = data[i].formatedDate;
+            var event = data[i].event;
+            var action = data[i].admin;
+            tableMid+=`<tr> <td>${time} </td> <td>${action}</td> <td>${event}</td></tr>`;
+        }
+        var fullTable = tableTop + tableMid + tableBot;
+        $(row).find('.sort-time').html(fullTable);
+        $(row).find('.item-status.grey').parent().html("");
+        $(row).find('.Spoiler').append("<div id='item_page_data' style='visibility:hidden;width:1px;height:1px;'>" + fullTable + "</div>");
         notSync--;
         tryBind();
     });
@@ -231,7 +246,7 @@ function tryBind(){
             }
         });
 }
- 
+
 function turnOnPhoneVerificationBut(){
     if($('#phones') && $('#phones').length){
         $('input[name^=phone]').each(function(){
@@ -299,7 +314,7 @@ function unverify(o){
         function(){alert('Не удалось открепить номер');}
     );
 }
- 
+
 var htmlmask = /<(?:.|\n)*?>/gm;
 var linkmask = /(https?:\/\/[^\s,]+)/gm;
 var imgmask = /(.jpe?g)|(.gif)|(.png)|(.bmp)|(.icon)/gi;
@@ -315,7 +330,7 @@ function preprocess(msg){
     });
     return msg.replace(/\n/g,'<br>');
 }
- 
+
 function extractDomain(url) {
     var domain;
     if (url.indexOf("://") > -1) {

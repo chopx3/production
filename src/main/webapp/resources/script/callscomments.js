@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name Calls and comments
-// @version 1.1
+// @version 1.2
 // @match https://adm.avito.ru/users/user/info/*
 // @require http://code.jquery.com/jquery-latest.js
 // @updateURL   https://raw.githubusercontent.com/chopx3/production/dev/src/main/webapp/resources/script/callscomments.js
@@ -9,7 +9,7 @@
 // @grant GM_xmlhttpRequest
 // ==/UserScript==
 var serverURL = "10.10.36.50";
-var commentBlock = 
+var commentBlock =
 '<div class="comment-block" id="comment-block">'+
 '  <div class="panel panel-default panel-comments">'+
 '    <div class="panel-heading text-center" style="font-size: 16px; font-weight: bold;">Комментарии</div>'+
@@ -23,8 +23,8 @@ var commentBlock =
 '    </div>'+
 '   </div>'+
 '</div>';
-var categoryBlock = 
-    "<div class='category-block unactive' style='color:#5cb85c;'>"+
+var categoryBlock =
+    "<div class='category-block ah-indicators-item' style='color:#5cb85c;'>"+
     "  <span class='fill-call-span'>• Заполнить звонок"+
     "    <div class='hidden-category-picker'>"+
 "  <div class='btn-group btn-group-justified col-lg-3' data-toggle='buttons' id='catButtonGroup'>"+
@@ -50,61 +50,61 @@ var categoryBlock =
 var numOfCalls = iJump = counter = 0;
 var oktell = "http://"+serverURL+"/firecatcher/oktell/calls?name=Avito_get_file_by_id_conn&startparam1=";
 var sheet = document.createElement('style');
-sheet.innerHTML = "#comment-block{"+ 
-" z-index: 1;"+ 
-" position: fixed;"+ 
-" overflow-y: hidden;"+ 
-" right: 1%;"+ 
-" top: 6%;"+ 
-" background : white;"+ 
-" width: 30vw; "+     
-" visibility : hidden;"+ 
+sheet.innerHTML = "#comment-block{"+
+" z-index: 1;"+
+" position: fixed;"+
+" overflow-y: hidden;"+
+" right: 1%;"+
+" top: 6%;"+
+" background : white;"+
+" width: 30vw; "+
+" visibility : hidden;"+
 " padding-top:4px;"+
-" padding-top:4px;"+ 
-" opacity: 0.5;"+ 
-"}"+ 
-"#comment-block.On{"+ 
-" visibility : visible;"+ 
-" overflow-y: hidden; "+ 
-" overflow-x: hidden; "+ 
-" background : #eee;"+ 
-" border: solid 1px #f0f0f0;"+ 
-" border-radius : 5px;"+ 
-" z-index : 5;"+ 
-" opacity : 1;"+ 
-" transition:all linear 0.3s;"+ 
-"}"+ 
-"#addCommentBlock{"+ 
-" overflow: auto;"+ 
-" resize:none;"+ 
+" padding-top:4px;"+
+" opacity: 0.5;"+
 "}"+
-".panel-comments{"+ 
-" margin-bottom: 0 !important;"+ 
+"#comment-block.On{"+
+" visibility : visible;"+
+" overflow-y: hidden; "+
+" overflow-x: hidden; "+
+" background : #eee;"+
+" border: solid 1px #f0f0f0;"+
+" border-radius : 5px;"+
+" z-index : 5;"+
+" opacity : 1;"+
+" transition:all linear 0.3s;"+
 "}"+
-".table-scroll{ "+ 
-" height: 70vh;"+ 
-" overflow: auto;"+ 
-" margin: 0 0 20px;"+ 
-" max-width: 750px;"+ 
-"}"+ 
-".breakable{"+ 
-" word-break: break-all;"+ 
-" word-wrap: break-word;"+ 
+"#addCommentBlock{"+
+" overflow: auto;"+
+" resize:none;"+
+"}"+
+".panel-comments{"+
+" margin-bottom: 0 !important;"+
+"}"+
+".table-scroll{ "+
+" height: 70vh;"+
+" overflow: auto;"+
+" margin: 0 0 20px;"+
+" max-width: 750px;"+
+"}"+
+".breakable{"+
+" word-break: break-all;"+
+" word-wrap: break-word;"+
 "}"+
 ".fill-call-span {"+
-" cursor:pointer;"+ 
+" cursor:pointer;"+
 "}"+
-".fill-call-span .hidden-category-picker{"+ 
+".fill-call-span .hidden-category-picker{"+
 " display:none;"+
 " width:300px;"+
-" margin-left:-50px;"+    
+" margin-left:-50px;"+
 "}"+
-".hidden-category-picker.On{"+ 
-" display: block;"+ 
-" position:absolute;"+  
-"}"+    
-"#commentForm h1{"+ 
-" margin-left:3px;"+ 
+".hidden-category-picker.On{"+
+" display: block;"+
+" position:absolute;"+
+"}"+
+"#commentForm h1{"+
+" margin-left:3px;"+
 "}";
 //updated version
 document.body.appendChild(sheet);
@@ -127,8 +127,9 @@ onreadystatechange: function(res) {
 onload: function(res) {
 numOfCalls = JSON.parse(res.response).length;
 if (numOfCalls >0) {
-$("#commentClick").after("<div class='unactive' style='color: rgb(92, 184, 92); cursor: pointer;' id='callClick'>• Звонки("+numOfCalls+") </div>");}
-else {$("#commentClick").after("<div class='unactive' style='color:rgb(189, 189, 189); cursor: pointer;' id='callClick'>• Звонки("+numOfCalls+") </div>");}
+    var lastCall = JSON.parse(res.response)[numOfCalls-1];
+$("#commentClick").after("<div class='ah-indicators-item' style='color: rgb(92, 184, 92); cursor: pointer;' title='"+lastCall.agent.russianName+" "+moment.unix(lastCall.timeStart/1000).format("DD.MM.YY HH:mm")+"' id='callClick'>• Звонки("+numOfCalls+") </div>");}
+else {$("#commentClick").after("<div class='ah-indicators-item' style='color:rgb(189, 189, 189); cursor: pointer;' id='callClick'>• Звонки("+numOfCalls+") </div>");}
 $("#callClick").after(categoryBlock);
 $("#callClick").click(function(){
 var url = "http://"+serverURL+"/firecatcher/?calls=true&id="+login;
@@ -143,7 +144,7 @@ var url = "http://"+serverURL+"/firecatcher/?lastcall=true&id="+login+"&cat="+$(
 window.open(url, '_blank');
 });
 }
-}); 
+});
 }
 });
 function getId(url){
@@ -167,8 +168,8 @@ $(".form-group.js-passwords").after(commentBlock);
     if (newComment){document.getElementById("commentClick").innerHTML = '• Комментарии('+numOfComments+')';
                     document.getElementById("commentClick").style.color = '#5cb85c';}
     else {if (numOfComments >0) {
-$("#REpremium").after("<div class='unactive' style='color: rgb(92, 184, 92); cursor: pointer;' id='commentClick'>• Комментарии ("+numOfComments+") </div>");}
-else {$("#REpremium").after("<div class='unactive' style='color:rgb(189, 189, 189); cursor: pointer;' id='commentClick'>• Комментарии("+numOfComments+") </div>");}}
+$("[data-indicator=REPremium]").after("<div class='ah-indicators-item' style='color: rgb(92, 184, 92); cursor: pointer;' id='commentClick'>• Комментарии ("+numOfComments+") </div>");}
+else {$("[data-indicator=REPremium]").after("<div class='ah-indicators-item' style='color:rgb(189, 189, 189); cursor: pointer;' id='commentClick'>• Комментарии("+numOfComments+") </div>");}}
 $("#commentClick").click(getComments);
 $(".close-comments-button").click(function() {
    $("#comment-block").removeClass('On');
@@ -178,7 +179,7 @@ $(".firecatcher-button").click(function() {
     window.open(url, '_blank');
 });
 }
-});   
+});
 }
 function postComment(zEvent){
        var comment = {
@@ -224,7 +225,7 @@ function RestPost(data, url){
                 data: JSON.stringify(data),
                 headers: {"Content-Type": "application/json; charset=cp1251",},
                 onload: function(res) {
-                
+
                 }
-        });   
+        });
 }

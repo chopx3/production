@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         Comments, calls and repremium
 // @match        https://adm.avito.ru/users/user/info/*
-// @version      1.3
+// @version      1.4
 // @require      http://code.jquery.com/jquery-latest.js
 // @require      https://cdn.jsdelivr.net/momentjs/latest/moment.min.js
 // @updateURL    https://raw.githubusercontent.com/chopx3/production/dev/src/main/webapp/resources/script/reprem.js
@@ -9,7 +9,7 @@
 // @grant        GM_xmlhttpRequest
 // ==/UserScript==
 var serverURL = "10.10.36.50";
-var commentBlock = 
+var commentBlock =
 '<div class="comment-block" id="comment-block">'+
 '  <div class="panel panel-default panel-comments">'+
 '    <div class="panel-heading text-center" style="font-size: 16px; font-weight: bold;">Комментарии</div>'+
@@ -23,8 +23,8 @@ var commentBlock =
 '    </div>'+
 '   </div>'+
 '</div>';
-var categoryBlock = 
-"<div class='category-block unactive' style='color:#5cb85c;'>"+
+var categoryBlock =
+"<div class='category-block ah-indicators-item' style='color:#5cb85c;'>"+
 " <span class='fill-call-span'>• Заполнить звонок"+
 "  <div class='hidden-category-picker'>"+
 "   <div class='btn-group btn-group-justified col-lg-3' data-toggle='buttons' id='catButtonGroup'>"+
@@ -107,74 +107,74 @@ var numOfCalls = iJump = counter = 0;
 var regexp = /\"/g;
 var oktell = "http://"+serverURL+"/firecatcher/oktell/calls?name=Avito_get_file_by_id_conn&startparam1=";
 var sheet = document.createElement('style');
-sheet.innerHTML = "#comment-block{"+ 
-" z-index: 1;"+ 
-" position: fixed;"+ 
-" overflow-y: hidden;"+ 
-" right: 1%;"+ 
-" top: 6%;"+ 
-" background : white;"+ 
-" width: 30vw; "+     
-" visibility : hidden;"+ 
+sheet.innerHTML = "#comment-block{"+
+" z-index: 1;"+
+" position: fixed;"+
+" overflow-y: hidden;"+
+" right: 1%;"+
+" top: 6%;"+
+" background : white;"+
+" width: 30vw; "+
+" visibility : hidden;"+
 " padding-top:4px;"+
-" padding-top:4px;"+ 
-" opacity: 0.5;"+ 
-"}"+ 
-"#comment-block.On{"+ 
-" visibility : visible;"+ 
-" overflow-y: hidden; "+ 
-" overflow-x: hidden; "+ 
-" background : #eee;"+ 
-" border: solid 1px #f0f0f0;"+ 
-" border-radius : 5px;"+ 
-" z-index : 5;"+ 
-" opacity : 1;"+ 
-" transition:all linear 0.3s;"+ 
-"}"+ 
+" padding-top:4px;"+
+" opacity: 0.5;"+
+"}"+
+"#comment-block.On{"+
+" visibility : visible;"+
+" overflow-y: hidden; "+
+" overflow-x: hidden; "+
+" background : #eee;"+
+" border: solid 1px #f0f0f0;"+
+" border-radius : 5px;"+
+" z-index : 5;"+
+" opacity : 1;"+
+" transition:all linear 0.3s;"+
+"}"+
 ".reprem-panel{"+
 "margin-bottom: 0px !important; "+
 "}" +
-"#addCommentBlock{"+ 
-" overflow: auto;"+ 
-" resize:none;"+ 
+"#addCommentBlock{"+
+" overflow: auto;"+
+" resize:none;"+
 "}"+
-".panel-comments{"+ 
-" margin-bottom: 0 !important;"+ 
+".panel-comments{"+
+" margin-bottom: 0 !important;"+
 "}"+
-".table-scroll{ "+ 
-" max-height: 50vh;"+ 
-" overflow: auto;"+ 
-" margin: 0 0 20px;"+ 
-" max-width: 750px;"+ 
-"}"+ 
-".breakable{"+ 
-" word-break: break-all;"+ 
-" word-wrap: break-word;"+ 
-"}"+ 
-".reprem-block{"+ 
-" z-index: 1;"+ 
-" position: fixed;"+ 
-" overflow-y: hidden;"+ 
-" right: 1%;"+ 
-" top: 6%;"+    
-" min-height: 465px;"+     
-" width: 30vw;"+      
-" background : white;"+ 
-" visibility : hidden;"+ 
-" padding-top:4px;"+ 
-" opacity: 0.5;"+ 
-"}"+ 
-".reprem-block.On{"+ 
-" visibility : visible;"+ 
-" overflow-y: hidden; "+ 
-" overflow-x: hidden; "+ 
-" background : #eee;"+ 
-" border: solid 1px #f0f0f0;"+ 
-" border-radius : 5px;"+ 
-" z-index : 5;"+ 
-" opacity : 1;"+ 
-" transition:all linear 0.3s;"+ 
-"}"+ 
+".table-scroll{ "+
+" max-height: 50vh;"+
+" overflow: auto;"+
+" margin: 0 0 20px;"+
+" max-width: 750px;"+
+"}"+
+".breakable{"+
+" word-break: break-all;"+
+" word-wrap: break-word;"+
+"}"+
+".reprem-block{"+
+" z-index: 1;"+
+" position: fixed;"+
+" overflow-y: hidden;"+
+" right: 1%;"+
+" top: 6%;"+
+" min-height: 465px;"+
+" width: 30vw;"+
+" background : white;"+
+" visibility : hidden;"+
+" padding-top:4px;"+
+" opacity: 0.5;"+
+"}"+
+".reprem-block.On{"+
+" visibility : visible;"+
+" overflow-y: hidden; "+
+" overflow-x: hidden; "+
+" background : #eee;"+
+" border: solid 1px #f0f0f0;"+
+" border-radius : 5px;"+
+" z-index : 5;"+
+" opacity : 1;"+
+" transition:all linear 0.3s;"+
+"}"+
  ".reprem-row{ "+
 "    line-height: 40px; "+
 "} "+
@@ -213,16 +213,16 @@ sheet.innerHTML = "#comment-block{"+
 "    overflow:auto; "+
 "} "+
 ".fill-call-span {"+
-" cursor:pointer;"+ 
+" cursor:pointer;"+
 "}"+
-".fill-call-span .hidden-category-picker{"+ 
+".fill-call-span .hidden-category-picker{"+
 " display:none;"+
 " width:300px;"+
-" margin-left:-50px;"+    
+" margin-left:-50px;"+
 "}"+
-".hidden-category-picker.On{"+ 
-" display: block;"+ 
-" position:absolute;"+  
+".hidden-category-picker.On{"+
+" display: block;"+
+" position:absolute;"+
 "}";
 document.body.appendChild(sheet);
 var userID = getId(window.location.href);
@@ -236,7 +236,7 @@ var repremInfoId = 0;
 var reprem = "";
 var dataToDraw = "";
 $(document).ready(function(){
-    
+
     agentName = $('ul.nav>li:last-child>a').text().trim();
     if(window.location.href.indexOf('/user/info') != -1){
     login = $('a.js-user-id').attr("data-user-id");
@@ -255,8 +255,9 @@ onreadystatechange: function(res) {
 onload: function(res) {
 numOfCalls = JSON.parse(res.response).length;
 if (numOfCalls >0) {
-$("#commentClick").after("<div class='unactive' style='color: rgb(92, 184, 92); cursor: pointer;' id='callClick'>• Звонки("+numOfCalls+") </div>");}
-else {$("#commentClick").after("<div class='unactive' style='color:rgb(189, 189, 189); cursor: pointer;' id='callClick'>• Звонки("+numOfCalls+") </div>");}
+    var lastCall = JSON.parse(res.response)[numOfCalls-1];
+$("#commentClick").after("<div class='ah-indicators-item' style='color: rgb(92, 184, 92); cursor: pointer;' title='"+lastCall.agent.russianName+" "+moment.unix(lastCall.timeStart/1000).format("DD.MM.YY HH:mm")+"' id='callClick'>• Звонки("+numOfCalls+") </div>");}
+else {$("#commentClick").after("<div class='ah-indicators-item' style='color:rgb(189, 189, 189); cursor: pointer;' id='callClick'>• Звонки("+numOfCalls+") </div>");}
 $("#callClick").after(categoryBlock);
 $("#callClick").click(function(){
 var url = "http://"+serverURL+"/firecatcher/?calls=true&id="+login;
@@ -271,7 +272,7 @@ var url = "http://"+serverURL+"/firecatcher/?lastcall=true&id="+login+"&cat="+$(
 window.open(url, '_blank');
 });
 }
-}); 
+});
 reprem = GM_xmlhttpRequest({
   method: "GET",
   headers: {"Accept": "application/json"},
@@ -284,78 +285,78 @@ reprem = GM_xmlhttpRequest({
     setTimeout(function() {
     var ourResponse = (res.response === undefined) ? undefined : JSON.parse(res.response).id ;
     $(".form-group.js-passwords").after(ourDivBlock);
-    if (ourResponse != undefined) {document.getElementById("REpremium").innerHTML = (" <div style='cursor:pointer;' id='repremClick'>• <span>RE premium</span> <span style='color:red;'> ✔ </span> </div>");}
-      else {document.getElementById("REpremium").innerHTML = (" <div style='cursor:pointer;' id='repremClick'>• <span>RE premium</span> <span style='color:red;'> ✖ </span></div>");}
+    if (ourResponse != undefined) {$("[data-indicator=REPremium]").html(" <div style='cursor:pointer;' id='repremClick'>• <span>RE premium</span> <span style='color:red;'> ✔ </span> </div>");}
+      else {$("[data-indicator=REPremium]").html(" <div style='cursor:pointer;' id='repremClick'>• <span>RE premium</span> <span style='color:red;'> ✖ </span></div>");}
     $("#repremClick").click(function(){
     $(".reprem-block").toggleClass('On');
     console.log(dataToDraw);
     getRepremData(dataToDraw);
-}); 
+});
    $(".edit-button").click( editButton);
    $(".save-button").click( saveButton);
    $(".create-button").click( createButton);
    $(".close-button").click(function() {
    $(".reprem-block").removeClass('On');
-   });  
+   });
 }, 1000) ;
 }
-});                   
+});
 }
 });
 function createButton(zEvent){
- var clientNewData = { 
-                    "avitoId" : login, 
-                    "username" : companyName.replace(regexp, "''"), 
-                    "admPhone" : "89000000000", 
-                    "contactPhone" : "89000000001" 
-                }; 
+ var clientNewData = {
+                    "avitoId" : login,
+                    "username" : companyName.replace(regexp, "''"),
+                    "admPhone" : "89000000000",
+                    "contactPhone" : "89000000001"
+                };
                 RestPost(clientNewData, addRepremURL);
-                location.reload();    
+                location.reload();
 }
 function saveButton(zEvent){
- var premiumClientData = []; 
-            $(".reprem-input").each(function() { 
-                var index = $(this).attr('name');   
-                var classArray = document.getElementsByClassName("reprem-text-"+index); 
-                var savedValue = $(this).val(); 
-                premiumClientData[index-1] = savedValue; 
-                if ($(this).hasClass('input-number')){ 
-                    classArray[0].innerHTML = '<label class="reprem-label-'+index+' reprem-label reprem-input input-number" name="'+index+'" value="'+savedValue+'">'+savedValue+'</label>'; 
-                } 
-                if ($(this).hasClass('input-textarea')){ 
-                    console.log("poof"); 
-                    classArray[0].innerHTML = '<label class="reprem-label-'+index+' reprem-label reprem-input input-textarea reprem-label-narrow" name="'+index+'" value="'+savedValue+'">'+savedValue+'</label>'; 
-                } 
-            }); 
-            var clientNewData = { 
-                    "id" : repremInfoId, 
-                    "avitoId" : login, 
-                    "username" : premiumClientData[1], 
-                    "contactPerson" : premiumClientData[2], 
-                    "comments" : premiumClientData[3], 
-                    "admPhone" : premiumClientData[4], 
-                    "contactPhone" : premiumClientData[5], 
-                    "additionalPhones" : premiumClientData[6] 
+ var premiumClientData = [];
+            $(".reprem-input").each(function() {
+                var index = $(this).attr('name');
+                var classArray = document.getElementsByClassName("reprem-text-"+index);
+                var savedValue = $(this).val();
+                premiumClientData[index-1] = savedValue;
+                if ($(this).hasClass('input-number')){
+                    classArray[0].innerHTML = '<label class="reprem-label-'+index+' reprem-label reprem-input input-number" name="'+index+'" value="'+savedValue+'">'+savedValue+'</label>';
+                }
+                if ($(this).hasClass('input-textarea')){
+                    console.log("poof");
+                    classArray[0].innerHTML = '<label class="reprem-label-'+index+' reprem-label reprem-input input-textarea reprem-label-narrow" name="'+index+'" value="'+savedValue+'">'+savedValue+'</label>';
+                }
+            });
+            var clientNewData = {
+                    "id" : repremInfoId,
+                    "avitoId" : login,
+                    "username" : premiumClientData[1],
+                    "contactPerson" : premiumClientData[2],
+                    "comments" : premiumClientData[3],
+                    "admPhone" : premiumClientData[4],
+                    "contactPhone" : premiumClientData[5],
+                    "additionalPhones" : premiumClientData[6]
                 };
                 dataToDraw = clientNewData;
-                console.log(clientNewData); 
-                RestPost(clientNewData, updateRepremURL); 
-                oneActiveButton(".edit-button");    
+                console.log(clientNewData);
+                RestPost(clientNewData, updateRepremURL);
+                oneActiveButton(".edit-button");
 }
 function editButton(zEvent){
-    $(".reprem-text").each(function() { 
+    $(".reprem-text").each(function() {
                 var index = $(this).attr('value');
-                var classArray = document.getElementsByClassName("reprem-text-"+index); 
+                var classArray = document.getElementsByClassName("reprem-text-"+index);
                 var savedValue = $(".reprem-label-"+index).text();
                 if ($(this).hasClass('input-number')){
                 if (index != 1) {
-                    classArray[0].innerHTML = '<input type="number" class="reprem-label-'+index+' form-control reprem-input input-number" name="'+index+'" value="'+savedValue+'">';} 
-                } 
-                if ($(this).hasClass('input-textarea')){ 
-                    classArray[0].innerHTML = '<textarea class="reprem-label-'+index+' form-control reprem-input reprem-input-textarea input-textarea" name="'+index+'" rows=2  value="'+savedValue+'">'+savedValue+'</textarea>'; 
-                } 
-                oneActiveButton(".save-button"); 
-            }); 
+                    classArray[0].innerHTML = '<input type="number" class="reprem-label-'+index+' form-control reprem-input input-number" name="'+index+'" value="'+savedValue+'">';}
+                }
+                if ($(this).hasClass('input-textarea')){
+                    classArray[0].innerHTML = '<textarea class="reprem-label-'+index+' form-control reprem-input reprem-input-textarea input-textarea" name="'+index+'" rows=2  value="'+savedValue+'">'+savedValue+'</textarea>';
+                }
+                oneActiveButton(".save-button");
+            });
 }
 function RestPost(data, url){
  GM_xmlhttpRequest({
@@ -366,7 +367,7 @@ function RestPost(data, url){
                 onload: function(res) {
                 getRepremData(JSON.parse(res.response));
                 }
-        });   
+        });
 }
 function getId(url){
     return url.substring(url.lastIndexOf('/')+1);
@@ -404,8 +405,8 @@ $(".form-group.js-passwords").after(commentBlock);
     if (newComment){document.getElementById("commentClick").innerHTML = '• Комментарии('+numOfComments+')';
                     document.getElementById("commentClick").style.color = '#5cb85c';}
     else {if (numOfComments >0) {
-$("#REpremium").after("<div class='unactive' style='color: rgb(92, 184, 92); cursor: pointer;' id='commentClick'>• Комментарии ("+numOfComments+") </div>");}
-else {$("#REpremium").after("<div class='unactive' style='color:rgb(189, 189, 189); cursor: pointer;' id='commentClick'>• Комментарии("+numOfComments+") </div>");}}
+$("[data-indicator=REPremium]").after("<div class='ah-indicators-item' style='color: rgb(92, 184, 92); cursor: pointer;' id='commentClick'>• Комментарии ("+numOfComments+") </div>");}
+else {$("[data-indicator=REPremium]").after("<div class='ah-indicators-item' style='color:rgb(189, 189, 189); cursor: pointer;' id='commentClick'>• Комментарии("+numOfComments+") </div>");}}
 $("#commentClick").click(getComments);
 $(".close-comments-button").click(function() {
    $("#comment-block").removeClass('On');
@@ -415,7 +416,7 @@ $(".firecatcher-button").click(function() {
     window.open(url, '_blank');
 });
 }
-});   
+});
 }
 function postComment(zEvent){
        var comment = {
@@ -454,30 +455,30 @@ else { outputComments='<div class="text-center">На данной учетной
 document.getElementById("forComments").innerHTML = thead + outputComments + tbot + addComment;
  $(".post-comment").click(postComment);
 }
-function getRepremData(data){ 
+function getRepremData(data){
     var repremFields = ["avitoId", "username", "contactPerson", "comments", "admPhone", "contactPhone", "additionalPhones"];
         console.log(data.avitoId+"id");
         console.log(data+"data");
         repremInfoId = data.id;
-        if (data.avitoId>1){ 
+        if (data.avitoId>1){
         oneActiveButton(".edit-button");
         var regExpMultiLines = /(\n)+/gm;
-        for (var i = 0; i < 7; i++) { 
+        for (var i = 0; i < 7; i++) {
             var info = (data[repremFields[i]] === null) ? "" : data[repremFields[i]];
       if (repremFields[i] ===  "additionalPhones"){
       info = info.replace(regExpMultiLines, "\n").trim();
       }
             $(".reprem-label-"+(i+1)).text(info);
-        } 
-    } 
-    else { 
-        oneActiveButton(".create-button"); 
-        $(".reprem-label").text(""); 
-        $(".reprem-label-1").text("Нет информации о клиенте"); 
-        $(".reprem-input-textarea").text(""); 
-    } 
-} 
-function oneActiveButton(value){ 
-        $(".reprem-button").addClass("hidden-button"); 
-        $(value).removeClass("hidden-button"); 
+        }
+    }
+    else {
+        oneActiveButton(".create-button");
+        $(".reprem-label").text("");
+        $(".reprem-label-1").text("Нет информации о клиенте");
+        $(".reprem-input-textarea").text("");
+    }
+}
+function oneActiveButton(value){
+        $(".reprem-button").addClass("hidden-button");
+        $(value).removeClass("hidden-button");
 }
