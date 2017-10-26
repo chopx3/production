@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name         Helper plus
-// @version      2.8
+// @version      2.9
 // @author       izayats@avito.ru
 // @include      https://adm.avito.ru/*
 // @require      http://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js
@@ -58,6 +58,21 @@ $(document).ready(function(){
         turnOnUsersComment();
     if(window.location.href.indexOf('/user/info') != -1){
         login = $('.dropdown-toggle').slice(-1)[0].innerHTML.match(/([^\n]+)/i)[1];
+    }
+if(window.location.href.indexOf('/item/info') != -1){
+        $("button[value=Добавить]").after('<button type="submit" style="float:left;" class="btn btn-warning" value="865" id="task865"> <i class="glyphicon glyphicon-plus"></i> 865 </button>');
+    $('#task865').bind("click",function(){
+        var itemId = getId(window.location.href);
+     $.post('https://adm.avito.ru/comment',
+                   {
+                objectTypeId:1,
+                objectId:itemId,
+                comment:"Таск 865, активация, объявление №" + itemId
+            }).fail(function(resp){
+                alert('Ошибка: ' + resp);
+                throw 'comment Error...';
+            });
+    });
     }
     if (window.location.href.indexOf('/helpdesk') != -1){
     checkAngryUser(); }
