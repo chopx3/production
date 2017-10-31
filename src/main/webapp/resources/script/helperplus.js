@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name         Helper plus
-// @version      3.0
+// @version      3.1
 // @author       izayats@avito.ru
 // @include      https://adm.avito.ru/*
 // @require      http://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js
@@ -60,20 +60,53 @@ $(document).ready(function(){
         login = $('.dropdown-toggle').slice(-1)[0].innerHTML.match(/([^\n]+)/i)[1];
     }
 if(window.location.href.indexOf('/item/info') != -1){
-        $("button[value=Добавить]").after('<button type="submit" style="float:left;" class="btn btn-warning" value="865" id="task865"> <i class="glyphicon glyphicon-plus"></i> 865 </button>');
+    $("button[value=Добавить]").after('<button type="submit" class="btn btn-info pull-left" id="task865"> <i class="glyphicon glyphicon-plus"></i> 865 </button>');
+    $("#task865").after('<button type="submit" class="pull-left btn btn-primary col-md-offset-1" id="tn"> <i class="glyphicon glyphicon-plus"></i> ТН </button>');
+    $("#tn").after('<button type="submit" class="pull-left btn btn-warning col-md-offset-1" id="pushUp"> <i class="glyphicon glyphicon-plus"></i> Push </button>');
+    var itemId = getId(window.location.href);
+    var userId = getId($($(".form-group>.col-xs-9>a")[1]).attr("href"));
     $('#task865').bind("click",function(){
-        var itemId = getId(window.location.href);
-        var userId = getId($($(".form-group>.col-xs-9>a")[1]).attr("href"));
-        console.log(userId);
+    var message = "Таск 865, активация, объявление №" + itemId;
+    addCommentOnPage("https://adm.avito.ru/comment",
+                       {objectTypeId:2,
+                        objectId:userId,
+                        comment: message});
+    $.post('https://adm.avito.ru/comment',
+                   {objectTypeId:1,
+                    objectId:itemId,
+                    comment: message
+            }).fail(function(resp){
+                alert('Ошибка: ' + resp);
+                throw 'comment Error...';
+            });
+    });
+    $('#tn').bind("click",function(){
+        var message = "Техническая неполадка, объявление №" + itemId;
      addCommentOnPage("https://adm.avito.ru/comment",{
                         objectTypeId:2,
                         objectId:userId,
-                        comment: "Таск 865, активация, объявление №" + itemId});
+                        comment: message});
      $.post('https://adm.avito.ru/comment',
                    {
                 objectTypeId:1,
                 objectId:itemId,
-                comment:"Таск 865, активация, объявление №" + itemId
+                comment: message
+            }).fail(function(resp){
+                alert('Ошибка: ' + resp);
+                throw 'comment Error...';
+            });
+    });
+    $('#pushUp').bind("click",function(){
+     var message = "Техническая неполадка, поднятие, №" + itemId;
+     addCommentOnPage("https://adm.avito.ru/comment",{
+                        objectTypeId:2,
+                        objectId:userId,
+                        comment: message});
+     $.post('https://adm.avito.ru/comment',
+                   {
+                objectTypeId:1,
+                objectId:itemId,
+                comment: message
             }).fail(function(resp){
                 alert('Ошибка: ' + resp);
                 throw 'comment Error...';
