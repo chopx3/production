@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         Comments, calls and repremium
 // @match        https://adm.avito.ru/users/user/info/*
-// @version      1.4
+// @version      1.5
 // @require      http://code.jquery.com/jquery-latest.js
 // @require      https://cdn.jsdelivr.net/momentjs/latest/moment.min.js
 // @updateURL    https://raw.githubusercontent.com/chopx3/production/dev/src/main/webapp/resources/script/reprem.js
@@ -285,8 +285,10 @@ reprem = GM_xmlhttpRequest({
     setTimeout(function() {
     var ourResponse = (res.response === undefined) ? undefined : JSON.parse(res.response).id ;
     $(".form-group.js-passwords").after(ourDivBlock);
-    if (ourResponse != undefined) {$("[data-indicator=REPremium]").html(" <div style='cursor:pointer;' id='repremClick'>• <span>RE premium</span> <span style='color:red;'> ✔ </span> </div>");}
-      else {$("[data-indicator=REPremium]").html(" <div style='cursor:pointer;' id='repremClick'>• <span>RE premium</span> <span style='color:red;'> ✖ </span></div>");}
+        $("[data-indicator=REPremium]").attr('id', 'repremClick');
+        $("[data-indicator=REPremium]").css('cursor', 'pointer');
+    if (ourResponse != undefined) {$("[data-indicator=REPremium]>span").after("<span style='color:red;'> ✔ </span>");}
+      else {$("[data-indicator=REPremium]>span").after("<span style='color:red;'> ✖ </span>");}
     $("#repremClick").click(function(){
     $(".reprem-block").toggleClass('On');
     console.log(dataToDraw);
