@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name         Helper plus
-// @version      3.1
+// @version      3.2
 // @author       izayats@avito.ru
 // @include      https://adm.avito.ru/*
 // @require      http://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js
@@ -67,10 +67,6 @@ if(window.location.href.indexOf('/item/info') != -1){
     var userId = getId($($(".form-group>.col-xs-9>a")[1]).attr("href"));
     $('#task865').bind("click",function(){
     var message = "Таск 865, активация, объявление №" + itemId;
-    addCommentOnPage("https://adm.avito.ru/comment",
-                       {objectTypeId:2,
-                        objectId:userId,
-                        comment: message});
     $.post('https://adm.avito.ru/comment',
                    {objectTypeId:1,
                     objectId:itemId,
