@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name         Helper plus
-// @version      3.4
+// @version      3.5
 // @author       izayats@avito.ru
 // @include      https://adm.avito.ru/*
 // @require      http://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js
@@ -149,15 +149,50 @@ onload: function(res) {
     }}, 500);
 }
 function turnOnRemovedHistory(){
-    $("input.mb_unblock").after('<button class="btn btn-default mb_unblock green" id="Activate">Активировать</button>');
+    $("input.mb_unblock").after('<button class="btn btn-default mb_unblock green" id="Activate">Waiting for Package</button>');
       $('#Activate').bind("click",function(){
-        activateItems();
-      })
+        $('input[name^="item_id"]:checked').each(function(){
+            var id = $(this).val();
+            var fullStatus = $($(this).parent().parent().html()).find('.item_cell_row>.item-status').text();
+            var wfpStatus = fullStatus.substring(fullStatus.lastIndexOf('/')+1).trim();
+            var itemStatus = fullStatus.substring(0, fullStatus.indexOf('/')).trim();
+            console.log(wfpStatus, itemStatus);
+            var done = 0;
+            if (wfpStatus == "Waiting for package"){
+                if (itemStatus == "Paid"){
+                    activateItems(id);
+                    done++;
+                }
+                if (itemStatus == "Blocked"){
+                    unblockItems(id);
+                    activateItems(id);
+                    done++;
+                }
+                if (itemStatus == "Rejected"){
+                    activateItems(id);
+                    activateItems(id);
+                    done++;
+                }
+            }
+            if (done){
+                var message = "Таск 865, активация, объявление №" + id;
+                $.post('https://adm.avito.ru/comment',
+                       {objectTypeId:1,
+                        objectId:id,
+                        comment: message
+            }).fail(function(resp){
+                alert('Ошибка: ' + resp);
+                throw 'comment Error...';
+            });
+            }
+      });
+          location.reload();
+      });
     $('.form-row:nth-child(4)').after('<div class="form-row"><input type="button" id="checkRemoved" value="История" class = "btn btn-default mb_activate green"/>');
     $('#checkRemoved').bind("click",function(){
         var items = document.getElementById('items').rows;
         if (items.length){
-        for(var i = 0;i < items.length;i++){
+        for(var i = 1;i < items.length;i++){
             var row = items[i].innerHTML;
             if(!firstTime){
             checkItemHistory(0, items[i],  backUpHtml[i]);
@@ -216,11 +251,11 @@ function turnOnRemovedHistory(){
     }))
     ;
 }
-function activateItems(zEvent){
- $('input[name^="item_id"]:checked').each(function(){
-                $.get('https://adm.avito.ru/items/item/activate/' + $(this).val()).fail(function(resp){alert('Ошибка: ' + resp);});
-            });
-            location.reload();
+function activateItems(link){
+                $.get('https://adm.avito.ru/items/item/activate/' + link).fail(function(resp){alert('Ошибка: ' + resp);});
+        }
+function unblockItems(link){
+                $.get('https://adm.avito.ru/items/item/unblock/' + link).fail(function(resp){alert('Ошибка: ' + resp);});
         }
 function bleachItems(zEvent){
 if(confirm('Вы уверены что хотите отбелить выделенные объявления?')){
@@ -271,7 +306,7 @@ function checkIsWPF(link, row, status) {
      var textToAdd = (wpf>0) ? " / Waiting for package " : "";
      var textToSave = $(row).find('.item-status').text();
      $(row).find('.item-status').text(textToSave+textToAdd);
- });
+})
 }
 function checkItemHistory(link, row, status){
     $("#checkRemoved").removeClass().addClass("btn btn-primary");
