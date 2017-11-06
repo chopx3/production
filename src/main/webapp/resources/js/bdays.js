@@ -9,11 +9,11 @@ var birthdays =
 {"date":"20-12", "fcID": 68},
 {"date":"8-12", "fcID": 90},
 {"date":"6-9", "fcID": 117},
-{"date":"29-2", "fcID": 10},
+{"date":"29-2", "fcID": 150},
 {"date":"16-7", "fcID": 4},
 {"date":"4-7", "fcID": 10},
 {"date":"6-3", "fcID": 65},
-{"date":"28-11", "fcID": 2},
+//{"date":"28-11", "fcID": 2},
 {"date":"7-8", "fcID": 72},
 {"date":"23-1", "fcID": 97},
 {"date":"3-2", "fcID": 79},
@@ -28,7 +28,7 @@ var birthdays =
 {"date":"7-8", "fcID": 36},
 {"date":"12-2", "fcID": 7},
 {"date":"17-11", "fcID": 100},
-{"date":"30-3", "fcID": 98},
+//{"date":"30-3", "fcID": 98},
 {"date":"23-11", "fcID": 119},
 {"date":"31-12", "fcID": 121},
 {"date":"31-7", "fcID": 85},
@@ -45,36 +45,35 @@ function alert(state){
 	else { $(".bdayAlert").removeClass('Add');}
 }
 $(document).ready(function() {
-var goodDay = isTodayAGoodDay();
-if (goodDay){
-	console.log(collectAgentBDays());
-	$(".achievment-block>label").after('<div class="bday" onmouseover=alert(1) onmouseleave=alert(0)><i class="fa fa-inverse fa-fw achievment fa-birthday-cake" id="bdayIcon" style="display: block; font-size: 35px; position:fixed; bottom: 150px; left:10px;"></i><label class="achievment" id="bdayCounter" style="display: block; font-size: 15px; position:fixed; bottom: 150px; left:50px;">'+goodDay+'</label></div>');
-			var string = "";
+	var goodDay = isTodayAGoodDay();
+	if (goodDay){
+		console.log(collectAgentBDays());
+		$(".achievment-block>label").after('<div class="bday" onmouseover=alert(1) onmouseleave=alert(0)><i class="fa fa-inverse fa-fw achievment fa-birthday-cake" id="bdayIcon" style="display: block; font-size: 35px; position:fixed; bottom: 150px; left:10px;"></i><label class="achievment" id="bdayCounter" style="display: block; font-size: 15px; position:fixed; bottom: 150px; left:50px;">'+goodDay+'</label></div>');
 		collectAgentBDays()
 		.then(function (array){
-		Promise.all(array).then(function (result){
-			$(".bday").after("<div class='bdayAlert'> Сегодня день рождения у:<br>" + result + "<div>");
-		})
+			Promise.all(array).then(function (result){
+				$(".bday").after("<div class='bdayAlert'> Сегодня день рождения у:<br>" + result + "<div>");
+			})
 		});
-}
+	}
 })
 function collectAgentBDays(){
 	return new Promise(function(resolve, reject) {
-  var agentBDaysArray = [];
-	birthdays.forEach(function(data){
-	if(data.date == moment().format("D-M")){
-		agentBDaysArray.push((ajax({ url: getNotesURL+ data.fcID}).then(function(agent) {return agent.russianName})));
-	}
-})
-	resolve(agentBDaysArray);
-});	
+		var agentBDaysArray = [];
+		birthdays.forEach(function(data){
+			if(data.date == moment().format("D-M")){
+				agentBDaysArray.push((ajax({ url: getNotesURL+ data.fcID}).then(function(agent) {return agent.russianName})));
+			}
+		})
+		resolve(agentBDaysArray);
+	});	
 }
 function isTodayAGoodDay(){
-var isTodayAGoodDay = 0;
-birthdays.forEach(function(data){
-	if(data.date == moment().format("D-M")){
-		isTodayAGoodDay++;
-	}
-});
-return isTodayAGoodDay;
+	var isTodayAGoodDay = 0;
+	birthdays.forEach(function(data){
+		if(data.date == moment().format("D-M")){
+			isTodayAGoodDay++;
+		}
+	});
+	return isTodayAGoodDay;
 }
