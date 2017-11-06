@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name         Helper plus
-// @version      3.2
+// @version      3.3
 // @author       izayats@avito.ru
 // @include      https://adm.avito.ru/*
 // @require      http://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js
@@ -14,6 +14,7 @@
 'use strict';
 var serverURL = "10.10.36.50";
 var showRemovedHistory = true;
+var backUpHtml = [];
 var showVerificationButton = true;
 var phoneVerificationCheck = false;
 var checkEmails = true;
@@ -148,23 +149,31 @@ onload: function(res) {
     }}, 500);
 }
 function turnOnRemovedHistory(){
-    $('body').append('<div id="item_info" style="position: fixed; left: 100px; top: 60px;border: 4px double black; overflow:auto;max-width:600px;max-height:500px;z-index:250;background-color:WHITE;visibility:hidden;"></div>');
-    $('.form-row:nth-child(4)').after('<div class="form-row"><input type="button" id="checkRemoved" value="История удаленных" class = "btn btn-default mb_activate green"/>');
+    $("input.mb_unblock").after('<button class="btn btn-default mb_unblock green" id="Activate">Активировать</button>');
+      $('#Activate').bind("click",function(){
+        activateItems();
+      })
+    $('.form-row:nth-child(4)').after('<div class="form-row"><input type="button" id="checkRemoved" value="История" class = "btn btn-default mb_activate green"/>');
     $('#checkRemoved').bind("click",function(){
-        if(!firstTime)
-            return;
-        firstTime = false;
         var items = document.getElementById('items').rows;
-        for(var i = 1;i < items.length;i++){
+        if (items.length){
+        for(var i = 0;i < items.length;i++){
             var row = items[i].innerHTML;
-            if(row.indexOf('Removed') != -1 || row.indexOf('Archived') != -1){
-                var isRemoved = (row.indexOf('Removed') != -1);
-                notSync++;
-                checkItemHistory($(row).find('.item_title').attr('href'), items[i], isRemoved);
-            }
+            if(!firstTime){
+            checkItemHistory(0, items[i],  backUpHtml[i]);
+        }
+        else{
+            backUpHtml[i] = $($(row)[8]).html();
+            var status = $($(row)[8]).find('.item_cell_row').text().trim();
+            notSync++;
+            checkItemHistory($(row).find('.item_title').attr('href'), items[i], status);
+            checkIsWPF($(row).find('.item_title').attr('href'), items[i], status);
+        }
+        }
+        firstTime = !firstTime;
+        console.log(firstTime);
         }
     });
-    $('#item_info').click(function(){ $('#item_info').css('visibility','hidden'); });
     $('input[name="query"]').before($('<input id="gnum" type="button" value="|">').click(function(){var e = $('input[name="query"]')[0]; var r = $(e).val().match(/\d{9,}/g);r && $(e).val(r.join('|'));}));
     $('input[name="itemIds"]').before($('<input id="gnum" type="button" value=",">').click(function(){var e = $('input[name="itemIds"]')[0]; var r = $(e).val().match(/\d{9,}/g);r && $(e).val(r.join(','));}));
     $('#checkRemoved').after($('<input type="button" value="ТН combo" class = "btn btn-default mb_activate green"/>').click(function(){
@@ -175,10 +184,10 @@ function turnOnRemovedHistory(){
     }))
     $('#checkRemoved').after($('<input type="button" value="Bleach" class = "btn btn-default mb_activate green"/></div>').click(bleachItems));
     $('#checkRemoved').after($('<input type="button" value="Push up" class = "btn btn-default mb_activate green"/>').click(pushUpItems));
-    $('#checkRemoved').after($('<input type="button" value="Оставить комментарий" class = "btn btn-default mb_activate green"/>').click(function(){
+    $('#checkRemoved').after($('<input type="button" value="Комментарий" class = "btn btn-default mb_activate green"/>').click(function(){
         addCommentToItem(false);
     }));
-    $('#checkRemoved').after($('<input type="button" value="Номера объявлений" class = "btn btn-default mb_activate green"/>').click(function(){
+    $('#checkRemoved').after($('<input type="button" value="Номера" class = "btn btn-default mb_activate green"/>').click(function(){
         collectItemsNumbers(false);
     }));
      $('#checkRemoved').after($('<input type="button" value="Открыть каждое" class = "btn btn-default mb_activate green"/>').click(function(){
@@ -207,6 +216,12 @@ function turnOnRemovedHistory(){
     }))
     ;
 }
+function activateItems(zEvent){
+ $('input[name^="item_id"]:checked').each(function(){
+                $.get('https://adm.avito.ru/items/item/activate/' + $(this).val()).fail(function(resp){alert('Ошибка: ' + resp);});
+            });
+            location.reload();
+        }
 function bleachItems(zEvent){
 if(confirm('Вы уверены что хотите отбелить выделенные объявления?')){
             $('input[name^="item_id"]:checked').each(function(){
@@ -250,9 +265,18 @@ function collectItemsNumbers(isTN){
             GM_setClipboard(toClipBoard);
         }
     }
+function checkIsWPF(link, row, status) {
+ $.get("https://adm.avito.ru/"+ link, function( data ){
+     var wpf = $($(data).find(".col-xs-9.form-control-static>span")[4]).text().indexOf("Waiting for package");
+     var textToAdd = (wpf>0) ? " / Waiting for package " : "";
+     var textToSave = $(row).find('.item-status').text();
+     $(row).find('.item-status').text(textToSave+textToAdd);
+ });
+}
 function checkItemHistory(link, row, status){
-    var statusText = (status) ? removed : archived;
-    $(row).find('.item-status.grey').parent().html(statusText + "<span style='color:#FF8C00;'>(Проверяем...)</span>");
+    $("#checkRemoved").removeClass().addClass("btn btn-primary");
+    var statusText = status;
+    if (link){
     $.get( "https://adm.avito.ru" + link+"/frst_history?history=-100", function( data ) {
         var tables = "";
         var array = [];
@@ -270,33 +294,25 @@ function checkItemHistory(link, row, status){
         </div>`;
         console.log(data);
         var dataLength = (data.length >= 3) ? 3 : data.length;
-        for (var i = 0; i< dataLength; i++){
+        for (var i = 0; i< data.length; i++){
+            if (data[i].admin == "Refund (The blocked item was not in SERP)"){
+                $(row).find('.item-status').after('<i class="glyphicon glyphicon-usd btn-primary" style="padding: 5px; border-radius: 50%;" title="'+data[i].formatedDate+'"></i>');
+            }
+            if (i<dataLength){
             var time = data[i].formatedDate;
             var event = data[i].event;
             var action = data[i].admin;
             tableMid+=`<tr> <td>${time} </td> <td>${action}</td> <td>${event}</td></tr>`;
+            }
         }
         var fullTable = tableTop + tableMid + tableBot;
         $(row).find('.sort-time').html(fullTable);
-        $(row).find('.item-status.grey').parent().html("");
-        $(row).find('.Spoiler').append("<div id='item_page_data' style='visibility:hidden;width:1px;height:1px;'>" + fullTable + "</div>");
-        notSync--;
-        tryBind();
     });
+    }
+    else {$(row).find('.sort-time').parent().html(statusText);
+         $("#checkRemoved").removeClass().addClass("btn btn-default green");
+         }
 }
-function tryBind(){
-    if(notSync == 0)
-        $(".Spoiler").click(function () {
-            if($('#item_info').css('visibility') == 'hidden'){
-                $('#item_info').css('visibility','visible');
-                $('#item_info').html(
-                    $(this).find('#item_page_data').html());
-            }else{
-                $('#item_info').css('visibility','hidden');
-            }
-        });
-}
-
 function turnOnPhoneVerificationBut(){
     if($('#phones') && $('#phones').length){
         $('input[name^=phone]').each(function(){

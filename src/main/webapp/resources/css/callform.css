@@ -14,12 +14,13 @@
 /* Вся строка с сервисным сообщением и кнопкой отправить */
 #sendAndServiceRow{
 	margin-top:10px;
+	margin-bottom: 10px;
 }
 /* Комментарии к звонку */
 #callComments{
-	margin-top: 10px;
 	resize:none;
-	overflow:auto;
+	overflow: auto;
+	overflow-x:hidden;
 }
 /* Переключатель "радости" */
 #isUserHappy{
