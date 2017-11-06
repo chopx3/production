@@ -57,15 +57,16 @@ function timeInCall(data){
 	var totalUsers = getUniqueData(data, "avitoUserId");
 	var modeMap = {};
 	for (var i = 0; i < data.length; i++) {
+		var userID = data[i].avitoUserId;
 		var fullResult = multipleCalls(data, i);
 		longestCall = (fullResult.callTime>longestCall) ? fullResult.callTime : longestCall;
-		if (fullResult.longestHold>longestHold && data[i].avitoUserId !== -1) {
+		if (fullResult.longestHold>longestHold && userID !== -1) {
 			longestHold = fullResult.longestHold;
-			longestHoldId = data[i].avitoUserId;
+			longestHoldId = userID;
 		}
-		if (data[i].avitoUserId == -1) user2299++
-		else if(data[i].avitoUserId !== null && data[i].avitoUserId !== 0){
-		var el = data[i].avitoUserId;
+		if (userID == -1) user2299++
+		else if(userID !== null && userID !== 0 && userID !== 100 && userID !== 1939992){
+		var el = userID;
 	    if(modeMap[el] == null)
 	        modeMap[el] = 1;
 	    else

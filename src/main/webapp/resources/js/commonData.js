@@ -39,7 +39,7 @@ var updTagGroupURL = 							host + "taggroup/update"; // обновить инф
 var tagURL = 											host + "tag/all"; // список тэгов
 var addTagURL = 									host + "tag/add"; // добавить тэг
 var updTagURL = 									host + "tag/update"; // обновить тэг
-var changeTagGroupURL = 							host + "tag/changeGroup"; // изменить группу в тэге
+var changeTagGroupURL = 					host + "tag/changeGroup"; // изменить группу в тэге
 // Общие переменные
 var Categories = []; // массив для категорий
 var Questions = []; // и для вопросов. На звонки
