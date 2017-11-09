@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name         Helper plus
-// @version      3.5
+// @version      3.6
 // @author       izayats@avito.ru
 // @include      https://adm.avito.ru/*
 // @require      http://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js
@@ -110,44 +110,15 @@ if(window.location.href.indexOf('/item/info') != -1){
             });
     });
     }
-    if (window.location.href.indexOf('/helpdesk') != -1){
-    checkAngryUser(); }
+    
     var sum = 0;
     $('.text-right.red').each(function(){
         var reg = /[^\d]([\d\s]+).*/i;
         sum += parseInt($(this).html().match(reg)[1].replace(' ',''));
     });
 var currentPage = window.location.href;
-setInterval(function(){
-    if (currentPage != window.location.href && window.location.href.indexOf('/helpdesk') != -1)    {
-        currentPage = window.location.href;
-        checkAngryUser();
-        console.log("check");
-    }
-},2000);
 });
-function checkAngryUser(zEvent){
-var URL = "http://"+serverURL+"/firecatchertest/api/angry/all";
-GM_xmlhttpRequest({
-method: "GET",
-headers: {"Accept": "application/json"},
-url: URL,
-onreadystatechange: function(res) {
-},
-onload: function(res) {
-    angryUsers = JSON.parse(res.response);
-}
-});
-    setTimeout(function(){
-    var emailToCheck = "";
-    emailToCheck = $("a.hd-ticket-header-email").text();
-    console.log(angryUsers.length);
-    for (var i=0; i<angryUsers.length;i++){
-        if (emailToCheck.indexOf(angryUsers[i].email)>0 && angryUsers[i].active) {
-            $(".hd-ticket-header-title").after("<div class='row text-center'><b style='font-size:20px;color:red;'>Жалобы данного пользователя обрабатываются в отдельном <a href="+angryUsers[i].ticket+"?limit=30&p=1&sortField=reactionTxtime&sortType=asc>тикете</a></b></div>");
-            break;}
-    }}, 500);
-}
+
 function turnOnRemovedHistory(){
     $("input.mb_unblock").after('<button class="btn btn-default mb_unblock green" id="Activate">Waiting for Package</button>');
       $('#Activate').bind("click",function(){
