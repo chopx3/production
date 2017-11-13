@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         Dash
 // @namespace    http://tampermonkey.net/
-// @version      1.0
+// @version      1.1
 // @include      https://adm.avito.ru/helpdesk/dashboard*
 // @require      http://code.jquery.com/jquery-latest.js
 // @require      https://cdn.jsdelivr.net/momentjs/latest/moment.min.js
@@ -13,8 +13,8 @@
 
 //Dash - info about new tickets
 const timeIntervalInMinutes = 2;
-var queues = [339, 706, 763, 354, 535, 351, 1081];
-var queueNames = ["Магазины", "Магазины (В УЗ есть менеджер)", "Gold General", "Запросы менеджеров", "RE Premium", "ProTools", "Context General"];
+var queues = [1473, 354, 535, 351, 1081];
+var queueNames = ["Prosupport (общая)", "Запросы менеджеров", "RE Premium", "ProTools", "Context General"];
 var targetTime = [3600, 3600, 3600, 3600, 3600, 7200, 3600];
 var finalResult = [];
 function getReactionTime(zEvent){
