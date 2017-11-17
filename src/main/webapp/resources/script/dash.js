@@ -15,7 +15,7 @@
 const timeIntervalInMinutes = 2;
 var queues = [1473, 354, 535, 351, 1081];
 var queueNames = ["Prosupport (общая)", "Запросы менеджеров", "RE Premium", "ProTools", "Context General"];
-var targetTime = [3600, 3600, 3600, 3600, 3600, 7200, 3600];
+var targetTime = [11400, 11400, 11400, 11400, 11400, 11400, 11400];
 var finalResult = [];
 function getReactionTime(zEvent){
     finalResult = [];
