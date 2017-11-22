@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name         Helper plus
-// @version      3.7
+// @version      3.8
 // @author       izayats@avito.ru
 // @include      https://adm.avito.ru/*
 // @require      http://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js
@@ -15,6 +15,7 @@
 var serverURL = "10.10.36.50";
 var showRemovedHistory = true;
 var backUpHtml = [];
+var showVerificationButton = true;
 var phoneVerificationCheck = false;
 var checkEmails = true;
 var usersComment = true;
@@ -26,34 +27,40 @@ var MAX_LEN = 600;
 var removed = "<span class='item-status  grey'>Removed</span>";
 var archived = '<span class="item-status  grey">Archived</span>';
 var notSync = 0;
+var status_colors = {
+    "Blocked":"RED",
+    "Rejected":"#FF00BF",
+    "Added":"#40FF00",
+    "Activated":"#40FF00",
+    "Unblocked":"#40FF00"
+};
 var firstTime = true;
-var todayTime = moment().endOf("day").format("DD/MM/YYYY HH:mm");
-var minusMonthTime =  moment().startOf("day").subtract(30, "days").format("DD/MM/YYYY HH:mm");
-var timeToFind =  minusMonthTime + " - " + todayTime;
+var angryUsers = "";
 $(document).ready(function(){
-  $(".items").after(`<a href="/items/search?user_id=${userID}&date=${timeToFind}&status%5B%5D=rejected&status%5B%5D=blocked" class="items" target="_blank/">bl+rej(30)</a>`);
+  var todayTime = moment().endOf("day").format("DD/MM/YYYY HH:mm");
+  var minusMonthTime =  moment().startOf("day").subtract(30, "days").format("DD/MM/YYYY HH:mm");
+  var timeToFind =  minusMonthTime + " - " + todayTime;
+  $(".items").after(`<a href="/items/search?user_id=${userID}&date=${timeToFind}&status%5B%5D=rejected&status%5B%5D=blocked" class="items">bl+rej(30)</a>`);
   $("td.item-checkbox").click(function() {
-    if ($(this).find("input").prop('checked')){
-      $(this).find("input").prop('checked', false)
-    }
-    else {$(this).find("input").prop('checked', true)}
-  })
-  if(showRemovedHistory)
-    turnOnRemovedHistory();
-  if(phoneVerificationCheck)
-    turnOnPhoneVerificationCheck();
-  if(checkEmails)
-    turnOnEmailChecking();
-  if(window.location.href.indexOf('/user/info') != -1){
-    login = $('.dropdown-toggle').slice(-1)[0].innerHTML.match(/([^\n]+)/i)[1];
+  if ($(this).find("input").prop('checked')){
+  $(this).find("input").prop('checked', false)
   }
-  if(window.location.href.indexOf('/item/info') != -1){
-      var abuse = document.getElementsByClassName("form-group")[5];
-      var ourElement = document.createElement('div');
-      ourElement.innerHTML = `<div class="form-group"> <label class="col-xs-3 control-label">Wallet Log</label> <div class="col-xs-9 form-control-static">
-  <a href="/billing/walletlog?date=${timeToFind}&itemIds=${userID}" target="_blank/"><span>Перейти</span></a> </div> </div>`
-      var parentDiv = abuse.parentNode;
-      parentDiv.insertBefore(ourElement, abuse);
+  else {$(this).find("input").prop('checked', true)}
+})
+    if(showRemovedHistory)
+        turnOnRemovedHistory();
+    if(showVerificationButton)
+        turnOnPhoneVerificationBut();
+    if(phoneVerificationCheck)
+        turnOnPhoneVerificationCheck();
+    if(checkEmails)
+        turnOnEmailChecking();
+    if(usersComment)
+        turnOnUsersComment();
+    if(window.location.href.indexOf('/user/info') != -1){
+        login = $('.dropdown-toggle').slice(-1)[0].innerHTML.match(/([^\n]+)/i)[1];
+    }
+if(window.location.href.indexOf('/item/info') != -1){
     $("button[value=Добавить]").after('<button type="submit" class="btn btn-info pull-left" id="task865"> <i class="glyphicon glyphicon-plus"></i> 865 </button>');
     $("#task865").after('<button type="submit" class="pull-left btn btn-primary col-md-offset-1" id="tn"> <i class="glyphicon glyphicon-plus"></i> ТН </button>');
     $("#tn").after('<button type="submit" class="pull-left btn btn-warning col-md-offset-1" id="pushUp"> <i class="glyphicon glyphicon-plus"></i> Push </button>');
@@ -61,24 +68,49 @@ $(document).ready(function(){
     var userId = getId($($(".form-group>.col-xs-9>a")[1]).attr("href"));
     $('#task865').bind("click",function(){
     var message = "Таск 865, активация, объявление №" + itemId;
-    var itemComment = {"type": 1, "ID": itemId, "comment": message};
-    comment(itemComment);
+    $.post('https://adm.avito.ru/comment',
+                   {objectTypeId:1,
+                    objectId:itemId,
+                    comment: message
+            }).fail(function(resp){
+                alert('Ошибка: ' + resp);
+                throw 'comment Error...';
+            });
     });
     $('#tn').bind("click",function(){
-    var message = "Техническая неполадка, объявление №" + itemId;
-    var pageComment = {"type": 2, "ID": userId, "comment": message};
-    comment(pageComment);
-    var itemComment = {"type": 1, "ID": itemId, "comment": message};
-    comment(itemComment);
+        var message = "Техническая неполадка, объявление №" + itemId;
+     addCommentOnPage("https://adm.avito.ru/comment",{
+                        objectTypeId:2,
+                        objectId:userId,
+                        comment: message});
+     $.post('https://adm.avito.ru/comment',
+                   {
+                objectTypeId:1,
+                objectId:itemId,
+                comment: message
+            }).fail(function(resp){
+                alert('Ошибка: ' + resp);
+                throw 'comment Error...';
+            });
     });
     $('#pushUp').bind("click",function(){
-      var message = "Техническая неполадка, поднятие, №" + itemId;
-      var pageComment = {"type": 2, "ID": userId, "comment": message};
-      comment(pageComment);
-      var itemComment = {"type": 1, "ID": itemId, "comment": message};
-      comment(itemComment);
-      });
-  }
+     var message = "Техническая неполадка, поднятие, №" + itemId;
+     addCommentOnPage("https://adm.avito.ru/comment",{
+                        objectTypeId:2,
+                        objectId:userId,
+                        comment: message});
+     $.post('https://adm.avito.ru/comment',
+                   {
+                objectTypeId:1,
+                objectId:itemId,
+                comment: message
+            }).fail(function(resp){
+                alert('Ошибка: ' + resp);
+                throw 'comment Error...';
+            });
+    });
+    }
+    
     var sum = 0;
     $('.text-right.red').each(function(){
         var reg = /[^\d]([\d\s]+).*/i;
@@ -86,13 +118,7 @@ $(document).ready(function(){
     });
 var currentPage = window.location.href;
 });
-function comment(options) {
-    $.post('https://adm.avito.ru/comment', {
-                objectTypeId: options.type,
-                objectId: options.ID,
-                comment: options.comment
-            });
-}
+
 function turnOnRemovedHistory(){
     $("input.mb_unblock").after('<button class="btn btn-default mb_unblock green" id="Activate">Waiting for Package</button>');
       $('#Activate').bind("click",function(){
@@ -104,7 +130,7 @@ function turnOnRemovedHistory(){
             console.log(wfpStatus, itemStatus);
             var done = 0;
             if (wfpStatus == "Waiting for package"){
-                if (itemStatus == "Paid" && itemStatus == "Unblocked" && itemStatus == "Added" && itemStatus == "Activated"){
+                if (itemStatus == "Paid"){
                     activateItems(id);
                     done++;
                 }
@@ -121,8 +147,14 @@ function turnOnRemovedHistory(){
             }
             if (done){
                 var message = "Таск 865, активация, объявление №" + id;
-                var itemComment = {"type": 1, "ID": id, "comment": message};
-                comment(itemComment);
+                $.post('https://adm.avito.ru/comment',
+                       {objectTypeId:1,
+                        objectId:id,
+                        comment: message
+            }).fail(function(resp){
+                alert('Ошибка: ' + resp);
+                throw 'comment Error...';
+            });
             }
       });
           location.reload();
@@ -141,7 +173,7 @@ function turnOnRemovedHistory(){
             var status = $($(row)[8]).find('.item_cell_row').text().trim();
             notSync++;
             checkItemHistory($(row).find('.item_title').attr('href'), items[i], status);
-            checkIsWFP($(row).find('.item_title').attr('href'), items[i], status);
+            checkIsWPF($(row).find('.item_title').attr('href'), items[i], status);
         }
         }
         firstTime = !firstTime;
@@ -154,9 +186,7 @@ function turnOnRemovedHistory(){
         bleachItems();
         pushUpItems();
         addCommentToItem(true);
-        var message = "ТН, Объявления №" + collectItemsNumbers() + " , поднятие в поиске, bleach"
-        var pageComment = {"type": 2, "ID": $(".item_user_login")[0].href.match(/\d{5,9}/)[0] , "comment": message};
-        comment(pageComment);
+        collectItemsNumbers(true);
     }))
     $('#checkRemoved').after($('<input type="button" value="Bleach" class = "btn btn-default mb_activate green"/></div>').click(bleachItems));
     $('#checkRemoved').after($('<input type="button" value="Push up" class = "btn btn-default mb_activate green"/>').click(pushUpItems));
@@ -164,7 +194,7 @@ function turnOnRemovedHistory(){
         addCommentToItem(false);
     }));
     $('#checkRemoved').after($('<input type="button" value="Номера" class = "btn btn-default mb_activate green"/>').click(function(){
-        collectItemsNumbers();
+        collectItemsNumbers(false);
     }));
      $('#checkRemoved').after($('<input type="button" value="Открыть каждое" class = "btn btn-default mb_activate green"/>').click(function(){
         var s = [];
@@ -215,31 +245,36 @@ function pushUpItems(zEvent){
         }
     }
 function addCommentToItem(isTN){
-        var message = (isTN) ? "ТН, поднятие в поиске, блич" : prompt('Введите пожалуйста комментарий');
-        if(message == null)
+        var comment = (isTN) ? "ТН, поднятие в поиске, блич" : prompt('Введите пожалуйста комментарий');
+        if(comment == null)
             return;
         $('input[name^="item_id"]:checked').each(function(){
-            var itemComment = {"type": 1, "ID": $(this).val(), "comment": message};
-            console.log(itemComment);
-            comment(itemComment);
+            $.post('https://adm.avito.ru/comment',
+                   {
+                objectTypeId:1,
+                objectId:$(this).val(),
+                comment:comment
+            }).fail(function(resp){
+                alert('Ошибка: ' + resp);
+                throw 'comment Error...';
+            });
         });
         alert('комментарий был успешно оставлен');
     }
-function collectItemsNumbers(){
+function collectItemsNumbers(isTN){
         var s = '';
         $('input[name^="item_id"]:checked').each(function(){
             s += $(this).val() +'|';
         });
         if(s.length > 0){
-          var result = s.substring(0,s.length-1);
-          GM_setClipboard(result);
+            var toClipBoard = (isTN) ? "ТН, Объявления №" + s.substring(0,s.length-1) + " , поднятие в поиске, bleach" : s.substring(0,s.length-1);
+            GM_setClipboard(toClipBoard);
         }
-        return result;
     }
-function checkIsWFP(link, row, status) {
+function checkIsWPF(link, row, status) {
  $.get("https://adm.avito.ru/"+ link, function( data ){
-     var wfp = $($(data).find(".col-xs-9.form-control-static>span")[4]).text().indexOf("Waiting for package");
-     var textToAdd = (wfp>0) ? " / Waiting for package " : "";
+     var wpf = $($(data).find(".col-xs-9.form-control-static>span")[4]).text().indexOf("Waiting for package");
+     var textToAdd = (wpf>0) ? " / Waiting for package " : "";
      var textToSave = $(row).find('.item-status').text();
      $(row).find('.item-status').text(textToSave+textToAdd);
 })
@@ -284,9 +319,74 @@ function checkItemHistory(link, row, status){
          $("#checkRemoved").removeClass().addClass("btn btn-default green");
          }
 }
-function getId(url){
-    return url.substring(url.lastIndexOf('/')+1).match(/\d+/)[0];
+function turnOnPhoneVerificationBut(){
+    if($('#phones') && $('#phones').length){
+        $('input[name^=phone]').each(function(){
+            if($(this).attr('value').length && !$(this).parents('tr').find('.i-verify-unchecked').length)
+                $(this).parents('tr').append('<td  style="width:10px;"><span class="verification-but" style="background-color:BLACK;color:white;cursor:pointer;border:5px solid BLACK;">О</span></td>');
+        });
+    }
+    $('.verification-but').unbind().click(function(){
+        var url = prompt('Открепить для(вставьте ссылку на учетную записи или адрес электнронной почты):');
+        if(url == ''){
+            alert('Введите адрес!');
+            return;
+        }
+        if(url != null){
+            var phone = $(this).parents('tr').find('input[name^=phone]').attr('value');
+            var o = {id:userID,phone:phone};
+            var mailPattern = /.+@.+\..+/i;
+            if(mailPattern.test(url)){
+                try{
+                    addCommentOnPage("https://adm.avito.ru/comment",{
+                        objectTypeId:2,
+                        objectId:userID,
+                        comment:phone + " откреплен для " + url});
+                    unverify(o);
+                    return;
+                }catch(e){alert(e);}
+            }
+            $.get(url).done(
+                function(){
+                    try{
+                        addCommentOnPage("https://adm.avito.ru/comment",{
+                            objectTypeId:2,
+                            objectId:getId(url),
+                            comment:phone + " откреплен от " + window.location.href});
+                        addCommentOnPage("https://adm.avito.ru/comment",{
+                            objectTypeId:2,
+                            objectId:userID,
+                            comment:phone + " откреплен для " + url});
+                        unverify(o);
+                    }catch(e){
+                        alert(e);
+                    }
+                }).fail(
+                function(){
+                    alert('Введен неправильный адрес');
+                });
+        }
+    });
 }
+function addCommentOnPage(link,params){
+    $.post(link, params).fail(function(e){
+        throw "Ошибка, что то пошло не так:(";
+    });
+}
+function getId(url){
+    return url.substring(url.lastIndexOf('/')+1);
+}
+function unverify(o){
+    $.post('https://adm.avito.ru/users/user/phone/cancel_confirm',o).done(
+        function(){
+            alert('Номер успешно откреплен');
+            location.reload();
+        }
+    ).fail(
+        function(){alert('Не удалось открепить номер');}
+    );
+}
+
 var htmlmask = /<(?:.|\n)*?>/gm;
 var linkmask = /(https?:\/\/[^\s,]+)/gm;
 var imgmask = /(.jpe?g)|(.gif)|(.png)|(.bmp)|(.icon)/gi;
@@ -372,4 +472,46 @@ function getEmailHistory(){
             })(o);
         }
     }
+}
+function turnOnUsersComment(){
+    if(location.href.indexOf('users/search') == -1)
+        return;
+    $('.table.table-striped tr td:first-child').css('width','100');
+    $($('.table.table-striped tr th:first-child')[0]).append(
+        $('<input type="checkbox">').click(function(){
+            $('.commentsCheck').prop('checked', $(this).prop('checked'));
+        })
+    );
+    $('.table.table-striped tr td:first-child').each(
+        function(){
+            var id = $(this).html();
+            $(this).html(
+                '<input type="checkbox" class="commentsCheck" value="' + id + '">' + $(this).html()
+            );
+        }
+    );
+    $('button[type="submit"]').after(
+        $('<input type="button" value="Оставить комментарии" class = "btn btn-default mb_activate green"/>').click(
+            function(){
+                var comment = prompt('Введите комментарий пожалуйста');
+                if(comment == null)
+                    return;
+                $('.commentsCheck').each( function(){
+                    if(!$(this).prop('checked')){
+                        return;
+                    }
+                    $.post('https://adm.avito.ru/comment',
+                           {
+                        objectTypeId:2,
+                        objectId:$(this).attr('value'),
+                        comment:comment
+                    }).fail(function(resp){
+                        alert('Ошибка: ' + resp);
+                        throw 'comment Error...';
+                    });
+                });
+                alert('комментарий был успешно оставлен');
+            }
+        )
+    );
 }
