@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name Calls and comments
-// @version 1.2
+// @version 1.3
 // @match https://adm.avito.ru/users/user/info/*
 // @require http://code.jquery.com/jquery-latest.js
 // @updateURL   https://raw.githubusercontent.com/chopx3/production/dev/src/main/webapp/resources/script/callscomments.js
@@ -146,6 +146,13 @@ window.open(url, '_blank');
 }
 });
 }
+    var packageNumber = $(".active-fees-packages-table>tbody>tr").length;
+    var colorClass = (packageNumber > 2) ? "ah-indicators-fired" : "ah-inactive" ;
+    var packageNumber = (packageNumber > 2) ? " (" + (packageNumber - 2) + ")" : ""
+    $(".ah-user-info-indicators>div[data-indicator=persManager]").after(`<div class="ah-indicators-item" data-indicator="packages" style="cursor: pointer; background-color: rgb(255, 255, 255);"><span class="ah-indicators-title ${colorClass}" id='packageID'>Пакеты${packageNumber}</span></div>`);
+$('#packageID').bind("click",function(){
+    $(window).scrollTop($('.fees-packages').offset().top);
+});
 });
 function getId(url){
 return url.substring(url.lastIndexOf('/')+1);
