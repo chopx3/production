@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name         Helper plus
-// @version      3.9
+// @version      4.0
 // @author       izayats@avito.ru
 // @include      https://adm.avito.ru/*
 // @require      http://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js
@@ -48,6 +48,22 @@ $(document).ready(function(){
     login = $('.dropdown-toggle').slice(-1)[0].innerHTML.match(/([^\n]+)/i)[1];
   }
   if(window.location.href.indexOf('/item/info') != -1){
+      var adminHistoryTable = $(".loadable-history.js-loadable-history>.table-scroll>table>tbody")[1];
+      var adminHistoryTableRows = adminHistoryTable.getElementsByTagName("tr");
+      var isAutoload = false;
+      for (var i = 0; i<adminHistoryTableRows.length; i++){
+          if (adminHistoryTableRows[i].getElementsByTagName("td")[2].innerHTML == "daemon-autoload") {
+              adminHistoryTableRows[i].getElementsByTagName("td")[2].innerHTML = "<b>daemon-autoload<b>";
+              isAutoload = true;
+          }
+      }
+      if (isAutoload) {
+          var ourElem = document.getElementsByTagName("header")[0].getElementsByTagName("h2")[0].getElementsByTagName("div")[0];
+          var HTMLCode = document.createElement('i');
+          HTMLCode.innerHTML = '<i class="glyphicon glyphicon-cloud-download btn-primary" style="font-size:24px; padding: 3px; border-radius: 50%;" title="АЗ"></i>';
+          var parent = ourElem.parentNode;
+          parent.insertBefore(HTMLCode, ourElem);
+      }
       var abuse = document.getElementsByClassName("form-group")[5];
       var ourElement = document.createElement('div');
       ourElement.innerHTML = `<div class="form-group"> <label class="col-xs-3 control-label">Wallet Log</label> <div class="col-xs-9 form-control-static">
