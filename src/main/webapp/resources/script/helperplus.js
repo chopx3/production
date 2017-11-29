@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name         Helper plus
-// @version      4.0
+// @version      4.1
 // @author       izayats@avito.ru
 // @include      https://adm.avito.ru/*
 // @require      http://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js
@@ -48,7 +48,9 @@ $(document).ready(function(){
     login = $('.dropdown-toggle').slice(-1)[0].innerHTML.match(/([^\n]+)/i)[1];
   }
   if(window.location.href.indexOf('/item/info') != -1){
+	  if ($(".loadable-history.js-loadable-history>.table-scroll>table>tbody").length > 1){
       var adminHistoryTable = $(".loadable-history.js-loadable-history>.table-scroll>table>tbody")[1];
+	  } else {var adminHistoryTable = $(".loadable-history.js-loadable-history>.table-scroll>table>tbody")[0]}
       var adminHistoryTableRows = adminHistoryTable.getElementsByTagName("tr");
       var isAutoload = false;
       for (var i = 0; i<adminHistoryTableRows.length; i++){
