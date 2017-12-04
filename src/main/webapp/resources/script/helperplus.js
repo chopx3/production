@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name         Helper plus
-// @version      4.1
+// @version      4.2
 // @author       izayats@avito.ru
 // @include      https://adm.avito.ru/*
 // @require      http://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js
@@ -47,6 +47,62 @@ $(document).ready(function(){
   if(window.location.href.indexOf('/user/info') != -1){
     login = $('.dropdown-toggle').slice(-1)[0].innerHTML.match(/([^\n]+)/i)[1];
   }
+  if(window.location.href.indexOf('shops/info/view') != -1){
+      var isWmChecked = $("#watermark").prop("checked");
+      var wmSpan = (isWmChecked) ? `<span class="label label-info" id=watermarkSpan style="cursor:pointer;"> Подключен </span>` : `<span class="label label-danger" id=watermarkSpan style="cursor:pointer;"> Отключен </span>`;
+      var tarifDiv = document.getElementsByClassName("form-group")[4];
+      var waterMarkDiv = document.createElement('div');
+      waterMarkDiv.innerHTML = `<div class="form-group"> <label class="col-xs-4 control-label">Водяной знак</label> <div class="col-xs-8"> <div class="help-block">${wmSpan}</div>  </div> </div>`
+      var parentDiv = tarifDiv.parentNode;
+      parentDiv.insertBefore(waterMarkDiv, tarifDiv);
+      $('#watermarkSpan').bind("click",function(){
+          $(window).scrollTop($('#watermark').offset().top);
+      });
+      $("button[value=Добавить]").after('<button type="submit" class="btn btn-info pull-left watermarkButtons" id="repeatWaterMark" title="Водяной знак переподключен"> <i class="glyphicon glyphicon-repeat"></i> WM</button>');
+      $("button[value=Добавить]").after('<button type="submit" class="btn btn-danger pull-left watermarkButtons" id="removeWaterMark" title="Водяной знак отключен"> <i class="glyphicon glyphicon-minus"></i> WM</button>');
+      $("button[value=Добавить]").after('<button type="submit" class="btn btn-success pull-left watermarkButtons" id="addWaterMark" title="Водяной знак подключен"> <i class="glyphicon glyphicon-plus"></i> WM</button>');
+      $('.watermarkButtons').bind("click",function(){
+          var message = this.title;
+          console.log(message);
+          var shopComment = {"type": 3, "ID": userID, "comment": message};
+          comment(shopComment);
+      });
+      var isGeneral = ($(".js-notification-phone")[0] != undefined);
+      console.log(isGeneral);
+      if (isGeneral){
+          var phone = $(".js-notification-phone")[0].value;
+          var dateInterval = $(".js-notification-interval-days option:selected").text();
+          $("#repeatWaterMark").after('<button type="submit" class="btn btn-info pull-left col-lg-offset-2" id="smsNotification" title="Замена номера телефона"> <i class="glyphicon glyphicon-phone"></i> SMS </button>');
+          $('#smsNotification').bind("click",function(){
+              if ( (phone != $(".js-notification-phone")[0].value) || (dateInterval != $(".js-notification-interval-days option:selected").text()) ){
+                  var newPhone = $(".js-notification-phone")[0].value;
+                  var newInterval = $(".js-notification-interval-days option:selected").text().trim();
+                  dateInterval = dateInterval.trim();
+                  var message = `Настройки СМС-оповещения изменены:\n Номер телефона: ${phone}, (${dateInterval}) --> \nНомер телефона: ${newPhone}, (${newInterval})`;
+                  var shopComment = {"type": 3, "ID": userID, "comment": message};
+                  comment(shopComment);
+              }
+          });
+      }
+  }
+   /* if(window.location.href.indexOf('helpdesk?') != -1){
+        var helpdeskEl = document.getElementsByClassName("helpdesk-main-section")[0];
+        var abuseButton = document.createElement('button');
+        abuseButton.innerHTML = `<button class="btn btn-default" id="abuseButton">Создать жалобу</button>`;
+        abuseButton.getElementsByTagName("button")[0].style.right = "200px";
+        abuseButton.getElementsByTagName("button")[0].style.position = "absolute";
+        abuseButton.getElementsByTagName("button")[0].style.top = "25px";
+        helpdeskEl.appendChild(abuseButton);
+        $('#abuseButton').bind("click",function(){
+            $(".helpdesk-new-ticket-button").trigger( "click" );
+            setTimeout(function(){
+                $(".helpdesk-comment-box").val("Жалоба пользователя");
+                $("[name=receivedAtEmail] option[value='shop_support@avito.ru']").prop('selected',true).trigger('change');
+
+                                 }, 300);
+
+        });
+    } */
   if(window.location.href.indexOf('/item/info') != -1){
 	  if ($(".loadable-history.js-loadable-history>.table-scroll>table>tbody").length > 1){
       var adminHistoryTable = $(".loadable-history.js-loadable-history>.table-scroll>table>tbody")[1];
@@ -66,12 +122,12 @@ $(document).ready(function(){
           var parent = ourElem.parentNode;
           parent.insertBefore(HTMLCode, ourElem);
       }
-      var abuse = document.getElementsByClassName("form-group")[5];
+      var abuseDiv = document.getElementsByClassName("form-group")[5];
       var ourElement = document.createElement('div');
       ourElement.innerHTML = `<div class="form-group"> <label class="col-xs-3 control-label">Wallet Log</label> <div class="col-xs-9 form-control-static">
   <a href="/billing/walletlog?date=${timeToFind}&itemIds=${userID}" target="_blank/"><span>Перейти</span></a> </div> </div>`
-      var parentDiv = abuse.parentNode;
-      parentDiv.insertBefore(ourElement, abuse);
+      var parentDiv = abuseDiv.parentNode;
+      parentDiv.insertBefore(ourElement, abuseDiv);
     $("button[value=Добавить]").after('<button type="submit" class="btn btn-info pull-left" id="task865"> <i class="glyphicon glyphicon-plus"></i> 865 </button>');
     $("#task865").after('<button type="submit" class="pull-left btn btn-primary col-md-offset-1" id="tn"> <i class="glyphicon glyphicon-plus"></i> ТН </button>');
     $("#tn").after('<button type="submit" class="pull-left btn btn-warning col-md-offset-1" id="pushUp"> <i class="glyphicon glyphicon-plus"></i> Push </button>');
