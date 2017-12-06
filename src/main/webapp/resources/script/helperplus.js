@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name         Helper plus
-// @version      4.2
+// @version      4.3
 // @author       izayats@avito.ru
 // @include      https://adm.avito.ru/*
 // @require      http://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js
@@ -87,7 +87,7 @@ $(document).ready(function(){
             }
         }
     }
-   /* if(window.location.href.indexOf('helpdesk?') != -1){
+    if(window.location.href.indexOf('helpdesk?') != -1){
         var helpdeskEl = document.getElementsByClassName("helpdesk-main-section")[0];
         var abuseButton = document.createElement('button');
         abuseButton.innerHTML = `<button class="btn btn-default" id="abuseButton">Создать жалобу</button>`;
@@ -98,13 +98,15 @@ $(document).ready(function(){
         $('#abuseButton').bind("click",function(){
             $(".helpdesk-new-ticket-button").trigger( "click" );
             setTimeout(function(){
-                $(".helpdesk-comment-box").val("Жалоба пользователя");
-                $("[name=receivedAtEmail] option[value='shop_support@avito.ru']").prop('selected',true).trigger('change');
-
+                document.getElementsByClassName("helpdesk-comment-box")[0].value = 'new comment';
+                document.getElementsByClassName("helpdesk-comment-box")[0].innerHTML = 'new comment';
+                const event = new Event('input', { bubbles: true });
+                document.getElementsByClassName("helpdesk-comment-box")[0].dispatchEvent(event);
+                document.getElementsByName("description")[0].value = "new comment";
                                  }, 300);
 
         });
-    } */
+    }
   if(window.location.href.indexOf('/item/info') != -1){
 	  if ($(".loadable-history.js-loadable-history>.table-scroll>table>tbody").length > 1){
       var adminHistoryTable = $(".loadable-history.js-loadable-history>.table-scroll>table>tbody")[1];
@@ -131,8 +133,10 @@ $(document).ready(function(){
       var parentDiv = abuseDiv.parentNode;
       parentDiv.insertBefore(ourElement, abuseDiv);
     $("button[value=Добавить]").after('<button type="submit" class="btn btn-info pull-left" id="task865"> <i class="glyphicon glyphicon-plus"></i> 865 </button>');
-    $("#task865").after('<button type="submit" class="pull-left btn btn-primary col-md-offset-1" id="tn"> <i class="glyphicon glyphicon-plus"></i> ТН </button>');
-    $("#tn").after('<button type="submit" class="pull-left btn btn-warning col-md-offset-1" id="pushUp"> <i class="glyphicon glyphicon-plus"></i> Push </button>');
+    $("#task865").after('<button type="submit" class="pull-left btn btn-primary buttonMargin" id="tn"> <i class="glyphicon glyphicon-plus"></i> ТН </button>');
+    $("#tn").after('<button type="submit" class="pull-left btn btn-warning buttonMargin" id="pushUp"> <i class="glyphicon glyphicon-plus"></i> Push </button>');
+    $("#pushUp").after('<button type="submit" class="pull-left btn btn-success buttonMargin" id="doubleComment"> <i class="glyphicon glyphicon-plus"></i> Учетка </button>');
+    $(".buttonMargin").css("margin-left", "20px");
     var itemId = getId(window.location.href);
     var userId = getId($($(".form-group>.col-xs-9>a")[1]).attr("href"));
     $('#task865').bind("click",function(){
@@ -146,6 +150,11 @@ $(document).ready(function(){
     comment(pageComment);
     var itemComment = {"type": 1, "ID": itemId, "comment": message};
     comment(itemComment);
+    });
+    $('#doubleComment').bind("click",function(){
+    var message = $("[name=comment]").val() + ", " + itemId;
+    var pageComment = {"type": 2, "ID": userId, "comment": message };
+    comment(pageComment);
     });
     $('#pushUp').bind("click",function(){
       var message = "Техническая неполадка, поднятие, №" + itemId;
@@ -294,20 +303,26 @@ function addCommentToItem(isTN){
         var message = (isTN) ? "ТН, поднятие в поиске, блич" : prompt('Введите пожалуйста комментарий');
         if(message == null)
             return;
-        $('input[name^="item_id"]:checked').each(function(){
+        $('td>input[name^="item_id"]:checked').each(function(){
             var itemComment = {"type": 1, "ID": $(this).val(), "comment": message};
             console.log(itemComment);
             comment(itemComment);
         });
-        alert('комментарий был успешно оставлен');
+        if (!isTN) {
+			if(confirm('Добавить комментарий ТАКЖЕ на учетную запись?')){
+			var pageComment = {"type": 2, "ID": $(".item_user_login")[0].href.match(/\d{5,9}/)[0] , "comment": "Объявления №" + collectItemsNumbers() + ", " + message};
+			comment(pageComment);
+			}
+			}
+		alert('комментарий был успешно оставлен')
     }
 function collectItemsNumbers(){
         var s = '';
-        $('input[name^="item_id"]:checked').each(function(){
+        $('td>input[name^="item_id"]:checked').each(function(){
             s += $(this).val() +'|';
         });
         if(s.length > 0){
-          var result = s.substring(0,s.length-1);
+         var result = s.substring(0,s.length-1);
           GM_setClipboard(result);
         }
         return result;
