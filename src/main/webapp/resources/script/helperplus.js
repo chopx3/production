@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name         Helper plus
-// @version      4.3
+// @version      4.4
 // @author       izayats@avito.ru
 // @include      https://adm.avito.ru/*
 // @require      http://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js
@@ -96,14 +96,28 @@ $(document).ready(function(){
         abuseButton.getElementsByTagName("button")[0].style.top = "25px";
         helpdeskEl.appendChild(abuseButton);
         $('#abuseButton').bind("click",function(){
-            $(".helpdesk-new-ticket-button").trigger( "click" );
             setTimeout(function(){
-                document.getElementsByClassName("helpdesk-comment-box")[0].value = 'new comment';
-                document.getElementsByClassName("helpdesk-comment-box")[0].innerHTML = 'new comment';
-                const event = new Event('input', { bubbles: true });
-                document.getElementsByClassName("helpdesk-comment-box")[0].dispatchEvent(event);
-                document.getElementsByName("description")[0].value = "new comment";
-                                 }, 300);
+                var toPostJSON = {
+                    "problemId":67,
+                    "submitterId":localStorage.agentID,
+                    "typeId": 1,
+                    "channelId": 3,
+                    "receivedAtEmail": "shop_support@avito.ru",
+                    "subject": "Жалобы",
+                    "theme": 42,
+                    "problem": 67,
+                    "statusId": 1,
+                    "description": "<p>Жалоба пользователя</p>",
+                    "requesterEmail": localStorage.agentEmail,
+                    "requesterName": localStorage.agentName
+                };
+                $.post('https://adm.avito.ru/helpdesk/api/1/ticket/add', toPostJSON, function(data, status){
+                    console.log(data);
+                    var url = "https://adm.avito.ru/helpdesk/details/" + data.id;
+                    window.open( url, '_blank');
+                }
+                      );
+            }, 300);
 
         });
     }
