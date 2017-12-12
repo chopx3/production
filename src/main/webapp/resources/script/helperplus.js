@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name         Helper plus
-// @version      4.4
+// @version      4.5
 // @author       izayats@avito.ru
 // @include      https://adm.avito.ru/*
 // @require      http://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js
@@ -44,9 +44,34 @@ $(document).ready(function(){
     turnOnPhoneVerificationCheck();
   if(checkEmails)
     turnOnEmailChecking();
-  if(window.location.href.indexOf('/user/info') != -1){
-    login = $('.dropdown-toggle').slice(-1)[0].innerHTML.match(/([^\n]+)/i)[1];
-  }
+    if(window.location.href.indexOf('/packages/info/') != -1){
+        var shopLink = $("section.content>div>div>a")[0].href;
+        var shopLinkHTML = $("section.content>div>div>a")[0].outerHTML;
+        $.get(shopLink).done(function(data){
+            var userLink = $("[data-userid]", data)[0].dataset.userid;
+            $("section.content>div>div>a")[0].outerHTML = (shopLinkHTML+'<a href="/users/user/info/'+userLink+'" type="button" class="btn btn-success" style="margin-left:20px">← Вернуться на УЗ</a>');
+            var subsNums = $(".header__title")[0].innerHTML.match(/\d+/g);
+            console.log(subsNums[0], subsNums[1]);
+            $("[type=submit]")[0].after("  max = " + (subsNums[1] - subsNums[0]));
+            $("tr[data-status-id='']>td:nth-child(2)").html("Archived");
+        });
+    }
+    if(window.location.href.indexOf('/user/info') != -1){
+        login = $('.dropdown-toggle').slice(-1)[0].innerHTML.match(/([^\n]+)/i)[1];
+        if ($(".form-group>div>a")[7].innerHTML != "создать" && $(".form-group>div>a")[7].innerHTML != "Закрыт"){
+            var shopLink = $(".form-group>div>a")[7].href;
+            var shopLinkHTML = $(".form-group>div>a")[7].outerHTML;
+            $(".form-group>div>a")[7].outerHTML = (shopLinkHTML + `<a id="buttonPackage" style="margin-left:20px; cursor:pointer">Пакет</a>`);
+            $('#buttonPackage').bind("click",function(){
+                $.get(shopLink).done(function(data){
+                    var packageLink = $("[title='Просмотреть историю списаний из пакета']", data)[0].pathname;
+                    if (packageLink != undefined){
+                        window.open("https://adm.avito.ru/" + packageLink);
+                    }
+                });
+            });
+        }
+    }
     if(window.location.href.indexOf('shops/info/view') != -1){
         if ($("#watermark").prop("checked") != undefined){
             var isWmChecked = $("#watermark").prop("checked");
