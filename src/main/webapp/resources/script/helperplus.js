@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name         Helper plus
-// @version      4.5
+// @version      4.6
 // @author       izayats@avito.ru
 // @include      https://adm.avito.ru/*
 // @require      http://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js
@@ -58,6 +58,13 @@ $(document).ready(function(){
     }
     if(window.location.href.indexOf('/user/info') != -1){
         login = $('.dropdown-toggle').slice(-1)[0].innerHTML.match(/([^\n]+)/i)[1];
+        $("#copyurl").after(`<button id="copyID" class="sh-default-btn" type="button" title="Скопировать URL страницы" style="margin-left:160px;position: absolute; padding: 1px 5px; font-size: 12px;">
+<span class="sh-button-label sh-copy-img" style="border-radius: 0; font-size: 12px; top: 2px; line-height: 16px;">
+</span>Номер
+</button>`);
+        $('#copyID').bind("click",function(){
+                GM_setClipboard(userID);
+            });
         if ($(".form-group>div>a")[7].innerHTML != "создать" && $(".form-group>div>a")[7].innerHTML != "Закрыт"){
             var shopLink = $(".form-group>div>a")[7].href;
             var shopLinkHTML = $(".form-group>div>a")[7].outerHTML;
@@ -274,6 +281,7 @@ function turnOnRemovedHistory(){
     });
     $('input[name="query"]').before($('<input id="gnum" type="button" value="|">').click(function(){var e = $('input[name="query"]')[0]; var r = $(e).val().match(/\d{9,}/g);r && $(e).val(r.join('|'));}));
     $('input[name="itemIds"]').before($('<input id="gnum" type="button" value=",">').click(function(){var e = $('input[name="itemIds"]')[0]; var r = $(e).val().match(/\d{9,}/g);r && $(e).val(r.join(','));}));
+    $('#checkRemoved').after($('<input type="button" value="WalletLog" class = "btn btn-default mb_activate green"/></div>').click(openWalletLog));
     $('#checkRemoved').after($('<input type="button" value="ТН combo" class = "btn btn-default mb_activate green"/>').click(function(){
         bleachItems();
         pushUpItems();
@@ -322,6 +330,16 @@ function activateItems(link){
 function unblockItems(link){
                 $.get('https://adm.avito.ru/items/item/unblock/' + link).fail(function(resp){alert('Ошибка: ' + resp);});
         }
+function openWalletLog(){
+    var s = "";
+    $('input[name^="item_id"]:checked').each(function(){
+        s += $(this).val() +',';
+    });
+    if(s.length > 0){
+        var url = `https://adm.avito.ru/billing/walletlog?date=${timeToFind}&itemIds=${s}`;
+        window.open(url, '_blank');
+    }
+}
 function bleachItems(zEvent){
 if(confirm('Вы уверены что хотите отбелить выделенные объявления?')){
             $('input[name^="item_id"]:checked').each(function(){
@@ -396,7 +414,7 @@ function checkItemHistory(link, row, status){
         console.log(data);
         var dataLength = (data.length >= 3) ? 3 : data.length;
         for (var i = 0; i< data.length; i++){
-            if (data[i].admin == "Refund (The blocked item was not in SERP)"){
+            if (data[i].admin == "Refund (The https://adm.avito.ru/billing/walletlog?date=18%2F12%2F2017+00%3A00+-+18%2F12%2F2017+23%3A59&itemIds=543789957%2C678356538%2C726432350ocked item was not in SERP)"){
                 $(row).find('.item-status').after('<i class="glyphicon glyphicon-usd btn-primary" style="padding: 5px; border-radius: 50%;" title="'+data[i].formatedDate+'"></i>');
             }
             if (i<dataLength){
