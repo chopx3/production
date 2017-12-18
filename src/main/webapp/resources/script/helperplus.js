@@ -58,9 +58,9 @@ $(document).ready(function(){
     }
     if(window.location.href.indexOf('/user/info') != -1){
         login = $('.dropdown-toggle').slice(-1)[0].innerHTML.match(/([^\n]+)/i)[1];
-        $("#copyurl").after(`<button id="copyID" class="sh-default-btn" type="button" title="Скопировать URL страницы" style="margin-left:160px;position: absolute; padding: 1px 5px; font-size: 12px;">
+        $(".form-group>label")[0].innerHTML = (`<button id="copyID" class="sh-default-btn" type="button" title="Скопировать URL страницы" style="padding: 1px 5px; font-size: 12px;">
 <span class="sh-button-label sh-copy-img" style="border-radius: 0; font-size: 12px; top: 2px; line-height: 16px;">
-</span>Номер
+</span>ID
 </button>`);
         $('#copyID').bind("click",function(){
                 GM_setClipboard(userID);
