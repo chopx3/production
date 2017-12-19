@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name         Helper plus
-// @version      4.6
+// @version      4.7
 // @author       izayats@avito.ru
 // @include      https://adm.avito.ru/*
 // @require      http://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js
@@ -120,13 +120,12 @@ $(document).ready(function(){
         }
     }
     if(window.location.href.indexOf('helpdesk?') != -1){
-        var helpdeskEl = document.getElementsByClassName("helpdesk-main-section")[0];
+        var helpdeskEl = document.getElementsByClassName("helpdesk-main-section")[0].getElementsByTagName("header")[0].getElementsByTagName("div")[1].getElementsByTagName("div")[0];
         var abuseButton = document.createElement('button');
-        abuseButton.innerHTML = `<button class="btn btn-default" id="abuseButton">Создать жалобу</button>`;
-        abuseButton.getElementsByTagName("button")[0].style.right = "200px";
-        abuseButton.getElementsByTagName("button")[0].style.position = "absolute";
-        abuseButton.getElementsByTagName("button")[0].style.top = "25px";
-        helpdeskEl.appendChild(abuseButton);
+        abuseButton.className  += `btn btn-default`;
+        abuseButton.id  = `abuseButton`;
+        abuseButton.innerHTML  = `Создать жалобу`;
+        helpdeskEl.insertBefore(abuseButton, helpdeskEl.firstChild);
         $('#abuseButton').bind("click",function(){
             setTimeout(function(){
                 var toPostJSON = {
