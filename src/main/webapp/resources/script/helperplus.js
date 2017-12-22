@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name         Helper plus
-// @version      4.7
+// @version      4.8
 // @author       izayats@avito.ru
 // @include      https://adm.avito.ru/*
 // @require      http://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js
@@ -100,12 +100,14 @@ $(document).ready(function(){
                 var shopComment = {"type": 3, "ID": userID, "comment": message};
                 comment(shopComment);
             });
-            var isGeneral = ($(".js-notification-phone")[0] != undefined);
+        }
+        var isGeneral = ($(".js-notification-phone")[0] != undefined);
             console.log(isGeneral);
             if (isGeneral){
+                var afterPlaceholder = ($("#watermark").prop("checked") != undefined) ? ["#repeatWaterMark", "col-lg-offset-2"] : ["button[value=Добавить]", ""];
                 var phone = $(".js-notification-phone")[0].value;
                 var dateInterval = $(".js-notification-interval-days option:selected").text();
-                $("#repeatWaterMark").after('<button type="submit" class="btn btn-info pull-left col-lg-offset-2" id="smsNotification" title="Замена номера телефона"> <i class="glyphicon glyphicon-phone"></i> SMS </button>');
+                $(afterPlaceholder[0]).after('<button type="submit" class="btn btn-info pull-left '+afterPlaceholder[1]+'" id="smsNotification" title="Замена номера телефона"> <i class="glyphicon glyphicon-phone"></i> SMS </button>');
                 $('#smsNotification').bind("click",function(){
                     if ( (phone != $(".js-notification-phone")[0].value) || (dateInterval != $(".js-notification-interval-days option:selected").text()) ){
                         var newPhone = $(".js-notification-phone")[0].value;
@@ -117,16 +119,39 @@ $(document).ready(function(){
                     }
                 });
             }
-        }
     }
     if(window.location.href.indexOf('helpdesk?') != -1){
         var helpdeskEl = document.getElementsByClassName("helpdesk-main-section")[0].getElementsByTagName("header")[0].getElementsByTagName("div")[1].getElementsByTagName("div")[0];
-        var abuseButton = document.createElement('button');
-        abuseButton.className  += `btn btn-default`;
+        var abuseButton = document.createElement('div');
+       /* abuseButton.className  += `btn btn-default`;
         abuseButton.id  = `abuseButton`;
-        abuseButton.innerHTML  = `Создать жалобу`;
+        abuseButton.innerHTML  = `Создать жалобу`;*/
+        abuseButton.className  += `dropdown`;
+        abuseButton.id  = `abuseButton`;
+        abuseButton.innerHTML  = `
+  <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenuAbuse" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+    Создать жалобу
+    <span class="caret"></span>
+  </button>
+  <ul class="dropdown-menu" aria-labelledby="dropdownMenuAbuse">
+    <li value="366"><a href=#>MOD_GE</a></li>
+    <li value="485"><a href=#>MOD_RE</a></li>
+    <li value="339"><a href=#>MOD_TR</a></li>
+    <li role="separator" class="divider"></li>
+    <li value="1261"><a href=#>to_mod_RE</a></li>
+	<li value="1254"><a href=#>to_mod_3D</a></li>
+	<li value="1252"><a href=#>to_mod_BE</a></li>
+	<li value="1255"><a href=#>to_mod_FB</a></li>
+	<li value="1256"><a href=#>to_mod_LV</a></li>
+	<li value="1257"><a href=#>to_mod_Pets</a></li>
+	<li value="1259"><a href=#>to_mod_Serv</a></li>
+	<li value="1260"><a href=#>to_mod_TR</a></li>
+	<li value="1258"><a href=#>to_mod_Job</a></li>
+	<li value="1253"><a href=#>to_mod_HO</a></li>
+  </ul>`;
         helpdeskEl.insertBefore(abuseButton, helpdeskEl.firstChild);
-        $('#abuseButton').bind("click",function(){
+        $('#abuseButton>ul>li').bind("click",function(){
+            var tag = this.value;
             setTimeout(function(){
                 var toPostJSON = {
                     "problemId":67,
@@ -138,6 +163,7 @@ $(document).ready(function(){
                     "theme": 42,
                     "problem": 67,
                     "statusId": 1,
+                    "tags[0]": tag,
                     "description": "<p>Жалоба пользователя</p>",
                     "requesterEmail": localStorage.agentEmail,
                     "requesterName": localStorage.agentName
@@ -146,11 +172,9 @@ $(document).ready(function(){
                     console.log(data);
                     var url = "https://adm.avito.ru/helpdesk/details/" + data.id;
                     window.open( url, '_blank');
-                }
-                      );
+                });
             }, 300);
-
-        });
+        })
     }
   if(window.location.href.indexOf('/item/info') != -1){
 	  if ($(".loadable-history.js-loadable-history>.table-scroll>table>tbody").length > 1){
