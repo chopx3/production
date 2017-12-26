@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         Dash
 // @namespace    http://tampermonkey.net/
-// @version      1.2
+// @version      1.3
 // @include      https://adm.avito.ru/helpdesk/dashboard*
 // @require      http://code.jquery.com/jquery-latest.js
 // @require      https://cdn.jsdelivr.net/momentjs/latest/moment.min.js
