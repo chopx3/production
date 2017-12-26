@@ -62,7 +62,8 @@ $.get(dashURL).done(function (data) { // получаем информацию
     var react = finalResult; // сохраняем сюда массив с временем реакции
 	sorting(react, "reaction"); // сортируем его, от большего к меньшему
     console.log(react);
-	var satisf = data.satisfactions; // теперь с сатисфакцией
+	var satisf = data.result.satisfactions; // теперь с сатисфакцией
+    console.log(data.result.satisfactions);
 	sortingMarks(satisf); // сортируем по количеству оценок
 	var firstColumn = "Очередь"; // просто
 	var secondColumn = "Ожидание"; // названия
