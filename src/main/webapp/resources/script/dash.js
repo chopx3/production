@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         Dash
 // @namespace    http://tampermonkey.net/
-// @version      1.4
+// @version      1.5
 // @include      https://adm.avito.ru/helpdesk/dashboard*
 // @require      http://code.jquery.com/jquery-latest.js
 // @require      https://cdn.jsdelivr.net/momentjs/latest/moment.min.js
@@ -9,8 +9,6 @@
 // @downloadURL  https://raw.githubusercontent.com/chopx3/production/dev/src/main/webapp/resources/script/dash.js
 // @grant        none
 // ==/UserScript==
-
-
 //Dash - info about new tickets
 const timeIntervalInMinutes = 2;
 var queues = [1473, 354, 535, 351, 1081];
