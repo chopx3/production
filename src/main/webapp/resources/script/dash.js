@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         Dash
 // @namespace    http://tampermonkey.net/
-// @version      1.3
+// @version      1.4
 // @include      https://adm.avito.ru/helpdesk/dashboard*
 // @require      http://code.jquery.com/jquery-latest.js
 // @require      https://cdn.jsdelivr.net/momentjs/latest/moment.min.js
@@ -81,8 +81,9 @@ $.get(dashURL).done(function (data) { // получаем информацию
 		reactBody+= '<tr><td class="noBottomBorderLine">'+name+'</td><td class="centered bold noBottomBorderLine">'+targetInHours+'</td><td class="centered bold noBottomBorderLine" '+isReactionSlow+'>'+reactionHoursMinutes+'</td></tr>'; // собрать все с одну строку, убрать нижнюю полосу подчеркивания у td элементов
 	}
     }
-	var satisfTableName = "Топ хороших оценок '4' и '5'"; // название таблицы оценок
-	var satisfHead = '<table id="dashboardTableSatisfaction" class="table table-condensed table-hover"><thead><tr><th colspan=2 class="col-lg-12">' + satisfTableName + '</th></tr></thead><tbody>'; // начало таблицы с оценками
+    var satisfTableName = "Топ хороших оценок '4' и '5'"; // название таблицы оценок
+	var satisfHead = '<table id="dashboardTableSatisfaction" class="table table-condensed table-hover"><thead><tr><th colspan=2 class="col-lg-12">' + satisfTableName + '</th></tr></thead><tbody>'; // начало таблицы с оценками   
+    if (satisf.length > 0){	
 	var maxMarkCount = satisf[0].four + satisf[0].five; // количество оценок максимальное
 	for (var i=0; i<satisf.length; i++){ // основной цикл отрисовки
 		var markCount = satisf[i].four + satisf[i].five; // количество оценок в списке общее
@@ -99,7 +100,8 @@ $.get(dashURL).done(function (data) { // получаем информацию
 		var fiveProgress = (five > 0) ? '<div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="'+Math.floor(five / maxMarkCount * 100)+'" aria-valuemin="0" aria-valuemax="100" style="width: '+Math.floor(five / maxMarkCount * 100)+'%;"><span class="count bold">'+five+'</span></div>' : ""; // отрисовка пятерок, если есть
 		var progressBar = '<div class="progress">'+ fourProgress + fiveProgress + '</div>';
 		satisfBody+='<tr ><td class="col-lg-6 noBottomBorderLine">'+satisf[i].name+'</td><td class="col-lg-6 noBottomBorderLine">'+progressBar+'</td></tr>';}
-	}
+    }
+}
     var leftTable = reactHead + reactBody+'</table>'; // левая таблица
     var rightTable = satisfHead + satisfBody +'</table>'; //правая таблица
 	$("div.hd-flex_justify-content-space-between>div.hd-flex-item:first-child>div.panel>div.panel-body").html(leftTable); // находим элемент в этой сложной структуре отрисовки дашборда для левой таблицы
