@@ -1,8 +1,9 @@
 // ==UserScript==
 // @name         Helper plus
-// @version      4.8
+// @version      4.9
 // @author       izayats@avito.ru
 // @include      https://adm.avito.ru/*
+// @include      http://192.168.8.56/*
 // @require      http://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js
 // @require      https://cdn.jsdelivr.net/momentjs/latest/moment.min.js
 // @require      https://raw.githubusercontent.com/phstc/jquery-dateFormat/master/dist/jquery-dateFormat.min.js
@@ -17,12 +18,8 @@ var showRemovedHistory = true;
 var backUpHtml = [];
 var phoneVerificationCheck = false;
 var checkEmails = true;
-var usersComment = true;
 var login = "";
 var userID = getId(window.location.href);
-var comments = [];
-var COMM_AMOUNTS = 20;
-var MAX_LEN = 600;
 var removed = "<span class='item-status  grey'>Removed</span>";
 var archived = '<span class="item-status  grey">Archived</span>';
 var notSync = 0;
@@ -31,19 +28,21 @@ var todayTime = moment().endOf("day").format("DD/MM/YYYY HH:mm");
 var minusMonthTime =  moment().startOf("day").subtract(30, "days").format("DD/MM/YYYY HH:mm");
 var timeToFind =  minusMonthTime + " - " + todayTime;
 $(document).ready(function(){
-  $(".items").after(`<a href="/items/search?user_id=${userID}&date=${timeToFind}&status%5B%5D=rejected&status%5B%5D=blocked" class="items" target="_blank/">bl+rej(30)</a>`);
-  $("td.item-checkbox").click(function() {
+
+
+    $(".items").after(`<a href="/items/search?user_id=${userID}&date=${timeToFind}&status%5B%5D=rejected&status%5B%5D=blocked" class="items" target="_blank/">bl+rej(30)</a>`);
+    $("td.item-checkbox").click(function() {
     if ($(this).find("input").prop('checked')){
       $(this).find("input").prop('checked', false)
     }
     else {$(this).find("input").prop('checked', true)}
   })
-  if(showRemovedHistory)
-    turnOnRemovedHistory();
-  if(phoneVerificationCheck)
-    turnOnPhoneVerificationCheck();
-  if(checkEmails)
-    turnOnEmailChecking();
+    if(showRemovedHistory)
+        turnOnRemovedHistory();
+    if(phoneVerificationCheck)
+        turnOnPhoneVerificationCheck();
+    if(checkEmails)
+        turnOnEmailChecking();
     if(window.location.href.indexOf('/packages/info/') != -1){
         var shopLink = $("section.content>div>div>a")[0].href;
         var shopLinkHTML = $("section.content>div>div>a")[0].outerHTML;
@@ -58,10 +57,11 @@ $(document).ready(function(){
     }
     if(window.location.href.indexOf('/user/info') != -1){
         login = $('.dropdown-toggle').slice(-1)[0].innerHTML.match(/([^\n]+)/i)[1];
-        $(".form-group>label")[0].innerHTML = (`<button id="copyID" class="sh-default-btn" type="button" title="Скопировать URL страницы" style="padding: 1px 5px; font-size: 12px;">
-<span class="sh-button-label sh-copy-img" style="border-radius: 0; font-size: 12px; top: 2px; line-height: 16px;">
-</span>ID
-</button>`);
+        $(".form-group>label")[0].innerHTML = (
+            `<button id="copyID" class="sh-default-btn" type="button" title="Скопировать URL страницы" style="padding: 1px 5px; font-size: 12px;">
+                <span class="sh-button-label sh-copy-img" style="border-radius: 0; font-size: 12px; top: 2px; line-height: 16px;">
+                </span>ID
+            </button>`);
         $('#copyID').bind("click",function(){
                 GM_setClipboard(userID);
             });
@@ -71,9 +71,30 @@ $(document).ready(function(){
             $(".form-group>div>a")[7].outerHTML = (shopLinkHTML + `<a id="buttonPackage" style="margin-left:20px; cursor:pointer">Пакет</a>`);
             $('#buttonPackage').bind("click",function(){
                 $.get(shopLink).done(function(data){
-                    var packageLink = $("[title='Просмотреть историю списаний из пакета']", data)[0].pathname;
-                    if (packageLink != undefined){
-                        window.open("https://adm.avito.ru/" + packageLink);
+                    var packages = $(".form-group>div.col-xs-4>a[title='Просмотреть историю списаний из пакета']", data);
+                    var packagesNum = packages.length;
+                    console.log(packages, packagesNum);
+                    if (packagesNum > 1){
+                        var packageBody = "";
+                        for (var i = 0; i<packagesNum; i++){
+                            var innerTextShort = (packages[i].innerText).substring(0,20);
+                            var link = packages[i].pathname;
+                            packageBody+=(`<label class='btn btn-default btn-sm category-label'>
+                                             <a class='packageButton' href=${link} autocomplete='off' style="text-decoration:none" target="_blank">${innerTextShort}...</a>
+                                         </label>`);
+                        }
+                        var packageDiv = `
+                       <div class='hidden-category-picker' style="position:absolute">
+                          ${packageBody}
+                       </div>`;
+                        $("#buttonPackage").after(packageDiv);
+
+                    }
+                    else {
+                        var packageLink = packages[0].pathname;
+                        if (packageLink != undefined){
+                            window.open("https://adm.avito.ru/" + packageLink);
+                        }
                     }
                 });
             });
@@ -177,21 +198,39 @@ $(document).ready(function(){
         })
     }
   if(window.location.href.indexOf('/item/info') != -1){
+      if (!Number.isInteger(parseInt($("#fld_price").val()))) $("#fld_price").val("");
 	  if ($(".loadable-history.js-loadable-history>.table-scroll>table>tbody").length > 1){
       var adminHistoryTable = $(".loadable-history.js-loadable-history>.table-scroll>table>tbody")[1];
 	  } else {var adminHistoryTable = $(".loadable-history.js-loadable-history>.table-scroll>table>tbody")[0]}
       var adminHistoryTableRows = adminHistoryTable.getElementsByTagName("tr");
-      var isAutoload = false;
+      var isAutoload = [false, true]; // isAutoload = [1 - Вообще была ли АЗ или нет, 2 - Условие item is closed не совпадает]
+      var isRefunded = false;
       for (var i = 0; i<adminHistoryTableRows.length; i++){
           if (adminHistoryTableRows[i].getElementsByTagName("td")[2].innerHTML == "daemon-autoload") {
-              adminHistoryTableRows[i].getElementsByTagName("td")[2].innerHTML = "<b>daemon-autoload<b>";
-              isAutoload = true;
+                adminHistoryTableRows[i].getElementsByTagName("td")[2].innerHTML = "<b>daemon-autoload<b>";
+                if (adminHistoryTableRows[i].getElementsByTagName("td")[1].innerHTML == "Item is closed" && i>0){
+                    isAutoload[1] = (adminHistoryTableRows[i-1].getElementsByTagName("td")[2].innerHTML !== "cron-premoderation");
+                } else {
+                    console.log(adminHistoryTableRows[i]);
+                    isAutoload[0] = true;
+                }
+          }
+          if (adminHistoryTableRows[i].getElementsByTagName("td")[1].innerHTML == "Refund (The blocked item was not in SERP)") {
+              adminHistoryTableRows[i].getElementsByTagName("td")[1].innerHTML = "<b>Refund (The blocked item was not in SERP)<b>";
+              isRefunded = true;
           }
       }
-      if (isAutoload) {
+      if (isAutoload[0] && isAutoload[1]) {
           var ourElem = document.getElementsByTagName("header")[0].getElementsByTagName("h2")[0].getElementsByTagName("div")[0];
           var HTMLCode = document.createElement('i');
           HTMLCode.innerHTML = '<i class="glyphicon glyphicon-cloud-download btn-primary" style="font-size:24px; padding: 3px; border-radius: 50%;" title="АЗ"></i>';
+          var parent = ourElem.parentNode;
+          parent.insertBefore(HTMLCode, ourElem);
+      }
+      if (isRefunded) {
+          var ourElem = document.getElementsByTagName("header")[0].getElementsByTagName("h2")[0].getElementsByTagName("div")[0];
+          var HTMLCode = document.createElement('i');
+          HTMLCode.innerHTML = '<i class="glyphicon glyphicon-usd btn-primary" style="font-size:20px; padding: 5px 6px 4px 4px;border-radius: 50%;" title="АЗ"></i>';
           var parent = ourElem.parentNode;
           parent.insertBefore(HTMLCode, ourElem);
       }
@@ -437,7 +476,7 @@ function checkItemHistory(link, row, status){
         console.log(data);
         var dataLength = (data.length >= 3) ? 3 : data.length;
         for (var i = 0; i< data.length; i++){
-            if (data[i].admin == "Refund (The https://adm.avito.ru/billing/walletlog?date=18%2F12%2F2017+00%3A00+-+18%2F12%2F2017+23%3A59&itemIds=543789957%2C678356538%2C726432350ocked item was not in SERP)"){
+            if (data[i].admin == "Refund (The blocked item was not in SERP)"){
                 $(row).find('.item-status').after('<i class="glyphicon glyphicon-usd btn-primary" style="padding: 5px; border-radius: 50%;" title="'+data[i].formatedDate+'"></i>');
             }
             if (i<dataLength){
