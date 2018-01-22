@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name         Helper plus
-// @version      4.9
+// @version      5.0
 // @author       izayats@avito.ru
 // @include      https://adm.avito.ru/*
 // @include      http://192.168.8.56/*
@@ -100,6 +100,21 @@ $(document).ready(function(){
             });
         }
     }
+    if(window.location.href.indexOf('users/account/info') != -1){
+        var packRefundRows = $("tr>td:contains('Возврат остатка по пакету')").parent();
+        packRefundRows.each(function (index){
+            var packageRefundNum = ($("td",this)[1].innerHTML).replace(/(\s|[a-яА-Я])+/g, "");
+            var packageRefundSum = ($("td>span",this)[0].innerHTML).replace(/(\s|[а-я]|\+|\.)+/g, "");
+            var packageRefundLink = $("td>a",this)[0].href;
+            $("td>button",this).after(`<button class="btn btn-default btn-xs packageButtons" data-refund=${packageRefundSum} data-package=${packageRefundNum} data-text="Тикет №___ ," data-link=${packageRefundLink}><i class="glyphicon glyphicon-envelope"></i></button><button class="btn btn-default btn-xs packageButtons" data-refund=${packageRefundSum} data-package=${packageRefundNum} data-text="Звонок," data-link=${packageRefundLink}><i class="glyphicon glyphicon-earphone"></i></button>`);        });
+        $('.packageButtons').bind("click",function(){
+            var message = `${this.dataset.text} Корректировка бонусами за пакет ${this.dataset.package},  ${this.dataset.link}`;
+            $($(".js-payment-method")[0]).val("101");
+            $($("input[name=comment]")[0]).val(message);
+            $(".form-control.js-payment-amount").val(this.dataset.refund);
+            $(window).scrollTop($('#payin').offset().top-50);
+            });
+    }
     if(window.location.href.indexOf('shops/info/view') != -1){
         if ($("#watermark").prop("checked") != undefined){
             var isWmChecked = $("#watermark").prop("checked");
@@ -198,8 +213,12 @@ $(document).ready(function(){
         })
     }
   if(window.location.href.indexOf('/item/info') != -1){
-      if (!Number.isInteger(parseInt($("#fld_price").val()))) $("#fld_price").val("");
-	  if ($(".loadable-history.js-loadable-history>.table-scroll>table>tbody").length > 1){
+      var isRefunded = false;
+      document.querySelectorAll(".loadable-history.js-loadable-history>.table-scroll>table>tbody>tr>td").forEach((elem => { if (elem.innerHTML == "Refund (The blocked item was not in SERP)") {
+          isRefunded = true;
+          elem.parentNode.style.fontWeight = "700";
+      }}));
+       if ($(".loadable-history.js-loadable-history>.table-scroll>table>tbody").length > 1){
       var adminHistoryTable = $(".loadable-history.js-loadable-history>.table-scroll>table>tbody")[1];
 	  } else {var adminHistoryTable = $(".loadable-history.js-loadable-history>.table-scroll>table>tbody")[0]}
       var adminHistoryTableRows = adminHistoryTable.getElementsByTagName("tr");
@@ -223,14 +242,14 @@ $(document).ready(function(){
       if (isAutoload[0] && isAutoload[1]) {
           var ourElem = document.getElementsByTagName("header")[0].getElementsByTagName("h2")[0].getElementsByTagName("div")[0];
           var HTMLCode = document.createElement('i');
-          HTMLCode.innerHTML = '<i class="glyphicon glyphicon-cloud-download btn-primary" style="font-size:24px; padding: 3px; border-radius: 50%;" title="АЗ"></i>';
+          HTMLCode.innerHTML = '<i class="glyphicon glyphicon-cloud-download btn-info" style="font-size:24px; padding: 3px; border-radius: 50%;" title="АЗ"></i>';
           var parent = ourElem.parentNode;
           parent.insertBefore(HTMLCode, ourElem);
       }
       if (isRefunded) {
           var ourElem = document.getElementsByTagName("header")[0].getElementsByTagName("h2")[0].getElementsByTagName("div")[0];
           var HTMLCode = document.createElement('i');
-          HTMLCode.innerHTML = '<i class="glyphicon glyphicon-usd btn-primary" style="font-size:20px; padding: 5px 6px 4px 4px;border-radius: 50%;" title="АЗ"></i>';
+          HTMLCode.innerHTML = '<i class="glyphicon glyphicon-usd btn-info" style="font-size:20px; padding: 5px 6px 4px 4px;border-radius: 50%;" title="Компенсировано"></i>';
           var parent = ourElem.parentNode;
           parent.insertBefore(HTMLCode, ourElem);
       }
