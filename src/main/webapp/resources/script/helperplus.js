@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name         Helper plus
-// @version      5.0
+// @version      5.1
 // @author       izayats@avito.ru
 // @include      https://adm.avito.ru/*
 // @include      http://192.168.8.56/*
@@ -101,10 +101,10 @@ $(document).ready(function(){
         }
     }
     if(window.location.href.indexOf('users/account/info') != -1){
-        var packRefundRows = $("tr>td:contains('Возврат остатка по пакету')").parent();
+        var packRefundRows = $(".account-history>tbody>tr>td:contains('Списание при возврате по пакету')").parent();
         packRefundRows.each(function (index){
             var packageRefundNum = ($("td",this)[1].innerHTML).replace(/(\s|[a-яА-Я])+/g, "");
-            var packageRefundSum = ($("td>span",this)[0].innerHTML).replace(/(\s|[а-я]|\+|\.)+/g, "");
+            var packageRefundSum = ($("td>span",this)[0].innerHTML).replace(/(\s|[а-я]|\+|\.|\-)+/g, "");
             var packageRefundLink = $("td>a",this)[0].href;
             $("td>button",this).after(`<button class="btn btn-default btn-xs packageButtons" data-refund=${packageRefundSum} data-package=${packageRefundNum} data-text="Тикет №___ ," data-link=${packageRefundLink}><i class="glyphicon glyphicon-envelope"></i></button><button class="btn btn-default btn-xs packageButtons" data-refund=${packageRefundSum} data-package=${packageRefundNum} data-text="Звонок," data-link=${packageRefundLink}><i class="glyphicon glyphicon-earphone"></i></button>`);        });
         $('.packageButtons').bind("click",function(){
