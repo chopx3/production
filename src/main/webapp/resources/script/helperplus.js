@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name         Helper plus
-// @version      5.2
+// @version      5.3
 // @author       izayats@avito.ru
 // @include      https://adm.avito.ru/*
 // @include      http://192.168.8.56/*
@@ -220,7 +220,6 @@ ___ - адресат для ответа: МП или клиент, иниции
         })
     }
   if(window.location.href.indexOf('/item/info') != -1){
-      if (!Number.isInteger(parseInt($("#fld_price").val()))) $("#fld_price").val("");
       var isRefunded = false;
       document.querySelectorAll(".loadable-history.js-loadable-history>.table-scroll>table>tbody>tr>td").forEach((elem => { if (elem.innerHTML == "Refund (The blocked item was not in SERP)" || elem.innerHTML == "Refund (The rejected item was not in SERP)") {
           isRefunded = true;
