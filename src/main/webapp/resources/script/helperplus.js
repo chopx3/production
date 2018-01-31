@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name         Helper plus
-// @version      5.1
+// @version      5.2
 // @author       izayats@avito.ru
 // @include      https://adm.avito.ru/*
 // @include      http://192.168.8.56/*
@@ -197,10 +197,17 @@ $(document).ready(function(){
                     "receivedAtEmail": "shop_support@avito.ru",
                     "subject": "Жалобы",
                     "theme": 42,
+                    "sourceId": 3,
                     "problem": 67,
                     "statusId": 1,
                     "tags[0]": tag,
-                    "description": "<p>Жалоба пользователя</p>",
+                    "description": `
+___ - ссылка на объявления или учетную запись пользователя
+___ - ID пользователя, если нет информации выше.
+___ - детальное описание жалобы
+___ - инициатор жалобы (ID)
+___ - категория проверяемого контента жалобы
+___ - адресат для ответа: МП или клиент, инициирующий проверку`,
                     "requesterEmail": localStorage.agentEmail,
                     "requesterName": localStorage.agentName
                 };
@@ -213,8 +220,9 @@ $(document).ready(function(){
         })
     }
   if(window.location.href.indexOf('/item/info') != -1){
+      if (!Number.isInteger(parseInt($("#fld_price").val()))) $("#fld_price").val("");
       var isRefunded = false;
-      document.querySelectorAll(".loadable-history.js-loadable-history>.table-scroll>table>tbody>tr>td").forEach((elem => { if (elem.innerHTML == "Refund (The blocked item was not in SERP)") {
+      document.querySelectorAll(".loadable-history.js-loadable-history>.table-scroll>table>tbody>tr>td").forEach((elem => { if (elem.innerHTML == "Refund (The blocked item was not in SERP)" || elem.innerHTML == "Refund (The rejected item was not in SERP)") {
           isRefunded = true;
           elem.parentNode.style.fontWeight = "700";
       }}));
