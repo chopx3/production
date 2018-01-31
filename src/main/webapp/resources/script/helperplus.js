@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name         Helper plus
-// @version      5.3
+// @version      5.4
 // @author       izayats@avito.ru
 // @include      https://adm.avito.ru/*
 // @include      http://192.168.8.56/*
@@ -106,7 +106,7 @@ $(document).ready(function(){
             var packageRefundNum = ($("td",this)[1].innerHTML).replace(/(\s|[a-яА-Я])+/g, "");
             var packageRefundSum = ($("td>span",this)[0].innerHTML).replace(/(\s|[а-я]|\+|\.|\-)+/g, "");
             var packageRefundLink = $("td>a",this)[0].href;
-            $("td>button",this).after(`<button class="btn btn-default btn-xs packageButtons" data-refund=${packageRefundSum} data-package=${packageRefundNum} data-text="Тикет №___ ," data-link=${packageRefundLink}><i class="glyphicon glyphicon-envelope"></i></button><button class="btn btn-default btn-xs packageButtons" data-refund=${packageRefundSum} data-package=${packageRefundNum} data-text="Звонок," data-link=${packageRefundLink}><i class="glyphicon glyphicon-earphone"></i></button>`);        });
+            $("td>button",this).after(`<button class="btn btn-default btn-xs packageButtons" data-refund=${packageRefundSum} data-package=${packageRefundNum} data-text="Тикет ___ ," data-link=${packageRefundLink}><i class="glyphicon glyphicon-envelope"></i></button><button class="btn btn-default btn-xs packageButtons" data-refund=${packageRefundSum} data-package=${packageRefundNum} data-text="Звонок," data-link=${packageRefundLink}><i class="glyphicon glyphicon-earphone"></i></button>`);        });
         $('.packageButtons').bind("click",function(){
             var message = `${this.dataset.text} Корректировка бонусами за пакет ${this.dataset.package},  ${this.dataset.link}`;
             $($(".js-payment-method")[0]).val("101");
@@ -188,35 +188,52 @@ $(document).ready(function(){
         helpdeskEl.insertBefore(abuseButton, helpdeskEl.firstChild);
         $('#abuseButton>ul>li').bind("click",function(){
             var tag = this.value;
-            setTimeout(function(){
-                var toPostJSON = {
-                    "problemId":67,
-                    "submitterId":localStorage.agentID,
-                    "typeId": 1,
-                    "channelId": 3,
-                    "receivedAtEmail": "shop_support@avito.ru",
-                    "subject": "Жалобы",
-                    "theme": 42,
-                    "sourceId": 3,
-                    "problem": 67,
-                    "statusId": 1,
-                    "tags[0]": tag,
-                    "description": `
-___ - ссылка на объявления или учетную запись пользователя
-___ - ID пользователя, если нет информации выше.
-___ - детальное описание жалобы
-___ - инициатор жалобы (ID)
-___ - категория проверяемого контента жалобы
-___ - адресат для ответа: МП или клиент, инициирующий проверку`,
-                    "requesterEmail": localStorage.agentEmail,
-                    "requesterName": localStorage.agentName
-                };
-                $.post('https://adm.avito.ru/helpdesk/api/1/ticket/add', toPostJSON, function(data, status){
-                    console.log(data);
-                    var url = "https://adm.avito.ru/helpdesk/details/" + data.id;
-                    window.open( url, '_blank');
+            var toPostJSON = {
+                "problemId":67,
+                "submitterId":localStorage.agentID,
+                "typeId": 1,
+                "channelId": 3,
+                "receivedAtEmail": "shop_support@avito.ru",
+                "subject": "Жалобы",
+                "theme": 42,
+                "sourceId": 3,
+                "problem": 67,
+                "statusId": 1,
+                "tags[0]": tag,
+                "description": "Жалоба пользователя",
+                "requesterEmail": localStorage.agentEmail,
+                "requesterName": localStorage.agentName
+            };
+            function createTicket() {
+                return new Promise(function(resolve, reject) {
+                    $.post('https://adm.avito.ru/helpdesk/api/1/ticket/add', toPostJSON, function(data, status){
+                        var url = "https://adm.avito.ru/helpdesk/details/" + data.id;
+                        resolve({"url" : url, "ticket": data.id});
+                    });
                 });
-            }, 300);
+            }
+            createTicket()
+                .then(data => {
+                var toTicketJson = {
+                    "assigneeId" : localStorage.agentID,
+                    "versionNum" : 0,
+                    "fakeEmailIgnore" : false
+                };
+                $.post("https://adm.avito.ru/helpdesk/api/1/ticket/"+data.ticket+"/take", toTicketJson);
+                return new Promise(function(resolve, reject) {resolve(data.ticket)});
+            })
+            .then(ticket => {
+                var toCommentJson = {
+                    "type" : 3,
+                    "versionNum" : 0,
+                    "type-selector" : 3,
+                    "commentTo" : localStorage.agentID,
+                    "commentFrom" : localStorage.agentID,
+                    "text" : "<p>___ - ссылка на объявления или учетную запись пользователя<br>___ - ID пользователя, если нет информации выше.<br>___ - детальное описание жалобы<br>___ - инициатор жалобы (ID)<br>___ - категория проверяемого контента жалобы<br>___ - адресат для ответа: МП или клиент, инициирующий проверку</p>"
+                }
+                $.post("https://adm.avito.ru/helpdesk/api/1/ticket/"+ticket+"/comment", toCommentJson);
+                return new Promise(function(resolve, reject) {resolve(ticket)});})
+            .then(ticket => window.open("https://adm.avito.ru/helpdesk/details/"+ticket));
         })
     }
   if(window.location.href.indexOf('/item/info') != -1){
@@ -269,7 +286,7 @@ ___ - адресат для ответа: МП или клиент, иниции
     $("button[value=Добавить]").after('<button type="submit" class="btn btn-info pull-left" id="task865"> <i class="glyphicon glyphicon-plus"></i> 865 </button>');
     $("#task865").after('<button type="submit" class="pull-left btn btn-primary buttonMargin" id="tn"> <i class="glyphicon glyphicon-plus"></i> ТН </button>');
     $("#tn").after('<button type="submit" class="pull-left btn btn-warning buttonMargin" id="pushUp"> <i class="glyphicon glyphicon-plus"></i> Push </button>');
-    $("#pushUp").after('<button type="submit" class="pull-left btn btn-success buttonMargin" id="doubleComment"> <i class="glyphicon glyphicon-plus"></i> Учетка </button>');
+    $("#pushUp").after('<button type="button" class="pull-left btn btn-success buttonMargin" id="doubleComment"> <i class="glyphicon glyphicon-plus"></i> Учетка </button>');
     $(".buttonMargin").css("margin-left", "20px");
     var itemId = getId(window.location.href);
     var userId = getId($($(".form-group>.col-xs-9>a")[1]).attr("href"));
@@ -286,9 +303,17 @@ ___ - адресат для ответа: МП или клиент, иниции
     comment(itemComment);
     });
     $('#doubleComment').bind("click",function(){
-    var message = $("[name=comment]").val() + ", " + itemId;
-    var pageComment = {"type": 2, "ID": userId, "comment": message };
-    comment(pageComment);
+        var commentElem = document.getElementsByName("comment")[0];
+        if((commentElem.value).trim() !== ""){
+            commentElem.style.borderColor = "";
+            var itemComment = {"type": 1, "ID": itemId, "comment": commentElem.value };
+            comment(itemComment);
+            var pageComment = {"type": 2, "ID": userId, "comment": commentElem.value + ", " + itemId };
+            comment(pageComment);
+            location.reload();
+        } else {
+            commentElem.style.borderColor = "red";
+        }
     });
     $('#pushUp').bind("click",function(){
       var message = "Техническая неполадка, поднятие, №" + itemId;
