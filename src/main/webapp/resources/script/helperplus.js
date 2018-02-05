@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name         Helper plus
-// @version      5.4
+// @version      5.5
 // @author       izayats@avito.ru
 // @include      https://adm.avito.ru/*
 // @include      http://192.168.8.56/*
@@ -237,6 +237,16 @@ $(document).ready(function(){
         })
     }
   if(window.location.href.indexOf('/item/info') != -1){
+      /*var injectStatus = document.querySelector(".content>.row>.item-page");
+      var injectStatusHTML = `
+     <div class="ah-user-info-indicators" style="top: 100px; left: 600px; position:absolute; border: 1px solid black;width: 200px;">
+        <div class="ah-indicators-item"></div>
+        <div class="ah-indicators-item"></div>
+        <div class="ah-indicators-item"></div>
+    </div>`
+      injectStatus.insertAdjacentHTML('afterbegin', injectStatusHTML) ;
+      */
+      if (!Number.isInteger(parseInt($("#fld_price").val()))) $("#fld_price").val("");
       var isRefunded = false;
       document.querySelectorAll(".loadable-history.js-loadable-history>.table-scroll>table>tbody>tr>td").forEach((elem => { if (elem.innerHTML == "Refund (The blocked item was not in SERP)" || elem.innerHTML == "Refund (The rejected item was not in SERP)") {
           isRefunded = true;
@@ -458,7 +468,7 @@ if(confirm('Вы уверены что хотите отбелить выдел�
             $('input[name^="item_id"]:checked').each(function(){
                 $.get('https://adm.avito.ru/items/item/bleach/' + $(this).val()).fail(function(resp){alert('Ошибка: ' + resp);});
             });
-            location.reload();
+            
         }
 }
 function pushUpItems(zEvent){
@@ -466,7 +476,7 @@ function pushUpItems(zEvent){
             $('input[name^="item_id"]:checked').each(function(){
                 $.get('https://adm.avito.ru/items/item/push2up/' + $(this).val()).fail(function(resp){alert('Ошибка: ' + resp);});
             });
-            location.reload();
+           
         }
     }
 function addCommentToItem(isTN){
