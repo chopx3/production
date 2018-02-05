@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name         Helper plus
-// @version      5.5
+// @version      5.6
 // @author       izayats@avito.ru
 // @include      https://adm.avito.ru/*
 // @include      http://192.168.8.56/*
@@ -159,9 +159,6 @@ $(document).ready(function(){
     if(window.location.href.indexOf('helpdesk?') != -1){
         var helpdeskEl = document.getElementsByClassName("helpdesk-main-section")[0].getElementsByTagName("header")[0].getElementsByTagName("div")[1].getElementsByTagName("div")[0];
         var abuseButton = document.createElement('div');
-       /* abuseButton.className  += `btn btn-default`;
-        abuseButton.id  = `abuseButton`;
-        abuseButton.innerHTML  = `Создать жалобу`;*/
         abuseButton.className  += `dropdown`;
         abuseButton.id  = `abuseButton`;
         abuseButton.innerHTML  = `
@@ -237,15 +234,71 @@ $(document).ready(function(){
         })
     }
   if(window.location.href.indexOf('/item/info') != -1){
-      /*var injectStatus = document.querySelector(".content>.row>.item-page");
-      var injectStatusHTML = `
-     <div class="ah-user-info-indicators" style="top: 100px; left: 600px; position:absolute; border: 1px solid black;width: 200px;">
-        <div class="ah-indicators-item"></div>
-        <div class="ah-indicators-item"></div>
-        <div class="ah-indicators-item"></div>
-    </div>`
+      var sheet = document.createElement('style');
+sheet.innerHTML = `
+.ah-user-info-indicators .ah-indicators-title::before {
+    content: "•";
+    margin-right: 4px;
+}
+.ah-user-info-indicators .ah-indicators-item {
+    padding: 0px 4px;
+}
+.ah-user-info-indicators{
+display: block;position: absolute;z-index: 10; font-weight: bolder;
+font-size: 15px;
+top: 100px;
+right: 100px;
+white-space: nowrap;
+background-color: white;
+width: 200px;
+}
+.ah-inactive {
+    color: rgb(189, 189, 189);
+}
+.ah-indicators-fired {
+    color: rgb(92, 184, 92);
+}
+`;
+      document.body.appendChild(sheet);
+      var injectStatus = document.querySelector(".content>.row>.item-page");
+      var length = (document.querySelectorAll(".form-group>div.col-xs-9.form-control-static>a").length >= 9) ? "1" : "0";
+      var userURL = document.querySelectorAll(".form-group>div>a")[length].href;
+      console.log(userURL);
+      function getUserInfo(){
+          return new Promise(function(resolve, reject) {
+              $.get(userURL).done(data => resolve(data));
+          });
+      }
+       getUserInfo()
+          .then(data => {
+           var parser = new DOMParser,
+               doc    = parser.parseFromString(data, "text/html");
+           var subs, isSubActive, shop, isShopActive, shopText, subsText;
+           for (const a of doc.querySelectorAll("label.col-xs-3.control-label")) {
+               if (a.innerHTML.includes("Подписка")) {
+                   subs = a.parentNode.querySelector("div>a").text.trim();
+                   subsText = (subs !== "создать") ? subs : "Подписка";
+
+               }
+               if ( a.innerHTML.includes("Магазин")) {
+                   shop = a.parentNode.querySelector("div>a").text.trim();
+                   console.log(shop);
+               }
+           };
+           shopText = (shop !== "создать" && shop !== "Закрыт" && shop !== "Приостановлен" && subs == "создать") ? " "+shop : " ";
+           isSubActive = (subs !== "создать" && shop !== "Закрыт" && shop !== "Приостановлен") ? "ah-indicators-fired" : "ah-inactive";
+           isShopActive = (shop !== "создать" && shop !== "Закрыт" && shop !== "Приостановлен" && subs == "создать") ? "ah-indicators-fired" : "ah-inactive";
+           console.log(doc);
+           console.log(doc.querySelector(".js-user-info-personal-manager-select"));
+           const isPmAttached = (doc.querySelector(".js-user-info-personal-manager-select").value > 0) ? "ah-indicators-fired" : "ah-inactive";
+           var injectStatusHTML = `
+<div class="ah-user-info-indicators">
+     <div class="ah-indicators-item"><span class="ah-indicators-title ${isShopActive}">Магазин${shopText}</span></div>
+     <div class="ah-indicators-item"><span class="ah-indicators-title ${isSubActive}">${subsText}</span></div>
+     <div class="ah-indicators-item"><span class="ah-indicators-title ${isPmAttached}">Перс. менеджер</span></div>
+</div>`;
       injectStatus.insertAdjacentHTML('afterbegin', injectStatusHTML) ;
-      */
+             });
       if (!Number.isInteger(parseInt($("#fld_price").val()))) $("#fld_price").val("");
       var isRefunded = false;
       document.querySelectorAll(".loadable-history.js-loadable-history>.table-scroll>table>tbody>tr>td").forEach((elem => { if (elem.innerHTML == "Refund (The blocked item was not in SERP)" || elem.innerHTML == "Refund (The rejected item was not in SERP)") {
