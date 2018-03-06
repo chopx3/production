@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name         Helper plus
-// @version      5.7
+// @version      5.8
 // @author       izayats@avito.ru
 // @include      https://adm.avito.ru/*
 // @include      http://192.168.8.56/*
@@ -44,6 +44,12 @@ $(document).ready(function(){
     if(checkEmails)
         turnOnEmailChecking();
     if(window.location.href.indexOf('/packages/info/') != -1){
+        let lastButton = document.querySelector('.list-inline');
+        let checkButtonHTML = `<li><button type="button" class="btn btn-default js-filter-item-status checkUniqueButton">Проверить списания</button></li>`;
+        lastButton.insertAdjacentHTML('beforeend', checkButtonHTML);
+        let checkButton = document.querySelector(".checkUniqueButton");
+        checkButton.addEventListener("click", startCheck);
+
         var shopLink = $("section.content>div>div>a")[0].href;
         var shopLinkHTML = $("section.content>div>div>a")[0].outerHTML;
         $.get(shopLink).done(function(data){
@@ -684,4 +690,72 @@ function getEmailHistory(){
             })(o);
         }
     }
+}
+function startCheck(){
+    var array = [];
+    var items = document.querySelectorAll(".js-history-table-item>td:first-child");
+    items.forEach(item => array.push(item.innerHTML));
+    Array.prototype.contains = function(v) {
+        for(var i = 0; i < this.length; i++) {
+            if(this[i] === v) return true;
+        }
+        return false;
+    };
+    Array.prototype.unique = function() {
+        var arr = [];
+        var notUnique = [];
+        for(var i = 0; i < this.length; i++) {
+            if(!arr.includes(this[i])) {
+                arr.push(this[i]);
+            }
+            else {notUnique.push(this[i])}
+        }
+        return [arr, notUnique];
+    };
+    var uniques = array.unique();
+    console.log(uniques[0], uniques[1]);
+        var notUniqueLink = "";
+        uniques[1].forEach(item => notUniqueLink+= item+"|");
+        console.log(notUniqueLink);
+         var tableHTML =
+`<style>
+.unique-table{
+    position: fixed;
+    right: 5vw;
+    top: 40vh;
+    padding: 10px;
+    background: #eee;
+    opacity: 0.8;
+    box-shadow: rgba(0, 0, 0, 0.172549) 0px 0px 12px;
+    margin: 0px 0px 8px;
+    border-radius: 4px;
+}
+.unique-table__content>tr>td{
+margin:5px;
+padding:5px;
+}
+</style>
+<div class="unique-table">
+    <table class="unique-table__body">
+        <tbody class="unique-table__content">
+            <tr>
+                <td>Списано размещений</td>
+                <td>${uniques[0].length+uniques[1].length}</td>
+            </tr>
+            <tr>
+                <td>Объявлений размещено</td>
+                <td>${uniques[0].length}</td>
+            </tr>
+            <tr>
+                <td>Лишние списания</td>
+                <td>${uniques[1].length}</td>
+            </tr>
+             <tr>
+                <td>Оплаченные более 1 раза</td>
+                <td><a href="https://adm.avito.ru/items/search?date=06%2F03%2F2018+00%3A00+-+06%2F03%2F2018+23%3A59&phone=&user=&ip=&query=${notUniqueLink}&price_min=&price_max=&percent_min=&percent_max=&sort_field=st" target=_blank>Открыть в поиске</a></td>
+            </tr>
+        </tbody>
+    </table>
+</div>`;
+        document.querySelector(".content").insertAdjacentHTML('afterbegin', tableHTML);
 }
