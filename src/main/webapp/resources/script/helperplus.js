@@ -1,12 +1,11 @@
 // ==UserScript==
 // @name         Helper plus
-// @version      6.1
+// @version      6.2
 // @author       izayats@avito.ru
 // @include      https://adm.avito.ru/*
 // @include      http://192.168.8.56/*
 // @require      http://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js
 // @require      https://cdn.jsdelivr.net/momentjs/latest/moment.min.js
-// @require      https://raw.githubusercontent.com/phstc/jquery-dateFormat/master/dist/jquery-dateFormat.min.js
 // @downloadURL  https://raw.githubusercontent.com/chopx3/production/dev/src/main/webapp/resources/script/helperplus.js
 // @grant        GM_xmlhttpRequest
 // @grant        GM_setClipboard
@@ -28,8 +27,6 @@ var todayTime = moment().endOf("day").format("DD/MM/YYYY HH:mm");
 var minusMonthTime =  moment().startOf("day").subtract(30, "days").format("DD/MM/YYYY HH:mm");
 var timeToFind =  minusMonthTime + " - " + todayTime;
 $(document).ready(function(){
-
-
     $(".items").after(`<a href="/items/search?user_id=${userID}&date=${timeToFind}&status%5B%5D=rejected&status%5B%5D=blocked" class="items" target="_blank/">bl+rej(30)</a>`);
     $("td.item-checkbox").click(function() {
     if ($(this).find("input").prop('checked')){
@@ -528,10 +525,12 @@ function addCommentToItem(isTN){
         var message = (isTN) ? "ТН, поднятие в поиске, блич" : prompt('Введите пожалуйста комментарий');
         if(message == null)
             return;
-        $('td>input[name^="item_id"]:checked').each(function(){
+        $('td>input[name^="item_id"]:checked').each(function(timer){
             var itemComment = {"type": 1, "ID": $(this).val(), "comment": message};
-            console.log(itemComment);
-            comment(itemComment);
+            setTimeout(function(){
+                console.log(itemComment);
+                comment(itemComment);
+            }, timer*100);
         });
         if (!isTN) {
 			if(confirm('Добавить комментарий ТАКЖЕ на учетную запись?')){
