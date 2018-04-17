@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name         Helper plus
-// @version      6.2
+// @version      6.3
 // @author       izayats@avito.ru
 // @include      https://adm.avito.ru/*
 // @include      http://192.168.8.56/*
@@ -13,15 +13,7 @@
 
 'use strict';
 var serverURL = "10.10.36.50";
-var showRemovedHistory = true;
-var backUpHtml = [];
-var phoneVerificationCheck = false;
-var checkEmails = true;
-var login = "";
 var userID = getId(window.location.href);
-var removed = "<span class='item-status  grey'>Removed</span>";
-var archived = '<span class="item-status  grey">Archived</span>';
-var notSync = 0;
 var firstTime = true;
 var todayTime = moment().endOf("day").format("DD/MM/YYYY HH:mm");
 var minusMonthTime =  moment().startOf("day").subtract(30, "days").format("DD/MM/YYYY HH:mm");
@@ -34,30 +26,22 @@ $(document).ready(function(){
     }
     else {$(this).find("input").prop('checked', true)}
   })
-    if(showRemovedHistory)
         turnOnRemovedHistory();
-    if(phoneVerificationCheck)
-        turnOnPhoneVerificationCheck();
-    if(checkEmails)
-        turnOnEmailChecking();
     if(window.location.href.indexOf('/packages/info/') != -1){
         let lastButton = document.querySelector('.list-inline');
         let checkButtonHTML = `<li><button type="button" class="btn btn-default js-filter-item-status checkUniqueButton">Проверить списания</button></li>`;
         lastButton.insertAdjacentHTML('beforeend', checkButtonHTML);
         let checkButton = document.querySelector(".checkUniqueButton");
         checkButton.addEventListener("click", startCheck);
-
-        var shopLink = $("section.content>div>div>a")[0].href;
-        var shopLinkHTML = $("section.content>div>div>a")[0].outerHTML;
-        $.get(shopLink).done(function(data){
-            var userLink = $("[data-userid]", data)[0].dataset.userid;
-            $("section.content>div>div>a")[0].outerHTML = (shopLinkHTML+'<a href="/users/user/info/'+userLink+'" type="button" class="btn btn-success" style="margin-left:20px">← Вернуться на УЗ</a>');
-            var subsNums = $(".header__title")[0].innerHTML.match(/\d+/g);
-            console.log(subsNums[0], subsNums[1]);
-            $("[type=submit]")[0].after("  max = " + (subsNums[1] - subsNums[0]));
-            $("tr[data-status-id='']>td:nth-child(2)").html("Archived");
-        });
+        let shopButton = document.querySelector("section.content>div>div>a");
+        let backToUserHTML = `<button class="btn btn-success backToUser" style="margin-left:10px">← Вернуться на УЗ</button>`;
+        shopButton.parentNode.insertAdjacentHTML('beforeend', backToUserHTML);
+        let backToUserButton = document.querySelector(".backToUser");
+        backToUserButton.addEventListener("click", function(){ getUserID(shopButton.href) });
+        var subsNums = document.querySelector(".header__title").innerHTML.match(/\d+/g);
+        document.querySelector("[type=submit]").parentNode.insertAdjacentHTML('beforeend', "  max = " + (subsNums[1] - subsNums[0]));
     }
+
     if(window.location.href.indexOf('/user/info') != -1){
         login = $('.dropdown-toggle').slice(-1)[0].innerHTML.match(/([^\n]+)/i)[1];
         $(".form-group>label")[0].innerHTML = (
@@ -108,42 +92,41 @@ $(document).ready(function(){
         if ($("#watermark").prop("checked") != undefined){
             var isWmChecked = $("#watermark").prop("checked");
             var wmSpan = (isWmChecked) ? `<span class="label label-info" id=watermarkSpan style="cursor:pointer;"> Подключен </span>` : `<span class="label label-danger" id=watermarkSpan style="cursor:pointer;"> Отключен </span>`;
-            var tarifDiv = document.getElementsByClassName("form-group")[4];
-            var waterMarkDiv = document.createElement('div');
-            waterMarkDiv.innerHTML = `<div class="form-group"> <label class="col-xs-4 control-label">Водяной знак</label> <div class="col-xs-8"> <div class="help-block">${wmSpan}</div>  </div> </div>`
-            var parentDiv = tarifDiv.parentNode;
-            parentDiv.insertBefore(waterMarkDiv, tarifDiv);
+            let displayStatus = (!isWmChecked) ? `<button class="btn btn-success btn-sm label watermarkButtons" id=watermarkSpan style="cursor:pointer; margin-left:100px;" title="Водяной знак подключен"> Включить </button>` : `<button class="btn btn-danger btn-sm label watermarkButtons" id=watermarkSpan style="cursor:pointer; margin-left:100px;" title="Водяной знак отключен"> Выключить </button>`;
+            var waterMarkDivHTML = `<div class="form-group"> <label class="col-xs-4 control-label">Водяной знак</label> <div class="col-xs-8"> <div class="help-block">${wmSpan} ${displayStatus}</div>  </div> </div>`;
+            document.querySelectorAll(".form-group")[4].insertAdjacentHTML('beforebegin', waterMarkDivHTML);
             $('#watermarkSpan').bind("click",function(){
                 $(window).scrollTop($('#watermark').offset().top);
             });
-            $("button[value=Добавить]").after('<button type="submit" class="btn btn-info pull-left watermarkButtons" id="repeatWaterMark" title="Водяной знак переподключен"> <i class="glyphicon glyphicon-repeat"></i> WM</button>');
+            /*$("button[value=Добавить]").after('<button type="submit" class="btn btn-info pull-left watermarkButtons" id="repeatWaterMark" title="Водяной знак переподключен"> <i class="glyphicon glyphicon-repeat"></i> WM</button>');
             $("button[value=Добавить]").after('<button type="submit" class="btn btn-danger pull-left watermarkButtons" id="removeWaterMark" title="Водяной знак отключен"> <i class="glyphicon glyphicon-minus"></i> WM</button>');
             $("button[value=Добавить]").after('<button type="submit" class="btn btn-success pull-left watermarkButtons" id="addWaterMark" title="Водяной знак подключен"> <i class="glyphicon glyphicon-plus"></i> WM</button>');
-            $('.watermarkButtons').bind("click",function(){
-                var message = this.title;
-                console.log(message);
-                var shopComment = {"type": 3, "ID": userID, "comment": message};
+            */$('.watermarkButtons').bind("click",function(){
+                let message = this.title;
+                let shopComment = {"type": 3, "ID": userID, "comment": message};
                 comment(shopComment);
+                document.getElementById('watermark').click();
+                document.querySelector("[name=versionNumber]+button").click();
             });
         }
         var isGeneral = ($(".js-notification-phone")[0] != undefined);
-            console.log(isGeneral);
-            if (isGeneral){
-                var afterPlaceholder = ($("#watermark").prop("checked") != undefined) ? ["#repeatWaterMark", "col-lg-offset-2"] : ["button[value=Добавить]", ""];
-                var phone = $(".js-notification-phone")[0].value;
-                var dateInterval = $(".js-notification-interval-days option:selected").text();
-                $(afterPlaceholder[0]).after('<button type="submit" class="btn btn-info pull-left '+afterPlaceholder[1]+'" id="smsNotification" title="Замена номера телефона"> <i class="glyphicon glyphicon-phone"></i> SMS </button>');
-                $('#smsNotification').bind("click",function(){
-                    if ( (phone != $(".js-notification-phone")[0].value) || (dateInterval != $(".js-notification-interval-days option:selected").text()) ){
-                        var newPhone = $(".js-notification-phone")[0].value;
-                        var newInterval = $(".js-notification-interval-days option:selected").text().trim();
-                        dateInterval = dateInterval.trim();
-                        var message = `Настройки СМС-оповещения изменены:\n Номер телефона: ${phone}, (${dateInterval}) --> \nНомер телефона: ${newPhone}, (${newInterval})`;
-                        var shopComment = {"type": 3, "ID": userID, "comment": message};
-                        comment(shopComment);
-                    }
-                });
-            }
+        console.log(isGeneral);
+        if (isGeneral){
+            var phone = $(".js-notification-phone")[0].value;
+            var dateInterval = $(".js-notification-interval-days option:selected").text();
+            document.querySelector(".js-notification-phone-save").setAttribute('type', 'submit');
+            $('.js-notification-phone-save').bind("click",function(){
+                if ( (phone != $(".js-notification-phone")[0].value) || (dateInterval != $(".js-notification-interval-days option:selected").text()) ){
+                    var newPhone = $(".js-notification-phone")[0].value;
+                    var newInterval = $(".js-notification-interval-days option:selected").text().trim();
+                    dateInterval = dateInterval.trim();
+                    var message = `Настройки СМС-оповещения изменены:\n Номер телефона: ${phone}, (${dateInterval}) --> \nНомер телефона: ${newPhone}, (${newInterval})`;
+                    var shopComment = {"type": 3, "ID": userID, "comment": message};
+                    comment(shopComment);
+                    location.reload();
+                }
+            });
+        }
     }
     if(window.location.href.indexOf('helpdesk?') != -1){
         var helpdeskEl = document.getElementsByClassName("helpdesk-main-section")[0].getElementsByTagName("header")[0].getElementsByTagName("div")[1].getElementsByTagName("div")[0];
@@ -223,6 +206,10 @@ $(document).ready(function(){
         })
     }
   if(window.location.href.indexOf('/item/info') != -1){
+
+      let checkFeeReturnButton = `<button class='btn btn-success pull-left feeReturn'>Проверить возврат</button>`;
+      document.querySelector('.loadable-history>.form-group').insertAdjacentHTML("beforeend", checkFeeReturnButton);
+      document.querySelector(".feeReturn").addEventListener("click", checkFeeReturn);
       var sheet = document.createElement('style');
 sheet.innerHTML = `
 .ah-user-info-indicators .ah-indicators-title::before {
@@ -253,16 +240,14 @@ width: 200px;
       var length = (document.querySelectorAll(".form-group>div.col-xs-9.form-control-static>a").length >= 9) ? "1" : "0";
       var userURL = document.querySelectorAll(".form-group>div>a")[length].href;
       console.log(userURL);
-      function getUserInfo(){
-          return new Promise(function(resolve, reject) {
-              $.get(userURL).done(data => resolve(data));
-          });
-      }
-       getUserInfo()
+      
+       getUserInfo(userURL)
           .then(data => {
            var parser = new DOMParser,
                doc    = parser.parseFromString(data, "text/html");
            var subs, isSubActive, shop, isShopActive, shopText, subsText;
+           let categories = document.querySelectorAll("span[data-placement='bottom']");
+           let catToFind = categories[0].innerHTML.trim() + "/" + categories[1].innerHTML.trim();
            for (const a of doc.querySelectorAll("label.col-xs-3.control-label")) {
                if (a.innerHTML.includes("Подписка")) {
                    subs = a.parentNode.querySelector("div>a").text.trim();
@@ -274,6 +259,7 @@ width: 200px;
                    console.log(shop);
                }
            };
+
            shopText = (shop !== "создать" && shop !== "Закрыт" && shop !== "Приостановлен" && subs == "создать") ? " "+shop : " ";
            isSubActive = (subs !== "создать" && shop !== "Закрыт" && shop !== "Приостановлен") ? "ah-indicators-fired" : "ah-inactive";
            isShopActive = (shop !== "создать" && shop !== "Закрыт" && shop !== "Приостановлен" && subs == "создать") ? "ah-indicators-fired" : "ah-inactive";
@@ -756,5 +742,67 @@ padding:5px;
         </tbody>
     </table>
 </div>`;
+    if (document.querySelectorAll(".unique-table").length<1){
         document.querySelector(".content").insertAdjacentHTML('afterbegin', tableHTML);
+    }
 }
+function getUserID(url){
+   $.get(url).done(function(data){
+       let regExp = /data-userid=\"[0-9]+\"/g;
+       let userLink = data.match(regExp)[0].match(/[0-9]+/)[0];
+       window.open("https://adm.avito.ru/users/user/info/" + userLink);
+        });
+}
+function checkFeeReturn(){
+    var length = (document.querySelectorAll(".form-group>div.col-xs-9.form-control-static>a").length >= 9) ? "1" : "0";
+    var userURL = document.querySelectorAll(".form-group>div>a")[length].href;
+    let userLink = userURL.match(/[0-9]+/)[0];
+    console.log(userLink);
+    getUserInfo(userURL)
+        .then(data => {
+        var parser = new DOMParser,
+            doc    = parser.parseFromString(data, "text/html");
+        var subs, isSubActive, shop, isShopActive, shopText, subsText;
+        let categories = document.querySelectorAll("span[data-placement='bottom']");
+        let catToFind = categories[0].innerHTML.trim() + "/" + categories[1].innerHTML.trim();
+        let feesId = 0;
+        for (const a of doc.querySelectorAll("#fees-packages-available-global>div>table>tbody>tr")) {
+            let neededCell = a.cells[1];
+            if (neededCell !== undefined) {
+                let buttonCell = a.cells[4];
+
+                let children = neededCell.childNodes;
+                let outputText = "";
+                children.forEach(child => {
+                    if (child.textContent !== undefined) outputText+= child.textContent.trim();
+                })
+                if (outputText.includes(catToFind)) {
+                    feesId = buttonCell.childNodes[1].dataset.id;
+                    console.log(catToFind);
+                    console.log(feesId);
+                }
+            }
+        }
+        return feesId;
+    })
+    .then(id =>{
+        $.get("https://adm.avito.ru/users/user/"+userLink+"/fee_limits/"+id).done(data => {
+            let itemId = getId(window.location.href);
+            let array = data.pubsHistory;
+            array.forEach(item =>{
+                if (item.itemId == itemId) {
+                    let button = document.querySelector(".feeReturn");
+                    if (item.isRefund) {
+                        button.innerHTML = "Возврат был";
+                        button.classList.add("btn-danger");
+                    } else {button.innerHTML = "Возврата не было";}
+                };
+            })
+        });
+    });
+}
+function getUserInfo(url){
+          return new Promise(function(resolve, reject) {
+              $.get(url).done(data => resolve(data));
+          });
+      }
