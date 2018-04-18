@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name         Helper plus
-// @version      6.4
+// @version      6.5
 // @author       izayats@avito.ru
 // @include      https://adm.avito.ru/*
 // @include      http://192.168.8.56/*
@@ -46,6 +46,9 @@ $(document).ready(function(){
 
     if(window.location.href.indexOf('/user/info') != -1){
         login = $('.dropdown-toggle').slice(-1)[0].innerHTML.match(/([^\n]+)/i)[1];
+        let postCallHTML = `<input type="button" class="ah-default-btn postCall" value="Постобработка" style="float: right; margin-right: 5px; height: 34px;" title="Создать обращение">`;
+        document.querySelector(".header__title").insertAdjacentHTML('beforeend', postCallHTML);
+        document.querySelector(".postCall").addEventListener("click", createPostCallTicket);
         $(".form-group>label")[0].innerHTML = (
             `<button id="copyID" class="sh-default-btn" type="button" title="Скопировать URL страницы" style="padding: 1px 5px; font-size: 12px;">
                 <span class="sh-button-label sh-copy-img" style="border-radius: 0; font-size: 12px; top: 2px; line-height: 16px;">
@@ -89,7 +92,7 @@ $(document).ready(function(){
             });
         }
     }
-    
+
     if(window.location.href.indexOf('shops/info/view') != -1){
         if ($("#watermark").prop("checked") != undefined){
             var isWmChecked = $("#watermark").prop("checked");
@@ -175,15 +178,8 @@ $(document).ready(function(){
                 "requesterEmail": localStorage.agentEmail,
                 "requesterName": localStorage.agentName
             };
-            function createTicket() {
-                return new Promise(function(resolve, reject) {
-                    $.post('https://adm.avito.ru/helpdesk/api/1/ticket/add', toPostJSON, function(data, status){
-                        var url = "https://adm.avito.ru/helpdesk/details/" + data.id;
-                        resolve({"url" : url, "ticket": data.id});
-                    });
-                });
-            }
-            createTicket()
+
+            createTicket(toPostJSON)
                 .then(data => {
                 var toTicketJson = {
                     "assigneeId" : localStorage.agentID,
@@ -242,8 +238,8 @@ width: 200px;
       var length = (document.querySelectorAll(".form-group>div.col-xs-9.form-control-static>a").length >= 9) ? "1" : "0";
       var userURL = document.querySelectorAll(".form-group>div>a")[length].href;
       console.log(userURL);
-      
-       getUserInfo(userURL)
+
+       getInfo(userURL)
           .then(data => {
            var parser = new DOMParser,
                doc    = parser.parseFromString(data, "text/html");
@@ -378,39 +374,6 @@ function comment(options) {
             });
 }
 function turnOnRemovedHistory(){
-    $("input.mb_unblock").after('<button class="btn btn-default mb_unblock green" id="Activate">Waiting for Package</button>');
-      $('#Activate').bind("click",function(){
-        $('input[name^="item_id"]:checked').each(function(){
-            var id = $(this).val();
-            var fullStatus = $($(this).parent().parent().html()).find('.item_cell_row>.item-status').text();
-            var wfpStatus = fullStatus.substring(fullStatus.lastIndexOf('/')+1).trim();
-            var itemStatus = fullStatus.substring(0, fullStatus.indexOf('/')).trim();
-            console.log(wfpStatus, itemStatus);
-            var done = 0;
-            if (wfpStatus == "Waiting for package"){
-                if (itemStatus == "Paid" && itemStatus == "Unblocked" && itemStatus == "Added" && itemStatus == "Activated"){
-                    activateItems(id);
-                    done++;
-                }
-                if (itemStatus == "Blocked"){
-                    unblockItems(id);
-                    activateItems(id);
-                    done++;
-                }
-                if (itemStatus == "Rejected"){
-                    activateItems(id);
-                    activateItems(id);
-                    done++;
-                }
-            }
-            if (done){
-                var message = "Таск 865, активация, объявление №" + id;
-                var itemComment = {"type": 1, "ID": id, "comment": message};
-                comment(itemComment);
-            }
-      });
-          location.reload();
-      });
     $('.form-row:nth-child(4)').after('<div class="form-row"><input type="button" id="checkRemoved" value="История" class = "btn btn-default mb_activate green"/>');
     $('#checkRemoved').bind("click",function(){
         var items = document.getElementById('items').rows;
@@ -425,7 +388,6 @@ function turnOnRemovedHistory(){
             var status = $($(row)[8]).find('.item_cell_row').text().trim();
             notSync++;
             checkItemHistory($(row).find('.item_title').attr('href'), items[i], status);
-            checkIsWFP($(row).find('.item_title').attr('href'), items[i], status);
         }
         }
         firstTime = !firstTime;
@@ -498,7 +460,7 @@ if(confirm('Вы уверены что хотите отбелить выдел�
             $('input[name^="item_id"]:checked').each(function(){
                 $.get('https://adm.avito.ru/items/item/bleach/' + $(this).val()).fail(function(resp){alert('Ошибка: ' + resp);});
             });
-            
+
         }
 }
 function pushUpItems(zEvent){
@@ -506,7 +468,7 @@ function pushUpItems(zEvent){
             $('input[name^="item_id"]:checked').each(function(){
                 $.get('https://adm.avito.ru/items/item/push2up/' + $(this).val()).fail(function(resp){alert('Ошибка: ' + resp);});
             });
-           
+
         }
     }
 function addCommentToItem(isTN){
@@ -566,7 +528,6 @@ function checkItemHistory(link, row, status){
         </tbody>
         </table>
         </div>`;
-        console.log(data);
         var dataLength = (data.length >= 3) ? 3 : data.length;
         for (var i = 0; i< data.length; i++){
             if (data[i].admin == "Refund (The blocked item was not in SERP)"){
@@ -582,7 +543,28 @@ function checkItemHistory(link, row, status){
         var fullTable = tableTop + tableMid + tableBot;
         $(row).find('.sort-time').html(fullTable);
     });
+    // /*
+    getInfo("https://adm.avito.ru" + link)
+    .then(data => {
+    var parser = new DOMParser,
+        doc    = parser.parseFromString(data, "text/html");
+    let feesId = 0;
+        for (const a of doc.querySelectorAll(".item-form>.form-group>.form-control-static")) {
+            let nodeList = a.querySelectorAll("span[title]:not(.js-tooltip)");
+            if (nodeList.length==4) {
+                let outputHTML = "";
+                let bgColor = "";
+                nodeList.forEach(span => {
+                    if (span.innerHTML == "—"){bgColor= "style='background-color:pink'"}
+                    outputHTML+=span.innerHTML + "<br>";
+                })
+                row.querySelector(".ah-copy-tooltip-pseudo-link").insertAdjacentHTML('afterend', `<div ${bgColor}><br>${outputHTML}</div>`);
+            }
+        }
+})
+// */
     }
+
     else {$(row).find('.sort-time').parent().html(statusText);
          $("#checkRemoved").removeClass().addClass("btn btn-default green");
          }
@@ -760,7 +742,7 @@ function checkFeeReturn(){
     var userURL = document.querySelectorAll(".form-group>div>a")[length].href;
     let userLink = userURL.match(/[0-9]+/)[0];
     console.log(userLink);
-    getUserInfo(userURL)
+    getInfo(userURL)
         .then(data => {
         var parser = new DOMParser,
             doc    = parser.parseFromString(data, "text/html");
@@ -803,8 +785,37 @@ function checkFeeReturn(){
         });
     });
 }
-function getUserInfo(url){
+function getInfo(url){
           return new Promise(function(resolve, reject) {
               $.get(url).done(data => resolve(data));
           });
       }
+function createTicket(json) {
+                return new Promise(function(resolve, reject) {
+                    $.post('https://adm.avito.ru/helpdesk/api/1/ticket/add', json, function(data, status){
+                        var url = "https://adm.avito.ru/helpdesk/details/" + data.id;
+                        resolve({"url" : url, "ticket": data.id});
+                    });
+                });
+            }
+function createPostCallTicket(){
+    let email = document.querySelector(".js-fakeemail-field").innerHTML;
+    var toPostJSON = {
+                "problemId":50,
+                "submitterId":localStorage.agentID,
+                "typeId": 1,
+                "channelId": 3,
+                "receivedAtEmail": "shop_support@avito.ru",
+                "subject": "Обращение в службу поддержки",
+                "theme": 42,
+                "sourceId": 3,
+                "problem": 50,
+                "statusId": 1,
+                "tags[0]": 1296,
+                "description": "Здравствуйте. Ваша заявка принята в обработку. Пожалуйста, ожидайте ответа в ближайшее время.",
+                "requesterEmail": email,
+                "requesterName": localStorage.agentName
+            };
+    createTicket(toPostJSON)
+    .then(data => window.open("https://adm.avito.ru/helpdesk/details/"+data.ticket));
+}
