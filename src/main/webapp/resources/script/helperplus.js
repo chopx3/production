@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name         Helper plus
-// @version      6.3
+// @version      6.4
 // @author       izayats@avito.ru
 // @include      https://adm.avito.ru/*
 // @include      http://192.168.8.56/*
@@ -13,6 +13,8 @@
 
 'use strict';
 var serverURL = "10.10.36.50";
+var backUpHtml = "";
+var notSync = "";
 var userID = getId(window.location.href);
 var firstTime = true;
 var todayTime = moment().endOf("day").format("DD/MM/YYYY HH:mm");
