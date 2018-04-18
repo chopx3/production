@@ -46,7 +46,7 @@ $(document).ready(function(){
 
     if(window.location.href.indexOf('/user/info') != -1){
         login = $('.dropdown-toggle').slice(-1)[0].innerHTML.match(/([^\n]+)/i)[1];
-        let postCallHTML = `<input type="button" class="ah-default-btn postCall" value="Постобработка" style="float: right; margin-right: 5px; height: 34px;" title="Создать обращение">`;
+        let postCallHTML = `<input type="button" class="ah-default-btn postCall" value="Постобработка" style="float: right; margin-right: 25px; height: 34px;" title="Создать обращение">`;
         document.querySelector(".header__title").insertAdjacentHTML('beforeend', postCallHTML);
         document.querySelector(".postCall").addEventListener("click", createPostCallTicket);
         $(".form-group>label")[0].innerHTML = (
