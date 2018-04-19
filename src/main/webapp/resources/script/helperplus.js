@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name         Helper plus
-// @version      6.5
+// @version      6.6
 // @author       izayats@avito.ru
 // @include      https://adm.avito.ru/*
 // @include      http://192.168.8.56/*
@@ -779,7 +779,9 @@ function checkFeeReturn(){
                     if (item.isRefund) {
                         button.innerHTML = "Возврат был";
                         button.classList.add("btn-danger");
-                    } else {button.innerHTML = "Возврата не было";}
+                    } else {
+                        button.innerHTML = "Возврата не было";
+                        button.classList.add("btn-primary");}
                 };
             })
         });
