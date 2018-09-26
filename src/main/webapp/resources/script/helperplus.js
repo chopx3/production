@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name         Helper plus
-// @version      6.7
+// @version      6.8
 // @author       izayats@avito.ru
 // @include      https://adm.avito.ru/*
 // @include      http://192.168.8.56/*
@@ -319,15 +319,15 @@ width: 200px;
   <a href="/billing/walletlog?date=${timeToFind}&itemIds=${userID}" target="_blank/"><span>Перейти</span></a> </div> </div>`
       var parentDiv = abuseDiv.parentNode;
       parentDiv.insertBefore(ourElement, abuseDiv);
-    $("button[value=Добавить]").after('<button type="submit" class="btn btn-info pull-left" id="task865"> <i class="glyphicon glyphicon-plus"></i> 865 </button>');
-    $("#task865").after('<button type="submit" class="pull-left btn btn-primary buttonMargin" id="tn"> <i class="glyphicon glyphicon-plus"></i> ТН </button>');
+    $("button[value=Добавить]").after('<button type="submit" class="btn btn-info pull-left" id="photofake"> <i class="glyphicon glyphicon-plus"></i> Фейк </button>');
+    $("#photofake").after('<button type="submit" class="pull-left btn btn-primary buttonMargin" id="tn"> <i class="glyphicon glyphicon-plus"></i> ТН </button>');
     $("#tn").after('<button type="submit" class="pull-left btn btn-warning buttonMargin" id="pushUp"> <i class="glyphicon glyphicon-plus"></i> Push </button>');
     $("#pushUp").after('<button type="button" class="pull-left btn btn-success buttonMargin" id="doubleComment"> <i class="glyphicon glyphicon-plus"></i> Учетка </button>');
     $(".buttonMargin").css("margin-left", "20px");
     var itemId = getId(window.location.href);
     var userId = getId($($(".form-group>.col-xs-9>a")[1]).attr("href"));
-    $('#task865').bind("click",function(){
-    var message = "Таск 865, активация, объявление №" + itemId;
+    $('#photofake').bind("click",function(){
+    var message = "Фотофейк на редакт";
     var itemComment = {"type": 1, "ID": itemId, "comment": message};
     comment(itemComment);
     });
